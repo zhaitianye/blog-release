@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    蚂蚁金服前端框架和工程化实践-转 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-蚂蚁金服前端框架和工程化实践-转"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  蚂蚁金服前端框架和工程化实践-转
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E5%92%8C%E5%B7%A5%E7%A8%8B%E5%8C%96%E5%AE%9E%E8%B7%B5-%E8%BD%AC/" class="article-date">
+  <time datetime="2019-05-29T06:55:06.000Z" itemprop="datePublished">2019-05-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/">前端方向</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">6.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">21 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在极客邦科技前两天召开的 GMTC 全球大前端技术大会上，蚂蚁金服高级技术专家陈成发表了《蚂蚁金服前端框架和工程化实践》的演讲，以下是本次演讲摘要。</p>
+<p>框架发展历史</p>
+<ul>
+<li>2015 年之前我们有 Sea.JS、Arale、SPM 开源技术方案，大家可以有所耳闻。</li>
+<li>2015 年我们接入 React，从自研的 Roof 到 Redux 再到开源的 Dva，一步步验证我们的最佳实践，并把这些实践交给开源社区检验。</li>
+<li>2017 年开始尝试了新一代的企业级前端框架，Umi 和 Bigfish，前者是从无线业务中长出来的，后者是从中台业务中长出来的。</li>
+<li>一个团队出两个框架毕竟不是长久之计，后来老大直接把两拨人调到一个组，于是就愉快地合并在了一起。</li>
+</ul>
+<p>在 Umi 和 Bigfish 时代，我们从刀耕火种的时代跨入了工业化时代。因为在此之前，用户需要接触很多技术栈和细节，在 Umi 和 Bigfish 中，用户只要知道一个框架，剩下的全部不用了解。框架像一个魔法球，把各种技术栈吸到一起，加工后吐给用户，以此来支撑业务。 在两个框架合并之后，我们的现状是这样：</p>
+<ul>
+<li>umi 对外开源，bigfish 对内服务内部同学。</li>
+<li>bigfish 扔掉原有实现，改造成 umi + umi 插件集的一个架构。</li>
+<li>我们不是第一个这么做的，类似的还有 eggjs 和 chair。这是一种很好的方式，开源和业务两不误。</li>
+</ul>
+<p>那么，这是我们的框架终局吗？以及是否还有更好的方式？大家也可以思考下，后面在未来规划区域会有探讨。 这是一些蚂蚁的内部数据：</p>
+<ul>
+<li>1100+ 内部应用数</li>
+<li>新增产品 80% 都用此框架</li>
+<li>包含 100+ 插件数量，社区够活跃，尤其是内部的</li>
+<li>1500+ 内部使用者</li>
+</ul>
+<p>目前来看，这个框架基本统一了内部的框架使用情况，不仅有不熟前端的 Java 开发，略熟前端的外包，还有资深的前端同学。要获得那么多同学的认可，并不是件容易的事。</p>
+<p>为什么我们能成？</p>
+<p>那么，为什么我们能成？个人理解，我觉得有几个关键词：</p>
+<ul>
+<li>人</li>
+<li>业务</li>
+<li>流程</li>
+<li>开源</li>
+</ul>
+<p>人是非常重要的一环，甚至比技术本身更重要一些。 那么别人为啥要用你的框架？首先，框架要好用，这是最基本的；然后，使用者尤其是资深的前端同学，还得在这上面找到自己的成就感和 ownership，另外如果绩效漂亮就更好了。总不能别人用你的框架，然后只有你自己一个人的绩效好，那是不会长久的。 我们的解法是插件体系。 框架不是凭空而来的，需求来自于业务，所以用框架写业务的同学往往能发现框架不足的点，他们可以开发适用于自己业务的框架插件，反哺框架。如果这是通用需求，那就亮了。框架的内部开发群有 100+ 人，包含大量来自业务线的同学，这就是插件体系的好处，人人都能贡献。为了让写插件变得简单，我们给框架分了五层架构 包含依赖层、插件层、插件集层、应用类型层和部署模式层，大家可在任何一层都可贡献代码，</p>
+<ul>
+<li>可以写一个独立的功能插件，比如和某个服务的对接，比如扩展路由的某个功能，比如实现一套特殊的补丁方案；</li>
+<li>可以做归类，把一系列插件整理到一个插件集里，适用于某一类的业务开发；</li>
+<li>可以扩展应用类型，比如 SPA、MPA、微前端等等；</li>
+<li>可以扩展部署模式，比如和不同的框架或平台做结合；</li>
+</ul>
+<p>这是插件生命周期图，包含：</p>
+<ol>
+<li>node 环境执行的编译时</li>
+<li>浏览器上执行的运行时</li>
+<li>ui 辅助层的编辑时</li>
+</ol>
+<p>大部分插件体系只会考虑 node 编译时，我们加上运行时和编辑时的支持，赋予了插件更大的能力。具体做了什么就不展开了，每个框架都不同，但做的事情其实大体一致，往上说是 html、css、js，往下说还有各种工具的配置，比如 webpack、babel、postcss、dev 中间件 等等。 下面来看具体如何写一个插件，如果大家有写过 vue-cli 的插件，会发现很类似：</p>
+<ul>
+<li>导出一个函数，第一个参数包含我们提供的能力。</li>
+<li>可以添加、修改、绑定事件等等。</li>
+</ul>
+<p>我们目前的部分插件，内部流程相关的就没有列出来了，内外加起来应该有 100 多个了吧。 这是我们的分工表，基本上涉及到了框架和业务的方方面面，很多事情都是由不同的人来负责，大家的参与度也不错。 当然，人总是不够的，很多子项都还处于招人状态。 我们的框架能成，我觉得另一个重要的原因是我们不仅做功能，还做业务和流程。我不清楚大家是如何走流程的，包括如何切换应用类型，如何和各种后端服务和平台对接，反正我们的还是挺繁琐的。程序员的时间浪费在这里我觉得很不值，所以如果框架能解决这部分，应该会受到欢迎。 我们通过 appType 和 deployMode 两个维护来对接各种场景，用户只要配 deployMode: node 就能对接 node 框架，改成 java 就能对接 java 框架，背后的脏活累活交给框架做。 最后还有一个原因是我们做开源，我个人是比较热衷开源的，把自己的实现完全透明地展示给社区，包括之前写的工具和数据流方案，也都是从开源做起，因为我觉得开源相比在内网闭门造车，能带来很多好处。</p>
+<ul>
+<li>代码质量，不写用例的代码不会有人愿意用。</li>
+<li>Bugfix 和额外的代码贡献，社区很多人都是愿意参与的，在吸引到足够的人使用之后，框架内部的问题会更快暴露出来，还会有很多人愿意贡献代码和修复 Bug。</li>
+<li>umi core developer group，我们还组织了社区的 umi developer 群，比如 vscode 插件、create-umi 等等的包，就是由社区同学主导维护的。</li>
+</ul>
+<p>另外，开源做得好，也更容易获得内部同学的认可。包括之前做的 dva、现在的 umi，都不是一开始的内部首选，而是后来慢慢逆袭的。</p>
+<ul>
+<li>中间从下往上是社区开源、蚂蚁开源、Bigfish 框架、应用发布流程。</li>
+<li>框架层主要就是我们前面介绍的五层架构。</li>
+<li>左上主要是资产市场，我们提效的主要手段之前，这在后面会展开介绍。</li>
+<li>左下是工程方面的配套设施，编辑器插件、测试、lint 工具等等。</li>
+<li>右边是对接的服务，通过框架插件，可实现配置式地对接外部服务，减少接入成本。</li>
+</ul>
+<p>拳头功能</p>
+<p>下面是我们的一些拳头功能。</p>
+<p>资产市场</p>
+<p>今年由于大形势的原因，我们比较重研发提效，最好是一个人能干 10 个人的活。关于提效，其中比较重要的是相同的代码不要重复写，要做提取和组件化。而资产市场就是做的这件事。为了更有效地复用，我们对资产市场分了四级:</p>
+<ol>
+<li>组件，指通用组件，就是 antd，在下半年将要发布的 antd@4 里，我们会陆续提取更多通用组件到 antd 中。</li>
+<li>业务组件，不能提取通用组件的，我们会提到内部统一的业务组件仓库中。</li>
+<li>区块，由组件组成，可以想象成代码片段。</li>
+<li>页面模板，由区块组成</li>
+</ol>
+<p>我们可以借助工具把区块和页面模板添加到页面中 通过 Umi UI（可视化方式）添加区块的样式。 区块方案其实不是一开始就这样，中间经历了几次迭代。</p>
+<ul>
+<li>最初的思路来源是 angular 的一个 theme market，以及飞冰。</li>
+<li>1.0 的版本时我们设计区块是页面级的，用户可以在一个页面里写组件、数据流方案、mock 等等，这样我们要做一个基于 antd 的 CRUD 页面就很简单，一个命令把区块拿进来，然后修修改改就完事了。</li>
+<li>然后今年我们重新整理了区块方案，因为我们希望区块能更通用一些，比如可重复添加，可无限嵌套，支持区块集，可结合布局，支持可视化添加等等。</li>
+</ul>
+<p>这是区块方案的迭代情况，一路踩着坑过来的。 资产市场不会凭空运转起来，或者说我们做了资产市场，大家就会按照这套方案用起来。比如一个产品，设计师不按照约定的规范来设计，那资产市场就成了摆设。所以，这是一件自上而下的事情，并且得拉上设计师同学一起做，才有可能做好。 在工具层面，我们需要打通上下游，同时兼顾三类角色的同学：</p>
+<ul>
+<li>设计师，在设计师工具层同步资产市场，让大家在设计时就按照约定的方式走。</li>
+<li>资产开发者，提供组件开发工具，包括组件的打包、文档、本地调试、测试、发布、自动生成 CHANGELOG 等等。</li>
+<li>资产使用者，同时提供命令行和可视化工具，命令行是兜底方案，可视化的方式添加资产则更友好。</li>
+</ul>
+<p>微前端</p>
+<p>我们在微前端方面也有一些沉淀，并在生产环境有大量应用。 关于微前端是啥？首先大家想到的可能是一个解决多套技术栈共存的方案，比如首页用 jQuery，订单页用 React，客户系统用 Vue。这没错，但是一个相对狭义的理解。 一个问题是，如果我们的技术栈一致，那是否就不需要微前端方案了？不是！ 我对微前端的理解是，他不仅是个技术方案，更是个解决流程、组织架构等问题的方案。 比如淘宝网，可以简单理解成有淘宝首页、交易系统和帮助系统，这些系统是优先级的，并且在我们人力有限的情况下，我们会把资深的同学投入到重要的系统里，不重要的系统我们可能会通过外包或者购买的方式解决，但是一个底线是，不重要的系统不能影响重要的系统的运转。 要实现这一点，目前流行的有两种方式：</p>
+<ul>
+<li>MPA（多页应用）</li>
+<li>微前端</li>
+</ul>
+<p>MPA 没啥好说，成本低，大家都爱用。但如果想要更好地体验，则不妨试试微前端。 微前端的概念其实已经出来 3 年多了 (<a href="https://www.thoughtworks.com/radar/techniques/micro-frontends)，但社区喊地比较多，给方案比较少，在生产环境应用地就更少了。" target="_blank" rel="noopener">https://www.thoughtworks.com/radar/techniques/micro-frontends)，但社区喊地比较多，给方案比较少，在生产环境应用地就更少了。</a> 我们首先是基于 SingleSPA。</p>
+<ul>
+<li>子应用提供 bootstrap、mount 和 unmount 三个生命周期方法。</li>
+<li>主应用注册子应用并决定渲染哪个子应用。</li>
+</ul>
+<p>这样能 Run 起来，但还只是玩具，要上到生产环境还远远不够，还需要解决很多关键的技术问题。 图中是们结合实践总结出的关键技术问题。</p>
+<ul>
+<li>JS 沙箱和 CSS 隔离，是为了让子应用之间互不影响。</li>
+<li>Html Entry 和 Config Entry，是关于如何注册子应用信息。</li>
+<li>按需加载、公共依赖加载和预加载，是关于性能的，这些很重要，否则虽然上了微前端，但性能严重下降，或者由于升级引起线上故障，就得不偿失了。</li>
+<li>父子应用通讯，顾名思义，无需解释。</li>
+<li>子应用嵌套 和 子应用并行 是微前端的进阶应用，在某些场景下会用到。</li>
+</ul>
+<p>以上问题，我们都有解决方案，但可能有些还不完美，需要进一步尝试。 这是部分问题的实现原理。</p>
+<ul>
+<li>首先子应用提供样式、脚本等配置，有内联也有外链。</li>
+<li>先通过 SEMVER MAP 解决公共依赖不重复加载的问题，比如 antd、react 都只载一份。</li>
+<li>然后通过 xhr 拉外链的样式和脚本，实现按需加载。</li>
+<li>样式会合并成一份，通过 <code>&lt;style&gt;</code> 写入到 DOM 结构，子应用 unmout 时删除，以此做到 CSS 隔离。</li>
+<li>脚本通过记录和 diff window 变量上的属性来取到子应用导出的生命周期方法，然后通过 eval + 基于 Proxy 实现的 Sandbox 实现 JS 沙箱。</li>
+</ul>
+<p>更多实现细节，可以关注文章，分享之后我们会公布。</p>
+<ul>
+<li>内核取名为乾坤，意义是统一。</li>
+<li>然后，搭配 umi 插件使用，效果会更好，比如我们建几个 umi 应用，配置一个为主应用，其他的为子应用，然后串起来就能跑了。</li>
+</ul>
+<p>这句话不是我说的，大家如果有发现更好的方案，可以找 @有知 探讨下。</p>
+<p>场景完备性</p>
+<p>作为一个框架，你得有亮点；而作为一个企业级框架，你得满足需求。而要满足需求，该有的功能就必须有，亮不亮不管，得有，不能让框架成为业务需求的瓶颈。 红色的应用类型方面：</p>
+<ul>
+<li>SPA 应该是目前用地最多的一种应用类型，但有时也会不满足需求。</li>
+<li>比如运营页面，多个页面之间没有一点点关系，也不需要互相跳转，用 SPA 就没有意义，这时候 MPA 可能更适合。</li>
+<li>比如语雀，我们的文档平台，他有前台、有后台、有 PC 端、有无线端，如果整体是一个 SPA，不仅尺寸大，公共依赖的提取是个问题，不同场景之间可能还会相互影响，这时候，多 SPA 的组合会更适合他。</li>
+<li>微前端前面已经提过。</li>
+<li>SSR 和 Prerender 则是为了更好的浏览器性能，顺便解决 SEO 的问题。</li>
+</ul>
+<p>蓝色的部署模式方面：</p>
+<ul>
+<li>Node 框架和 Java 框架是框架层的，我们需要通过 HTML 层与这些后端框架做一层对接。</li>
+<li>离线包是指支付宝的手机应用钱包，让我们的应用可以快速打包成一个压缩包，上传到手机里。</li>
+<li>等等。</li>
+</ul>
+<p>当前端框架成为内部的一致选择之后，就会被推着去做很多业务方面的事情，适配各种场景的需求。不过好在我们有插件机制，上面大部分的需求都是业务方同学通过插件和我们一起实现的。</p>
+<p>专题研究</p>
+<p>除了拳头功能，要做一个框架，还不得不在一些专题上有深入的研究，很多知识点是需要彻底搞透的，这样才能知道如何设计更合适。</p>
+<p>路由</p>
+<p>首先，我们既支持配置式路由，也支持约定式路由。配置式是实际需要，约定式是理想：</p>
+<ul>
+<li>约定式路由即以物理文件的路径作为路由，可减少冗余的配置层。</li>
+<li>但是，这明显没有用 JSON 配置灵活，所以我们在命名上做了一些处理，实现 <strong>动态路由</strong>和 嵌套路由。</li>
+<li>还不够，比如要给路由加个 title 属性的配置，所以我们又允许通过 yaml 注释为路由提供额外的属性配置。</li>
+</ul>
+<p>功能方面我们最先是参考 next.js 做的，但发现 next.js 只支持简单的路由功能，于是自己做了很多扩展，</p>
+<ul>
+<li>权限路由，是否允许进入。</li>
+<li>切换动效。</li>
+<li>面包屑，根据路由生成面包屑。</li>
+<li>滚动条状态，清空或保持。</li>
+<li>keep-alive，来自 vue router，让路由切掉后不销毁。</li>
+</ul>
+<p>由于我们是集中式的路由组织方式，并且管控了路由的渲染逻辑，所以基于路由就可以做很多事，</p>
+<ul>
+<li>标题切换，基于路由的标题切换。</li>
+<li>dva model 绑定，和按需加载。</li>
+<li>埋点，路由切换时埋点。</li>
+<li>编译时按需编译。</li>
+<li>运行时按需加载，还有各种按需加载策略。</li>
+<li>生成菜单，根据路由配置结合 antd 组件自动生成侧边栏菜单。</li>
+</ul>
+<p>这个列表每次分享时都会增加，很有想象空间。 这里介绍一个大家可能感兴趣的点，基于路由的按需编译。就是比如我们有 1000 个页面，而调试时只要调其中的 5 个页面，那只编译这 5 个就是最理想的。 这有几种实现方式：</p>
+<ul>
+<li>next.js 的，通过动态 entry 实现。</li>
+<li>我们的，通过临时文件实现。</li>
+</ul>
+<p>临时文件的实现是这样的，</p>
+<ol>
+<li>先用 Loading 组件占位。</li>
+<li>当用户访问指定 url 时，才把相应路由的组件替换进去。</li>
+</ol>
+<p>虽然有些取巧，但简单有效。 我们的编译是基于 webpack 的，诚如大家所料，启动速度还是比较慢的，尤其是项目大了之后。为了让使用者体验更好，我们在这边也做了很多尝试，有正常的方式，也有不正常的方式。 正常的方式有：</p>
+<ul>
+<li>dll，把不会修改到的部分打到 dll 里，避免重复打包。</li>
+<li>hard-source，利用物理文件缓存，但由于作者不维护，此方案已废弃。</li>
+<li>cache-loader、happypack。</li>
+<li>external，比 dll 更有效的提速方案。</li>
+<li>硬件升级，简单粗暴有效，有个案例是我们其中一个项目的 ci 需要 12 分钟，换了台机器后，只要 5 分钟，所以有时做很多努力，不如换台机器。</li>
+<li>简化配置，只给当前项目需要的配置，比如多一个模块 resolve 规则，或者多载入不需要的 loader，都会降低编译速度。</li>
+<li>按需编译，在前面介绍过了。</li>
+<li>webpack@5，有时做很多努力，不如升个大版本提升大，参考 node 升级带来的性能提升。以 ant-design-pro 为例试验了下 webpack@5 的物理缓存能力，首次编译需要 37s，二次编译只要 4s！！</li>
+<li>Plug’n’Play，和编译关系不大，但能提升依赖安装速度。</li>
+</ul>
+<p>进阶优化的有：</p>
+<ul>
+<li>auto-external，external 虽然效果好，但配置麻烦，所以我们封装了一个插件解决配置麻烦的问题。</li>
+<li>uglifyjs hash cache，构建差不多 70% 时间是在做压缩，如果能把不需要压缩的不压缩，压缩过的不重复压缩，那会快很多。</li>
+</ul>
+<p>“变态”优化的有：</p>
+<ul>
+<li>我们现在都在用 webpack，大家也可以想想，我们是否一定要用 webpack？</li>
+<li>我们目前是，三年之后可能就不是了。在上云的大环境下，云端跑 webpack 不仅成本高，而且效率低，我们可能会考虑低成本的方案，比如 codesandbox 或 stackbliz 的云编译方案，也有可能会借助 rust 提升编译器运行效率，现在社区已经有一些尝试了。</li>
+<li>并且，随着浏览器的发展，已经可以在浏览器里用 esm 这种格式，所以未来也可能不再需要编译器或者只要做一层很薄的合并操作。</li>
+</ul>
+<p>性能优化是每个框架和每个前端都逃不开的点，从我 10 年前做前端起就关注这个点了，到目前方法有些变化，但性能优化依然很重要。下面我们的一些尝试，</p>
+<ul>
+<li>按需加载，通常是以路由为维度的，但这里还有些细节的点，比如加载到哪一层的路由，子路由是否应该合并到一个文件里，和路由相关的数据流文件和国际化文件如何按需加载，等等。</li>
+<li>一键切框架，对于一些无线场景，切成小尺寸的 react 实现能大幅降低产物大小，但需格外小心兼容问题。</li>
+<li>公共文件提取策略。</li>
+<li>SSR + Prerender。</li>
+<li>Prefetch 和 Preload。</li>
+<li>modern mode，如果大家有听说过，对，就是 vue-cli 的那个 modern mode</li>
+</ul>
+<p>目前为止，因为浏览器的差异，我们仍需处理浏览器的兼容问题。不过比第一代前端需要处理 IE6 的兼容问题已经好多了。 关于补丁方案：</p>
+<ul>
+<li>组件不打补丁，这点上很多人有认知误区，组件会做语法转换，但不会包含补丁，因为包含补丁会造成冗余。</li>
+<li>目前最常用的常规方案，如右图所示，通过 targets 配置配需要兼容啥浏览器的啥版本，实现上要注意需同时给到 babel 和 postcss，处理 JS 和 CSS。</li>
+<li>某些场景会很在意性能，多一个字节都舍不得，比如无线，他们会追求 极限方案，强制写死就打某几个补丁，然后通过 eslint 插件限制不能使用需要补丁的那些 es 语法，用了就报错。</li>
+<li>最后是我个人理解的终极方案，在线补丁服务 + 本地特性检测，本地特性检测可以保证特性的最小化，在线补丁服务可以区分浏览器差异，保证特性浏览器下载固定补丁列表时的最小化。</li>
+</ul>
+<p>编辑器插件是框架非常重要的配套设施，很多功能在框架层其实没法做，尤其是用了大量的约定之后，编码时会损失代码提示方面的支持，利用编辑器插件就能弥补这一点。 举两个例子，</p>
+<ul>
+<li>比如，dva 的数据流方案基于 redux，而 redux 的 action 是基于字符串，很难利用 TypeScript 特性做自动提示。借助 vscode 插件即可做到这一点。</li>
+<li>再比如，umi 的路由配置是指向路由组件的路径字符串，框架层做不到提示补全，借助 vscode 插件也可以做到。</li>
+</ul>
+<p>测试方面基本上和大家都一样，包含单测、UI 测试、e2e 测试和集成测试，基本方案是基于 Jest + test-react-library + Puppeteer。 但是，大家都知道业务同学很忙，没有太多时间写测试。所以我们如果能有个基于路由的自动化测试方案，让业务不写代码也能确保每个路由都能正常运行，也是个不错的选择。 这是我们的监控体系，有了数据，才能知己知彼，有的放矢。 分构建时和运行时。 构建时在云构建容器层去生成构建报告，我们自研的工具比较好办，但就算在蚂蚁内部，也还是其他工具的存在，比如直接用 webpack 做构建的，或者基于 webpack 封装的。对于这些非自研的构建，我们会用猜测的方式，来定位出他是有什么工具进行构建。 数据层会跑大量的定时任务去做数据清理，提供够展示层。展示层提供排名、大盘、版本分布、竞品分析、出错预警等信息。 运行时没啥特别的，大家的方法都差不多。有一点值得一提的是我们会在云构建平台去自动申请埋点标识并在构建时自动注入，让用户免去埋点标识的申请，所有产品自动就会有数据支撑。 这是一些构建时的数据展现示例。</p>
+<p>未来和规划</p>
+<p>Bigfish + Umi 的内外结合的方式目前看起来还不错，但毕竟是两个团队妥协后的方案，在我们需要服务外部 ISV 时暴露了一些问题：</p>
+<ul>
+<li>Bigfish 是内网框架，绑了很多内部服务，不能直接给 ISV 用。</li>
+<li>umi 给 ISV 又会存在一些差异。</li>
+</ul>
+<p>虽然底层都是 umi，但内外网同学的使用方式还是有很大差别的，导致我们的方案对外时会有额外的成本，以及我们自己在文档等方面的投入上都需要做两次。差异主要是：</p>
+<ul>
+<li>配置不完全一致。</li>
+<li>文档不统一。</li>
+</ul>
+<p>所以，我们要 <strong>让内外网的框架方案保持一致</strong>。</p>
+<ul>
+<li>内部同学也统一用 Umi。</li>
+<li>修改 Umi 的插件配置方式，和内部保持一致。</li>
+<li>Umi 增加 Preset 的概念，之前的 Bigfish 框架提供 umi-preset-bigfish 服务内部同学。</li>
+</ul>
+<p>修改后的这一版是我能预见的框架终态。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/" rel="tag">前端方向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/06/css-%E7%89%B9%E5%AE%9A%E7%94%A8%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            css-特定用法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/05/ES2018%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ES2018新特性</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

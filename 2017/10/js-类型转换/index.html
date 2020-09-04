@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    js-类型转换 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-js-类型转换"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  js-类型转换
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/10/js-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="article-date">
+  <time datetime="2017-10-29T06:03:12.000Z" itemprop="datePublished">2017-10-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="JavaScript-类型转换"><a href="#JavaScript-类型转换" class="headerlink" title="JavaScript 类型转换"></a>JavaScript 类型转换</h1><p>Number() 转换为数字， String() 转换为字符串， Boolean() 转化为布尔值。</p>
+<h2 id="JavaScript-数据类型"><a href="#JavaScript-数据类型" class="headerlink" title="JavaScript 数据类型"></a>JavaScript 数据类型</h2><p>在 JavaScript 中有 5 种不同的数据类型：</p>
+<ul>
+<li>string</li>
+<li>number</li>
+<li>boolean</li>
+<li>object</li>
+<li>function</li>
+</ul>
+<p>3 种对象类型：</p>
+<ul>
+<li>Object</li>
+<li>Date</li>
+<li>Array</li>
+</ul>
+<p>2 个不包含任何值的数据类型：</p>
+<ul>
+<li>null</li>
+<li>undefined</li>
+</ul>
+<h2 id="typeof-操作符"><a href="#typeof-操作符" class="headerlink" title="typeof 操作符"></a>typeof 操作符</h2><p>你可以使用 <strong>typeof</strong> 操作符来查看 JavaScript 变量的数据类型。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typeof &quot;John&quot;                 &#x2F;&#x2F; 返回 string typeof 3.14                   &#x2F;&#x2F; 返回 number typeof NaN                    &#x2F;&#x2F; 返回 number typeof false                  &#x2F;&#x2F; 返回 boolean typeof [1,2,3,4]              &#x2F;&#x2F; 返回 object typeof &#123;name:&#39;John&#39;, age:34&#125;  &#x2F;&#x2F; 返回 object typeof new Date()             &#x2F;&#x2F; 返回 object typeof function () &#123;&#125;         &#x2F;&#x2F; 返回 function typeof myCar                  &#x2F;&#x2F; 返回 undefined (如果 myCar 没有声明) typeof null                   &#x2F;&#x2F; 返回 object</span><br></pre></td></tr></table></figure>
+
+<p>请注意：</p>
+<ul>
+<li>NaN 的数据类型是 number</li>
+<li>数组(Array)的数据类型是 object</li>
+<li>日期(Date)的数据类型为 object</li>
+<li>null 的数据类型是 object</li>
+<li>未定义变量的数据类型为 undefined</li>
+</ul>
+<p>如果对象是 JavaScript Array 或 JavaScript Date ，我们就无法通过 <strong>typeof</strong> 来判断他们的类型，因为都是 返回 Object。</p>
+<h2 id="constructor-属性"><a href="#constructor-属性" class="headerlink" title="constructor 属性"></a>constructor 属性</h2><p><strong>constructor</strong> 属性返回所有 JavaScript 变量的构造函数。</p>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;John&quot;.constructor                 &#x2F;&#x2F; 返回函数 String()  &#123; [native code] &#125; (3.14).constructor                 &#x2F;&#x2F; 返回函数 Number()  &#123; [native code] &#125; false.constructor                  &#x2F;&#x2F; 返回函数 Boolean() &#123; [native code] &#125; [1,2,3,4].constructor              &#x2F;&#x2F; 返回函数 Array()   &#123; [native code] &#125; &#123;name:&#39;John&#39;, age:34&#125;.constructor  &#x2F;&#x2F; 返回函数 Object()  &#123; [native code] &#125; new Date().constructor             &#x2F;&#x2F; 返回函数 Date()    &#123; [native code] &#125; function () &#123;&#125;.constructor         &#x2F;&#x2F; 返回函数 Function()&#123; [native code] &#125;</span><br></pre></td></tr></table></figure>
+<p>你可以使用 constructor 属性来查看对象是否为数组 (包含字符串 “Array”):</p>
+<h2 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function isArray(myArray) &#123;</span><br><span class="line">    return myArray.constructor.toString().indexOf(&quot;Array&quot;) &gt; -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以使用 constructor 属性来查看对象是否为日期 (包含字符串 “Date”):</p>
+<h2 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function isDate(myDate) &#123;</span><br><span class="line">    return myDate.constructor.toString().indexOf(&quot;Date&quot;) &gt; -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="JavaScript-类型转换-1"><a href="#JavaScript-类型转换-1" class="headerlink" title="JavaScript 类型转换"></a>JavaScript 类型转换</h2><p>JavaScript 变量可以转换为新变量或其他数据类型：</p>
+<ul>
+<li>通过使用 JavaScript 函数</li>
+<li>通过 JavaScript 自身自动转换</li>
+</ul>
+<h2 id="将数字转换为字符串"><a href="#将数字转换为字符串" class="headerlink" title="将数字转换为字符串"></a>将数字转换为字符串</h2><p>全局方法 <strong>String()</strong> 可以将数字转换为字符串。 该方法可用于任何类型的数字，字母，变量，表达式：</p>
+<h2 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String(x)         &#x2F;&#x2F; 将变量 x 转换为字符串并返回 String(123)       &#x2F;&#x2F; 将数字 123 转换为字符串并返回 String(100 + 23)  &#x2F;&#x2F; 将数字表达式转换为字符串并返回</span><br></pre></td></tr></table></figure>
+<p>Number 方法 <strong>toString()</strong> 也是有同样的效果。</p>
+<h2 id="实例-5"><a href="#实例-5" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x.toString()</span><br><span class="line">(123).toString()</span><br><span class="line">(100 + 23).toString()</span><br></pre></td></tr></table></figure>
+<p>在 Number 方法 章节中，你可以找到更多数字转换为字符串的方法：</p>
+<p>方法</p>
+<p>描述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">toExponential()</span><br></pre></td></tr></table></figure>
+<p>把对象的值转换为指数计数法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">toFixed()</span><br></pre></td></tr></table></figure>
+<p>把数字转换为字符串，结果的小数点后有指定位数的数字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">toPrecision()</span><br></pre></td></tr></table></figure>
+<p>把数字格式化为指定的长度。</p>
+<h2 id="将布尔值转换为字符串"><a href="#将布尔值转换为字符串" class="headerlink" title="将布尔值转换为字符串"></a>将布尔值转换为字符串</h2><p>全局方法 <strong>String()</strong> 可以将布尔值转换为字符串。</p>
+<p><code>String(false)</code>        // 返回 “false” String(true)         // 返回 “true”</p>
+<p><code>Boolean</code> 方法 <strong>toString()</strong> 也有相同的效果。</p>
+<p><code>false.toString()</code>     // 返回 “false” true.toString()      // 返回 “true”</p>
+<h2 id="将日期转换为字符串"><a href="#将日期转换为字符串" class="headerlink" title="将日期转换为字符串"></a>将日期转换为字符串</h2><p><code>Date()</code> 返回字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Date()      &#x2F;&#x2F; 返回 Thu Jul 17 2014 15:38:19 GMT+0200 (W. Europe Daylight Time)</span><br></pre></td></tr></table></figure>
+<p>全局方法 String() 可以将日期对象转换为字符串。</p>
+<p><code>String(new Date())</code>      // 返回 Thu Jul 17 2014 15:38:19 GMT+0200 (W. Europe Daylight Time)</p>
+<p>Date 方法 <strong>toString()</strong> 也有相同的效果。</p>
+<h2 id="实例-6"><a href="#实例-6" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj &#x3D; new Date() obj.toString()   &#x2F;&#x2F; 返回 Thu Jul 17 2014 15:38:19 GMT+0200 (W. Europe Daylight Time)</span><br></pre></td></tr></table></figure>
+<p>在 Date 方法 章节中，你可以查看更多关于日期转换为字符串的函数：</p>
+<p>方法</p>
+<p>描述</p>
+<p>getDate()</p>
+<p>从 Date 对象返回一个月中的某一天 (1 ~ 31)。</p>
+<p>getDay()</p>
+<p>从 Date 对象返回一周中的某一天 (0 ~ 6)。</p>
+<p>getFullYear()</p>
+<p>从 Date 对象以四位数字返回年份。</p>
+<p>getHours()</p>
+<p>返回 Date 对象的小时 (0 ~ 23)。</p>
+<p>getMilliseconds()</p>
+<p>返回 Date 对象的毫秒(0 ~ 999)。</p>
+<p>getMinutes()</p>
+<p>返回 Date 对象的分钟 (0 ~ 59)。</p>
+<p>getMonth()</p>
+<p>从 Date 对象返回月份 (0 ~ 11)。</p>
+<p>getSeconds()</p>
+<p>返回 Date 对象的秒数 (0 ~ 59)。</p>
+<p>getTime()</p>
+<p>返回 1970 年 1 月 1 日至今的毫秒数。</p>
+<hr>
+<h2 id="将字符串转换为数字"><a href="#将字符串转换为数字" class="headerlink" title="将字符串转换为数字"></a>将字符串转换为数字</h2><p>全局方法 <strong>Number()</strong> 可以将字符串转换为数字。 字符串包含数字(如 “3.14”) 转换为数字 (如 3.14). 空字符串转换为 0。 其他的字符串会转换为 NaN (不是个数字)。</p>
+<p>Number(“3.14”)    // 返回 3.14 Number(“ “)       // 返回 0 Number(“”)        // 返回 0 Number(“99 88”)   // 返回 NaN</p>
+<p>在 Number 方法 章节中，你可以查看到更多关于字符串转为数字的方法：</p>
+<p>方法</p>
+<p>描述</p>
+<p>parseFloat()</p>
+<p>解析一个字符串，并返回一个浮点数。</p>
+<p>parseInt()</p>
+<p>解析一个字符串，并返回一个整数。</p>
+<h2 id="一元运算符"><a href="#一元运算符" class="headerlink" title="一元运算符 +"></a>一元运算符 +</h2><p>*<em>Operator + *</em>可用于将变量转换为数字：</p>
+<h2 id="实例-7"><a href="#实例-7" class="headerlink" title="实例"></a>实例</h2><p>var y = “5”;      // y 是一个字符串 var x = + y;      // x 是一个数字</p>
+<p>如果变量不能转换，它仍然会是一个数字，但值为 NaN (不是一个数字):</p>
+<h2 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h2><p>var y = “John”;   // y 是一个字符串 var x = + y;      // x 是一个数字 (NaN)</p>
+<h2 id="将布尔值转换为数字"><a href="#将布尔值转换为数字" class="headerlink" title="将布尔值转换为数字"></a>将布尔值转换为数字</h2><p>全局方法 <strong>Number()</strong> 可将布尔值转换为数字。</p>
+<p>Number(false)     // 返回 0 Number(true)      // 返回 1</p>
+<h2 id="将日期转换为数字"><a href="#将日期转换为数字" class="headerlink" title="将日期转换为数字"></a>将日期转换为数字</h2><p>全局方法 <strong>Number()</strong> 可将日期转换为数字。</p>
+<p>d = new Date();<br>Number(d)          // 返回 1404568027739</p>
+<p>日期方法 <strong>getTime()</strong> 也有相同的效果。</p>
+<p>d = new Date();<br>d.getTime()        // 返回 1404568027739</p>
+<h2 id="自动转换类型"><a href="#自动转换类型" class="headerlink" title="自动转换类型"></a>自动转换类型</h2><p>当 JavaScript 尝试操作一个 “错误” 的数据类型时，会自动转换为 “正确” 的数据类型。 以下输出结果不是你所期望的：</p>
+<p>5 + null    // 返回 5         null 转换为 0 “5” + null  // 返回”5null”   null 转换为 “null” “5” + 1     // 返回 “51”      1 转换为 “1” “5” - 1     // 返回 4         “5” 转换为 5</p>
+<h2 id="自动转换为字符串"><a href="#自动转换为字符串" class="headerlink" title="自动转换为字符串"></a>自动转换为字符串</h2><p>当你尝试输出一个对象或一个变量时 JavaScript 会自动调用变量的 toString() 方法：</p>
+<p>document.getElementById(“demo”).innerHTML = myVar;</p>
+<p>// if myVar = {name:”Fjohn”}  // toString 转换为 “[object Object]” // if myVar = [1,2,3,4]       // toString 转换为 “1,2,3,4” // if myVar = new Date()      // toString 转换为 “Fri Jul 18 2014 09:08:55 GMT+0200” </p>
+<p>数字和布尔值也经常相互转换：</p>
+<p>// if myVar = 123             // toString 转换为 “123” // if myVar = true            // toString 转换为 “true” // if myVar = false           // toString 转换为 “false”</p>
+<p>检测数据类型：typeof 与 instanceof typeof typeof 用以获取一个变量或者表达式的类型，typeof 一般只能返回如下几个结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number,boolean,string,function（函数）,object（NULL,数组，对象）,undefined。</span><br></pre></td></tr></table></figure>
+<p>实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&quot;demo&quot;).innerHTML &#x3D; </span><br><span class="line">typeof &quot;john&quot; + &quot;&lt;br&gt;&quot; + </span><br><span class="line">typeof 3.14 + &quot;&lt;br&gt;&quot; +</span><br><span class="line">typeof false + &quot;&lt;br&gt;&quot; +</span><br><span class="line">typeof [1,2,3,4] + &quot;&lt;br&gt;&quot; +</span><br><span class="line">typeof &#123;name:&#39;john&#39;, age:34&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们可以使用 typeof 来获取一个变量是否存在，如 if(typeof a!=”undefined”){}，而不要去使用 if(a) 因为如果 a 不存在（未声明）则会出错。 正因为 typeof 遇到 null,数组,对象时都会返回 object 类型，所以当我们要判断一个对象是否是数组时。 或者判断某个变量是否是某个对象的实例则要选择使用另一个关键语法 instanceof 。</p>
+<p>instanceof</p>
+<p>可通过 instanceof 操作符来判断对象的具体类型，语法格式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; objectName instanceof objectType</span><br></pre></td></tr></table></figure>
+<p>返回布尔值，如果是指定类型返回 true，否则返回 false： 例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">arr &#x3D; [1,2,3];</span><br><span class="line">if(arr instanceof Array)&#123;</span><br><span class="line"> document.write(&quot;arr 是一个数组&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line"> document.write(&quot;arr 不是一个数组&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/11/css-%E5%BC%B9%E6%80%A7%E7%9B%92%E5%AD%90/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            css-弹性盒子
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/10/js-%E7%94%A8%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">js-用法</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    常见的CSS知识点 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-常见的CSS知识点"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  常见的CSS知识点
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/%E5%B8%B8%E8%A7%81%E7%9A%84CSS%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
+  <time datetime="2019-07-03T07:02:07.000Z" itemprop="datePublished">2019-07-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="常见的-CSS-知识点"><a href="#常见的-CSS-知识点" class="headerlink" title="常见的 CSS 知识点"></a>常见的 CSS 知识点</h2><p>声明，这里也包含了部分 CSS 预处理器知识，愿各位不要纠结于此。</p>
+<h3 id="position-fixed-降级问题"><a href="#position-fixed-降级问题" class="headerlink" title="position:fixed 降级问题"></a>position:fixed 降级问题</h3><p>不知道曾经的你是不是遇到吸顶效果，就是使用 <code>position:fixed</code> 这个属性。其实如果其父元素中有使用 <code>transform</code>， <code>fixed</code> 的效果会降级为 <code>absolute</code>。 解决方案： 既然会降级为 <code>absolute</code> 效果，我们该怎么解决这个问题呢？我们就改考虑什么情况下 <code>fixed</code>和 <code>absolute</code> 的表现效果会是一样的。 即当使用 <code>fixed</code> 的直接父元素的高度和屏幕的高度相同时 <code>fixed</code> 和 <code>absolute</code> 的表现效果会是一样的。 如果这个直接父级内的元素存在滚动的情况，那就加上 <code>overflow-y:auto</code>。</p>
+<h3 id="合理使用变量"><a href="#合理使用变量" class="headerlink" title="合理使用变量"></a>合理使用变量</h3><p>一般设计稿中的某一类的文字（元素）都是用相同的字体大小、颜色、行高等样式属性，所以这些值我们不必每次都重复写，因为当 UI 更新设计方案，你需要改的地方就很多了。这些重复使用的值我们完全可以存放在变量里面。 Sass 和 Less 稍微有点区别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; sass</span><br><span class="line">$direction: left;</span><br><span class="line">&#x2F;&#x2F; less</span><br><span class="line">@direction: left;</span><br></pre></td></tr></table></figure>
+<p>当然 CSS 原生也是存在变量的，使用规则如下： 变量定义的语法是：–；// *为变量名称。 变量使用的语法是：var()；</p>
+<ol>
+<li>无论是变量的定义和使用只能在声明块 {} 里面</li>
+<li>CSS 变量字符限制为：[0-9]、[a-zA-Z]、_、-、中文和韩文等。<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line"><span class="attribute">--blue_color</span>: <span class="number">#3388ff</span>;</span><br><span class="line"><span class="attribute">--main_bgcolor</span>: <span class="number">#fafafa</span>;</span><br><span class="line"><span class="attribute">--font_size_12</span>: <span class="number">12px</span>;</span><br><span class="line"><span class="attribute">--font_size_14</span>: <span class="number">14px</span>;</span><br><span class="line"><span class="attribute">--color</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.div1</span>&#123;</span><br><span class="line"><span class="attribute">background-color</span>: <span class="built_in">var</span>(--main_bgcolor);</span><br><span class="line"><span class="attribute">font-size</span>: <span class="built_in">var</span>(--font_size_12);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-使用-Mixin-归类重复样式"><a href="#3-使用-Mixin-归类重复样式" class="headerlink" title="3. 使用 Mixin 归类重复样式"></a>3. 使用 Mixin 归类重复样式</h3></li>
+</ol>
+<p>和重复变量一样，重复的样式也可以归类。我觉得优秀的代码其中有一条肯定是代码的复用性强。 之前我们写 CSS 的时候，也会将一些重复使用的代码放在一个 class 中，这样的确达到了一定的复用性，不过最后的效果可能就是在一个元素里面放了很多 class 这样下一个接手得人难免会有点迷糊，而且这样会造成样式越来越难修改。 这个时候，mixin( 可以理解成 class 中的 class )就能发挥它的作用了。 这是一个描述性文字的样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.font-description</span> &#123;</span><br><span class="line">.font-des-style(24px,#fff,1.5em);</span><br><span class="line"><span class="selector-class">.line-camp</span>(2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// less</span><br><span class="line"><span class="comment">/* 多行显示 */</span></span><br><span class="line">.line-camp( @clamp:2 ) &#123;</span><br><span class="line"><span class="selector-tag">text-overflow</span>: <span class="selector-tag">-o-ellipsis-lastline</span>;</span><br><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br><span class="line"><span class="selector-tag">text-overflow</span>: <span class="selector-tag">ellipsis</span>;</span><br><span class="line"><span class="selector-tag">display</span>: <span class="selector-tag">-webkit-box</span>;</span><br><span class="line"><span class="selector-tag">-webkit-line-clamp</span>: <span class="keyword">@clamp</span>;</span><br><span class="line"><span class="selector-tag">-webkit-box-orient</span>: <span class="selector-tag">vertical</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.font-des-style</span>( <span class="keyword">@fontSize</span>, @color, @lineHeight, @<span class="attribute">textAlign:</span>left ) &#123;</span><br><span class="line"><span class="selector-tag">font-size</span>: <span class="keyword">@fontSize</span>;</span><br><span class="line"><span class="selector-tag">color</span>: <span class="keyword">@color</span>;</span><br><span class="line"><span class="selector-tag">line-height</span>: <span class="keyword">@lineHeight</span>;</span><br><span class="line"><span class="selector-tag">text-align</span>: <span class="keyword">@textAlign</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只是一个简单的例子，我们可以把可复用的样式放在 mixin 中，这样接手项目的人只需要熟悉你写的 mixin.less 就可以开始迭代需求了</p>
+<h3 id="1px-方案"><a href="#1px-方案" class="headerlink" title="1px 方案"></a>1px 方案</h3><p>做过移动端需求的前端肯定是避免不了处理 <code>1px</code> 细线问题，这个问题的原因就是 UI 对页面美观度的要求越来越高（不要和我说这是 retina 屏的问题）。 代码如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.min-device-pixel-ratio</span>(<span class="keyword">@scale2</span>, @scale3) &#123;</span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-device-pixel-ratio:</span> <span class="number">2</span>), (<span class="attribute">-webkit-min-device-pixel-ratio:</span> <span class="number">2</span>) &#123;</span><br><span class="line"><span class="selector-tag">transform</span>: <span class="keyword">@scale2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-device-pixel-ratio:</span> <span class="number">3</span>), (<span class="attribute">-webkit-min-device-pixel-ratio:</span> <span class="number">3</span>) &#123;</span><br><span class="line"><span class="selector-tag">transform</span>: <span class="keyword">@scale3</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">.border-1px(@color: #DDD, @radius: 2PX, @style: solid) &#123;</span><br><span class="line">&amp;<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line"><span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line"><span class="attribute">pointer-events</span>: none;</span><br><span class="line"><span class="attribute">display</span>: block;</span><br><span class="line"><span class="attribute">position</span>: absolute;</span><br><span class="line"><span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">transform-origin</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border</span>: <span class="number">1PX</span> @style @color;</span><br><span class="line"><span class="attribute">border-radius</span>: @radius;</span><br><span class="line"><span class="attribute">box-sizing</span>: border-box;</span><br><span class="line"><span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">@media screen and (min-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2) &#123;</span><br><span class="line"><span class="selector-tag">width</span>: 200%;</span><br><span class="line"><span class="selector-tag">height</span>: 200%;</span><br><span class="line"><span class="selector-tag">border-radius</span>: <span class="keyword">@radius</span> * <span class="number">2</span>;</span><br><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">scale</span>(<span class="selector-class">.5</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-device-pixel-ratio:</span> <span class="number">3</span>), (<span class="attribute">-webkit-min-device-pixel-ratio:</span> <span class="number">3</span>) &#123;</span><br><span class="line"><span class="selector-tag">width</span>: 300%;</span><br><span class="line"><span class="selector-tag">height</span>: 300%;</span><br><span class="line"><span class="selector-tag">border-radius</span>: <span class="keyword">@radius</span> * <span class="number">3</span>;</span><br><span class="line"><span class="selector-tag">transform</span>: <span class="selector-tag">scale</span>(<span class="selector-class">.33</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.border-top-1px(@color: #DDD, @style: solid) &#123;</span><br><span class="line">&amp;<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line"><span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line"><span class="attribute">position</span>: absolute;</span><br><span class="line"><span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line"><span class="attribute">border-top</span>: <span class="number">1Px</span> @style @color;</span><br><span class="line"><span class="attribute">transform-origin</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">.min-device-pixel-ratio(scaleY(.5), scaleY(.33));</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="内联首屏关键-CSS"><a href="#内联首屏关键-CSS" class="headerlink" title="内联首屏关键 CSS"></a>内联首屏关键 CSS</h3><p>性能优化中有一个重要的指标 —— 首次有效绘制（FMP），即指页面的首要内容（primary content）出现在屏幕上的时间。这一指标影响用户看到页面前所需等待的时间，而 内联首屏关键 CSS（即 Critical CSS，可以称之为首屏关键 CSS） 能给用户一个更好的心理预期。 我们知道内联 CSS 能够使浏览器开始页面渲染的时间提前，即在 HTML 下载完成之后就能渲染了。 既然是内联关键 CSS，也就说明我们只会将少部分的 CSS 代码直接写入 HTML 中。至于内联哪些 CSS 你可以使用 Critical。</p>
+<h3 id="文字两端对齐"><a href="#文字两端对齐" class="headerlink" title="文字两端对齐"></a>文字两端对齐</h3><p>需求中我们也经常遇到这样的需求，这里直接提供方案。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; html</span><br><span class="line">&lt;div&gt;姓名&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;手机号码&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;账号&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div&gt;密码&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; css</span><br><span class="line">div &#123;</span><br><span class="line">margin: 10px 0;</span><br><span class="line">width: 100px;</span><br><span class="line">border: 1px solid red;</span><br><span class="line">text-align: justify;</span><br><span class="line">text-align-last:justify;</span><br><span class="line">&#125;</span><br><span class="line">div:after&#123;</span><br><span class="line">content: &#39;&#39;;</span><br><span class="line">display: inline-block;</span><br><span class="line">width: 100%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="样式的顺序"><a href="#样式的顺序" class="headerlink" title="样式的顺序"></a>样式的顺序</h3><p>CSS 代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.red &#123;</span><br><span class="line">color: red;</span><br><span class="line">&#125;</span><br><span class="line">.blue &#123;</span><br><span class="line">color: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HTML 代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;red blue&quot;&gt;这是什么颜色&lt;&#x2F;div&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;blue red&quot;&gt;这是什么颜色&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>记得之前这是一道比较火的 CSS 考题，当时好像是有不少的人答错（30% 以上）</p>
+<h3 id="浏览器会从右到左解析-CSS-选择器"><a href="#浏览器会从右到左解析-CSS-选择器" class="headerlink" title="浏览器会从右到左解析 CSS 选择器"></a>浏览器会从右到左解析 CSS 选择器</h3><h3 id="浏览器会对上面的例子做如下的步骤处理："><a href="#浏览器会对上面的例子做如下的步骤处理：" class="headerlink" title="浏览器会对上面的例子做如下的步骤处理："></a>浏览器会对上面的例子做如下的步骤处理：</h3><ol>
+<li>首先找到页面所有的 <code>&lt;a&gt;</code> 元素</li>
+<li>然后向上找到被 <code>&lt;p&gt;</code> 元素包裹的 <code>&lt;a&gt;</code> 元素</li>
+<li>再向上查找到一直到 <code>.content_box</code> 的元素</li>
+</ol>
+<p>从上面的步骤我们可以看出，越靠右的选择器越具有唯一性，浏览器解析 CSS 属性的效率就越高。 所以一定换成使用具体的 <code>class</code> 编写 CSS 代码。</p>
+<h3 id="每个单词的首字母大写"><a href="#每个单词的首字母大写" class="headerlink" title="每个单词的首字母大写"></a>每个单词的首字母大写</h3><p>其实我第一次看到这个功能的时候就是使用 JS 去实现这个功能： 直到有一天看到 CSS 也能做这个功能的时候，我才反应过来明明一句 CSS 就能解决的问题，我却使用了更复杂的方案。  </p>
+<h4 id="text-transform-简单介绍"><a href="#text-transform-简单介绍" class="headerlink" title="text-transform 简单介绍"></a>text-transform 简单介绍</h4><p>这是 CSS2 中的属性，参数有 capitalize | uppercase | lowercase | none 参数介绍：</p>
+<ol>
+<li>none：默认。定义带有小写字母和大写字母的标准的文本。</li>
+<li>capitalize：文本中的每个单词以大写字母开头。</li>
+<li>uppercase：定义仅有大写字母。</li>
+<li>lowercase：定义无大写字母，仅有小写字母。</li>
+</ol>
+<p>从这个属性我们可以知道全部大写（小写）的需求这个属性也能轻易实现。</p>
+<h3 id="单选高亮"><a href="#单选高亮" class="headerlink" title="单选高亮"></a>单选高亮</h3><p>可能你看到“单选高亮”没反应过来，直接来张图片你就马上清楚了 <code>~选择器</code>：查找某个元素后面的所有兄弟元素 <code>+选择器</code>：查找某个元素后面紧邻的兄弟元素</p>
+<h3 id="多列等高问题"><a href="#多列等高问题" class="headerlink" title="多列等高问题"></a>多列等高问题</h3><p>有三种 CSS 的处理方案：</p>
+<ol>
+<li>每列设置一个很大的 padding，再设置一个很大的负的 margin</li>
+<li>使用 <code>display:table;</code></li>
+<li>使用 flex</li>
+</ol>
+<p>第一种有明显的缺陷：</p>
+<ol>
+<li><code>border-bottom</code> 看不到了</li>
+<li>设置的下方的两个圆角也不见了</li>
+</ol>
+<p>所以可以使用 <code>display:table;</code> 或者 <code>flex布局</code> 的方式来实现等高。 建议不要一味的抵触 table，有的场景还是可以使用的。</p>
+<h2 id="11-个有趣实用的-JS-特性"><a href="#11-个有趣实用的-JS-特性" class="headerlink" title="11 个有趣实用的 JS 特性"></a>11 个有趣实用的 JS 特性</h2><p>在日常开发中总是和各种 <code>API</code> 打交道，我们名为前端工程师实为 <code>API</code> 调用工程师。这里分享 11 个实用又有趣的 JS 特性，使用得当可以提高你应用的友好性。</p>
+<h3 id="监听屏幕旋转变化接口-orientationchange"><a href="#监听屏幕旋转变化接口-orientationchange" class="headerlink" title="监听屏幕旋转变化接口: orientationchange"></a>监听屏幕旋转变化接口: orientationchange</h3><p>定义： 这个 <code>API</code> 可以将你手机是否横屏的情况暴露给需要知道的人知道。 使用：</p>
+<p>orientation.angle 值</p>
+<p>屏幕方向</p>
+<p>0</p>
+<p>竖屏</p>
+<p>90</p>
+<p>向左横屏</p>
+<p>-90/270</p>
+<p>向右横屏</p>
+<p>180</p>
+<p>倒屏</p>
+<p>通过这个 <code>API</code> 我们在横屏和竖屏的时候可以添加一些动作或者是样式的改变。</p>
+<p>如果只是样式的改变也可以通过媒体查询来监听：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 竖屏 *&#x2F;</span><br><span class="line">@media screen and (orientation: portrait) &#123;</span><br><span class="line">&#x2F;&#x2F; some css code</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 横屏 *&#x2F;</span><br><span class="line">@media screen and (orientation: landscape) &#123;</span><br><span class="line">&#x2F;&#x2F; some css code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="电池状态：navigator-getBattery"><a href="#电池状态：navigator-getBattery" class="headerlink" title="电池状态：navigator.getBattery()"></a>电池状态：navigator.getBattery()</h3><p>定义： 这个 <code>API</code> 可以将你手机电池状态的情况暴露给需要知道的人知道。 这个 <code>api</code> 返回的是一个 <code>promise</code> 对象，会给出一个 <code>BatteryManager</code> 对象，对象中包含了以下信息：</p>
+<p>key</p>
+<p>描述</p>
+<p>备注</p>
+<p>charging</p>
+<p>是否在充电</p>
+<p>可读属性</p>
+<p>chargingTime</p>
+<p>若在充电，还需充电时间</p>
+<p>可读属性</p>
+<p>dischargingTime</p>
+<p>剩余电量</p>
+<p>可读属性</p>
+<p>level</p>
+<p>剩余电量百分数</p>
+<p>可读属性</p>
+<p>onchargingchange</p>
+<p>监听充电状态的改变</p>
+<p>可监听事件</p>
+<p>onchargingtimechange</p>
+<p>监听充电时间的改变</p>
+<p>可监听事件</p>
+<p>ondischargingtimechange</p>
+<p>监听电池可用时间的改变</p>
+<p>可监听事件</p>
+<p>onlevelchange</p>
+<p>监听剩余电量百分数的改变</p>
+<p>可监听事件</p>
+<p>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">getBatteryInfo: function()&#123;</span><br><span class="line">let self &#x3D; this;</span><br><span class="line">if(navigator.getBattery)&#123;</span><br><span class="line">navigator.getBattery().then(function(battery) &#123;</span><br><span class="line">&#x2F;&#x2F; 判断是否在充电</span><br><span class="line">self.batteryInfo &#x3D; battery.charging ? &#96;在充电 : 剩余 $&#123;battery.level * 100&#125;%&#96; : &#96;没充电 : 剩余 $&#123;battery.level * 100&#125;%&#96;;</span><br><span class="line">&#x2F;&#x2F; 电池充电状态改变事件</span><br><span class="line">battery.addEventListener(&#39;chargingchange&#39;, function()&#123;</span><br><span class="line">self.batteryInfo &#x3D; battery.charging ? &#96;在充电 : 剩余 $&#123;battery.level * 100&#125;%&#96; : &#96;没充电 : 剩余 $&#123;battery.level * 100&#125;%&#96;;</span><br><span class="line">&#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">self.batteryInfo &#x3D; &#39;不支持电池状态接口&#39;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="让你的手机震动-window-navigator-vibrate-200"><a href="#让你的手机震动-window-navigator-vibrate-200" class="headerlink" title="让你的手机震动: window.navigator.vibrate(200)"></a>让你的手机震动: window.navigator.vibrate(200)</h3><p>定义： 这个 <code>API</code> 可以让你的手机按你的想法震动。 使用： 震动效果会在很多游戏使用。比如欢乐斗地主中，地主打完王炸后手机都会有震动的效果，以此来表达地主嘚瑟的心情也很是合理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例代码如下：</span><br><span class="line">vibrateFun: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">if</span>( navigator.vibrate )&#123;</span><br><span class="line">navigator.vibrate([<span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>, <span class="number">500</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">self.vibrateInfo = <span class="string">"您的设备不支持震动"</span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!--</span><br><span class="line"><span class="comment">// 清除震动</span></span><br><span class="line">navigator.vibrate(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// 持续震动</span></span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">navigator.vibrate(<span class="number">200</span>);</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br><span class="line">--&gt;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h3 id="当前语言：navigator-language"><a href="#当前语言：navigator-language" class="headerlink" title="当前语言：navigator.language"></a>当前语言：navigator.language</h3><p>定义： 这个 <code>API</code> 可以告诉你当前应该使用什么语言。 如果你需要和我一样做多语言适配，这个 API 或许可以给你提供一个不错的思路。 使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">不同浏览器返回的值稍微有点差异。你可以通过以下封装好的方法来消除这种差异：</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getThisLang</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">const</span> langList = \[<span class="string">'cn'</span>,<span class="string">'hk'</span>,<span class="string">'tw'</span>,<span class="string">'en'</span>,<span class="string">'fr'</span>\];</span><br><span class="line"><span class="keyword">const</span> langListLen = langList.length;</span><br><span class="line"><span class="keyword">const</span> thisLang = (navigator.language || navigator.browserLanguage).toLowerCase();</span><br><span class="line"><span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; langListLen; i++ )&#123;</span><br><span class="line"><span class="keyword">let</span> lang = langList\[i\];</span><br><span class="line"><span class="keyword">if</span>(thisLang.includes(lang))&#123;</span><br><span class="line"><span class="keyword">return</span> lang</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="string">'en'</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不同的语言就对应不同的语言文案就好。</p>
+<h3 id="联网状态：navigator-onLine"><a href="#联网状态：navigator-onLine" class="headerlink" title="联网状态：navigator.onLine"></a>联网状态：navigator.onLine</h3><p>定义： 这个 <code>API</code> 可以告诉让你知道你的设备的网络状态是否连接着。 可以准确的告诉用户“您的网络无法连接，请检查”。这样用户是不是可以有更好的体验呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">代码如下：</span><br><span class="line">mounted()&#123;</span><br><span class="line"><span class="keyword">let</span> self = <span class="keyword">this</span>;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'online'</span>, self.updateOnlineStatus, <span class="literal">true</span>);</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'offline'</span>, self.updateOnlineStatus, <span class="literal">true</span>);</span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">updateOnlineStatus: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">self.onLineInfo = navigator.onLine ? <span class="string">"online"</span> : <span class="string">"offline"</span>;</span><br><span class="line">&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：<code>navigator.onLine</code> 只会在机器未连接到局域网或路由器时返回 <code>false</code>，其他情况下均返回 <code>true</code>。也就是说，机器连接上路由器后，即使这个路由器没联通网络， <code>navigator.onLine</code>仍然返回 <code>true</code>。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/07/%E6%AD%A3%E5%88%99%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            正则极简教程
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/06/vue-%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E6%8C%87%E5%8D%97/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vue-代码风格指南</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

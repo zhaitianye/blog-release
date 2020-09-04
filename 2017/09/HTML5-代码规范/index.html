@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    HTML5-代码规范 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-HTML5-代码规范"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  HTML5-代码规范
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/09/HTML5-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" class="article-date">
+  <time datetime="2017-09-16T03:59:17.000Z" itemprop="datePublished">2017-09-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTML/">HTML</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="HTML-代码约定"><a href="#HTML-代码约定" class="headerlink" title="HTML 代码约定"></a>HTML 代码约定</h2><p>很多 Web 开发人员对 HTML 的代码规范知之甚少。 在2000年至2010年，许多Web开发人员从 HTML 转换到 XHTML。 使用 XHTML 开发人员逐渐养成了比较好的 HTML 编写规范。 而针对于 HTML5 ，我们应该形成比较好的代码规范，以下提供了几种规范的建议。</p>
+<hr>
+<h2 id="使用正确的文档类型"><a href="#使用正确的文档类型" class="headerlink" title="使用正确的文档类型"></a>使用正确的文档类型</h2><p>文档类型声明位于HTML文档的第一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br></pre></td></tr></table></figure>
+<p>如果你想跟其他标签一样使用小写，可以使用以下代码：</p>
+<!doctype html>
+
+<hr>
+<h2 id="使用小写元素名"><a href="#使用小写元素名" class="headerlink" title="使用小写元素名"></a>使用小写元素名</h2><p>HTML5 元素名可以使用大写和小写字母。 推荐使用小写字母：</p>
+<ul>
+<li>混合了大小写的风格是非常糟糕的。</li>
+<li>开发人员通常使用小写 (类似 XHTML)。</li>
+<li>小写风格看起来更加清爽。</li>
+<li>小写字母容易编写。</li>
+</ul>
+<h3 id="不推荐"><a href="#不推荐" class="headerlink" title="不推荐:"></a>不推荐:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;SECTION&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;&#x2F;SECTION&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="非常糟糕"><a href="#非常糟糕" class="headerlink" title="非常糟糕:"></a>非常糟糕:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Section&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;&#x2F;SECTION&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="推荐"><a href="#推荐" class="headerlink" title="推荐:"></a>推荐:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;section&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;&#x2F;section&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="关闭所有-HTML-元素"><a href="#关闭所有-HTML-元素" class="headerlink" title="关闭所有 HTML 元素"></a>关闭所有 HTML 元素</h2><p>在 HTML5 中, 你不一定要关闭所有元素 (例如 <code>&lt;p&gt;</code> 元素)，但我们建议每个元素都要添加关闭标签。 不推荐:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;section&gt; &lt;p&gt;这是一个段落。 &lt;p&gt;这是一个段落。 &lt;&#x2F;section&gt;</span><br></pre></td></tr></table></figure>
+<p>推荐:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;section&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;&#x2F;section&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="关闭空的-HTML-元素"><a href="#关闭空的-HTML-元素" class="headerlink" title="关闭空的 HTML 元素"></a>关闭空的 HTML 元素</h2><p>在 HTML5 中, 空的 HTML 元素也不一定要关闭： 我们可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta charset&#x3D;&quot;utf-8&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta charset&#x3D;&quot;utf-8&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>在 XHTML 和 XML 中斜线 (/) 是必须的。 如果你期望 XML 软件使用你的页面，使用这种风格是非常好的。</p>
+<hr>
+<h2 id="使用小写属性名"><a href="#使用小写属性名" class="headerlink" title="使用小写属性名"></a>使用小写属性名</h2><p>HTML5 属性名允许使用大写和小写字母。 我们推荐使用小写字母属性名:</p>
+<ul>
+<li>同时使用大小写是非常不好的习惯。</li>
+<li>开发人员通常使用小写 (类似 XHTML)。</li>
+<li>小写风格看起来更加清爽。</li>
+<li>小写字母容易编写。</li>
+</ul>
+<p>不推荐：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div CLASS&#x3D;&quot;menu&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>推荐：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;menu&quot;&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="属性值"><a href="#属性值" class="headerlink" title="属性值"></a>属性值</h2><p>HTML5 属性值可以不用引号。 属性值我们推荐使用引号:</p>
+<ul>
+<li>如果属性值含有空格需要使用引号。</li>
+<li>混合风格不推荐的，建议统一风格。</li>
+<li>属性值使用引号易于阅读。</li>
+</ul>
+<p>以下实例属性值包含空格，没有使用引号，所以不能起作用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class&#x3D;table striped&gt;</span><br></pre></td></tr></table></figure>
+<p>以下使用了双引号，是正确的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;table class&#x3D;&quot;table striped&quot;&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="图片属性"><a href="#图片属性" class="headerlink" title="图片属性"></a>图片属性</h2><p>图片通常使用 <strong>alt</strong> 属性。 在图片不能显示时，它能替代图片显示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;html5.gif&quot; **alt&#x3D;****&quot;HTML5&quot;** style&#x3D;&quot;width:128px;height:128px&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>定义好图片的尺寸，在加载时可以预留指定空间，减少闪烁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;html5.gif&quot; alt&#x3D;&quot;HTML5&quot; **style&#x3D;****&quot;width:128px;height:128px**&quot;&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="空格和等号"><a href="#空格和等号" class="headerlink" title="空格和等号"></a>空格和等号</h2><p>等号前后可以使用空格。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel &#x3D; &quot;stylesheet&quot; href &#x3D; &quot;styles.css&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>但我们推荐少用空格:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;styles.css&quot;&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="避免一行代码过长"><a href="#避免一行代码过长" class="headerlink" title="避免一行代码过长"></a>避免一行代码过长</h2><p>使用 HTML 编辑器，左右滚动代码是不方便的。 每行代码尽量少于 80 个字符。</p>
+<hr>
+<h2 id="空行和缩进"><a href="#空行和缩进" class="headerlink" title="空行和缩进"></a>空行和缩进</h2><p>不要无缘无故添加空行。 为每个逻辑功能块添加空行，这样更易于阅读。 缩进使用两个空格，不建议使用 TAB。 比较短的代码间不要使用不必要的空行和缩进。</p>
+<h3 id="不必要的空行和缩进"><a href="#不必要的空行和缩进" class="headerlink" title="不必要的空行和缩进:"></a>不必要的空行和缩进:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt; &lt;h1&gt;菜鸟教程&lt;&#x2F;h1&gt; &lt;h2&gt;HTML&lt;&#x2F;h2&gt; &lt;p&gt; 菜鸟教程，学的不仅是技术，更是梦想。 菜鸟教程，学的不仅是技术，更是梦想。 菜鸟教程，学的不仅是技术，更是梦想, 菜鸟教程，学的不仅是技术，更是梦想。 &lt;&#x2F;p&gt; &lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="推荐-1"><a href="#推荐-1" class="headerlink" title="推荐:"></a>推荐:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt; &lt;h1&gt;菜鸟教程&lt;&#x2F;h1&gt; &lt;h2&gt;&lt;&#x2F;h2&gt; &lt;p&gt;菜鸟教程，学的不仅是技术，更是梦想。 菜鸟教程，学的不仅是技术，更是梦想。 菜鸟教程，学的不仅是技术，更是梦想。 菜鸟教程，学的不仅是技术，更是梦想。&lt;&#x2F;p&gt; &lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="表格实例"><a href="#表格实例" class="headerlink" title="表格实例:"></a>表格实例:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt; &lt;tr&gt; &lt;th&gt;Name&lt;&#x2F;th&gt; &lt;th&gt;Description&lt;&#x2F;th&gt; &lt;&#x2F;tr&gt; &lt;tr&gt; &lt;td&gt;A&lt;&#x2F;td&gt; &lt;td&gt;Description of A&lt;&#x2F;td&gt; &lt;&#x2F;tr&gt; &lt;tr&gt; &lt;td&gt;B&lt;&#x2F;td&gt; &lt;td&gt;Description of B&lt;&#x2F;td&gt; &lt;&#x2F;tr&gt; &lt;&#x2F;table&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="列表实例"><a href="#列表实例" class="headerlink" title="列表实例:"></a>列表实例:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ol&gt; &lt;li&gt;London&lt;&#x2F;li&gt; &lt;li&gt;Paris&lt;&#x2F;li&gt; &lt;li&gt;Tokyo&lt;&#x2F;li&gt; &lt;&#x2F;ol&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="省略-lt-html-gt-和-lt-body-gt"><a href="#省略-lt-html-gt-和-lt-body-gt" class="headerlink" title="省略 &lt;html&gt; 和 &lt;body&gt;?"></a>省略 <code>&lt;html&gt;</code> 和 <code>&lt;body&gt;</code>?</h2><p>在标准 HTML5 中， <code>&lt;html&gt;</code> 和 <code>&lt;body&gt;</code> 标签是可以省略的。 以下 HTML5 文档是正确的:</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例:"></a>实例:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt; &lt;head&gt; &lt;title&gt;页面标题&lt;&#x2F;title&gt; &lt;&#x2F;head&gt;&lt;h1&gt;这是一个标题&lt;&#x2F;h1&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>不推荐省略 <code>&lt;html&gt;</code> 和 <code>&lt;body&gt;</code> 标签。</strong> <code>&lt;html&gt;</code> 元素是文档的根元素，用于描述页面的语言：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;zh&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>声明语言是为了方便屏幕阅读器及搜索引擎。 省略 <code>&lt;html&gt;</code> 或 <code>&lt;body&gt;</code> 在 DOM 和 XML 软件中会崩溃。 省略 <code>&lt;body&gt;</code> 在旧版浏览器 (IE9)会发生错误。</p>
+<hr>
+<h2 id="省略-lt-head-gt"><a href="#省略-lt-head-gt" class="headerlink" title="省略 &lt;head&gt;?"></a>省略 <code>&lt;head&gt;</code>?</h2><p>在标准 HTML5 中， <code>&lt;head&gt;</code>标签是可以省略的。 默认情况下，浏览器会将 <code>&lt;body&gt;</code> 之前的内容添加到一个默认的 <code>&lt;head&gt;</code> 元素上。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;title&gt;页面标题&lt;&#x2F;title&gt;&lt;body&gt; &lt;h1&gt;这是一个标题&lt;&#x2F;h1&gt; &lt;p&gt;这是一个段落。&lt;&#x2F;p&gt; &lt;&#x2F;body&gt; &lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<p>现在省略 head 标签还不推荐使用。</p>
+<p>元数据</p>
+<p>HTML5 中 <code>&lt;title&gt;</code> 元素是必须的，标题名描述了页面的主题:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;title&gt;xxx&lt;&#x2F;title&gt;</span><br></pre></td></tr></table></figure>
+<p>标题和语言可以让搜索引擎很快了解你页面的主题:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt; &lt;html lang&#x3D;&quot;zh&quot;&gt; &lt;head&gt; &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt; &lt;title&gt;xxx&lt;&#x2F;title&gt; &lt;&#x2F;head&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="HTML-注释"><a href="#HTML-注释" class="headerlink" title="HTML 注释"></a>HTML 注释</h2><p>注释可以写在 <code>&lt;!-- 和 --&gt;</code> 中:</p>
+<p><code>&lt;!-- 这是注释 --&gt;</code></p>
+<p>比较长的评论可以在 <code>&lt;!-- 和 --&gt;</code> 中分行写：</p>
+<p><code>&lt;!-- 这是一个较长评论。 这是 一个较长评论。这是一个较长评论。 这是 一个较长评论 这是一个较长评论。 这是 一个较长评论。 --&gt;</code></p>
+<p>长评论第一个字符缩进两个空格，更易于阅读。</p>
+<hr>
+<h2 id="样式表"><a href="#样式表" class="headerlink" title="样式表"></a>样式表</h2><p>样式表使用简洁的语法格式 ( type 属性不是必须的):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;styles.css&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>短的规则可以写成一行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p.into &#123;font-family: Verdana; font-size: 16em;&#125;</span><br></pre></td></tr></table></figure>
+<p>长的规则可以写成多行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">body &#123; background-color: lightgrey; font-family: &quot;Arial Black&quot;, Helvetica, sans-serif; font-size: 16em; color: black; &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将左花括号与选择器放在同一行。</li>
+<li>左花括号与选择器间添加一个空格。</li>
+<li>使用两个空格来缩进。</li>
+<li>冒号与属性值之间添加一个空格。</li>
+<li>逗号和符号之后使用一个空格。</li>
+<li>每个属性与值结尾都要使用分号。</li>
+<li>只有属性值包含空格时才使用引号。</li>
+<li>右花括号放在新的一行。</li>
+<li>每行最多 80 个字符。</li>
+</ul>
+<hr>
+<h2 id="在-HTML-中载入-JavaScript"><a href="#在-HTML-中载入-JavaScript" class="headerlink" title="在 HTML 中载入 JavaScript"></a>在 HTML 中载入 JavaScript</h2><p>使用简洁的语法来载入外部的脚本文件 ( type 属性不是必须的 ):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src&#x3D;&quot;myscript.js&quot;&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="使用-JavaScript-访问-HTML-元素"><a href="#使用-JavaScript-访问-HTML-元素" class="headerlink" title="使用 JavaScript 访问 HTML 元素"></a>使用 JavaScript 访问 HTML 元素</h2><p>一个糟糕的 HTML 格式可能会导致 JavaScript 执行错误。 以下两个 JavaScript 语句会输出不同结果:</p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var obj &#x3D; getElementById(&quot;Demo&quot;) var obj &#x3D; getElementById(&quot;demo&quot;)</span><br></pre></td></tr></table></figure>
+<p>HTML 中 JavaScript 尽量使用相同的命名规则。</p>
+<hr>
+<h2 id="使用小写文件名"><a href="#使用小写文件名" class="headerlink" title="使用小写文件名"></a>使用小写文件名</h2><p>大多 Web 服务器 (Apache, Unix) 对大小写敏感： london.jpg 不能通过 London.jpg 访问。 其他 Web 服务器 (Microsoft, IIS) 对大小写不敏感： london.jpg 可以通过 London.jpg 或 london.jpg 访问。 你必须保持统一的风格，我们建议统一使用小写的文件名。</p>
+<hr>
+<h2 id="文件扩展名"><a href="#文件扩展名" class="headerlink" title="文件扩展名"></a>文件扩展名</h2><p>HTML 文件后缀可以是 <strong>.html</strong> (或 <strong>.htm</strong>)。 CSS 文件后缀是 <strong>.css</strong> 。 JavaScript 文件后缀是 <strong>.js</strong> 。</p>
+<hr>
+<h2 id="htm-和-html-的区别"><a href="#htm-和-html-的区别" class="headerlink" title=".htm 和 .html 的区别"></a>.htm 和 .html 的区别</h2><p>.htm 和 .html 的扩展名文件本质上是没有区别的。浏览器和 Web 服务器都会把它们当作 HTML 文件来处理。 区别在于： .htm 应用在早期 DOS 系统，系统现在或者只能有三个字符。 在 Unix 系统中后缀没有特别限制，一般用 .html。</p>
+<h2 id="技术上区别"><a href="#技术上区别" class="headerlink" title="技术上区别"></a>技术上区别</h2><p>如果一个 URL 没有指定文件名, 服务器会返回默认的文件名。通常默认文件名为 index.html, index.htm, default.html, 和 default.htm。 如果服务器只配置了 “index.html” 作为默认文件，你必须将文件命名为 “index.html”, 而不是 “index.htm”。 但是，通常服务器可以设置多个默认文件，你可以根据需要设置默认文件名。 不管怎样，HTML 完整的后缀是 “.html”。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/09/HTML5-%E6%8B%96%E6%94%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            HTML5-拖放
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/09/Cropper-%E8%A3%81%E5%89%AA%E4%B8%8A%E4%BC%A0%E5%A4%B4%E5%83%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Cropper-裁剪上传头像</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

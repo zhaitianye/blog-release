@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c++-实现双向链表 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c++-实现双向链表"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c++-实现双向链表
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/12/c++-%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/" class="article-date">
+  <time datetime="2015-12-27T05:22:24.000Z" itemprop="datePublished">2015-12-27</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">909</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>双向链表相比较于单向链表要删除节点的时候不需要一个一个遍历节点来找到它的前驱节点，它的节点里自带前驱节点。 Slist.h </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1 #<span class="meta-keyword">pragma</span> once typedef int DataType; struct ListNode &#123; DataType _data; ListNode* _next;<span class="comment">//存放下一个节点的地址 ListNode* _prev;</span></span></span><br><span class="line"><span class="comment">//存放上一个节点的地址 </span></span><br><span class="line">ListNode(<span class="keyword">const</span> DataType x) :_data(x) , _next(<span class="literal">NULL</span>) , _prev(<span class="literal">NULL</span>) &#123;&#125; &#125;; <span class="class"><span class="keyword">class</span> <span class="title">List</span> &#123;</span> <span class="keyword">typedef</span> ListNode Node; <span class="keyword">public</span>: List()<span class="comment">//构造 </span></span><br><span class="line">:_head(<span class="literal">NULL</span>) , _tail(<span class="literal">NULL</span>) &#123;&#125; ~List()<span class="comment">//析构 </span></span><br><span class="line">&#123; <span class="built_in">clear</span>(); &#125; List(<span class="keyword">const</span> List&amp;L)<span class="comment">//拷贝构造 </span></span><br><span class="line">:_head(<span class="literal">NULL</span>) , _tail(<span class="literal">NULL</span>) &#123; Node* cur = L._head; <span class="keyword">while</span> (cur) &#123; PushBack(cur-&gt;_data); cur = cur-&gt;_next; &#125; &#125; <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(List L)</span> </span>&#123; swap(_head, L._head); swap(_tail, L._tail); &#125; List&amp; <span class="keyword">operator</span>=(List L)<span class="comment">//赋值运算符重载 </span></span><br><span class="line">&#123; Swap(L); <span class="keyword">return</span> *<span class="keyword">this</span>; &#125; <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; Node* cur = _head; <span class="keyword">while</span> (cur) &#123; Node* tmp = cur; cur = cur-&gt;_next; <span class="keyword">delete</span> tmp; &#125; _head = _tail = <span class="literal">NULL</span>; &#125; <span class="function"><span class="keyword">void</span> <span class="title">PushBack</span><span class="params">(DataType x)</span><span class="comment">//尾插 </span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">if</span> (_head == <span class="literal">NULL</span>) &#123; _head = _tail = <span class="keyword">new</span> Node(x); &#125; <span class="keyword">else</span> &#123; Node* tmp = <span class="keyword">new</span> Node(x); _tail-&gt;_next = tmp; tmp-&gt;_prev = _tail; _tail = _tail-&gt;_next; &#125; &#125; <span class="function"><span class="keyword">void</span> <span class="title">PushFront</span><span class="params">(DataType x)</span><span class="comment">//头插 </span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">if</span> (_head == <span class="literal">NULL</span>) &#123; _head = _tail = <span class="keyword">new</span> Node(x);<span class="comment">//无节点时 </span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123; Node* tmp = <span class="keyword">new</span> Node(x); <span class="comment">//有节点 </span></span><br><span class="line">tmp-&gt;_next = _head; _head-&gt;_prev = tmp; _head = tmp; &#125; &#125; <span class="function"><span class="keyword">void</span> <span class="title">PopBack</span><span class="params">()</span><span class="comment">//尾删 </span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">if</span> (_head == <span class="literal">NULL</span>)<span class="comment">//无节点时 </span></span><br><span class="line">&#123; <span class="keyword">return</span>; &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_head-&gt;_next == <span class="literal">NULL</span>)<span class="comment">//一个节点 </span></span><br><span class="line">&#123; <span class="keyword">delete</span> _head; _head = _tail = <span class="literal">NULL</span>; &#125; <span class="keyword">else</span> <span class="comment">//多个节点 </span></span><br><span class="line">&#123; Node* tmp = _tail-&gt;_prev; <span class="keyword">delete</span> _tail; _tail = tmp; _tail-&gt;_next=<span class="literal">NULL</span>; &#125; &#125; <span class="function"><span class="keyword">void</span> <span class="title">PopFront</span><span class="params">()</span><span class="comment">//头删 </span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">if</span> (_head == <span class="literal">NULL</span>) &#123; <span class="keyword">return</span>; &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_head-&gt;_next == <span class="literal">NULL</span>) &#123; _head = _tail = <span class="literal">NULL</span>; &#125; <span class="keyword">else</span> &#123; Node* tmp = _head-&gt;_next; <span class="keyword">delete</span> _head; _head = tmp; tmp-&gt;_prev = <span class="literal">NULL</span>; &#125; &#125; <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> <span class="comment">//打印 </span></span></span><br><span class="line"><span class="function"></span>&#123; Node* cur = _head; <span class="keyword">while</span> (cur) &#123; <span class="built_in">cout</span> &lt;&lt; cur-&gt;_data &lt;&lt; “ “; cur = cur-&gt;_next; &#125; <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>; &#125; <span class="function">Node* <span class="title">Find</span><span class="params">(DataType x)</span> <span class="comment">//查找 </span></span></span><br><span class="line"><span class="function"></span>&#123; Node* cur = _head; <span class="keyword">while</span> (cur) &#123; <span class="keyword">if</span> (cur-&gt;_data == x) &#123; <span class="keyword">return</span> cur; &#125; cur = cur-&gt;_next; &#125; <span class="keyword">return</span> <span class="literal">NULL</span>; &#125; <span class="function"><span class="keyword">void</span> <span class="title">Insert</span><span class="params">(Node* pos, DataType x)</span><span class="comment">//在节点前插入 </span></span></span><br><span class="line"><span class="function"></span>&#123; assert(pos); <span class="keyword">if</span> (pos == _head) &#123; PushFront(x); <span class="comment">//头结点前插入 </span></span><br><span class="line"><span class="keyword">return</span>; &#125; Node* tmp = <span class="keyword">new</span> Node(x); Node* prev = pos-&gt;_prev; Node* next = pos; prev-&gt;_next = tmp; tmp-&gt;_prev = prev; tmp-&gt;_next=next; next-&gt;_prev=tmp; </span><br><span class="line"><span class="comment">/* if (pos == _head) &#123; PushFront(x); return; &#125; Node* tmp = new Node(x); pos-&gt;_prev-&gt;_next = tmp; tmp-&gt;_prev = pos-&gt;_prev; tmp-&gt;_next = pos; pos-&gt;_prev = tmp;/ &#125; void Reverse() //链表的逆置 &#123; /*Node\ begin = _head; Node* end = _tail; while (begin != end&amp;&amp;begin-&gt;_prev != end) &#123; swap(begin-&gt;_data, end-&gt;_data); begin = begin-&gt;_next; end = end-&gt;_prev; &#125;/ Node cur = _head; swap(_head, _tail); while (cur) &#123; swap(cur-&gt;_next, cur-&gt;_prev); cur = cur-&gt;_prev; &#125; &#125; void Erase(Node* pos) //删除节点 &#123; assert(pos); if (pos == _head)//删除头结点 &#123; PopFront(); &#125; else if (pos == _tail)//删除尾节点 &#123; PopBack(); &#125; else &#123; Node* prev = pos-&gt;_prev; Node* next = pos-&gt;_next; prev-&gt;_next = next; next-&gt;_prev = prev; &#125; &#125; private: Node* _head;//头结点 Node* _tail; //尾节点 &#125;; //测试尾插以及尾删 void test1() &#123; List l1; l1.PushBack(1); l1.PushBack(2); l1.PushBack(3); l1.PushBack(4); l1.PushBack(5); l1.Print(); l1.PopBack(); l1.PopBack(); l1.PopBack(); l1.PopBack(); l1.PopBack(); l1.PopBack(); l1.Print(); &#125; //测试头插以及头删 void test2() &#123; List l1; l1.PushFront(1); l1.PushFront(2); l1.PushFront(3); l1.PushFront(4); l1.PushFront(5); l1.Print(); l1.PopFront(); l1.PopFront(); l1.PopFront(); l1.PopFront(); l1.PopFront(); l1.PopFront(); l1.Print(); &#125; //测试查找以及在节点前插入 void test3() &#123; List l1; l1.PushBack(1); l1.PushBack(2); l1.PushBack(3); l1.PushBack(4); l1.PushBack(5); ListNode* ret = l1.Find(1); /*if (ret == NULL) &#123; cout &lt;&lt; “找不到” &lt;&lt; endl; &#125; else &#123; cout &lt;&lt; ret-&gt;_data &lt;&lt; endl; &#125;*/</span> </span><br><span class="line"></span><br><span class="line">l1.Insert(ret, <span class="number">0</span>); l1.Insert(ret, <span class="number">8</span>); l1.Print(); &#125; <span class="comment">//删除节点以及链表逆置 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123; List l1; l1.PushBack(<span class="number">0</span>); l1.PushBack(<span class="number">1</span>); l1.PushBack(<span class="number">2</span>); l1.PushBack(<span class="number">3</span>); l1.PushBack(<span class="number">4</span>); l1.PushBack(<span class="number">5</span>); l1.Print(); ListNode* ret = l1.Find(<span class="number">0</span>); l1.Erase(ret); l1.Print(); l1.Reverse(); l1.Print(); &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1 #<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt; #include&lt;assert.h&gt; using namespace std; #include”Slist.h” int main() &#123; //test1(); //test2(); //test3(); test4(); return 0; &#125;</span></span></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/12/c++-%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c++-编程模型
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/12/c++-%E7%BC%93%E5%86%B2%E5%8C%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c++-缓冲区</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

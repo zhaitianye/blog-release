@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Jquery-表单校验 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Jquery-表单校验"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Jquery-表单校验
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/03/Jquery-%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C/" class="article-date">
+  <time datetime="2017-02-28T16:36:37.000Z" itemprop="datePublished">2017-03-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Jquery/">Jquery</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">5.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">23 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="jQuery-Validate"><a href="#jQuery-Validate" class="headerlink" title="jQuery Validate"></a>jQuery Validate</h3><p>jQuery Validate 插件为表单提供了强大的验证功能，让客户端表单验证变得更简单，同时提供了大量的定制选项，满足应用程序各种需求。该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，同时提供了一个用来编写用户自定义方法的 API。所有的捆绑方法默认使用英语作为错误信息，且已翻译成其他 37 种语言。</p>
+<h3 id="默认校验规则"><a href="#默认校验规则" class="headerlink" title="默认校验规则"></a>默认校验规则</h3><p>序号</p>
+<p>规则</p>
+<p>描述</p>
+<p>required:true</p>
+<p>必须输入的字段。</p>
+<p>remote:”check.php”</p>
+<p>使用 ajax 方法调用 check.php 验证输入值。</p>
+<p>email:true</p>
+<p>必须输入正确格式的电子邮件。</p>
+<p>url:true</p>
+<p>必须输入正确格式的网址。</p>
+<p>date:true</p>
+<p>必须输入正确格式的日期。日期校验 ie6 出错，慎用。</p>
+<p>dateISO:true</p>
+<p>必须输入正确格式的日期（ISO），例如：2009-06-23，1998/01/22。只验证格式，不验证有效性。</p>
+<p>number:true</p>
+<p>必须输入合法的数字（负数，小数）。</p>
+<p>digits:true</p>
+<p>必须输入整数。</p>
+<p>creditcard:</p>
+<p>必须输入合法的信用卡号。</p>
+<p>equalTo:”#field”</p>
+<p>输入值必须和 #field 相同。</p>
+<p>accept:</p>
+<p>输入拥有合法后缀名的字符串（上传文件的后缀）。</p>
+<p>maxlength:5</p>
+<p>输入长度最多是 5 的字符串（汉字算一个字符）。</p>
+<p>minlength:10</p>
+<p>输入长度最小是 10 的字符串（汉字算一个字符）。</p>
+<p>rangelength:[5,10]</p>
+<p>输入长度必须介于 5 和 10 之间的字符串（汉字算一个字符）。</p>
+<p>range:[5,10]</p>
+<p>输入值必须介于 5 和 10 之间。</p>
+<p>max:5</p>
+<p>输入值不能大于 5。</p>
+<p>min:10</p>
+<p>输入值不能小于 10。</p>
+<h3 id="默认提示"><a href="#默认提示" class="headerlink" title="默认提示"></a>默认提示</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">messages: &#123;</span><br><span class="line">  required: <span class="string">"This field is required."</span>,</span><br><span class="line">  remote: <span class="string">"Please fix this field."</span>,</span><br><span class="line">  email: <span class="string">"Please enter a valid email address."</span>,</span><br><span class="line">  url: <span class="string">"Please enter a valid URL."</span>,</span><br><span class="line">  date: <span class="string">"Please enter a valid date."</span>,</span><br><span class="line">  dateISO: <span class="string">"Please enter a valid date ( ISO )."</span>,</span><br><span class="line">  number: <span class="string">"Please enter a valid number."</span>,</span><br><span class="line">  digits: <span class="string">"Please enter only digits."</span>,</span><br><span class="line">  creditcard: <span class="string">"Please enter a valid credit card number."</span>,</span><br><span class="line">  equalTo: <span class="string">"Please enter the same value again."</span>,</span><br><span class="line">  maxlength: $.validator.format(<span class="string">"Please enter no more than &#123;0&#125; characters."</span>),</span><br><span class="line">  minlength: $.validator.format(<span class="string">"Please enter at least &#123;0&#125; characters."</span>),</span><br><span class="line">  rangelength: $.validator.format(<span class="string">"Please enter a value between &#123;0&#125; and &#123;1&#125; characters long."</span>),</span><br><span class="line">  range: $.validator.format(<span class="string">"Please enter a value between &#123;0&#125; and &#123;1&#125;."</span>),</span><br><span class="line">  max: $.validator.format(<span class="string">"Please enter a value less than or equal to &#123;0&#125;."</span>),</span><br><span class="line">  min: $.validator.format(<span class="string">"Please enter a value greater than or equal to &#123;0&#125;."</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>jQuery Validate提供了中文信息提示包，位于下载包的 dist/localization/messages_zh.js，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">factory</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) &#123; define(\[<span class="string">"jquery"</span>, <span class="string">"../jquery.validate"</span>\], factory); &#125; <span class="keyword">else</span> &#123; factory(jQuery); &#125;</span><br><span class="line">  &#125;(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>) </span>&#123;</span><br><span class="line">    /\*\ * Translated</span><br><span class="line">    <span class="keyword">default</span> messages</span><br><span class="line">    <span class="keyword">for</span> the jQuery validation plugin.\*Locale: ZH(Chinese, 中文(Zhōngwén), 汉语, 漢語) *</span><br><span class="line">      / $.extend($.validator.messages, &#123; <span class="attr">required</span>: <span class="string">"这是必填字段"</span>, <span class="attr">remote</span>: <span class="string">"请修正此字段"</span>, <span class="attr">email</span>: <span class="string">"请输入有效的电子邮件地址"</span>, <span class="attr">url</span>: <span class="string">"请输入有效的网址"</span>, <span class="attr">date</span>: <span class="string">"请输入有效的日期"</span>, <span class="attr">dateISO</span>: <span class="string">"请输入有效的日期 (YYYY-MM-DD)"</span>, <span class="attr">number</span>: <span class="string">"请输入有效的数字"</span>, <span class="attr">digits</span>: <span class="string">"只能输入数字"</span>, <span class="attr">creditcard</span>: <span class="string">"请输入有效的信用卡号码"</span>, <span class="attr">equalTo</span>: <span class="string">"你的输入不相同"</span>, <span class="attr">extension</span>: <span class="string">"请输入有效的后缀"</span>, <span class="attr">maxlength</span>: $.validator.format(<span class="string">"最多可以输入 &#123;0&#125; 个字符"</span>), <span class="attr">minlength</span>: $.validator.format(<span class="string">"最少要输入 &#123;0&#125; 个字符"</span>), <span class="attr">rangelength</span>: $.validator.format(<span class="string">"请输入长度在 &#123;0&#125; 到 &#123;1&#125; 之间的字符串"</span>), <span class="attr">range</span>: $.validator.format(<span class="string">"请输入范围在 &#123;0&#125; 到 &#123;1&#125; 之间的数值"</span>), <span class="attr">max</span>: $.validator.format(<span class="string">"请输入不大于 &#123;0&#125; 的数值"</span>), <span class="attr">min</span>: $.validator.format(<span class="string">"请输入不小于 &#123;0&#125; 的数值"</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>你可以将该本地化信息文件 dist/localization/messages_zh.js 引入到页面：</p>
+<p><code>&lt;script src=../jquery-validation-1.14.0/dist/localization/messages_zh.js&quot;&gt;&lt;/script&gt;</code></p>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h4 id="1、将校验规则写到控件中"><a href="#1、将校验规则写到控件中" class="headerlink" title="1、将校验规则写到控件中"></a>1、将校验规则写到控件中</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../jquery.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../jquery.validate.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../messages_zh.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"> $.validator.setDefaults(&#123; <span class="attr">submitHandler</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; alert(<span class="string">"提交事件!"</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="javascript">&#125;); $().ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; $(<span class="string">"#commentForm"</span>).validate();</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"cmxform"</span> <span class="attr">id</span>=<span class="string">"commentForm"</span> <span class="attr">method</span>=<span class="string">"get"</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">legend</span>&gt;</span>输入您的名字，邮箱，URL，备注。<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"cname"</span>&gt;</span>Name (必需, 最小两个字母)<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"cname"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">minlength</span>=<span class="string">"2"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"cemail"</span>&gt;</span>E-Mail (必需)<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"cemail"</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"curl"</span>&gt;</span>URL (可选)<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"curl"</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">name</span>=<span class="string">"url"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"ccomment"</span>&gt;</span>备注 (必需)<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">"ccomment"</span> <span class="attr">name</span>=<span class="string">"comment"</span> <span class="attr">required</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"submit"</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Submit"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、将校验规则写到-js-代码中"><a href="#2、将校验规则写到-js-代码中" class="headerlink" title="2、将校验规则写到 js 代码中"></a>2、将校验规则写到 js 代码中</h4><p>messages 处，如果某个控件没有 message，将调用默认的信息</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"cmxform"</span> <span class="attr">id</span>=<span class="string">"signupForm"</span> <span class="attr">method</span>=<span class="string">"get"</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">legend</span>&gt;</span>验证完整的表单<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"firstname"</span>&gt;</span>名字<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"firstname"</span> <span class="attr">name</span>=<span class="string">"firstname"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"lastname"</span>&gt;</span>姓氏<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"lastname"</span> <span class="attr">name</span>=<span class="string">"lastname"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"username"</span>&gt;</span>用户名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"password"</span>&gt;</span>密码<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"confirm_password"</span>&gt;</span>验证密码<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"confirm_password"</span> <span class="attr">name</span>=<span class="string">"confirm_password"</span> <span class="attr">type</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"email"</span>&gt;</span>Email<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">type</span>=<span class="string">"email"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"agree"</span>&gt;</span>请同意我们的声明<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"agree"</span> <span class="attr">name</span>=<span class="string">"agree"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"newsletter"</span>&gt;</span>我乐意接收新信息<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"newsletter"</span> <span class="attr">name</span>=<span class="string">"newsletter"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">fieldset</span> <span class="attr">id</span>=<span class="string">"newsletter_topics"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">legend</span>&gt;</span>主题 (至少选择两个) \- 注意：如果没有勾选“我乐意接收新信息”以下选项会隐藏，但我们这里作为演示让它可见<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"topic_marketflash"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"topic_marketflash"</span> <span class="attr">value</span>=<span class="string">"marketflash"</span> <span class="attr">name</span>=<span class="string">"topic"</span>&gt;</span>Marketflash <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"topic_fuzz"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"topic_fuzz"</span> <span class="attr">value</span>=<span class="string">"fuzz"</span> <span class="attr">name</span>=<span class="string">"topic"</span>&gt;</span>Latest fuzz <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"topic_digester"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"topic_digester"</span> <span class="attr">value</span>=<span class="string">"digester"</span> <span class="attr">name</span>=<span class="string">"topic"</span>&gt;</span>Mailing list digester <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"topic"</span> <span class="attr">class</span>=<span class="string">"error"</span>&gt;</span>Please select at least two topics you'd like to receive.<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"submit"</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>required: true</strong> 值是必须的。 <strong>required: “#aa:checked”</strong> 表达式的值为真，则需要验证。 <strong>required: function(){}</strong> 返回为真，表示需要验证。 后边两种常用于，表单中需要同时填或不填的元素。</p>
+<h3 id="常用方法及注意问题"><a href="#常用方法及注意问题" class="headerlink" title="常用方法及注意问题"></a>常用方法及注意问题</h3><h4 id="1、用其他方式替代默认的-SUBMIT"><a href="#1、用其他方式替代默认的-SUBMIT" class="headerlink" title="1、用其他方式替代默认的 SUBMIT"></a>1、用其他方式替代默认的 SUBMIT</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$().ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; $(<span class="string">"#signupForm"</span>).validate(&#123; <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params">form</span>)</span>&#123; alert(<span class="string">"提交事件!"</span>); form.submit();</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>使用 ajax 方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">submitHandler</span>: <span class="function"><span class="keyword">function</span>(<span class="params">form</span>) </span></span><br><span class="line"><span class="function">  </span>&#123; $(form).ajaxSubmit();     </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>可以设置 validate 的默认值，写法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$.validator.setDefaults(&#123; <span class="attr">submitHandler</span>: <span class="function"><span class="keyword">function</span>(<span class="params">form</span>) </span>&#123; alert(<span class="string">"提交事件!"</span>);form.submit(); &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果想提交表单, 需要使用 form.submit()，而不要使用 $(form).submit()。</p>
+<h4 id="2、debug，只验证不提交表单"><a href="#2、debug，只验证不提交表单" class="headerlink" title="2、debug，只验证不提交表单"></a>2、debug，只验证不提交表单</h4><p>如果这个参数为true，那么表单不会提交，只进行检查，调试时十分方便。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$().ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; $(<span class="string">"#signupForm"</span>).validate(&#123; <span class="attr">debug</span>:<span class="literal">true</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果一个页面中有多个表单都想设置成为 debug，则使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$.validator.setDefaults(&#123; <span class="attr">debug</span>: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="3、ignore：忽略某些元素不验证"><a href="#3、ignore：忽略某些元素不验证" class="headerlink" title="3、ignore：忽略某些元素不验证"></a>3、ignore：忽略某些元素不验证</h4><p>ignore: “.ignore”</p>
+<h4 id="4、更改错误信息显示的位置"><a href="#4、更改错误信息显示的位置" class="headerlink" title="4、更改错误信息显示的位置"></a>4、更改错误信息显示的位置</h4><p>errorPlacement：Callback</p>
+<p>指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。</p>
+<p>errorPlacement: function(error, element) { error.appendTo(element.parent());<br>}</p>
+<p><strong>实例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;将错误信息放在 label 元素后并使用 span 元素包裹它&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;form method="get" class="cmxform" id="form1" action=""&gt;</span></span><br><span class="line"><span class="regexp">  &lt;fieldset&gt;</span></span><br><span class="line"><span class="regexp">    &lt;legend&gt;Login Form&lt;/</span>legend&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      &lt;label <span class="keyword">for</span>=<span class="string">"user"</span>&gt;Username&lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">      &lt;input id="user" name="user" required minlength="3"&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      &lt;label <span class="keyword">for</span>=<span class="string">"password"</span>&gt;Password&lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">      &lt;input id="password" type="password" maxlength="12" name="password" required minlength="5"&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>p&gt;</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">      &lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"submit"</span> type=<span class="string">"submit"</span> value=<span class="string">"Login"</span>&gt;</span><br><span class="line">    &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>fieldset&gt;</span><br><span class="line">&lt;<span class="regexp">/form&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码的作用是：一般情况下把错误信息显示在 <td class="status"></td> 中，如果是 radio 则显示在 <td></td> 中，如果是 checkbox 则显示在内容的后面。</p>
+<p>参数</p>
+<p>类型</p>
+<p>描述</p>
+<p>默认值</p>
+<p>errorClass</p>
+<p>String</p>
+<p>指定错误提示的 css 类名，可以自定义错误提示的样式。</p>
+<p>“error”</p>
+<p>errorElement</p>
+<p>String</p>
+<p>用什么标签标记错误，默认是 label，可以改成 em。</p>
+<p>“label”</p>
+<p>errorContainer</p>
+<p>Selector</p>
+<p>显示或者隐藏验证信息，可以自动实现有错误信息出现时把容器属性变为显示，无错误时隐藏，用处不大。 errorContainer: “#messageBox1, #messageBox2”</p>
+<p>errorLabelContainer</p>
+<p>Selector</p>
+<p>把错误信息统一放在一个容器里面。</p>
+<p>wrapper</p>
+<p>String</p>
+<p>用什么标签再把上边的 errorELement 包起来。</p>
+<p>一般这三个属性同时使用，实现在一个容器内显示所有错误提示的功能，并且没有信息时自动隐藏。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">errorContainer: &quot;div.error&quot;, errorLabelContainer: $(&quot;#signupForm div.error&quot;), wrapper: &quot;li&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="5、更改错误信息显示的样式"><a href="#5、更改错误信息显示的样式" class="headerlink" title="5、更改错误信息显示的样式"></a>5、更改错误信息显示的样式</h4><p>设置错误提示的样式，可以增加图标显示，在该系统中已经建立了一个 validation.css，专门用于维护校验文件的样式。</p>
+<h4 id="6、每个字段验证通过执行函数"><a href="#6、每个字段验证通过执行函数" class="headerlink" title="6、每个字段验证通过执行函数"></a>6、每个字段验证通过执行函数</h4><p>success：String,Callback</p>
+<p>要验证的元素通过验证后的动作，如果跟一个字符串，会当作一个 css 类，也可跟一个函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">success: <span class="function"><span class="keyword">function</span>(<span class="params">label</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// set &amp;nbsp; as text for IE label.html("&amp;nbsp;").addClass("checked");</span></span><br><span class="line">    <span class="comment">//label.addClass("valid").text("Ok!")</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加 “valid” 到验证元素，在 CSS 中定义的样式 <style>label.valid {}</style>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">success: <span class="string">"valid"</span></span><br></pre></td></tr></table></figure>
+<h4 id="7、验证的触发方式修改"><a href="#7、验证的触发方式修改" class="headerlink" title="7、验证的触发方式修改"></a>7、验证的触发方式修改</h4><p>下面的虽然是 boolean 型的，但建议除非要改为 false，否则别乱添加。</p>
+<p>触发方式</p>
+<p>类型</p>
+<p>描述</p>
+<p>默认值</p>
+<p>onsubmit</p>
+<p>Boolean</p>
+<p>提交时验证。设置为 false 就用其他方法去验证。</p>
+<p>true</p>
+<p>onfocusout</p>
+<p>Boolean</p>
+<p>失去焦点时验证（不包括复选框/单选按钮）。</p>
+<p>true</p>
+<p>onkeyup</p>
+<p>Boolean</p>
+<p>在 keyup 时验证。</p>
+<p>true</p>
+<p>onclick</p>
+<p>Boolean</p>
+<p>在点击复选框和单选按钮时验证。</p>
+<p>true</p>
+<p>focusInvalid</p>
+<p>Boolean</p>
+<p>提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点。</p>
+<p>true</p>
+<p>focusCleanup</p>
+<p>Boolean</p>
+<p>如果是 true 那么当未通过验证的元素获得焦点时，移除错误提示。避免和 focusInvalid 一起用。</p>
+<p>false</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重置表单 </span></span><br><span class="line">$().ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">var</span> validator = $(<span class="string">"#signupForm"</span>).validate(&#123; <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params">form</span>)</span>&#123; alert(<span class="string">"submitted"</span>); form.submit();</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;); $(<span class="string">"#reset"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; validator.resetForm();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="8、异步验证"><a href="#8、异步验证" class="headerlink" title="8、异步验证"></a>8、异步验证</h4><p>remote：URL</p>
+<p>使用 ajax 方式进行验证，默认会提交当前验证的值到远程地址，如果需要提交其他的值，可以使用 data 选项。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">remote: <span class="string">"check-email.php"</span></span><br><span class="line"></span><br><span class="line">remote: &#123; <span class="attr">url</span>: <span class="string">"check-email.php"</span>,     <span class="comment">//后台处理程序 type: "post",               //数据发送方式 dataType: "json",           //接受数据格式 </span></span><br><span class="line">    data: &#123;                     <span class="comment">//要传递的数据 username: function() &#123;</span></span><br><span class="line">            <span class="keyword">return</span> $(<span class="string">"#username"</span>).val();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>远程地址只能输出 “true” 或 “false”，不能有其他输出。</p>
+<h4 id="9、添加自定义校验"><a href="#9、添加自定义校验" class="headerlink" title="9、添加自定义校验"></a>9、添加自定义校验</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addMethod：name, method, message</span><br></pre></td></tr></table></figure>
+<p>自定义验证方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 中文字两个字节 </span></span><br><span class="line">jQuery.validator.addMethod(<span class="string">"byteRangeLength"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value, element, param</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> length = value.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; value.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(value.charCodeAt(i) &gt; <span class="number">127</span>)&#123; length++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.optional(element) || ( length &gt;= param\[<span class="number">0</span>\] &amp;&amp; length &lt;= param\[<span class="number">1</span>\] );   </span><br><span class="line">&#125;, $.validator.format(<span class="string">"请确保输入的值在&#123;0&#125;-&#123;1&#125;个字节之间(一个中文字算2个字节)"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 邮政编码验证 </span></span><br><span class="line">jQuery.validator.addMethod(<span class="string">"isZipCode"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value, element</span>) </span>&#123;   </span><br><span class="line">    <span class="keyword">var</span> tel = <span class="regexp">/^\[0-9\]&#123;6&#125;$/</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.optional(element) || (tel.test(value));</span><br><span class="line">&#125;, <span class="string">"请正确填写您的邮政编码"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：要在 additional-methods.js 文件中添加或者在 jquery.validate.js 文件中添加。建议一般写在 additional-methods.js 文件中。 <strong>注意</strong>：在 messages_cn.js 文件中添加：isZipCode: “只能包括中文字、英文字母、数字和下划线”。调用前要添加对 additional-methods.js 文件的引用。</p>
+<h4 id="10、radio-和-checkbox、select-的验证"><a href="#10、radio-和-checkbox、select-的验证" class="headerlink" title="10、radio 和 checkbox、select 的验证"></a>10、radio 和 checkbox、select 的验证</h4><p>radio 的 required 表示必须选中一个。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span>  <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">id</span>=<span class="string">"gender_male"</span> <span class="attr">value</span>=<span class="string">"m"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">required</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span>  <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">id</span>=<span class="string">"gender_female"</span> <span class="attr">value</span>=<span class="string">"f"</span> <span class="attr">name</span>=<span class="string">"gender"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>checkbox 的 required 表示必须选中。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"agree"</span> <span class="attr">name</span>=<span class="string">"agree"</span> <span class="attr">required</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>checkbox 的 minlength 表示必须选中的最小个数，maxlength 表示最大的选中个数，rangelength:[2,3] 表示选中个数区间。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"spam_email"</span> <span class="attr">value</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"spam\[\]"</span> <span class="attr">required</span> <span class="attr">minlength</span>=<span class="string">"2"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"spam_phone"</span> <span class="attr">value</span>=<span class="string">"phone"</span> <span class="attr">name</span>=<span class="string">"spam\[\]"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">class</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"spam_mail"</span> <span class="attr">value</span>=<span class="string">"mail"</span> <span class="attr">name</span>=<span class="string">"spam\[\]"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>select 的 required 表示选中的 value 不能为空。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"jungle"</span> <span class="attr">name</span>=<span class="string">"jungle"</span> <span class="attr">title</span>=<span class="string">"Please select something!"</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"1"</span>&gt;</span>Buga<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>Baga<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"3"</span>&gt;</span>Oi<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>select 的 minlength 表示选中的最小个数（可多选的 select），maxlength 表示最大的选中个数，rangelength:[2,3] 表示选中个数区间。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"fruit"</span> <span class="attr">name</span>=<span class="string">"fruit"</span> <span class="attr">title</span>=<span class="string">"Please select at least two fruits"</span> <span class="attr">class</span>=<span class="string">"&#123;required:true, minlength:2&#125;"</span> <span class="attr">multiple</span>=<span class="string">"multiple"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"b"</span>&gt;</span>Banana<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"a"</span>&gt;</span>Apple<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"p"</span>&gt;</span>Peach<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"t"</span>&gt;</span>Turtle<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="jQuery-validate-中文-API"><a href="#jQuery-validate-中文-API" class="headerlink" title="jQuery.validate 中文 API"></a>jQuery.validate 中文 API</h3><p>名称</p>
+<p>返回类型</p>
+<p>描述</p>
+<p>validate(options)</p>
+<p>Validator</p>
+<p>验证所选的 FORM。</p>
+<p>valid()</p>
+<p>Boolean</p>
+<p>检查是否验证通过。</p>
+<p>rules()</p>
+<p>Options</p>
+<p>返回元素的验证规则。</p>
+<p>rules(“add”,rules)</p>
+<p>Options</p>
+<p>增加验证规则。</p>
+<p>rules(“remove”,rules)</p>
+<p>Options</p>
+<p>删除验证规则。</p>
+<p>removeAttrs(attributes)</p>
+<p>Options</p>
+<p>删除特殊属性并且返回它们。</p>
+<p>自定义选择器</p>
+<p>:blank</p>
+<p>Validator</p>
+<p>没有值的筛选器。</p>
+<p>:filled</p>
+<p>Array <Element></p>
+<p>有值的筛选器。</p>
+<p>:unchecked</p>
+<p>Array <Element></p>
+<p>没选择的元素的筛选器。</p>
+<p>实用工具</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jQuery.format(template,argument,argumentN...)</span><br></pre></td></tr></table></figure>
+<p>String</p>
+<p>用参数代替模板中的 {n}。</p>
+<h3 id="Validator"><a href="#Validator" class="headerlink" title="Validator"></a>Validator</h3><p>validate 方法返回一个 Validator 对象。Validator 对象有很多方法可以用来引发校验程序或者改变 form 的内容，下面列出几个常用的方法。</p>
+<p>名称</p>
+<p>返回类型</p>
+<p>描述</p>
+<p>form()</p>
+<p>Boolean</p>
+<p>验证 form 返回成功还是失败。</p>
+<p>element(element)</p>
+<p>Boolean</p>
+<p>验证单个元素是成功还是失败。</p>
+<p>resetForm()</p>
+<p>undefined</p>
+<p>把前面验证的 FORM 恢复到验证前原来的状态。</p>
+<p>showErrors(errors)</p>
+<p>undefined</p>
+<p>显示特定的错误信息。</p>
+<p>Validator 函数</p>
+<p>setDefaults(defaults)</p>
+<p>undefined</p>
+<p>改变默认的设置。</p>
+<p>addMethod(name,method,message)</p>
+<p>undefined</p>
+<p>添加一个新的验证方法。必须包括一个独一无二的名字，一个 JAVASCRIPT 的方法和一个默认的信息。</p>
+<p>addClassRules(name,rules)</p>
+<p>undefined</p>
+<p>增加组合验证类型，在一个类里面用多种验证方法时比较有用。</p>
+<p>addClassRules(rules)</p>
+<p>undefined</p>
+<p>增加组合验证类型，在一个类里面用多种验证方法时比较有用。这个是同时加多个验证方法。</p>
+<h3 id="内置验证方式"><a href="#内置验证方式" class="headerlink" title="内置验证方式"></a>内置验证方式</h3><p>名称</p>
+<p>返回类型</p>
+<p>描述</p>
+<p>required()</p>
+<p>Boolean</p>
+<p>必填验证元素。</p>
+<p>required(dependency-expression)</p>
+<p>Boolean</p>
+<p>必填元素依赖于表达式的结果。</p>
+<p>required(dependency-callback)</p>
+<p>Boolean</p>
+<p>必填元素依赖于回调函数的结果。</p>
+<p>remote(url)</p>
+<p>Boolean</p>
+<p>请求远程校验。url 通常是一个远程调用方法。</p>
+<p>minlength(length)</p>
+<p>Boolean</p>
+<p>设置最小长度。</p>
+<p>maxlength(length)</p>
+<p>Boolean</p>
+<p>设置最大长度。</p>
+<p>rangelength(range)</p>
+<p>Boolean</p>
+<p>设置一个长度范围 [min,max]。</p>
+<p>min(value)</p>
+<p>Boolean</p>
+<p>设置最小值。</p>
+<p>max(value)</p>
+<p>Boolean</p>
+<p>设置最大值。</p>
+<p>email()</p>
+<p>Boolean</p>
+<p>验证电子邮箱格式。</p>
+<p>range(range)</p>
+<p>Boolean</p>
+<p>设置值的范围。</p>
+<p>url()</p>
+<p>Boolean</p>
+<p>验证 URL 格式。</p>
+<p>date()</p>
+<p>Boolean</p>
+<p>验证日期格式（类似 30/30/2008 的格式，不验证日期准确性只验证格式）。</p>
+<p>dateISO()</p>
+<p>Boolean</p>
+<p>验证 ISO 类型的日期格式。</p>
+<p>dateDE()</p>
+<p>Boolean</p>
+<p>验证德式的日期格式（29.04.1994 或 1.1.2006）。</p>
+<p>number()</p>
+<p>Boolean</p>
+<p>验证十进制数字（包括小数的）。</p>
+<p>digits()</p>
+<p>Boolean</p>
+<p>验证整数。</p>
+<p>creditcard()</p>
+<p>Boolean</p>
+<p>验证信用卡号。</p>
+<p>accept(extension)</p>
+<p>Boolean</p>
+<p>验证相同后缀名的字符串。</p>
+<p>equalTo(other)</p>
+<p>Boolean</p>
+<p>验证两个输入框的内容是否相同。</p>
+<p>phoneUS()</p>
+<p>Boolean</p>
+<p>验证美式的电话号码。</p>
+<h3 id="validate-的可选项"><a href="#validate-的可选项" class="headerlink" title="validate ()的可选项"></a>validate ()的可选项</h3><p>描述</p>
+<p>代码</p>
+<p>debug：进行调试模式（表单不提交）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate (&#123; <span class="attr">debug</span>:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>把调试设置为默认。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$.validator.setDefaults(&#123; <span class="attr">debug</span>:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>submitHandler：通过验证后运行的函数，里面要加上表单提交的函数，否则表单不会提交。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params">form</span>) </span>&#123; $(form).ajaxSubmit(); &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>ignore：对某些元素不进行验证。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">ignore</span>:<span class="string">".ignore"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>rules：自定义规则，key:value 的形式，key 是要验证的元素，value 可以是字符串或对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">rules</span>:&#123; <span class="attr">name</span>:<span class="string">"required"</span>, <span class="attr">email</span>:&#123; <span class="attr">required</span>:<span class="literal">true</span>, <span class="attr">email</span>:<span class="literal">true</span> &#125; &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>messages：自定义的提示信息，key:value 的形式，key 是要验证的元素，value 可以是字符串或函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">rules</span>:&#123; <span class="attr">name</span>:<span class="string">"required"</span>, <span class="attr">email</span>:&#123; <span class="attr">required</span>:<span class="literal">true</span>, <span class="attr">email</span>:<span class="literal">true</span> &#125; &#125;, <span class="attr">messages</span>:&#123; <span class="attr">name</span>:<span class="string">"Name不能为空"</span>, <span class="attr">email</span>:&#123; <span class="attr">required</span>:<span class="string">"E-mail不能为空"</span>, <span class="attr">email</span>:<span class="string">"E-mail地址不正确"</span> &#125; &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>groups：对一组元素的验证，用一个错误提示，用 errorPlacement 控制把出错信息放在哪里。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">groups</span>:&#123; <span class="attr">username</span>:<span class="string">"fname lname"</span> &#125;, <span class="attr">errorPlacement</span>:<span class="function"><span class="keyword">function</span>(<span class="params">error,element</span>) </span>&#123; <span class="keyword">if</span> (element.attr(<span class="string">"name"</span>) == <span class="string">"fname"</span> || element.attr(<span class="string">"name"</span>) == <span class="string">"lname"</span>) error.insertAfter(<span class="string">"#lastname"</span>); <span class="keyword">else</span> error.insertAfter(element); &#125;, <span class="attr">debug</span>:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>OnSubmit：类型 Boolean，默认 true，指定是否提交时验证。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">onsubmit</span>:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>onfocusout：类型 Boolean，默认 true，指定是否在获取焦点时验证。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">onfocusout</span>:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>onkeyup：类型 Boolean，默认 true，指定是否在敲击键盘时验证。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">onkeyup</span>:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>onclick：类型 Boolean，默认 true，指定是否在鼠标点击时验证（一般验证 checkbox、radiobox）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">onclick</span>:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>focusInvalid：类型 Boolean，默认 true。提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">focusInvalid</span>:<span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>focusCleanup：类型 Boolean，默认 false。当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">focusCleanup</span>:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>errorClass：类型 String，默认 “error”。指定错误提示的 css 类名，可以自定义错误提示的样式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">errorClass</span>:<span class="string">"invalid"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>errorElement：类型 String，默认 “label”。指定使用什么标签标记错误。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123;</span><br><span class="line">   errorElement:<span class="string">"em"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>wrapper：类型 String，指定使用什么标签再把上边的 errorELement 包起来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">wrapper</span>:<span class="string">"li"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>errorLabelContainer：类型 Selector，把错误信息统一放在一个容器里面。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">errorLabelContainer</span>:<span class="string">"#messageBox"</span>, <span class="attr">wrapper</span>:<span class="string">"li"</span>, <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; alert(<span class="string">"Submitted!"</span>) &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>showErrors：跟一个函数，可以显示总共有多少个未通过验证的元素。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">".selector"</span>).validate(&#123; <span class="attr">showErrors</span>:<span class="function"><span class="keyword">function</span>(<span class="params">errorMap,errorList</span>) </span>&#123; $(<span class="string">"#summary"</span>).html(<span class="string">"Your form contains "</span> + <span class="keyword">this</span>.numberOfInvalids() + <span class="string">" errors,see details below."</span>); <span class="keyword">this</span>.defaultShowErrors(); &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>errorPlacement：跟一个函数，可以自定义错误放到哪里。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">errorPlacement</span>:<span class="function"><span class="keyword">function</span>(<span class="params">error,element</span>) </span>&#123; error.appendTo(element.parent(<span class="string">"td"</span>).next(<span class="string">"td"</span>));</span><br><span class="line">   &#125;, <span class="attr">debug</span>:<span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>success：要验证的元素通过验证后的动作，如果跟一个字符串，会当作一个 css 类，也可跟一个函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">success</span>:<span class="string">"valid"</span>, <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; alert(<span class="string">"Submitted!"</span>) &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>highlight：可以给未通过验证的元素加效果、闪烁等。</p>
+<h3 id="addMethod-name-method-message-方法"><a href="#addMethod-name-method-message-方法" class="headerlink" title="addMethod(name,method,message)方法"></a>addMethod(name,method,message)方法</h3><p>参数 name 是添加的方法的名字。 参数 method 是一个函数，接收三个参数 (value,element,param) 。 value 是元素的值，element 是元素本身，param 是参数。 我们可以用 addMethod 来添加除内置的 Validation 方法之外的验证方法。比如有一个字段，只能输一个字母，范围是 a-f，写法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.validator.addMethod(<span class="string">"af"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">value,element,params</span>)</span>&#123; <span class="keyword">if</span>(value.length&gt;<span class="number">1</span>)&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span>(value&gt;=params\[<span class="number">0</span>\] &amp;&amp; value&lt;=params\[<span class="number">1</span>\])&#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125;<span class="keyword">else</span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;</span><br><span class="line">&#125;,<span class="string">"必须是一个字母,且a-f"</span>);</span><br></pre></td></tr></table></figure>
+<p>如果有个表单字段的 name=”username”，则在 rules 中写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">username:&#123; <span class="attr">af</span>:\[<span class="string">"a"</span>,<span class="string">"f"</span>\]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>addMethod 的第一个参数，是添加的验证方法的名字，这时是 af。 addMethod 的第三个参数，是自定义的错误提示，这里的提示为:”必须是一个字母,且a-f”。 addMethod 的第二个参数，是一个函数，这个比较重要，决定了用这个验证方法时的写法。 如果只有一个参数，直接写，比如 af:”a”，那么 a 就是这个唯一的参数，如果多个参数，则写在 [] 里，用逗号分开。</p>
+<h3 id="meta-String-方式"><a href="#meta-String-方式" class="headerlink" title="meta String 方式"></a>meta String 方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myform"</span>).validate(&#123; <span class="attr">meta</span>:<span class="string">"validate"</span>, <span class="attr">submitHandler</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; alert(<span class="string">"Submitted!"</span>) &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> </span></span><br><span class="line"><span class="tag"><span class="attr">src</span>=<span class="string">"js/jquery.metadata.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> </span></span><br><span class="line"><span class="tag"><span class="attr">src</span>=<span class="string">"js/jquery.validate.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"myform"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> </span></span><br><span class="line"><span class="tag"><span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"&#123;validate:&#123; required:true,email:true &#125;&#125;"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> </span></span><br><span class="line"><span class="tag"><span class="attr">value</span>=<span class="string">"Submit"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jquery/" rel="tag">Jquery</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/03/css-%E5%8A%A8%E7%94%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            css-动画
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/02/css-%E5%9B%BE%E5%83%8F%E6%8B%BC%E5%90%88%E6%8A%80%E6%9C%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">css-图像拼合技术</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

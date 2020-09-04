@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    如何写好前端业务代码 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-如何写好前端业务代码"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  如何写好前端业务代码
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/%E5%A6%82%E4%BD%95%E5%86%99%E5%A5%BD%E5%89%8D%E7%AB%AF%E4%B8%9A%E5%8A%A1%E4%BB%A3%E7%A0%81/" class="article-date">
+  <time datetime="2019-05-10T07:20:30.000Z" itemprop="datePublished">2019-05-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/">前端方向</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>对于业务代码来说，大部分的前端应用都还是以展示数据为主，无非是从接口拿到数据，进行一系列数据格式化后，显示在页面当中。 首先，应当尽可能的进行分层，传统的mvc分层很适用于前端开发，但对于复杂页面来说，随着业务逻辑增加，往往会造成controller臃肿的问题。因此，在此之上，可以将controller其分成formatter、service等等。 下面这是一些分层后简单的目录结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    + pages</span><br><span class="line">        + hotelList</span><br><span class="line">            + components</span><br><span class="line">                + Header.jsx</span><br><span class="line">            + formatter</span><br><span class="line">                + index.js</span><br><span class="line">            + share</span><br><span class="line">                + constants.js</span><br><span class="line">                + utils.js</span><br><span class="line">            + view.js</span><br><span class="line">            + controller.js</span><br><span class="line">            + model.js</span><br></pre></td></tr></table></figure>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a><strong>Service</strong></h3><p>统一管理所有请求路径，并且将页面中涉及到的网络请求封装为class。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; api.js</span><br><span class="line">export default &#123;</span><br><span class="line">    HOTELLIST: &#39;&#x2F;hotelList&#39;,</span><br><span class="line">    HOTELDETAIL: &#39;&#x2F;hotelDetail&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Service.js</span><br><span class="line">class Service &#123;</span><br><span class="line">    fetchHotelList &#x3D; (params) &#x3D;&gt; &#123;</span><br><span class="line">        return fetch(HOTELLIST, params);</span><br><span class="line">    &#125;</span><br><span class="line">    fetchHotelDetail &#x3D; (params) &#x3D;&gt; &#123;</span><br><span class="line">        return fetch(HOTELLIST, params);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default new Service</span><br></pre></td></tr></table></figure>
+<p>这样带来的好处就是，很清楚的知道页面中涉及了哪些请求，如果使用了TypeScript，后续某个请求方法名修改了后，在所有调用的地方也会提示错误，非常方便。</p>
+<h3 id="formatter"><a href="#formatter" class="headerlink" title="formatter"></a><strong>formatter</strong></h3><p>formatter层储存一些格式化数据的方法，这些方法接收数据，返回新的数据，不应该再涉及到其他的逻辑，这样有利于单元测试。单个format函数也不应该格式化过多数据，函数应该根据功能进行适当拆分，合理复用。</p>
+<h3 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a><strong>mvc</strong></h3><p>顾名思义，controller就是mvc中的c，controller应该是处理各种副作用操作（网络请求、缓存等等）的地方。 当处理一个请求的时候，controller会调用service里面对应的方法，拿到数据后再调用formatter的方法，将格式化后的数据存入store中，展示到页面上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Controller &#123;</span><br><span class="line">    fetchAndSaveHotelList &#x3D; () &#x3D;&gt; async (dispatch) &#x3D;&gt; &#123;</span><br><span class="line">        const params &#x3D; &#123;&#125;</span><br><span class="line">        this.showLoading();</span><br><span class="line">        try &#123;</span><br><span class="line">            const res &#x3D; await Service.fetchHotelList(params)</span><br><span class="line">            const hotelList &#x3D; formatHotelList(res.Data &amp;&amp; res.Data.HotelList)</span><br><span class="line">            dispatch(&#123;</span><br><span class="line">                type: &#39;UPDATE_HOTELLIST&#39;,</span><br><span class="line">                hotelList</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; catch (err) &#123;</span><br><span class="line">            this.showError(err);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            this.hideLoading();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>view则是指react组件，建议尽量用纯函数组件，有了hooks之后，react也会变得更加纯粹（实际上有状态组件也可以看做一个mvc的结构，state是model，render是view，各种handler方法是controller）。 对于react来说，最外层的一般称作容器组件，我们会在容器组件里面进行网络请求等副作用的操作。 在这里，容器组件里面的一些逻辑也可以剥离出来放到controller中（react-imvc就是这种做法），这样可以给controller赋予生命周期，容器组件只用于纯展示。 我们将容器组件的生命周期放到wrapper这个高阶组件中，并在里面调用controller里面封装的生命周期，这样我们可以就编写更加纯粹的view，例如： wrapper.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; wrapper.js（伪代码）</span><br><span class="line">const Wrapper &#x3D; (components) &#x3D;&gt; &#123;</span><br><span class="line">    return class extends Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">            super(props)</span><br><span class="line">        &#125;</span><br><span class="line">        componentWillMount() &#123;</span><br><span class="line">            this.props.pageWillMount()</span><br><span class="line">        &#125;</span><br><span class="line">        componentDidMount() &#123;</span><br><span class="line">            this.props.pageDidMount()</span><br><span class="line">        &#125;</span><br><span class="line">        componentWillUnmount() &#123;</span><br><span class="line">             this.props.pageWillLeave()</span><br><span class="line">        &#125;</span><br><span class="line">        render() &#123;</span><br><span class="line">            const &#123;</span><br><span class="line">                store: state,</span><br><span class="line">                actions</span><br><span class="line">            &#125; &#x3D; this.props</span><br><span class="line">            return view(&#123;state, actions&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>view.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; view.js</span><br><span class="line">function view(&#123;</span><br><span class="line">    state,</span><br><span class="line">    actions</span><br><span class="line">&#125;) &#123;</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">        &lt;&gt;</span><br><span class="line">            &lt;Header </span><br><span class="line">                title&#x3D;&#123;state.title&#125; </span><br><span class="line">                handleBack&#x3D;&#123;actions.goBackPage&#125;</span><br><span class="line">            &#x2F;&gt;</span><br><span class="line">            &lt;Body &#x2F;&gt;</span><br><span class="line">            &lt;Footer &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">export default Wrapper(view)</span><br></pre></td></tr></table></figure>
+<p>controller.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; controller.js</span><br><span class="line">class Controller &#123;</span><br><span class="line">    pageDidMount() &#123;</span><br><span class="line">        this.bindScrollEvent(&#39;on&#39;)</span><br><span class="line">        console.log(&#39;page did mount&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">    pageWillLeave() &#123;</span><br><span class="line">        this.bindScrollEvent(&#39;off&#39;)</span><br><span class="line">        console.log(&#39;page will leave&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">    bindScrollEvent(status) &#123;</span><br><span class="line">        if (status &#x3D;&#x3D;&#x3D; &#39;on&#39;) &#123;</span><br><span class="line">            this.bindScrollEvent(&#39;off&#39;);</span><br><span class="line">            window.addEventListener(&#39;scroll&#39;, this.handleScroll);</span><br><span class="line">        &#125; else if (status &#x3D;&#x3D;&#x3D; &#39;off&#39;) &#123;</span><br><span class="line">            window.removeEventListener(&#39;scroll&#39;, this.handleScroll);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 滚动事件</span><br><span class="line">    handleScroll() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a><strong>其他</strong></h3><p>对于埋点来说，原本也应该放到controller中，但也是可以独立出来一个tracelog层，至于tracelog层如何实现和调用，还是看个人爱好，我比较喜欢用发布订阅的形式。 如果还涉及到缓存，那我们也可以再分出来一个storage层，这里存放对缓存进行增删查改的各种操作。 对于一些常用的固定不变的值，也可以放到constants.js，通过引入constants来获取值，这样便于后续维护。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; constants.js</span><br><span class="line">export const cityMapping &#x3D; &#123;</span><br><span class="line">    &#39;1&#39;: &#39;北京&#39;,</span><br><span class="line">    &#39;2&#39;: &#39;上海&#39;</span><br><span class="line">&#125;</span><br><span class="line">export const traceKey &#x3D; &#123;</span><br><span class="line">    &#39;loading&#39;: &#39;PAGE_LOADING&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; tracelog.js</span><br><span class="line">class TraceLog &#123;</span><br><span class="line">    traceLoading &#x3D; (params) &#x3D;&gt; &#123;</span><br><span class="line">        tracelog(traceKey.loading, params);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default new TraceLog</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; storage.js</span><br><span class="line">export default class Storage &#123;</span><br><span class="line">    static get instance() &#123;</span><br><span class="line">        &#x2F;&#x2F; </span><br><span class="line">    &#125;</span><br><span class="line">    setName(name) &#123;</span><br><span class="line">        &#x2F;&#x2F;</span><br><span class="line">    &#125;</span><br><span class="line">    getName() &#123;</span><br><span class="line">        &#x2F;&#x2F;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据与交互 不过也不代表着这样写就够了，分层只能够保证代码结构上的清晰，真正想写出好的业务代码，最重要的还是你对业务逻辑足够清晰，页面上的数据流动是怎样的？数据结构怎么设计更加合理？页面上有哪些交互？这些交互会带来哪些影响？</p>
+<p><strong>总结</strong> 在开始写业务之前，理应先想清楚需求和业务逻辑，设计出合理的数据结构，对代码进行好的分层，这样在一定程度上可以写出可维护性更高的代码。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/" rel="tag">前端方向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/05/%E4%B8%89%E7%A7%8D%E5%A4%84%E7%90%86%E6%BB%9A%E5%8A%A8%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98%E6%96%B9%E6%A1%88%E7%9A%84%E5%AF%B9%E6%AF%94/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            三种处理滚动穿透问题方案的对比
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/05/vue-router/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vue-router</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

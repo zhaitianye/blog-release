@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Tianye Blog</title>
+  
+  <subtitle>The seeker of the world</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.zhaitianye.com/"/>
+  <updated>2020-07-16T06:26:11.125Z</updated>
+  <id>http://blog.zhaitianye.com/</id>
+  
+  <author>
+    <name>Tianye Zhai</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>说一道JS面试题</title>
+    <link href="http://blog.zhaitianye.com/2019/10/%E8%AF%B4%E4%B8%80%E9%81%93JS%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://blog.zhaitianye.com/2019/10/%E8%AF%B4%E4%B8%80%E9%81%93JS%E9%9D%A2%E8%AF%95%E9%A2%98/</id>
+    <published>2019-10-03T09:55:24.000Z</published>
+    <updated>2020-07-16T06:26:11.125Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;创建一个函数来判断给定的表达式中的大括号是否闭合，返回 True/False，对于空字串，返回 True：&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lodash-防抖和节流是如何实现的</title>
+    <link href="http://blog.zhaitianye.com/2019/09/Lodash-%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/"/>
+    <id>http://blog.zhaitianye.com/2019/09/Lodash-%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84/</id>
+    <published>2019-09-26T09:19:18.000Z</published>
+    <updated>2020-07-16T06:43:06.001Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;防抖函数 debounce&lt;/p&gt;
+&lt;p&gt;Lodash 中节流函数比较简单，直接调用防抖函数，传入一些配置就摇身一变成了节流函数，所以我们先来看看其中防抖函数是如何实现的，弄懂了防抖，那节流自然就容易理解了。 进入正文，我们看下 debounce 源码，源码不多，总共
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一个合格的中级前端工程师要掌握的JavaScript技巧</title>
+    <link href="http://blog.zhaitianye.com/2019/09/%E4%B8%80%E4%B8%AA%E5%90%88%E6%A0%BC%E7%9A%84%E4%B8%AD%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84JavaScript%E6%8A%80%E5%B7%A7/"/>
+    <id>http://blog.zhaitianye.com/2019/09/%E4%B8%80%E4%B8%AA%E5%90%88%E6%A0%BC%E7%9A%84%E4%B8%AD%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84JavaScript%E6%8A%80%E5%B7%A7/</id>
+    <published>2019-09-25T07:21:24.000Z</published>
+    <updated>2020-07-16T06:31:29.491Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;摘要：&lt;/p&gt;
+&lt;p&gt;必须要掌握的28 个 JavaScript进阶技巧&lt;/p&gt;
+&lt;h2 id=&quot;1-判断对象的数据类型&quot;&gt;&lt;a href=&quot;#1-判断对象的数据类型&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React-路由跳转基本原理</title>
+    <link href="http://blog.zhaitianye.com/2019/09/React-%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"/>
+    <id>http://blog.zhaitianye.com/2019/09/React-%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/</id>
+    <published>2019-09-24T01:53:42.000Z</published>
+    <updated>2020-07-16T06:38:10.731Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;目前前端三杰 Angular、React、Vue 都推介单页面应用 SPA 开发模式，在路由切换时替换 DOM Tree 中最小修改的部分
+        
+      
+    
+    </summary>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网站前端的性能优化</title>
+    <link href="http://blog.zhaitianye.com/2019/09/%E7%BD%91%E7%AB%99%E5%89%8D%E7%AB%AF%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <id>http://blog.zhaitianye.com/2019/09/%E7%BD%91%E7%AB%99%E5%89%8D%E7%AB%AF%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</id>
+    <published>2019-09-21T09:41:42.000Z</published>
+    <updated>2020-07-16T06:44:40.240Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;首屏作为直面用户的第一屏，其重要性不言而喻，如何加快加载的速度是非常重要的一课。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;h1 id=&quot;用户期待的速度体验&quot;&gt;&lt;a href=&quot;#用户期待的速度体验&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/categories/HTML/"/>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/tags/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>优秀前端工程师的自检清单</title>
+    <link href="http://blog.zhaitianye.com/2019/09/%E4%BC%98%E7%A7%80%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95/"/>
+    <id>http://blog.zhaitianye.com/2019/09/%E4%BC%98%E7%A7%80%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95/</id>
+    <published>2019-09-20T06:13:30.000Z</published>
+    <updated>2020-07-16T06:37:09.266Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;开篇&quot;&gt;&lt;a href=&quot;#开篇&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="前端方向" scheme="http://blog.zhaitianye.com/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
+    
+    
+      <category term="前端方向" scheme="http://blog.zhaitianye.com/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript手写代码</title>
+    <link href="http://blog.zhaitianye.com/2019/09/JavaScript%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81/"/>
+    <id>http://blog.zhaitianye.com/2019/09/JavaScript%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81/</id>
+    <published>2019-09-18T06:38:56.000Z</published>
+    <updated>2020-07-16T06:47:03.458Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;手写路径导航&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;实现一个new操作符&lt;/li&gt;
+&lt;li&gt;实现一个JSON.stringify&lt;/li&gt;
+&lt;li&gt;实现一个JSON.parse&lt;/li&gt;
+&lt;li&gt;实现一个call或
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React-Hooks该怎么用</title>
+    <link href="http://blog.zhaitianye.com/2019/09/React-Hooks%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8/"/>
+    <id>http://blog.zhaitianye.com/2019/09/React-Hooks%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8/</id>
+    <published>2019-09-16T09:00:39.000Z</published>
+    <updated>2020-07-16T06:48:09.687Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;为什么要用-Hooks&quot;&gt;&lt;a href=&quot;#为什么要用-Hooks&quot; class=&quot;headerlink&quot; title=&quot;为什么要用 Hooks&quot;&gt;&lt;/a&gt;为什么要用 Hooks&lt;/h2&gt;&lt;h3 id=&quot;组件嵌套问题&quot;&gt;&lt;a href=&quot;#组件嵌套问题&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>chrome开发者工具各种骚技巧</title>
+    <link href="http://blog.zhaitianye.com/2019/09/chrome%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%90%84%E7%A7%8D%E9%AA%9A%E6%8A%80%E5%B7%A7/"/>
+    <id>http://blog.zhaitianye.com/2019/09/chrome%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%90%84%E7%A7%8D%E9%AA%9A%E6%8A%80%E5%B7%A7/</id>
+    <published>2019-09-13T08:16:14.000Z</published>
+    <updated>2020-07-16T06:29:52.229Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;对于每个前端从业者来说，除了F5键之外，用的最多的另外一个键就是F12了。最近大神（@小鱼二）推荐我一个网站，才知道chrome还有各种骚姿势。这个网站是：&lt;strong&gt;umaar.com/dev-tips/，&lt;/strong&gt;本文分享一些实用且聪明的调试技巧。&lt;/p&gt;
+
+        
+      
+    
+    </summary>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/categories/HTML/"/>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/tags/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从这25个方面优化你的前端项目</title>
+    <link href="http://blog.zhaitianye.com/2019/09/%E4%BB%8E%E8%BF%9925%E4%B8%AA%E6%96%B9%E9%9D%A2%E4%BC%98%E5%8C%96%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://blog.zhaitianye.com/2019/09/%E4%BB%8E%E8%BF%9925%E4%B8%AA%E6%96%B9%E9%9D%A2%E4%BC%98%E5%8C%96%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/</id>
+    <published>2019-09-08T01:01:39.000Z</published>
+    <updated>2020-07-16T06:32:00.044Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;0、前言&quot;&gt;&lt;a href=&quot;#0、前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/categories/HTML/"/>
+    
+    
+      <category term="HTML" scheme="http://blog.zhaitianye.com/tags/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实用的JavaScript技巧</title>
+    <link href="http://blog.zhaitianye.com/2019/09/%E5%AE%9E%E7%94%A8%E7%9A%84JavaScript%E6%8A%80%E5%B7%A7/"/>
+    <id>http://blog.zhaitianye.com/2019/09/%E5%AE%9E%E7%94%A8%E7%9A%84JavaScript%E6%8A%80%E5%B7%A7/</id>
+    <published>2019-09-05T14:22:06.000Z</published>
+    <updated>2020-07-16T06:40:09.874Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;数组去重&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高频JavaScript手写面试题及答案</title>
+    <link href="http://blog.zhaitianye.com/2019/08/%E9%AB%98%E9%A2%91JavaScript%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88/"/>
+    <id>http://blog.zhaitianye.com/2019/08/%E9%AB%98%E9%A2%91JavaScript%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88/</id>
+    <published>2019-08-18T11:23:43.000Z</published>
+    <updated>2020-07-16T06:19:58.344Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;实现防抖函数（debounce） 防抖函数原理：在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。 手写简化版:&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何让你的JS写得更漂亮</title>
+    <link href="http://blog.zhaitianye.com/2019/08/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84JS%E5%86%99%E5%BE%97%E6%9B%B4%E6%BC%82%E4%BA%AE/"/>
+    <id>http://blog.zhaitianye.com/2019/08/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84JS%E5%86%99%E5%BE%97%E6%9B%B4%E6%BC%82%E4%BA%AE/</id>
+    <published>2019-08-14T03:35:20.000Z</published>
+    <updated>2020-07-16T06:14:23.967Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;按强类型风格写代码 JS是弱类型的，但是写代码的时候不能太随意，写得太随意也体现了编码风格不好。下面分点说明： （1）定义变量的时候要指明类型，告诉JS解释器这个变量是什么数据类型的，而不要让解释器去猜，例如不好的写法：&lt;/p&gt;
+&lt;figure
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React中组件的生命周期</title>
+    <link href="http://blog.zhaitianye.com/2019/08/React%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"/>
+    <id>http://blog.zhaitianye.com/2019/08/React%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</id>
+    <published>2019-08-12T14:40:08.000Z</published>
+    <updated>2020-07-16T06:25:12.732Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;为了进一步了解React的工作过程,已经晓得了怎么编写React组件,知道了React的数据流,那么是时候学习React组件的生命周期了,每个组件都包含生命周期方法,生命周期如同四季更替,一个人的生,老,病,死.在每个特殊的年龄阶段,做着不同的事情
+        
+      
+    
+    </summary>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js-开发常用工具函数</title>
+    <link href="http://blog.zhaitianye.com/2019/08/js-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/"/>
+    <id>http://blog.zhaitianye.com/2019/08/js-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/</id>
+    <published>2019-08-11T09:10:37.000Z</published>
+    <updated>2020-07-16T06:24:01.576Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1、isStatic：检测数据是不是除了symbol外的原始数据&quot;&gt;&lt;a href=&quot;#1、isStatic：检测数据是不是除了symbol外的原始数据&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实现快速排序</title>
+    <link href="http://blog.zhaitianye.com/2019/08/%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
+    <id>http://blog.zhaitianye.com/2019/08/%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</id>
+    <published>2019-08-10T12:50:13.000Z</published>
+    <updated>2020-07-16T06:10:45.791Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;对于经典算法，你是否也遇到这样的情形：学时觉得很清楚，可过阵子就忘了？本系列文章（老姚的-手写算法并记住它-系列）就尝试解决这个问题。 研读那些排序算法，细品它们的名字，其实都很贴切。比如快速排序，一个快字就能体现出其价值，因而它是用得最多的。
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端学习路线的一些建议</title>
+    <link href="http://blog.zhaitianye.com/2019/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BB%BA%E8%AE%AE/"/>
+    <id>http://blog.zhaitianye.com/2019/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BB%BA%E8%AE%AE/</id>
+    <published>2019-07-24T12:06:56.000Z</published>
+    <updated>2020-07-16T06:01:16.601Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;入题&quot;&gt;&lt;a href=&quot;#入题&quot; class=&quot;headerlink&quot; title=&quot;入题&quot;&gt;&lt;/a&gt;入题&lt;/h2&gt;&lt;p&gt;我们俨然能感受到前端岗位现在已经发展成了最重要的研发岗位之一，所以对我们提出的要求也就越来越高。所以我们需要学的也就不仅仅只是
+        
+      
+    
+    </summary>
+    
+    
+      <category term="前端方向" scheme="http://blog.zhaitianye.com/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
+    
+    
+      <category term="前端方向" scheme="http://blog.zhaitianye.com/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React-Hooks与Redux的配合及状态管理方案</title>
+    <link href="http://blog.zhaitianye.com/2019/07/React-Hooks%E4%B8%8ERedux%E7%9A%84%E9%85%8D%E5%90%88%E5%8F%8A%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/"/>
+    <id>http://blog.zhaitianye.com/2019/07/React-Hooks%E4%B8%8ERedux%E7%9A%84%E9%85%8D%E5%90%88%E5%8F%8A%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/</id>
+    <published>2019-07-18T06:14:10.000Z</published>
+    <updated>2020-07-16T06:07:33.109Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Hooks面世已有一段时间，但目前在状态管理方面，还未正式推出官方解决方案。因此目前社区中hooks主要有这么三种方案来解决应用的状态管理问题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用Redux-React-Hook库替代React-redux，与Redux一同配合&lt;/li&gt;
+&lt;li
+        
+      
+    
+    </summary>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/categories/React/"/>
+    
+    
+      <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Webpack-优化技巧</title>
+    <link href="http://blog.zhaitianye.com/2019/07/Webpack-%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/"/>
+    <id>http://blog.zhaitianye.com/2019/07/Webpack-%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/</id>
+    <published>2019-07-12T02:20:05.000Z</published>
+    <updated>2020-07-16T06:09:43.935Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;我们构建的初始大小&lt;/p&gt;
+&lt;p&gt;我们处理一个构建时收到了以下两条错误消息： Vue 建议包大小不超过 244 KiB。我们一共有 14 项 assets
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JS工具" scheme="http://blog.zhaitianye.com/categories/JS%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="JS工具" scheme="http://blog.zhaitianye.com/tags/JS%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正则极简教程</title>
+    <link href="http://blog.zhaitianye.com/2019/07/%E6%AD%A3%E5%88%99%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/"/>
+    <id>http://blog.zhaitianye.com/2019/07/%E6%AD%A3%E5%88%99%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/</id>
+    <published>2019-07-09T05:45:01.000Z</published>
+    <updated>2020-07-16T06:05:46.154Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;正则是字符串匹配模式，在处理文本时很有用。最常见的操作就是用于查找和替换。&lt;/p&gt;
+&lt;p&gt;说到处理文本，其实我们每天敲的代码就是文本，因此常用的代码编辑器的查找替换工具基本都支持正则语法的。&lt;/p&gt;
+&lt;p&gt;先说明一下，接下来的内容都以《We will rock
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
+  
+</feed>

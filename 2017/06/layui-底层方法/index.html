@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    layui-底层方法 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-layui-底层方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  layui-底层方法
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/06/layui-%E5%BA%95%E5%B1%82%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2017-06-25T06:06:07.000Z" itemprop="datePublished">2017-06-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/layui/">layui</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>全局配置 方法：layui.config(options) 你可以在使用模块之前，全局化配置一些参数，尽管大部分时候它不是必须的。所以我们目前提供的全局配置项非常少，这也是为了减少一些不必要的工作，尽可能让使用变得更简单。目前支持的全局配置项如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layui.config(&#123;</span><br><span class="line">  dir: <span class="string">'/res/layui/'</span> <span class="comment">//layui.js 所在路径（注意，如果是script单独引入layui.js，无需设定该参数。），一般情况下可以无视</span></span><br><span class="line">  ,<span class="attr">version</span>: <span class="literal">false</span> <span class="comment">//一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610</span></span><br><span class="line">  ,<span class="attr">debug</span>: <span class="literal">false</span> <span class="comment">//用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面</span></span><br><span class="line">  ,<span class="attr">base</span>: <span class="string">''</span> <span class="comment">//设定扩展的Layui模块的所在目录，一般用于外部模块扩展</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>定义模块 方法：layui.define([mods], callback) 通过该方法可定义一个 Layui模块。参数mods是可选的，用于声明该模块所依赖的模块。callback即为模块加载完毕的回调函数，它返回一个exports参数，用于输出该模块的接口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">layui.define(function(exports) &#123;</span><br><span class="line">  exports(&#39;demo&#39;, function() &#123;</span><br><span class="line">    alert(&#39;Hello World!&#39;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>跟Requirejs最大不同的地方在于接口输出，exports是一个函数，它接受两个参数，第一个参数为模块名，第二个参数为模块接口，当你声明了上<br>述的一个模块后，你就可以在外部使用了，demo就会注册到layui对象下，即可通过 layui.demo() 去执行该模块的接口。 你也可以在定义一个模块的时候，声明该模块所需的依赖，如：</p>
+<p>codelayui.code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">layui.define([&#39;layer&#39;, &#39;laypage&#39;], function(exports)&#123;</span><br><span class="line">  &#x2F;&#x2F;do something</span><br><span class="line">  </span><br><span class="line">  exports(&#39;demo&#39;, function()&#123;</span><br><span class="line">    alert(&#39;Hello World!&#39;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上述的[‘layer’, ‘laypage’]即为本模块所依赖的模块，它并非只能是一个数组，你也可以直接传一个字符型的模块名，但是这样只能依赖一个模块。 加载所需模块 方法：layui.use([mods], callback) Layui的内置模块并非默认就加载的，他必须在你执行该方法后才会加载。它的参数跟上述的 define方法完全一样。 另外请注意，mods里面必须是一个合法的模块名，不能包含目录。如果需要加载目录，建议采用extend建立别名（详见模块规范）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layui.use([&#39;laypage&#39;, &#39;layedit&#39;], function()&#123;</span><br><span class="line">  var laypage &#x3D; layui.laypage</span><br><span class="line">  ,layedit &#x3D; layui.layedit;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;do something</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>该方法的函数其实返回了所加载的模块接口，所以你其实也可以不通过layui对象赋值获得接口（这一点跟Sea.js很像哈）：</p>
+<p>codelayui.code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">layui.use([&#39;laypage&#39;, &#39;layedit&#39;], function(laypage, layedit)&#123;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;使用分页</span><br><span class="line">  laypage();</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;建立编辑器</span><br><span class="line">  layedit.build();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>动态加载CSS 方法：layui.link(href) href即为css路径。注意：该方法并非是你使用Layui所必须的，它一般只是用于动态加载你的外部CSS文件。 本地存储 本地存储是对 localStorage 和 sessionStorage 的友好封装，可更方便地管理本地数据。 localStorage 持久化存储：layui.data(table, settings)，数据会永久存在，除非物理删除。 sessionStorage 会话性存储：layui.sessionData(table, settings)，页面关闭后即失效。注：layui 2.2.5 新增 上述两个方法的使用方式是完全一样的。其中参数 table 为表名，settings是一个对象，用于设置key、value。下面与 layui.data 方法为例： //【增】：向test表插入一个nickname字段，如果该表不存在，则自动建立。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">layui.data(&#39;test&#39;, &#123;</span><br><span class="line">  key: &#39;nickname&#39;</span><br><span class="line">  ,value: &#39;贤心&#39;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>//【删】：删除test表的nickname字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">layui.data(&#39;test&#39;, &#123;</span><br><span class="line">  key: &#39;nickname&#39;</span><br><span class="line">  ,remove: true</span><br><span class="line">&#125;);</span><br><span class="line">layui.data(&#39;test&#39;, null); &#x2F;&#x2F;删除test表</span><br></pre></td></tr></table></figure>
+<p>//【改】：同【增】，会覆盖已经存储的数据 //【查】：向test表读取全部的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var localTest &#x3D; layui.data(&#39;test&#39;);</span><br><span class="line">console.log(localTest.nickname); &#x2F;&#x2F;获得“贤心”</span><br></pre></td></tr></table></figure>
+<p>获取设备信息 方法：layui.device(key)，参数key是可选的 由于Layui的一些功能进行了兼容性处理和响应式支持，因此该方法同样发挥了至关重要的作用。尤其是在layui mobile模块中的作用可谓举足轻重。该方法返回了丰富的设备信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var device &#x3D; layui.device();</span><br></pre></td></tr></table></figure>
+<p>//device即可根据不同的设备返回下述不同的信息</p>
+<p>codelayui.code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  os: &quot;windows&quot; &#x2F;&#x2F;底层操作系统，windows、linux、mac等</span><br><span class="line">  ,ie: false &#x2F;&#x2F;ie6-11的版本，如果不是ie浏览器，则为false</span><br><span class="line">  ,weixin: false &#x2F;&#x2F;是否微信环境</span><br><span class="line">  ,android: false &#x2F;&#x2F;是否安卓系统</span><br><span class="line">  ,ios: false &#x2F;&#x2F;是否ios系统</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有时你的App可能会对userAgent插入一段特定的标识，譬如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;53.0.2785.143 myapp&#x2F;1.8.6 Safari&#x2F;537.36</span><br></pre></td></tr></table></figure>
+<p>你要验证当前的WebView是否在你的App环境，即可通过上述的myapp（即为Native给Webview插入的标识，可以随意定义）来判断。</p>
+<p>codelayui.code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var device &#x3D; layui.device(&#39;myapp&#39;);</span><br><span class="line">if(device.myapp)&#123;</span><br><span class="line">  alert(&#39;在我的App环境&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其它 其实除此之外，layui.js内部还提供了许多底层引擎，他们同样是整个Layui框架体系的有力支撑，所以有必要露个脸，尽管你可能并不会用到： 方法/属性 描述 layui.cache 静态属性。获得一些配置及临时的缓存信息 layui.extend(options) 拓展一个模块别名，</p>
+<p>如：layui.extend({test: ‘/res/js/test’}) layui.each(obj, fn) 对象（Array、Object、DOM对象等）遍历，</p>
+<p>可用于取代for语句 layui.getStyle(node, name) 获得一个原始DOM节点的style属性值，如：layui.getStyle(document.body, ‘font-size’) layui.img(url, callback, error) 图片预加载 layui.sort(obj, key, desc) 将数组中的对象按某个成员重新对该数组排序，</p>
+<p>如：layui.sort([{a: 3},{a: 1},{a: 5}], ‘a’) layui.router() 获得location.hash路由，目前在Layui中没发挥作用。</p>
+<p>对做单页应用会派上用场。 layui.hint() 向控制台打印一些异常信息，目前只返回了error方法：layui.hint().error(‘出错啦’) layui.stope(e) 阻止事件冒泡 layui.onevent(modName, events, callback) 自定义模块事件，属于比较高级的应用。</p>
+<p>有兴趣的同学可以阅读layui.js源码以及form模块 layui.event(modName, events, params) 执行自定义模块事件，搭配onevent使用 layui.factory(modName) 用于获取模块对应的 define 回调函数 第三方支撑 Layui部分模块依赖jQuery（比如layer），但是你并不用去额外加载jQuery。</p>
+<p>Layui已经将jQuery最稳定的一个版本改为Layui的内部模块，当你去使用 layer 之类的模块时，它会首先判断你的页面是否已经引入了jQuery，如果没有，则加载内部的jQuery模块，如果有，则不会加载。 另外，我们的图标取材于阿里巴巴矢量图标库（iconfont），构建工具采用 Gulp 。除此之外，不依赖于任何第三方工具。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/layui/" rel="tag">layui</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/06/Bootstrap-%E7%BD%91%E6%A0%BC%E7%B3%BB%E7%BB%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Bootstrap-网格系统
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/06/Jquery-AJAX/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Jquery-AJAX</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

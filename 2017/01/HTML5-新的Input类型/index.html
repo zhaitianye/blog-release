@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    HTML5-新的Input类型 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-HTML5-新的Input类型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  HTML5-新的Input类型
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/01/HTML5-%E6%96%B0%E7%9A%84Input%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2017-01-07T09:01:20.000Z" itemprop="datePublished">2017-01-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTML/">HTML</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">4 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>HTML5 拥有多个新的表单输入类型。这些新特性提供了更好的输入控制和验证。 本章全面介绍这些新的输入类型：</p>
+<ul>
+<li>color</li>
+<li>date</li>
+<li>datetime</li>
+<li>datetime-local</li>
+<li>email</li>
+<li>month</li>
+<li>number</li>
+<li>range</li>
+<li>search</li>
+<li>tel</li>
+<li>time</li>
+<li>url</li>
+<li>week</li>
+</ul>
+<p><strong>注意:</strong>并不是所有的主流浏览器都支持新的input类型，不过您已经可以在所有主流的浏览器中使用它们了。即使不被支持，仍然可以显示为常规的文本域。</p>
+<hr>
+<h2 id="Input-类型-color"><a href="#Input-类型-color" class="headerlink" title="Input 类型: color"></a>Input 类型: color</h2><p>color 类型用在input字段主要用于选取颜色，如下所示：</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>从拾色器中选择一个颜色:</p>
+<p>选择你喜欢的颜色: <code>&lt;input type=&quot;color&quot; name=&quot;favcolor&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-date"><a href="#Input-类型-date" class="headerlink" title="Input 类型: date"></a>Input 类型: date</h2><p>date 类型允许你从一个日期选择器选择一个日期。</p>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><p>定义一个时间控制器:</p>
+<p>生日: <code>&lt;input type=&quot;date&quot; name=&quot;bday&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-datetime"><a href="#Input-类型-datetime" class="headerlink" title="Input 类型: datetime"></a>Input 类型: datetime</h2><p>datetime 类型允许你选择一个日期（UTC 时间）。</p>
+<h2 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h2><p>定义一个日期和时间控制器（本地时间）:</p>
+<p>生日 (日期和时间): <code>&lt;input type=&quot;datetime&quot; name=&quot;bdaytime&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-datetime-local"><a href="#Input-类型-datetime-local" class="headerlink" title="Input 类型: datetime-local"></a>Input 类型: datetime-local</h2><p>datetime-local 类型允许你选择一个日期和时间 (无时区).</p>
+<h2 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h2><p>定义一个日期和时间 (无时区):</p>
+<p>生日 (日期和时间): <code>&lt;input type=&quot;datetime-local&quot; name=&quot;bdaytime&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-email"><a href="#Input-类型-email" class="headerlink" title="Input 类型: email"></a>Input 类型: email</h2><p>email 类型用于应该包含 e-mail 地址的输入域。</p>
+<h2 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h2><p>在提交表单时，会自动验证 email 域的值是否合法有效:</p>
+<p>E-mail: <code>&lt;input type=&quot;email&quot; name=&quot;email&quot;&gt;</code></p>
+<p><strong>提示:</strong> iPhone 中的 Safari 浏览器支持 email 输入类型，并通过改变触摸屏键盘来配合它（添加 @ 和 .com 选项）。</p>
+<hr>
+<h2 id="Input-类型-month"><a href="#Input-类型-month" class="headerlink" title="Input 类型: month"></a>Input 类型: month</h2><p>month 类型允许你选择一个月份。</p>
+<h2 id="实例-5"><a href="#实例-5" class="headerlink" title="实例"></a>实例</h2><p>定义月与年 (无时区):</p>
+<p>生日 (月和年): <code>&lt;input type=&quot;month&quot; name=&quot;bdaymonth&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-number"><a href="#Input-类型-number" class="headerlink" title="Input 类型: number"></a>Input 类型: number</h2><p>number 类型用于应该包含数值的输入域。 您还能够设定对所接受的数字的限定：</p>
+<h2 id="实例-6"><a href="#实例-6" class="headerlink" title="实例"></a>实例</h2><p>定义一个数值输入域(限定):</p>
+<p>数量 ( 1 到 5 之间 ): <code>&lt;input type=&quot;number&quot; name=&quot;quantity&quot; min=&quot;1&quot; max=&quot;5&quot;&gt;</code></p>
+<p>使用下面的属性来规定对数字类型的限定：</p>
+<p>属性</p>
+<p>描述</p>
+<p>disabled</p>
+<p>规定输入字段是禁用的</p>
+<p>max</p>
+<p>规定允许的最大值</p>
+<p>maxlength</p>
+<p>规定输入字段的最大字符长度</p>
+<p>min</p>
+<p>规定允许的最小值</p>
+<p>pattern</p>
+<p>规定用于验证输入字段的模式</p>
+<p>readonly</p>
+<p>规定输入字段的值无法修改</p>
+<p>required</p>
+<p>规定输入字段的值是必需的</p>
+<p>size</p>
+<p>规定输入字段中的可见字符数</p>
+<p>step</p>
+<p>规定输入字段的合法数字间隔</p>
+<p>value</p>
+<p>规定输入字段的默认值</p>
+<p>尝试一下带有所有限定属性的例子</p>
+<hr>
+<h2 id="Input-类型-range"><a href="#Input-类型-range" class="headerlink" title="Input 类型: range"></a>Input 类型: range</h2><p>range 类型用于应该包含一定范围内数字值的输入域。 range 类型显示为滑动条。</p>
+<h2 id="实例-7"><a href="#实例-7" class="headerlink" title="实例"></a>实例</h2><p>定义一个不需要非常精确的数值（类似于滑块控制）:</p>
+<p><code>&lt;input type=&quot;range&quot; name=&quot;points&quot; min=&quot;1&quot; max=&quot;10&quot;&gt;</code></p>
+<p>请使用下面的属性来规定对数字类型的限定：</p>
+<ul>
+<li>max - 规定允许的最大值</li>
+<li>min - 规定允许的最小值</li>
+<li>step - 规定合法的数字间隔</li>
+<li>value - 规定默认值</li>
+</ul>
+<hr>
+<h2 id="Input-类型-search"><a href="#Input-类型-search" class="headerlink" title="Input 类型: search"></a>Input 类型: search</h2><p>search 类型用于搜索域，比如站点搜索或 Google 搜索。 实例</p>
+<p>定义一个搜索字段 (类似站点搜索或者Google搜索):</p>
+<p>Search Google: <code>&lt;input type=&quot;search&quot; name=&quot;googlesearch&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-tel"><a href="#Input-类型-tel" class="headerlink" title="Input 类型: tel"></a>Input 类型: tel</h2><h2 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h2><p>定义输入电话号码字段:</p>
+<p>电话号码: <code>&lt;input type=&quot;tel&quot; name=&quot;usrtel&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-time"><a href="#Input-类型-time" class="headerlink" title="Input 类型: time"></a>Input 类型: time</h2><p>time 类型允许你选择一个时间。</p>
+<h2 id="实例-9"><a href="#实例-9" class="headerlink" title="实例"></a>实例</h2><p>定义可输入时间控制器（无时区）：</p>
+<p>选择时间: <code>&lt;input type=&quot;time&quot; name=&quot;usr_time&quot;&gt;</code></p>
+<hr>
+<h2 id="Input-类型-url"><a href="#Input-类型-url" class="headerlink" title="Input 类型: url"></a>Input 类型: url</h2><p>url 类型用于应该包含 URL 地址的输入域。 在提交表单时，会自动验证 url 域的值。</p>
+<h2 id="实例-10"><a href="#实例-10" class="headerlink" title="实例"></a>实例</h2><p>定义输入URL字段:</p>
+<p>添加您的主页: <code>&lt;input type=&quot;url&quot; name=&quot;homepage&quot;&gt;</code></p>
+<p><strong>提示:</strong> iPhone 中的 Safari 浏览器支持 url 输入类型，并通过改变触摸屏键盘来配合它（添加 .com 选项）。</p>
+<hr>
+<h2 id="Input-类型-week"><a href="#Input-类型-week" class="headerlink" title="Input 类型: week"></a>Input 类型: week</h2><p>week 类型允许你选择周和年。</p>
+<h2 id="实例-11"><a href="#实例-11" class="headerlink" title="实例"></a>实例</h2><p>定义周和年 (无时区):</p>
+<p>选择周: <code>&lt;input type=&quot;week&quot; name=&quot;week_year&quot;&gt;</code></p>
+<hr>
+<h2 id="HTML5-lt-input-gt-标签"><a href="#HTML5-lt-input-gt-标签" class="headerlink" title="HTML5 &lt;input&gt; 标签"></a>HTML5 <code>&lt;input&gt;</code> 标签</h2><p>标签</p>
+<p>描述</p>
+<p>描述input输入器</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/02/mysql-%E5%BA%8F%E5%88%97%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            mysql-序列使用
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/12/css-%E7%AE%80%E4%BB%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">css-简介</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

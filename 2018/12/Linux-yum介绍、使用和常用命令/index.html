@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Linux-yum介绍、使用和常用命令 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Linux-yum介绍、使用和常用命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Linux-yum介绍、使用和常用命令
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/Linux-yum%E4%BB%8B%E7%BB%8D%E3%80%81%E4%BD%BF%E7%94%A8%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2018-12-14T08:51:15.000Z" itemprop="datePublished">2018-12-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="什么是YUM"><a href="#什么是YUM" class="headerlink" title="什么是YUM"></a>什么是YUM</h2><p>YUM，全称Yellow dog Updater, Modifier，是一个自由、开源的命令行软件包管理工具，运行在基于RPM包管理的的Linux操作系统（例如RedHat、CentOS、Suse等）。 基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。 yum 主要是更方便的添加、删除、更新RPM包，<strong>自动解决</strong>软件包之间的<strong>依赖关系</strong>，方便系统更新及软件管理。yum 通过软件仓库（repository）进行软件的下载、安装等，软件仓库可以是一个 HTTP 或 FTP 站点，也可以是一个本软件池，资源仓库也可以是多个，在 /etc/yum.conf 文件中进行相关配置即可。在yum的资源库中，会包括 RPM 的头信息（header），头信息中包括了软件的功能描述、依赖关系等。通过分析这些信息，yum 计算出依赖关系并进行相关的升级、安装、删除等操作。</p>
+<hr>
+<h2 id="yum的命令"><a href="#yum的命令" class="headerlink" title="yum的命令"></a>yum的命令</h2><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>命令格式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum [options] [<span class="built_in">command</span>] [package ...]</span><br></pre></td></tr></table></figure>
+<p>options：可选，选项包括-h（帮助），-y（当安装过程提示选择全部为”yes”），-q（不显示安装的过程）等等。<br>command：要进行的操作。<br>package操作的对象。</p>
+<p>常用选项(options)：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-h, --<span class="built_in">help</span>         <span class="comment">#显示帮助信息</span></span><br><span class="line">-t, --tolerant     <span class="comment">#容错</span></span><br><span class="line">-C, --cacheonly    <span class="comment">#完全从系统缓存中运行，不更新缓存</span></span><br><span class="line">-c [config file], --config=[config file]      <span class="comment">#本地配置文件</span></span><br><span class="line">-R [minutes], --randomwait=[minutes]          <span class="comment">#命令最大等待时间</span></span><br><span class="line">-d [debug level], --debuglevel=[debug level]  <span class="comment">#设置调试级别</span></span><br><span class="line">-e [error level], --errorlevel=[error level]  <span class="comment">#设置错误等级</span></span><br><span class="line">-q, --quiet        <span class="comment">#退出运行</span></span><br><span class="line">-v, --verbose      <span class="comment">#详细模式</span></span><br><span class="line">-y, --assumeyes    <span class="comment">#对所有交互提问都回答 yes</span></span><br></pre></td></tr></table></figure>
+
+
+<p>命令列表(command)：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">check         check         <span class="comment">#检测 rpmdb 是否有问题</span></span><br><span class="line">check-update  <span class="comment">#检查可更新的包</span></span><br><span class="line">clean         <span class="comment">#清除缓存的数据</span></span><br><span class="line">deplist       <span class="comment">#显示包的依赖关系</span></span><br><span class="line">distribution-synchronization  <span class="comment">#将已安装的包同步到最新的可用版本</span></span><br><span class="line">downgrade     <span class="comment">#降级一个包</span></span><br><span class="line">erase         <span class="comment">#删除包</span></span><br><span class="line">groupinfo     <span class="comment">#显示包组的详细信息</span></span><br><span class="line">groupinstall  <span class="comment">#安装指定的包组</span></span><br><span class="line">grouplist     <span class="comment">#显示可用包组信息</span></span><br><span class="line">groupremove   <span class="comment">#从系统删除已安装的包组</span></span><br><span class="line"><span class="built_in">help</span>          <span class="comment">#删除帮助信息</span></span><br><span class="line"><span class="built_in">history</span>       <span class="comment">#显示或使用交互历史</span></span><br><span class="line">info          <span class="comment">#显示包或包组的详细信息</span></span><br><span class="line">install       <span class="comment">#安装包</span></span><br><span class="line">list          <span class="comment">#显示可安装或可更新的包</span></span><br><span class="line">makecache     <span class="comment">#生成元数据缓存</span></span><br><span class="line">provides      <span class="comment">#搜索特定包文件名</span></span><br><span class="line">reinstall     <span class="comment">#重新安装包</span></span><br><span class="line">repolist      <span class="comment">#显示已配置的资源库</span></span><br><span class="line">resolvedep    <span class="comment">#指事实上依赖</span></span><br><span class="line">search        <span class="comment">#搜索包</span></span><br><span class="line">shell         <span class="comment">#进入yum的shell提示符</span></span><br><span class="line">update        <span class="comment">#更新系统中的包</span></span><br><span class="line">upgrade       <span class="comment">#升级系统中的包</span></span><br><span class="line">version       <span class="comment">#显示机器可用源的版本</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询功能："><a href="#查询功能：" class="headerlink" title="查询功能："></a>查询功能：</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">yum \[list | info | search | provides | whatprovides\] 参数</span><br><span class="line"></span><br><span class="line">$ yum [option] [查询工作项目] [相关参数]</span><br><span class="line">选项与参数：</span><br><span class="line">[option]：主要的选项，包括有：</span><br><span class="line">  -y ：当 yum 要等待使用者输入时，这个选项可以自动提供 yes 的回应；</span><br><span class="line">  --installroot=/some/path ：将该软件安装在 /some/path 而不使用默认路径</span><br><span class="line">[查询工作项目] [相关参数]：这方面的参数有：</span><br><span class="line">  search  ：搜寻某个软件名称或者是描述 (description) 的重要关键字；</span><br><span class="line">  list    ：列出目前 yum 所管理的所有的软件名称与版本，有点类似 rpm -qa；</span><br><span class="line">  info    ：同上，不过有点类似 rpm -qai 的运行结果；</span><br><span class="line">  provides：从文件去搜寻软件！类似 rpm -qf 的功能！</span><br><span class="line"></span><br><span class="line">范例一：搜寻git相关的软件有哪些？</span><br><span class="line">$ yum search git</span><br><span class="line"></span><br><span class="line">范例二：找出 git 这个软件的功能为何</span><br><span class="line">$ yum info git</span><br><span class="line"></span><br><span class="line">范例三：列出 yum 服务器上面提供的所有软件名称</span><br><span class="line">$ yum list</span><br><span class="line"></span><br><span class="line">范例四：列出目前服务器上可供本机进行升级的软件有哪些？</span><br><span class="line">$ yum list updates  &lt;==一定要是 updates 喔！</span><br><span class="line"></span><br><span class="line">范例五：列出提供 passwd 这个文件的软件有哪些</span><br><span class="line">$ yum provides passwd</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装-升级功能"><a href="#安装-升级功能" class="headerlink" title="安装/升级功能"></a>安装/升级功能</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">yum \[install | update | groupinstall | groupupdate\] 软件</span><br><span class="line"></span><br><span class="line">$ yum [option] [查询工作项目] [相关参数]</span><br><span class="line">选项与参数：</span><br><span class="line">  install ：后面接要安装的软件！</span><br><span class="line">  groupinstall : 组包安装，后面接软件包组</span><br><span class="line">  update  ：后面接要升级的软件，若要整个系统都升级，就直接 update 即可</span><br><span class="line">  groupupdate ： 组包升级</span><br><span class="line"></span><br><span class="line">范例一：安装git</span><br><span class="line">$ yum install git</span><br><span class="line"></span><br><span class="line">范例二：升级真个系统的软件</span><br><span class="line">$ yum update</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="移除功能"><a href="#移除功能" class="headerlink" title="移除功能"></a>移除功能</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum [remove | groupremove] 软件</span><br><span class="line"></span><br><span class="line">$ yum remove git</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a>清除缓存</h4><p>yum 会把下载的软件包和header存储在cache中，而不会自动删除。如果我们觉得它们占用了磁盘空间，可以使用yum clean指令进行清除，更精确的用法是yum clean headers清除header，yum clean packages清除下载的rpm包，yum clean all 清除所有 yum [clean]</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.清除缓存目录(/var/cache/yum)下的软件包</span><br><span class="line">$ yum clean packages</span><br><span class="line"></span><br><span class="line">2.清除缓存目录(/var/cache/yum)下的 headers</span><br><span class="line">$ yum clean headers</span><br><span class="line"></span><br><span class="line">3.清除缓存目录(/var/cache/yum)下旧的 headers</span><br><span class="line">$ yum clean oldheaders</span><br><span class="line"></span><br><span class="line">4.清除缓存目录(/var/cache/yum)下的软件包及旧的headers</span><br><span class="line">$ yum clean, yum clean all (= yum clean packages; yum clean oldheaders)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="yum的配置"><a href="#yum的配置" class="headerlink" title="yum的配置"></a>yum的配置</h2><p>yum 的配置文件分为main 和repository ：</p>
+<ul>
+<li>main:定义了全局配置选项，该文件只有一个。通常位于 /etc/yum.conf</li>
+<li>repository:定义了源服务器的具体配置，可能是一或多个。通常位于 /etc/yum.repo.d 目录</li>
+</ul>
+<h4 id="配置文件main"><a href="#配置文件main" class="headerlink" title="配置文件main"></a>配置文件main</h4><p>可以通过以下命令查看yum的配置：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/yum.conf</span><br></pre></td></tr></table></figure>
+
+<p>主要配置项如下：</p>
+<p>[main]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># yum 的缓存目录，用于存储下载的 RPM 包和数据库</span><br><span class="line">cachedir&#x3D;&#x2F;var&#x2F;cache&#x2F;yum&#x2F;$basearch&#x2F;$releasever</span><br><span class="line"></span><br><span class="line"># 安装完成后是否保留软件包，0为不保留（默认为0），1为保留</span><br><span class="line">keepcache&#x3D;0</span><br><span class="line">   </span><br><span class="line"># Debug 信息输出等级，范围为0-10，默认为2</span><br><span class="line">debuglevel&#x3D;2</span><br><span class="line"></span><br><span class="line"># yum 日志文件位置，用户通过该文件查询做过的更新   </span><br><span class="line">logfile&#x3D;&#x2F;var&#x2F;log&#x2F;yum.log</span><br><span class="line">   </span><br><span class="line"># 是否只安装和系统架构匹配的软件包。可选项为：1､0，默认为1</span><br><span class="line"># 设置为 1 时不会将 i686 的软件包安装在适合i386的系统中</span><br><span class="line">exactarch&#x3D;1</span><br><span class="line"></span><br><span class="line"># update 设置，是否允许更新陈旧的 RPM 包，相当于 upgrade</span><br><span class="line">obsoletes&#x3D;1</span><br><span class="line">   </span><br><span class="line"># 是否进行 GPG(GNU Private Guard) 校验，以确定 RPM 包的来源是有效和安全</span><br><span class="line"># 当在这个选项设置在[main]部分，则对每个 repository 都有效</span><br><span class="line">plugins&#x3D;1</span><br><span class="line"></span><br><span class="line"># 是否启用插件，默认1为允许，0表示不允许</span><br><span class="line">gpgcheck&#x3D;1</span><br><span class="line">   </span><br><span class="line"># 排除某些软件在升级名单之外，可以用通配符，各个项目用空格隔开</span><br><span class="line">exclude&#x3D;*.i?86 kernel kernel-xen kernel-debug</span><br><span class="line"></span><br><span class="line"># 可同时安装多少程序包   </span><br><span class="line">installonly_limit&#x3D;5</span><br><span class="line"></span><br><span class="line"># Bug 追踪路径   </span><br><span class="line">bugtracker_url&#x3D;http:&#x2F;&#x2F;bugs.centos.org&#x2F;set_project.php?project_id&#x3D;16&amp;ref&#x3D;http:&#x2F;&#x2F;bugs.centos.org&#x2F;bug_report_page.php?category&#x3D;yum</span><br><span class="line"></span><br><span class="line"># 当前发行版版本号   </span><br><span class="line">distroverpkg&#x3D;centos-release</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置目录repository"><a href="#配置目录repository" class="headerlink" title="配置目录repository"></a>配置目录repository</h4><p>在yum.repos.d 目录下存放的就是yum源的设定文件。 查看对应目录下的文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo</span><br><span class="line">[base]</span><br><span class="line">name&#x3D;CentOS-$releasever - Base</span><br><span class="line">mirrorlist&#x3D;http:&#x2F;&#x2F;mirrorlist.centos.org&#x2F;?release&#x3D;$releasever&amp;arch&#x3D;$basearch&amp;repo&#x3D;os&amp;infra&#x3D;$infra</span><br><span class="line">#baseurl&#x3D;http:&#x2F;&#x2F;mirror.centos.org&#x2F;centos&#x2F;$releasever&#x2F;os&#x2F;$basearch&#x2F;</span><br><span class="line">gpgcheck&#x3D;1</span><br><span class="line">gpgkey&#x3D;file:&#x2F;&#x2F;&#x2F;etc&#x2F;pki&#x2F;rpm-gpg&#x2F;RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>[base]：代表容器的名字！中刮号一定要存在，里面的名称则可以随意取。但是不能有两个相同的容器名称， 否则 yum 会不晓得该到哪里去找容器相关软件清单文件。</li>
+<li>name：只是说明一下这个容器的意义而已，重要性不高！</li>
+<li>mirrorlist=：列出这个容器可以使用的映射站台，如果不想使用，可以注解到这行；</li>
+<li>baseurl=：这个最重要，因为后面接的就是容器的实际网址！ mirrorlist 是由 yum 程序自行去捉映射站台， baseurl 则是指定固定的一个容器网址！我们刚刚找到的网址放到这里来啦！</li>
+<li>enable=1：就是让这个容器被启动。如果不想启动可以使用 enable=0 喔！</li>
+<li>gpgcheck=1：还记得 RPM 的数码签章吗？这就是指定是否需要查阅 RPM 文件内的数码签章！</li>
+<li>gpgkey=：就是数码签章的公钥档所在位置！使用默认值即可</li>
+</ul>
+<p>注意：手工修改repo文件后，需要更新缓存，命令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2018/12/NodeJs-Buffer%EF%BC%88%E7%BC%93%E5%86%B2%E5%99%A8%EF%BC%89/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            NodeJs-Buffer（缓冲器）
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/NodeJs-child_precess%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">NodeJs-child_precess子进程的基础使用方法</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

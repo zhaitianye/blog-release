@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    网站前端的性能优化 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-网站前端的性能优化"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  网站前端的性能优化
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/09/%E7%BD%91%E7%AB%99%E5%89%8D%E7%AB%AF%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-09-21T09:41:42.000Z" itemprop="datePublished">2019-09-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTML/">HTML</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>首屏作为直面用户的第一屏，其重要性不言而喻，如何加快加载的速度是非常重要的一课。</p>
+<ol>
+<li><h1 id="用户期待的速度体验"><a href="#用户期待的速度体验" class="headerlink" title="用户期待的速度体验"></a>用户期待的速度体验</h1></li>
+</ol>
+<p>2018 年 8 月，百度搜索资源平台发布的《百度移动搜索落地页体验白皮书 4.0 》中提到：页面的首屏内容应在 1.5 秒内加载完成。 也许有人有疑惑：为什么是 1.5 秒内？哪些方式可加快加载速度？以下将为您解答这些疑问！ 移动互联网时代，用户对于网页的打开速度要求越来越高。百度用户体验部研究表明，页面放弃率。 根据百度用户体验部的研究结果来看，普通用户期望且能够接受的页面加载时间在 3 秒以内。若页面的加载时间过慢，用户就会失去耐心而选择离开，这对用户和站长来说都是一大损失。 百度搜索资源平台有 “闪电算法” 的支持，为了能够保障用户体验，给予优秀站点更多面向用户的机会，“闪电算法”在 2017 年 10 月初上线。 闪电算法 的具体内容如下： 移动网页首屏在 2 秒之内完成打开的，在移动搜索下将获得提升页面评价优待，获得流量倾斜；同时，在移动搜索页面首屏加载非常慢（3 秒及以上）的网页将会被打压。</p>
+<ol start="2">
+<li><h1 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h1></li>
+</ol>
+<p>主要问题：</p>
+<ul>
+<li>第一个文章列表接口用了 4.42 秒</li>
+<li>其他的后端接口速度也不快</li>
+<li>另外 js css 等静态的文件也很大，请求的时间也很长</li>
+</ul>
+<p>我还用了 Lighthouse 来测试和分析我的网站。</p>
+<ol start="2">
+<li><h1 id="优化之路"><a href="#优化之路" class="headerlink" title="优化之路"></a>优化之路</h1></li>
+</ol>
+<p>网页速度优化的方法实在太多，本文只说本次优化用到的方法。</p>
+<h2 id="2-1-前端优化"><a href="#2-1-前端优化" class="headerlink" title="2.1 前端优化"></a>2.1 前端优化</h2><p>本项目前端部分是用了 react 和 antd，但是 webpack 用的还是 3.8.X 。</p>
+<h4 id="2-1-1-webpack-打包优化"><a href="#2-1-1-webpack-打包优化" class="headerlink" title="2.1.1 webpack 打包优化"></a>2.1.1 webpack 打包优化</h4><p>因为 webpack4 对打包做了很多优化，比如 Tree-Shaking ，所以我用最新的 react-create-app 重构了一次项目，把项目升级了一遍，所有的依赖包都是目前最新的稳定版了，webpack 也升级到了 4.28.3 。 用最新 react-create-app 创建的项目，很多配置已经是很好了的，笔者只修改了两处地方。</p>
+<ol>
+<li><p>打包配置修改了 webpack.config.js 的这一行代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Source maps are resource heavy and can cause out of memory issue for large source files.</span><br><span class="line">const shouldUseSourceMap &#x3D; process.env.GENERATE_SOURCEMAP !&#x3D;&#x3D; &#39;false&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 把上面的代码修改为： </span><br><span class="line">const shouldUseSourceMap &#x3D; process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;production&#39; ? false : true;</span><br></pre></td></tr></table></figure>
+<p>生产环境下，打包去掉 SourceMap，静态文件就很小了，从 13M 变成了 3M 。</p>
+</li>
+<li><p>还修改了图片打包大小的限制，这样子小于 40K 的图片都会变成 base64 的图片格式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      test: [<span class="regexp">/.bmp$/</span>, /.gif$/, /.jpe?g$/, /.png$/,/.jpg$/,/.svg$/],</span><br><span class="line">      loader: <span class="built_in">require</span>.resolve(<span class="string">'url-loader'</span>),</span><br><span class="line">      options: &#123;</span><br><span class="line">            limit: <span class="number">40000</span>, <span class="comment">// 把默认的 10000 修改为 40000</span></span><br><span class="line">            name: <span class="string">'static/media/[name].[hash:8].[ext]'</span>,</span><br><span class="line">      &#125;,</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-2-去掉没用的文件"><a href="#2-1-2-去掉没用的文件" class="headerlink" title="2.1.2 去掉没用的文件"></a>2.1.2 去掉没用的文件</h4></li>
+</ol>
+<p>比如之前可能觉得会有用的文件，后面发现用不到了，注释或者删除，比如 reducers 里面的 home 模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">import</span> &#123; connectRouter &#125; <span class="keyword">from</span> <span class="string">'connected-react-router'</span></span><br><span class="line"><span class="comment">// import &#123; home &#125; from './module/home'</span></span><br><span class="line"><span class="keyword">import</span> &#123; user &#125; <span class="keyword">from</span> <span class="string">'./module/user'</span></span><br><span class="line"><span class="keyword">import</span> &#123; articles &#125; <span class="keyword">from</span> <span class="string">'./module/articles'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> rootReducer = <span class="function">(<span class="params">history</span>) =&gt;</span> combineReducers(&#123;</span><br><span class="line"> <span class="comment">// home, </span></span><br><span class="line">  user,</span><br><span class="line">  articles,</span><br><span class="line">  router: connectRouter(history)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-3-图片处理"><a href="#2-1-3-图片处理" class="headerlink" title="2.1.3 图片处理"></a>2.1.3 图片处理</h4><ul>
+<li>把一些静态文件再用 photoshop 换一种格式或者压缩了一下， 比如 logo 图片，原本 111k，压缩后是 23K。</li>
+<li>首页的文章列表图片，修改为懒加载的方式加载。</li>
+</ul>
+<p>之前因为不想为了个懒加载功能而引用一个插件，所以想自己实现，看了网上关于图片懒加载的一些代码，再结合本项目，实现了一个图片懒加载功能，加入了 事件的节流（throttle）与防抖（debounce）。 代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fn 是事件回调, delay 是时间间隔的阈值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// last 为上一次触发回调的时间, timer 是定时器</span></span><br><span class="line">  <span class="keyword">let</span> last = <span class="number">0</span>,</span><br><span class="line">    timer = <span class="literal">null</span>;</span><br><span class="line">  <span class="comment">// 将throttle处理结果当作函数返回</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 保留调用时的 this 上下文</span></span><br><span class="line">    <span class="keyword">let</span> context = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// 保留调用时传入的参数</span></span><br><span class="line">    <span class="keyword">let</span> args = <span class="built_in">arguments</span>;</span><br><span class="line">    <span class="comment">// 记录本次触发回调的时间</span></span><br><span class="line">    <span class="keyword">let</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断上次触发的时间和本次触发的时间差是否小于时间间隔的阈值</span></span><br><span class="line">    <span class="keyword">if</span> (now - last &lt; delay) &#123;</span><br><span class="line">      <span class="comment">// 如果时间间隔小于我们设定的时间间隔阈值，则为本次触发操作设立一个新的定时器</span></span><br><span class="line">      clearTimeout(timer);</span><br><span class="line">      timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        last = now;</span><br><span class="line">        fn.apply(context, args);</span><br><span class="line">      &#125;, delay);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果时间间隔超出了我们设定的时间间隔阈值，那就不等了，无论如何要反馈给用户一次响应</span></span><br><span class="line">      last = now;</span><br><span class="line">      fn.apply(context, args);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取可视区域的高度</span></span><br><span class="line"><span class="keyword">const</span> viewHeight = <span class="built_in">window</span>.innerHeight || <span class="built_in">document</span>.documentElement.clientHeight;</span><br><span class="line"><span class="comment">// 用新的 throttle 包装 scroll 的回调</span></span><br><span class="line"><span class="keyword">const</span> lazyload = throttle(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 获取所有的图片标签</span></span><br><span class="line">  <span class="keyword">const</span> imgs = <span class="built_in">document</span>.querySelectorAll(<span class="string">'#list .wrap-img img'</span>);</span><br><span class="line">  <span class="comment">// num 用于统计当前显示到了哪一张图片，避免每次都从第一张图片开始检查是否露出</span></span><br><span class="line">  <span class="keyword">let</span> num = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = num; i &lt; imgs.length; i++) &#123;</span><br><span class="line">    <span class="comment">// 用可视区域高度减去元素顶部距离可视区域顶部的高度</span></span><br><span class="line">    <span class="keyword">let</span> distance = viewHeight - imgs[i].getBoundingClientRect().top;</span><br><span class="line">    <span class="comment">// 如果可视区域高度大于等于元素顶部距离可视区域顶部的高度，说明元素露出</span></span><br><span class="line">    <span class="keyword">if</span> (distance &gt;= <span class="number">100</span>) &#123;</span><br><span class="line">      <span class="comment">// 给元素写入真实的 src，展示图片</span></span><br><span class="line">      <span class="keyword">let</span> hasLaySrc = imgs[i].getAttribute(<span class="string">'data-has-lazy-src'</span>);</span><br><span class="line">      <span class="keyword">if</span> (hasLaySrc === <span class="string">'false'</span>) &#123;</span><br><span class="line">        imgs[i].src = imgs[i].getAttribute(<span class="string">'data-src'</span>);</span><br><span class="line">        imgs[i].setAttribute(<span class="string">'data-has-lazy-src'</span>, <span class="literal">true</span>); <span class="comment">// </span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 前 i 张图片已经加载完毕，下次从第 i+1 张开始检查是否露出</span></span><br><span class="line">      num = i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>注意：给元素写入真实的 src 了之后，把 data-has-lazy-src 设置为 true ，是为了避免回滚的时候再设置真实的 src 时，浏览器会再请求这个图片一次，白白浪费服务器带宽。</p>
+<h2 id="2-2-后端优化"><a href="#2-2-后端优化" class="headerlink" title="2.2 后端优化"></a>2.2 后端优化</h2><p>后端用到的技术是 node、express 和 mongodb。 后端主要问题是接口速度很慢，特别是文章列表的接口，已经是分页请求数据了，为什么还那么慢呢 ？ 所以查看了接口返回内容之后，发现返回了很多列表不展示的字段内容，特别是文章内容都返回了，而文章内容是很大的，占用了很多资源与带宽，从而使接口消耗的时间加长。 从上图可以看出文章列表接口只要返回文章的 标题、描述、封面、查看数，评论数、点赞数和时间即可。 所以把不需要给前端展示的字段注释掉或者删除。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 待返回的字段</span></span><br><span class="line"><span class="keyword">let</span> fields = &#123;</span><br><span class="line">    title: <span class="number">1</span>,</span><br><span class="line">    <span class="comment">// author: 1,</span></span><br><span class="line">    <span class="comment">// keyword: 1,</span></span><br><span class="line">    <span class="comment">// content: 1,</span></span><br><span class="line">    desc: <span class="number">1</span>,</span><br><span class="line">    img_url: <span class="number">1</span>,</span><br><span class="line">    tags: <span class="number">1</span>,</span><br><span class="line">    category: <span class="number">1</span>,</span><br><span class="line">    <span class="comment">// state: 1,</span></span><br><span class="line">    <span class="comment">// type: 1,</span></span><br><span class="line">    <span class="comment">// origin: 1,</span></span><br><span class="line">    <span class="comment">// comments: 1,</span></span><br><span class="line">    <span class="comment">// like_User_id: 1,</span></span><br><span class="line">    meta: <span class="number">1</span>,</span><br><span class="line">    create_time: <span class="number">1</span>,</span><br><span class="line">    <span class="comment">// update_time: 1,</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>同样对其他的接口都做了这个处理。 后端做了处理之后，所有的接口速度都加快了，特别是文章列表接口，只用了 0.04 - 0.05 秒左右，相比之前的 4.3 秒，速度提高了 100 倍，简直不要太爽， 效果如下： 2.3 服务器优化 你以为前后端都优化一下，本文就完了 ？小兄弟，你太天真了，重头戏在后头 ！ 服务器用了 nginx 代理。 做的优化如下：</p>
+<ul>
+<li>隐藏 nginx 版本号</li>
+</ul>
+<p>一般来说，软件的漏洞都和版本相关，所以我们要隐藏或消除 web 服务对访问用户显示的各种敏感信息。 如何查看 nginx 版本号？直接看 network 的接口或者静态文件请求的 Response Headers 即可。 没有设置之前，可以看到版本号，比如我网站的版本号如下：</p>
+<p>Server: nginx/1.6.2</p>
+<p>设置之后，直接显示 nginx 了，没有了版本号 nginx 对于处理静态文件的效率要远高于 Web 框架，因为可以使用 gzip 压缩协议，减小静态文件的体积加快静态文件的加载速度、开启缓存和超时时间减少请求静态文件次数。 开启 gzip 压缩之后，请求的静态文件大小大约减少了 2 / 3 呢。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">#该指令用于开启或关闭gzip模块(on&#x2F;off)</span><br><span class="line"></span><br><span class="line">gzip_buffers 16 8k;</span><br><span class="line">#设置系统获取几个单位的缓存用于存储gzip的压缩结果数据流。16 8k代表以8k为单位，安装原始数据大小以8k为单位的16倍申请内存</span><br><span class="line"></span><br><span class="line">gzip_comp_level 6;</span><br><span class="line">#gzip压缩比，数值范围是1-9，1压缩比最小但处理速度最快，9压缩比最大但处理速度最慢</span><br><span class="line"></span><br><span class="line">gzip_http_version 1.1;</span><br><span class="line">#识别http的协议版本</span><br><span class="line"></span><br><span class="line">gzip_min_length 256;</span><br><span class="line">#设置允许压缩的页面最小字节数，页面字节数从header头得content-length中进行获取。默认值是0，不管页面多大都压缩。这里我设置了为256</span><br><span class="line"></span><br><span class="line">gzip_proxied any;</span><br><span class="line">#这里设置无论header头是怎么样，都是无条件启用压缩</span><br><span class="line"></span><br><span class="line">gzip_vary on;</span><br><span class="line">#在http header中添加Vary: Accept-Encoding ,给代理服务器用的</span><br><span class="line"></span><br><span class="line">gzip_types</span><br><span class="line">    text&#x2F;xml application&#x2F;xml application&#x2F;atom+xml application&#x2F;rss+xml application&#x2F;xhtml+xml image&#x2F;svg+xml</span><br><span class="line">    text&#x2F;javascript application&#x2F;javascript application&#x2F;x-javascript</span><br><span class="line">    text&#x2F;x-json application&#x2F;json application&#x2F;x-web-app-manifest+json</span><br><span class="line">    text&#x2F;css text&#x2F;plain text&#x2F;x-component</span><br><span class="line">    font&#x2F;opentype font&#x2F;ttf application&#x2F;x-font-ttf application&#x2F;vnd.ms-fontobject</span><br><span class="line">    image&#x2F;x-icon;</span><br><span class="line">#进行压缩的文件类型,这里特别添加了对字体的文件类型</span><br><span class="line"></span><br><span class="line">gzip_disable &quot;MSIE [1-6].(?!.*SV1)&quot;;</span><br><span class="line">#禁用IE 6 gzip</span><br><span class="line"></span><br><span class="line">设置 expires，设置缓存</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line">        location  &#x2F; &#123;</span><br><span class="line">            root   &#x2F;home&#x2F;blog&#x2F;blog-react&#x2F;build&#x2F;;</span><br><span class="line">            index  index.html;</span><br><span class="line">            try_files $uri $uri&#x2F; @router;</span><br><span class="line">            autoindex on;</span><br><span class="line">            expires 7d; # 缓存 7 天</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我重新刷新请求的时候是 2019 年 3 月 16 号，是否设置成功看如下几个字段就知道了：</p>
+<ol>
+<li>Staus Code 里面的 form memory cache 看出，文件是直接从本地浏览器本地请求到的，没有请求服务器。</li>
+<li>Cache-Control 的 max-age= 604800 看出，过期时间为 7 天。</li>
+<li>Express 是 2019 年 3 月 23 号过期，也是 7 天过期。</li>
+</ol>
+<p>比起优化之前，各项指标都提升了很大的空间。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/09/React-%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            React-路由跳转基本原理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/09/%E4%BC%98%E7%A7%80%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">优秀前端工程师的自检清单</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

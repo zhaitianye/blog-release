@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    20个好用的WebAPI |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-20个好用的WebAPI"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  20个好用的WebAPI
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/20%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84WebAPI/" class="article-date">
+  <time datetime="2019-06-14T04:19:06.000Z" itemprop="datePublished">2019-06-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTML/">HTML</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">9 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>本文列举了一些列比较不常见的 Web API，内容较多，所以有关兼容性的内容在本文不会出现，大家可以自己去查阅。 01、方法列表</p>
+<ul>
+<li>querySelector（元素向下查询，返回一个）</li>
+<li>querySelectorAll（元素向下查询，返回多个）</li>
+<li>closest（元素向上查询）</li>
+<li>dataset（获取元素以”data-“为前缀的属性集合）</li>
+<li>URLSearchParams（查询参数）</li>
+<li>hidden（隐藏元素）</li>
+<li>contenteditable（使元素可以被编辑）</li>
+<li>spellCheck（检查拼音）</li>
+<li>classList（类名控制器）</li>
+<li>getBoundingClientRect（元素空间结构详细信息）</li>
+<li>contains（判断是否包含指定元素）</li>
+<li>online state（网络状态）</li>
+<li>battery state（电池状态）</li>
+<li>vibration（设备震动）</li>
+<li>page visibility（页面可见性）</li>
+<li>deviceOrientation（陀螺仪）</li>
+<li>toDataUrl（画布内容转base64）</li>
+<li>customEvent（自定义事件）</li>
+<li>notification（桌面通知）</li>
+<li>fullScreen（全屏）</li>
+<li>orientation（屏幕方向）</li>
+</ul>
+<p>02、逐个击破</p>
+<h4 id="querySelector"><a href="#querySelector" class="headerlink" title="- querySelector"></a>- querySelector</h4><p>都9102年了，还在用getElementById吗😭 获取指定元素中匹配css选择器的元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 作用在document</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">"#nav"</span>); <span class="comment">// 获取文档中id="nav"的元素</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">".nav"</span>); <span class="comment">// 获取文档中class="nav"的元素</span></span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">"#nav li:first-child"</span>); <span class="comment">// 获取文档中id="nav"下面的第一个li元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以作用在其他元素</span></span><br><span class="line"><span class="keyword">let</span> nav = dodocument.querySelector(<span class="string">"#nav"</span>);</span><br><span class="line">nav.querySelector(<span class="string">"li"</span>); <span class="comment">// 如果有多个li的话，返回第一个li</span></span><br></pre></td></tr></table></figure>
+<p>注意：无论如何只返回一个元素，如果有多个素，那也只返第一个✅</p>
+<h4 id="querySelectorAll"><a href="#querySelectorAll" class="headerlink" title="- querySelectorAll"></a>- querySelectorAll</h4><p>获取指定元素中匹配css选择器的所有元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="built_in">document</span>.querySelectorAll(<span class="string">"li"</span>); <span class="comment">// NodeList(2) [li, li] 这里假设返回2个</span></span><br></pre></td></tr></table></figure>
+<p>注意：返回的值是一个类数组，无法使用数组的原生方法（forEach、map等），需 要转换一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(list).map();</span><br></pre></td></tr></table></figure>
+<h4 id="closest"><a href="#closest" class="headerlink" title="- closest"></a>- closest</h4><p>跟querySelector相反，该元素可以向上查询，也就是可以查询到父元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">"li"</span>).closest(<span class="string">"#nav"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="dataset"><a href="#dataset" class="headerlink" title="- dataset"></a>- dataset</h4><p>就跟原生微信小程序一样，能获取标签上以”<code>data-</code>“为前缀的属性集合：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p data-name=<span class="string">"蜘蛛侠"</span> data-age=<span class="string">"16"</span>&gt;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">document.querySelector("p").dataset; /</span><span class="regexp">/ &#123;name: "蜘蛛侠", age: "16"&#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意：虽然可以用getAttribute方法获取任何属性值，但是性质却不一样，这是开发规范问题，凡是自定义属性都要加上data-前缀哦</p>
+<h4 id="URLSearchParams"><a href="#URLSearchParams" class="headerlink" title="URLSearchParams"></a>URLSearchParams</h4><p>假设浏览器的url参数是 “?name=蜘蛛侠&amp;age=16”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new URLSearchParams(location.search).get(&quot;name&quot;); &#x2F;&#x2F; 蜘蛛侠</span><br></pre></td></tr></table></figure>
+<h4 id="hidden"><a href="#hidden" class="headerlink" title="- hidden"></a>- hidden</h4><p>这是一个html属性，规定元素是否隐藏，表现跟css的display: none一致：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div hidden&gt;我被隐藏了&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">document.querySelector("div").hidden = true /</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="contenteditable"><a href="#contenteditable" class="headerlink" title="- contenteditable"></a>- contenteditable</h4><p>可以使一个元素可以被用户编辑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p contenteditable&gt;我是P元素，但是我也可以被编辑&lt;&#x2F;p&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="speelcheck"><a href="#speelcheck" class="headerlink" title="- speelcheck"></a>- speelcheck</h4><p>也是一个html属性，规定输入的内容是否检查英文拼写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 默认就是true，可省略 --&gt;</span><br><span class="line">&lt;textarea spellcheck&#x3D;&quot;true&quot;&gt;&lt;&#x2F;textarea&gt;</span><br></pre></td></tr></table></figure>
+<p>设置不检查</p>
+<p><textarea spellcheck="false"></textarea></p>
+<h4 id="classList"><a href="#classList" class="headerlink" title="- classList"></a>- classList</h4><p>这是一个对象，该对象里封装了许多操作元素类名的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p class&#x3D;&quot;title&quot;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">let elem &#x3D; document.querySelector(&quot;p&quot;);</span><br><span class="line">&#x2F;&#x2F; 增加类名</span><br><span class="line">elem.classList.add(&quot;title-new&quot;); &#x2F;&#x2F; &quot;title title-new&quot;</span><br><span class="line">&#x2F;&#x2F; 删除类名</span><br><span class="line">elem.classList.remove(&quot;title&quot;); &#x2F;&#x2F; &quot;title-new&quot;</span><br><span class="line">&#x2F;&#x2F; 切换类名（有则删、无则增，常用于一些切换操作，如显示&#x2F;隐藏）</span><br><span class="line">elem.classList.toggle(&quot;title&quot;); &#x2F;&#x2F; &quot;title-new title&quot;</span><br><span class="line">&#x2F;&#x2F; 替换类名</span><br><span class="line">elem.classList.replace(&quot;title&quot;, &quot;title-old&quot;); &#x2F;&#x2F; &quot;title-new title-old&quot;</span><br><span class="line">&#x2F;&#x2F; 是否包含指定类名</span><br><span class="line">elem.classList.contains(&quot;title&quot;); &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+<h4 id="getBoundingClientRect"><a href="#getBoundingClientRect" class="headerlink" title="- getBoundingClientRect"></a>- getBoundingClientRect</h4><p>可以获取指定元素在当前页面的空间信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">elem.getBoundingClientRect();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回</span><br><span class="line">&#123;</span><br><span class="line">x: 604.875,</span><br><span class="line">y: 1312,</span><br><span class="line">width: 701.625,</span><br><span class="line">height: 31,</span><br><span class="line">top: 1312,</span><br><span class="line">right: 1306.5,</span><br><span class="line">bottom: 1343,</span><br><span class="line">left: 604.875</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：top是距离文档顶部的距离，y则是距离可视窗口（浏览器屏幕）的顶部距离，如果浏览器滚动，top值不变，y值会变</p>
+<h4 id="contains"><a href="#contains" class="headerlink" title="- contains"></a>- contains</h4><p>可以判断指定元素是否包含了指定的子元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">&lt;p&gt;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">document.querySelector(&quot;div&quot;).contains(document.querySelector(&quot;p&quot;)); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
+<h4 id="online-state"><a href="#online-state" class="headerlink" title="- online state"></a>- online state</h4><p>监听当前的网络状态变动，然后执行对应的方法：</p>
+<p>window.addEventListener(“online”, xxx);</p>
+<p>window.addEventListener(“offline”, () =&gt; {<br>alert(“你断网啦！”);<br>});</p>
+<h4 id="battery-state"><a href="#battery-state" class="headerlink" title="- battery state"></a>- battery state</h4><p>获取设备的电池状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">navigator.getBattery().then(battery &#x3D;&gt; console.log(battery));</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回</span><br><span class="line">&#123;</span><br><span class="line">charging, &#x2F;&#x2F; 是否在充电</span><br><span class="line">chargingTime, &#x2F;&#x2F; 充满电所需时间</span><br><span class="line">dischargingTime, &#x2F;&#x2F; 当前电量可使用时间</span><br><span class="line">level, 剩余电量</span><br><span class="line"></span><br><span class="line">onchargingchange, &#x2F;&#x2F; 监听充电状态变化</span><br><span class="line">onchargingtimechange, &#x2F;&#x2F; 监听充满电所需时间变化</span><br><span class="line">ondischargingtimechange, &#x2F;&#x2F; 监听当前电量可使用时间变化</span><br><span class="line">onlevelchange &#x2F;&#x2F; 监听电量变化</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用场景：提示用户电量已充满，或者为了让用户有安全感，电量低于<code>99%</code>的时候来个弹框提示”该充电啦”</p>
+<h4 id="vibration"><a href="#vibration" class="headerlink" title="- vibration"></a>- vibration</h4><p>嘻嘻，使设备进行震动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 震动一次</span><br><span class="line">navigator.vibrate(100);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 连续震动，震动200ms、暂停100ms、震动300ms</span><br><span class="line">navigator.vibrate([200, 100, 300]);</span><br></pre></td></tr></table></figure>
+<p>效果如下：不好意思你得用你自己的手握住手机才能感受得到; 使用场景：通过振动来提供感官反馈，比如太久没有触摸屏幕的时候连续<code>震动</code>提醒用户</p>
+<h4 id="page-visibility"><a href="#page-visibility" class="headerlink" title="- page visibility"></a>- page visibility</h4><p>顾名思义，这个<code>API</code>是用来监听页面可见性变化的，在<code>PC端</code>标签栏切换、最小化会触发、在<code>移动端</code>程序切到后台会触发，简单说就是页面消失了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"visibilitychange"</span>, () =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`页面可见性：<span class="subst">$&#123;<span class="built_in">document</span>.visibilityState&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="deviceOrientation"><a href="#deviceOrientation" class="headerlink" title="- deviceOrientation"></a>- deviceOrientation</h4><p>陀螺仪，也就是设备的方向，又名重力感应，该API在IOS设备上失效的解决办法，将域名协议改成https； 从左到右分别为alpha、beta、gamma:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"deviceorientation"</span>, event =&gt; &#123;</span><br><span class="line"><span class="keyword">let</span> &#123;</span><br><span class="line">alpha,</span><br><span class="line">beta,</span><br><span class="line">gamma</span><br><span class="line">&#125; = event;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`alpha：<span class="subst">$&#123;alpha&#125;</span>`</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`beta：<span class="subst">$&#123;beta&#125;</span>`</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`gamma：<span class="subst">$&#123;gamma&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>使用场景：页面上的某些元素需要根据手机摆动进行移动，达到视差的效果，比如王者荣耀进入游戏的那个界面，手机转动背景图会跟着动</p>
+<h4 id="toDataURL"><a href="#toDataURL" class="headerlink" title="- toDataURL"></a>- toDataURL</h4><p>这个canvas的API，作用是将画布的内容转换成一个base64的图片地址：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> canvas = <span class="built_in">document</span>.querySelector(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">let</span> context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 画东西</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> url = canvas.toDataURL(<span class="string">"image/png"</span>); <span class="comment">// 将画布内容转换成base64地址</span></span><br></pre></td></tr></table></figure>
+<h4 id="customEvent"><a href="#customEvent" class="headerlink" title="- customEvent"></a>- customEvent</h4><p>自定义事件，就跟vue里面的on跟emit一样； 监听自定义事件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"follow"</span>, event =&gt; &#123;</span><br><span class="line"><span class="built_in">console</span>.log(event.detail); <span class="comment">// 输出 &#123;name: "前端宇宙情报局"&#125;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>派发自定义事件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.dispatchEvent(<span class="keyword">new</span> CustomEvent(<span class="string">"follow"</span>, &#123;</span><br><span class="line">detail: &#123;</span><br><span class="line">name: <span class="string">"前端宇宙情报局"</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<h4 id="notification"><a href="#notification" class="headerlink" title="- notification"></a>- notification</h4><p>PC端的桌面通知，如网页端的微信，当收到消息时，右下角会出现一个通知（尽管你把浏览器最小化），因为这个通知时独立于浏览器的，是系统的一个原生控件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> notice = <span class="keyword">new</span> Notification(<span class="string">"前端宇宙情报局"</span>, &#123;</span><br><span class="line">body: <span class="string">"这20个不常用的Web API真的有用吗?，别问，问就是有用🈶"</span>,</span><br><span class="line">icon: <span class="string">"我的掘金头像"</span>,</span><br><span class="line">data: &#123;</span><br><span class="line">url: <span class="string">"https://www.baidu.com"</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击回调</span></span><br><span class="line">notice.onclick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">window</span>.open(notice.data.url); <span class="comment">// 当用户点击通知时，在浏览器打开百度网站</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：想要成功的调起通知，首先要用户的授权</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Notification.requestPermission(<span class="function"><span class="params">prem</span> =&gt;</span> &#123;</span><br><span class="line">prem == <span class="string">"granted"</span> <span class="comment">// 同意</span></span><br><span class="line">prem == <span class="string">"denied"</span> <span class="comment">// 拒绝</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>所以，再调用之前先向用户发起请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> permission = Notification.permission;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (permission == <span class="string">"granted"</span>) &#123;</span><br><span class="line"><span class="comment">// 已同意，开始发送通知</span></span><br><span class="line">...</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (permission == <span class="string">"denied"</span>) &#123;</span><br><span class="line"><span class="comment">// 不同意，发不了咯</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">// 其他状态，可以重新发送授权提示</span></span><br><span class="line">Notification.requestPermission();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="fullScreen"><a href="#fullScreen" class="headerlink" title="- fullScreen"></a>- fullScreen</h4><p>全屏不咯? 之前的一个项目刚好用上，不仅仅可以作用在documentElement上，还可以作用在指定元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@method </span>launchFullScreen 开启全屏</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param <span class="type">&#123;Object&#125;</span> </span>elem = document.documentElement 作用的元素</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> launchFullScreen = <span class="function">(<span class="params">elem = <span class="built_in">document</span>.documentElement</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="keyword">if</span>(elem.requestFullScreen) &#123;</span><br><span class="line">elem.requestFullScreen();</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(elem.mozRequestFullScreen) &#123;</span><br><span class="line">elem.mozRequestFullScreen();</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(elem.webkitRequestFullScreen) &#123;</span><br><span class="line">elem.webkitRequestFullScreen();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作用在documentElement上没啥可以介绍的咯，就相当于F11开启全屏： 就像效果图一样，会直接开启全屏，并且只显示指定的元素，元素的宽高填充了整个屏幕✅ 关闭全屏的时候需要注意的是，统一用document对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@method </span>exitFullScreen 关闭全屏</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> exitFullScreen = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">document</span>.exitFullscreen) &#123;</span><br><span class="line"><span class="built_in">document</span>.exitFullscreen();</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">document</span>.mozCancelFullScreen) &#123;</span><br><span class="line"><span class="built_in">document</span>.mozCancelFullScreen();</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">document</span>.webkitCancelFullScreen) &#123;</span><br><span class="line"><span class="built_in">document</span>.webkitCancelFullScreen();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用场景：需要让用户专注去做某件事，比如代码编辑区的全屏</p>
+<h4 id="orientation"><a href="#orientation" class="headerlink" title="- orientation"></a>- orientation</h4><p>可以监听用户手机设备的旋转方向变化： window.addEventListener(“orientationchange”, () =&gt; { document.body.innerHTML += <code>&lt;p&gt;屏幕旋转后的角度值：${window.orientation}&lt;/p&gt;</code>; }, false);</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/06/%E5%AF%B9%E9%9D%A2%E8%AF%95%E9%80%A0%E7%81%AB%E7%AE%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9C%8B%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            对面试造火箭的一些看法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/06/Node%E6%A8%A1%E5%9D%97%E4%B8%ADmodule.exports%E4%B8%8Eexports%E7%9A%84%E5%85%B3%E7%B3%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Node模块中module.exports与exports的关系</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

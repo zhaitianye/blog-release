@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Elevate-焦点图 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Elevate-焦点图"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Elevate-焦点图
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/Elevate-%E7%84%A6%E7%82%B9%E5%9B%BE/" class="article-date">
+  <time datetime="2017-05-02T13:50:48.000Z" itemprop="datePublished">2017-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS%E5%B7%A5%E5%85%B7/">JS工具</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">775</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">3 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="Elevate是一个图片局部放大js（移步官网，因为是国外网站所有有点慢）"><a href="#Elevate是一个图片局部放大js（移步官网，因为是国外网站所有有点慢）" class="headerlink" title="Elevate是一个图片局部放大js（移步官网，因为是国外网站所有有点慢）"></a>Elevate是一个图片局部放大js（移步<a href="http://www.elevateweb.co.uk" target="_blank" rel="noopener">官网</a>，因为是国外网站所有有点慢）</h2><p>elevateZoom 是一个定制性非常高的 jQuery 放大镜插件，可实现电子商务网站中查看大图的效果。它能够对一张图片或两张图片(一张缩略图和一张大图)实现放大效果。放大图片的位置可自定义设置，并且支持内缩放，使用放大镜镜头展示大图。它还内置了一个相册展示的模式，可同时展示多张可缩放的图片。它自带了淡入淡出、easing 等多种效果。</p>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><p>下面6种不同放大镜HTML结果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>默认效果<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_01"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>内置镜头<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_02"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>镜头聚焦<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_03"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>淡入/淡出设置<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_04"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>动画<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_05"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>鼠标滚动<span class="tag">&lt;/<span class="name">h1</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">"zoom_06"</span> <span class="attr">src</span>=<span class="string">'images/small/image1.png'</span> <span class="attr">data-zoom-image</span>=<span class="string">"images/large/image1.jpg"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><p>6中不同的放大镜效果代码都很简单，代码都已翻译注释：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'#zoom_01'</span>).elevateZoom(&#123;&#125;);<span class="comment">//默认效果 </span></span><br><span class="line"> </span><br><span class="line">$(<span class="string">'#zoom_02'</span>).elevateZoom(&#123; <span class="comment">//内置镜头 </span></span><br><span class="line">    zoomType: <span class="string">"inner"</span>,<span class="comment">//类型：内置镜头 </span></span><br><span class="line">    cursor: <span class="string">"crosshair"</span>, <span class="comment">//光标：十字 </span></span><br><span class="line">    zoomWindowFadeIn: <span class="number">500</span>,<span class="comment">//镜头窗口淡入速度 </span></span><br><span class="line">    zoomWindowFadeOut: <span class="number">750</span> <span class="comment">//镜头窗口淡出速度 </span></span><br><span class="line">&#125;); </span><br><span class="line"> </span><br><span class="line">$(<span class="string">"#zoom_03"</span>).elevateZoom(&#123; <span class="comment">//镜头聚焦 </span></span><br><span class="line">    zoomType: <span class="string">"lens"</span>,<span class="comment">//类型：透镜效果 </span></span><br><span class="line">    lensShape: <span class="string">"round"</span>, <span class="comment">//透镜形状：圆形 </span></span><br><span class="line">    lensSize: <span class="number">200</span> <span class="comment">//透镜尺寸：长和宽：200px </span></span><br><span class="line">&#125;); </span><br><span class="line"> </span><br><span class="line">$(<span class="string">"#zoom_04"</span>).elevateZoom(&#123; <span class="comment">//淡入/淡出设置 </span></span><br><span class="line">    zoomWindowFadeIn: <span class="number">500</span>,<span class="comment">//镜头窗口淡入速度 </span></span><br><span class="line">    zoomWindowFadeOut: <span class="number">500</span>,<span class="comment">//镜头窗口淡出速度 </span></span><br><span class="line">    lensFadeIn: <span class="number">500</span>,<span class="comment">//透镜淡入速度 </span></span><br><span class="line">    lensFadeOut: <span class="number">500</span><span class="comment">//透镜淡出速度 </span></span><br><span class="line">&#125;); </span><br><span class="line"> </span><br><span class="line">$(<span class="string">"#zoom_05"</span>).elevateZoom(&#123; <span class="comment">//动画 </span></span><br><span class="line">    easing: <span class="literal">true</span> <span class="comment">//是否开启动画效果 </span></span><br><span class="line">&#125;); </span><br><span class="line"> </span><br><span class="line">$(<span class="string">"#zoom_06"</span>).elevateZoom(&#123; <span class="comment">//鼠标滚动 </span></span><br><span class="line">    scrollZoom: <span class="literal">true</span> <span class="comment">//是否开启鼠标滚动 </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>参数</p>
+<p>描述</p>
+<p>默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">responsive</span><br><span class="line"></span><br><span class="line">Set to true to activate responsivenes. If you have a theme which changes size, or tablets which change orientation this is needed to be on. Possible Values:</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">scrollZoom</span><br><span class="line"></span><br><span class="line">Set to true to activate zoom on mouse scroll. Possible Values:</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">imageCrossfade</span><br><span class="line"></span><br><span class="line">Set to true to activate simultaneous crossfade of images on gallery change. Possible Values:</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">loadingIcon</span><br><span class="line"></span><br><span class="line">Set to the url of the spinner icon to activat</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">easing</span><br><span class="line"></span><br><span class="line">Set to true to activate easing.</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">easingType</span><br><span class="line"></span><br><span class="line">default easing type is easeOutExpo, (t&#x3D;&#x3D;d) ? b+c : c * (-Math.pow(2, -10 * t&#x2F;d) + 1) + b Extend jquery with other easing types before initiating the plugin and pass the easing type as a string value.</span><br><span class="line"></span><br><span class="line">zoomdefault</span><br><span class="line"></span><br><span class="line">#### easingDuration</span><br><span class="line"></span><br><span class="line">lensSize</span><br><span class="line"></span><br><span class="line">used when zoomType set to lens, when zoom type is set to window, then the lens size is auto calculated</span><br><span class="line"></span><br><span class="line">200</span><br><span class="line"></span><br><span class="line">zoomWindowWidth</span><br><span class="line"></span><br><span class="line">Width of the zoomWindow (Note: zoomType must be</span><br><span class="line"></span><br><span class="line">400</span><br><span class="line"></span><br><span class="line">zoomWindowHeight</span><br><span class="line"></span><br><span class="line">Height of the zoomWindow (Note: zoomType must be</span><br><span class="line"></span><br><span class="line">400</span><br><span class="line"></span><br><span class="line">zoomWindowOffetx</span><br><span class="line"></span><br><span class="line">x-axis offset of the zoom window</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">zoomWindowOffety</span><br><span class="line"></span><br><span class="line">y-axis offset of the zoom window</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">zoomWindowPosition</span><br><span class="line"></span><br><span class="line">Once positioned, use zoomWindowOffsetx and zoomWindowOffsety to adjust Possible values: 1-16</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">zoomTintFadeIn</span><br><span class="line"></span><br><span class="line">Set as a number e.g 200 for speed of Tint fadeIn</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">zoomTintFadeOut</span><br><span class="line"></span><br><span class="line">Set as a number e.g 200 for speed of Tint fadeOut</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">borderSize</span><br><span class="line"></span><br><span class="line">Border Size of the ZoomBox - Must be set here as border taken into account for plugin calculations</span><br><span class="line"></span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">gallery</span><br><span class="line"></span><br><span class="line">This assigns a set of gallery links to the zoom image</span><br><span class="line"></span><br><span class="line">null</span><br><span class="line"></span><br><span class="line">tint</span><br><span class="line"></span><br><span class="line">enable a tint overlay, other options: true</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line"></span><br><span class="line">tintColour</span><br><span class="line"></span><br><span class="line">colour of the tint, can be #hex, word (red, blue), or rgb(x, x, x)</span><br><span class="line"></span><br><span class="line">#333</span><br><span class="line"></span><br><span class="line">tintOpacity</span><br><span class="line"></span><br><span class="line">0.4</span><br><span class="line"></span><br><span class="line">opacity of the tint</span><br><span class="line"></span><br><span class="line">zoomLens</span><br><span class="line"></span><br><span class="line">set to false to hide the Lens</span><br><span class="line"></span><br><span class="line">true</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS%E5%B7%A5%E5%85%B7/" rel="tag">JS工具</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/05/js-%E8%AF%AD%E5%8F%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            js-语句
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/05/ECharts-%E9%83%A8%E7%BD%B2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ECharts-部署</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    正则极简教程 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-正则极简教程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  正则极简教程
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/%E6%AD%A3%E5%88%99%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/" class="article-date">
+  <time datetime="2019-07-09T05:45:01.000Z" itemprop="datePublished">2019-07-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>正则是字符串匹配模式，在处理文本时很有用。最常见的操作就是用于查找和替换。</p>
+<p>说到处理文本，其实我们每天敲的代码就是文本，因此常用的代码编辑器的查找替换工具基本都支持正则语法的。</p>
+<p>先说明一下，接下来的内容都以《We will rock you》的歌词测试文本。</p>
+<p>使用的正则测试工具是Regex 101[1]。</p>
+<p>这里建议读者看的过程中，同时打开该网站，把歌词贴进去，每个案例都验证一遍。也建议稍微改动一下正则，看看匹配结果仍是否与自己的理解一致。跟着动手，学习效果要好一些。</p>
+<h3 id="1-精确匹配"><a href="#1-精确匹配" class="headerlink" title="1. 精确匹配"></a>1. 精确匹配</h3><p>正则是用来描述字符串的一种模式（pattern），或者说规律。最平凡的用法，就是精确查找。比如我要找到歌词中的所有“the”。正则写成 the 即可。</p>
+<p>上图只找到了一个 the，而不是所有的。这是因为正则本身是分两部分的，一部分是模式，另一部分是修饰符（flags，或者叫标志位）。一个常用的修饰符是 g，它单词 global 的简写，表示全局查找。</p>
+<p>此时，我们找到了所有“the”。接着我们再找所有“we”。</p>
+<p>然而，同时我们也希望找到文本中“We”，w 字符是大写的。此时可以用另外常见的标识符 i，单词 ignoreCase 或者 insensitive 的首字母，表示忽略大小写。</p>
+<p>无论 the 或 we，这种模式匹配都是精确匹配，如果正则只是输入什么就查找什么，那么其存在的意义就没有那么大。而它的强大之处在于能实现模糊匹配。</p>
+<h3 id="2-横向模糊匹配"><a href="#2-横向模糊匹配" class="headerlink" title="2. 横向模糊匹配"></a>2. 横向模糊匹配</h3><p>比如我们想找到歌词中所有连续出现的“e”。</p>
+<p>图中正则形如 p{m,n}，表示 p 至少连续出现 m 到 n 次（包括m、n）。p 可以是一个子模式，不一定只是一个字符。</p>
+<p>上图中，为了测试我修改了部分歌词。其中正则使用了括号，括号如你所料一样，起到了高优先级的作用。表示 noise 这个整体重复出现了 1 到 3 次。</p>
+<p>不知道此时你是否有疑问，{1,3} 表示 1 到 3 次。为啥上面的匹配结果只有一个呢？而不是匹配到 3 个 noise。又或者 noisenoise 和 noise，这两个结果呢？</p>
+<p>这是因为量词有贪婪和惰性之分。{1,3} 这个量词是贪婪的，能满足条件的话，它会尽可能多地匹配。可以在量词的后面加个问号，让其变为惰性的。</p>
+<p>确实够懒得的，找到一个就满足了。量词后面的这个问号，彷佛是在问量词，“可以别再贪了吗？”</p>
+<p>量词的含义清楚了，下来我们来看一些简写形式。</p>
+<p>•* 等价于{0,}。即任意多个。</p>
+<p>•+ 等价于{1,}。即至少一个</p>
+<p>•? 等价于{0,1}。即有一个或者没有</p>
+<p>•{m} 等价于{m,m}</p>
+<p>这里要说明的是 ? 这时就可能两个含义。即一个表示惰性模式，一个表示量词。</p>
+<p>其实二者很好区分，在量词之后的 ? 才表示惰性匹配。比如正则 bo??y，第一个问号表示量词 {0,1}，第二个表示量词是惰性的。</p>
+<p>量词的存在，能让正则可以模糊匹配，即很少的模式代码就能匹配一长串。我称之为横向模糊匹配。还有一种纵向的模糊匹配。</p>
+<h3 id="3-纵向模糊匹配"><a href="#3-纵向模糊匹配" class="headerlink" title="3. 纵向模糊匹配"></a>3. 纵向模糊匹配</h3><p>假设歌词中有几处不小心把“rock”写成“ruck”。我们需要找到二者，可以使用字符集 r[ou]ck。效果如下：</p>
+<p>其中 [ou]，这种方括号括起来的模式就是字符集。它是一个集合，匹配“o”或者“u”。又比如我们要找到所有 a 到 e 的字符，可以写成 [abcde]。这种连续的字符也可以简写成 [a-e]。</p>
+<p>字符集是集合的意思，而集合有补集。正则里在方括号内开头加上脱字符，来表示取反[^a-e]，匹配一个不是 a、b、c、d、e 的某字符。</p>
+<p>字符类的含义搞清楚了，下来我们来看一下常见的简写形式</p>
+<p>•d 等价于 [0-9]。表示是一位数字。digit 的首字母。</p>
+<p>•D 等价于 [^0-9]。</p>
+<p>•w 等价于 [0-9a-zA-Z_]。表示数字、大小写字母和下划线。word的首字母，也称单词字符。</p>
+<p>•W 等价于 [^0-9a-zA-Z_]。</p>
+<p>•s 等价于 [ tvnrf]。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。</p>
+<p>•S 等价于 [^ tvnrf]。</p>
+<p>•. 等价于[^nru2028u2029]。点是通配符，表示几乎任意字符。</p>
+<p>字符集是正则实现模糊匹配的另外一种方式，具体到某一位上，要匹配的字符可以是不确定的，我称之为纵向模糊匹配。</p>
+<p>量词和字符组掌握了话，基本上正则问题能解决一多半。这里再举一个例子。找到所有以“ing”结尾的单词。</p>
+<p>上面使用的是贪婪量词，如果使用惰性量词的话，情形会有所不同。</p>
+<p>此时，“singing”这个单词分成了“sing”和“ing”。要完整的匹配一个单词。需要匹配位置。</p>
+<h3 id="4-匹配一个具体位置"><a href="#4-匹配一个具体位置" class="headerlink" title="4. 匹配一个具体位置"></a>4. 匹配一个具体位置</h3><p>比如匹配“you”这个单词，可能会匹配到“your”中的 you。</p>
+<p>此时我们可以使用b。b 是单词 boundary 的首字母。它表示匹配一个位置，这个位置某一边是w，另一边是W。也就是一边是单词字符，一边是非单词字符，因此它叫单词边界。</p>
+<p>如果对“位置”这一概念，理解得还是不太透彻，我们可以具体看看 b 到底长什么样。</p>
+<p>注意上图中得粉色虚线。它们就是一个个位置。请看看每一个是不是两边一个是单词字符，另一个是非单词字符。</p>
+<p>位置也是有反义的。比如 B 表示非单词边界。我们也可以看看。</p>
+<p>有了单词字符后，要准确的匹配单词“you”，可以使用byoub。</p>
+<p>除了单词边界这种位置之外，估计大家应该知道 ^ 和 $。它匹配整个文本的开头和结尾。</p>
+<p>还记得前面我们找“we”吗，如果我们想找到所有行开头的 we 单词。我们可以使用多行模式：</p>
+<p>此时修饰符里多了一个 m，是 multiline 的首字母，表示多行匹配。所谓多行匹配，就是说 ^ 和 $，可以匹配行开头和行结尾，不再局限于整个文本的开头和结尾。</p>
+<p>除了 b、B、^、$ 外，还有一种断言位置。比如 (?=p)，表示模式 p 前面的位置。</p>
+<p>(?!p)是其反义。还有反向的断言，例如 (?&lt;=p)，表示模式 p 后面的位置。或者说该位置的后面是 p。它也有反义的形式 (?请读者自己尝试看看都匹配了啥。</p>
+<p>关于位置这一块儿，多说几句。假如我想找到这样的位置，该位置不能是开头，并且后面的字符是 s，此时该怎么做呢？</p>
+<p>(?!^) 其实就是 ^ 的反义。连续写多个位置是没有关系的。比如写 ^^^^。</p>
+<p>需要注意的位置不同于字符，是不占地方的，如果说是字符也可以，它则是空字符，没有实际宽度的。</p>
+<p>正则要么匹配字符，要么匹配位置。主体内容介绍完了，接下来查缺补漏。</p>
+<h3 id="5-引用"><a href="#5-引用" class="headerlink" title="5. 引用"></a>5. 引用</h3><p>street 里有两个 e，而 all 里有连个 l。此时我想找到所有这样的双棒字母，该怎么做呢？直接使用 .{2} 是不行的。因为它就是 .. 的简写形式，表示两个任意字符。并没有要求这两个字符相同。</p>
+<p>此时，就涉及到了反向引用：</p>
+<p>1 是反向引用，表示第一个括号里捕获的数据。那么 2 呢，表示第二个括号捕获的。</p>
+<p>需要注意一点是这里的括号，是平常的括号，而不是像 (?=p) 那样特殊语法的括号。</p>
+<p>括号捕获的数据，不仅可以在正则里反向引用。也可以配合宿主 API 来使用，外部引用。比如实现滤重：</p>
+<p>上面使用了替换，工具内部必然要用到宿主语言相关 API。$1 表示外部引用第一个分组捕获的内容。</p>
+<p>括号可以用来提供分组功能，又能捕获数据。能否只让括号充当分组功能呢？此时要使用非捕获分组(?:p)，而不是(p)。</p>
+<h3 id="6-分支结构"><a href="#6-分支结构" class="headerlink" title="6. 分支结构"></a>6. 分支结构</h3><p>比如我想找到所有的 face 和 place。此时该怎么办？</p>
+<p>管道符 |，表示或的关系，多选一。它从左到右面一个个尝试，如果成功，就不再继续尝试了。可以说它是短路的、惰性的。比如用 you|your 去匹配 your 时，它只会匹配到 your 的前 3 个字母。所以分支顺序不同结果可能也会不同。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文，通过案例的形式覆盖了正则常用语法。包括：</p>
+<p>•量词</p>
+<p>•字符集</p>
+<p>•分支结构</p>
+<p>•修饰符</p>
+<p>•位置</p>
+<p>•引用</p>
+<p>•常见简写</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/07/Webpack-%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Webpack-优化技巧
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/%E5%B8%B8%E8%A7%81%E7%9A%84CSS%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">常见的CSS知识点</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

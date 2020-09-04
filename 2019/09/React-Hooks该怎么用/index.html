@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    React-Hooks该怎么用 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-React-Hooks该怎么用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  React-Hooks该怎么用
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/09/React-Hooks%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8/" class="article-date">
+  <time datetime="2019-09-16T09:00:39.000Z" itemprop="datePublished">2019-09-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="为什么要用-Hooks"><a href="#为什么要用-Hooks" class="headerlink" title="为什么要用 Hooks"></a>为什么要用 Hooks</h2><h3 id="组件嵌套问题"><a href="#组件嵌套问题" class="headerlink" title="组件嵌套问题"></a>组件嵌套问题</h3><p>之前如果我们需要抽离一些重复的逻辑，就会选择 HOC 或者 render props 的方式。但是通过这样的方式去实现组件，你打开 React DevTools 就会发现组件被各种其他组件包裹在里面。这种方式首先提高了 debug 的难度，并且也很难实现共享状态。 但是通过 Hooks 的方式去抽离重复逻辑的话，一是不会增加组件的嵌套，二是可以实现状态的共享。</p>
+<h3 id="class-组件的问题"><a href="#class-组件的问题" class="headerlink" title="class 组件的问题"></a>class 组件的问题</h3><p>如果我们需要一个管理状态的组件，那么就必须使用 class 的方式去创建一个组件。但是一旦 class 组件变得复杂，那么四散的代码就很不容易维护。另外 class 组件通过 Babel 编译出来的代码也相比函数组件多得多。 Hooks 能够让我们通过函数组件的方式去管理状态，并且也能将四散的业务逻辑写成一个个 Hooks 便于复用以及维护。</p>
+<h2 id="Hooks-怎么用"><a href="#Hooks-怎么用" class="headerlink" title="Hooks 怎么用"></a>Hooks 怎么用</h2><p>前面说了一些 Hooks 的好处，接下来我们就进入正题，通过实现一个计数器来学习几个常用的 Hooks。</p>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><p><code>useState</code> 的用法很简单，传入一个初始 <code>state</code>，返回一个 <code>state</code> 以及修改 <code>state</code> 的函数。</p>
+<p>// useState 返回的 state 是个常量<br>// 每次组件重新渲染之后，当前 state 和之前的 state 都不相同<br>// 即使这个 state 是个对象<br>const [count, setCount] = useState(1)</p>
+<p><code>setCount</code> 用法是和 <code>setState</code> 一样的，可以传入一个新的状态或者函数。</p>
+<p>setCount(2)<br>setCount(prevCount =&gt; prevCount + 1)</p>
+<p><code>useState</code> 的用法是不是很简单。假如现在需要我们实现一个计数器，按照之前的方式只能通过 class 的方式去写，但是现在我们可以通过函数组件 + Hooks 的方式去实现这个功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      Count: &#123;count&#125;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount + 1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount - 1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h3><p>现在我们的计时器需求又升级了，需要在组件更新以后打印出当前的计数，这时候我们可以通过 <code>useEffect</code> 来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">console.log(count)</span><br><span class="line">&#125;)</span><br><span class="line">return (</span><br><span class="line">&lt;div&gt;</span><br><span class="line">Count: &#123;count&#125;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount + 1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount - 1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码当我们改变计数的时候，就会打印出正确的计数，我们其实基本可以把 <code>useEffect</code> 看成是 <code>componentDidUpdate</code>，它们的区别我们可以在下一个例子中看到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">  React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    console.log(count)</span><br><span class="line">    return () &#x3D;&gt; console.log(&#39;clean&#39;, count)</span><br><span class="line">  &#125;)</span><br><span class="line">  &#x2F;&#x2F; ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们每次更新计数时，都会先打印 <code>clean</code> 这行 log 现在我们的需求再次升级了，需要我们在计数器更新以后延时两秒打印出计数。实现这个再简单不过了，我们改造下 <code>useEffect</code> 内部的代码即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">console.log(count)</span><br><span class="line">&#125;, 2000)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">当我们快速点击按钮后，可以在两秒延时以后看到正确的计数。但是如果我们将这段代码写到 componentDidUpdate 中，事情就变得不一样了。</span><br><span class="line"></span><br><span class="line">componentDidUpdate() &#123;</span><br><span class="line"></span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line"></span><br><span class="line">        console.log(this.state.count)</span><br><span class="line"></span><br><span class="line">    &#125;, 2000)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于这段代码来说，如果我们快速点击按钮，你会在延时两秒后看到打印出了相同的几个计数。这是因为在 useEffect 中我们通过闭包的方式每次都捕获到了正确的计数。但是在 componentDidUpdate 中，通过 this.state.count 的方式只能拿到最新的状态，因为这是一个对象。 当然如果你只想拿到最新的 state 的话，你可以使用 useRef 来实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">  const ref &#x3D; React.useRef(count)</span><br><span class="line">  React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    ref.current &#x3D; count</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">        console.log(ref.current)</span><br><span class="line">    &#125;, 2000)</span><br><span class="line">  &#125;)</span><br><span class="line">  &#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>useRef 可以用来存储任何会改变的值，解决了在函数组件上不能通过实例去存储数据的问题。另外你还可以 useRef 来访问到改变之前的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">  const ref &#x3D; React.useRef()</span><br><span class="line">  React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; 可以在重新赋值之前判断先前存储的数据和当前数据的区别</span><br><span class="line"></span><br><span class="line">    ref.current &#x3D; count</span><br><span class="line"></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">function Counter() &#123;</span><br><span class="line">const [count, setCount] &#x3D; React.useState(0)</span><br><span class="line">const ref &#x3D; React.useRef()</span><br><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">&#x2F;&#x2F; 可以在重新赋值之前判断先前存储的数据和当前数据的区别</span><br><span class="line">ref.current &#x3D; count</span><br><span class="line">&#125;)</span><br><span class="line">&lt;div&gt;</span><br><span class="line">Count: &#123;count&#125;</span><br><span class="line">PreCount: &#123;ref.current&#125;</span><br><span class="line">&lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount + 1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(prevCount &#x3D;&gt; prevCount - 1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&#x2F;&#x2F;...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在需求再次升级，我们需要通过接口来获取初始计数，我们通过 <code>setTimeout</code> 来模拟这个行为。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">const [count, setCount] &#x3D; React.useState();</span><br><span class="line">const [loading, setLoading] &#x3D; React.useState(true);</span><br><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">setLoading(true);</span><br><span class="line">setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">setCount(1);</span><br><span class="line">setLoading(false);</span><br><span class="line">&#125;, 2000);</span><br><span class="line">&#125;);</span><br><span class="line">return (</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&#123;!loading ? (</span><br><span class="line">&lt;div&gt;</span><br><span class="line">Count: &#123;count&#125;</span><br><span class="line">&lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(pre &#x3D;&gt; pre + 1)&#125;&gt;+&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(pre &#x3D;&gt; pre - 1)&#125;&gt;-&lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">) : (</span><br><span class="line">&lt;div&gt;loading&lt;&#x2F;div&gt;</span><br><span class="line">)&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你去执行这段代码，会发现 <code>useEffect</code> 无限执行。这是因为在 <code>useEffect</code> 内部再次触发了状态更新，因此 <code>useEffect</code> 会再次执行。 解决这个问题我们可以通过 <code>useEffect</code> 的第二个参数解决</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">setLoading(true);</span><br><span class="line">setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">setCount(1);</span><br><span class="line">setLoading(false);</span><br><span class="line">&#125;, 2000);</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+<p>第二个参数传入一个依赖数组，只有依赖的属性变更了，才会再次触发 <code>useEffect</code> 的执行。在上述例子中，我们传入一个空数组就代表这个 <code>useEffect</code> 只会执行一次。 现在我们的代码有点丑陋了，可以将请求的这部分代码单独抽离成一个函数，你可能会这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const fetch &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">setLoading(true);</span><br><span class="line">setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">setCount(1);</span><br><span class="line">setLoading(false);</span><br><span class="line">&#125;, 2000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">fetch()</span><br><span class="line">&#125;, [fetch]);</span><br></pre></td></tr></table></figure>
+<p>但是这段代码出现的问题和一开始的是一样的，还是会无限执行。这是因为虽然你传入了依赖，但是每次组件更新的时候 <code>fetch</code> 都会重新创建，因此 <code>useEffect</code> 认为依赖已经更新了，所以再次执行回调。 解决这个问题我们需要使用到一个新的 Hooks <code>useCallback</code>。这个 Hooks 可以生成一个不随着组件更新而再次创建的 callback，接下来我们通过这个 Hooks 再次改造下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const fetch &#x3D; React.useCallback(() &#x3D;&gt; &#123;</span><br><span class="line">setLoading(true);</span><br><span class="line">setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">setCount(1);</span><br><span class="line">setLoading(false);</span><br><span class="line">&#125;, 2000);</span><br><span class="line">&#125;, [])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">React.useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">fetch()</span><br><span class="line">&#125;, [fetch]);</span><br></pre></td></tr></table></figure>
+<p>大功告成，我们已经通过几个 Hooks + 函数组件完美实现了原本需要 class 组件才能完成的事情.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过几个计数器的需求我们学习了一些常用的 Hooks，接下来总结一下这部分的内容。</p>
+<p>useState：传入我们所需的初始状态，返回一个常量状态以及改变状态的函数<br>useEffect：第一个参数接受一个 callback，每次组件更新都会执行这个 callback，并且 callback 可以返回一个函数，该函数会在每次组件销毁前执行。如果 <code>useEffect</code> 内部有依赖外部的属性，并且希望依赖属性不改变就不重复执行 <code>useEffect</code> 的话，可以传入一个依赖数组作为第二个参数<br>useRef：如果你需要有一个地方来存储变化的数据<br>useCallback：如果你需要一个不会随着组件更新而重新创建的 callback</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/09/JavaScript%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            JavaScript手写代码
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/09/chrome%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%90%84%E7%A7%8D%E9%AA%9A%E6%8A%80%E5%B7%A7/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">chrome开发者工具各种骚技巧</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

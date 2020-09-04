@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c语言-指针使用 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c语言-指针使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c语言-指针使用
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2015-08-28T09:30:25.000Z" itemprop="datePublished">2015-08-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c%E8%AF%AD%E8%A8%80/">c语言</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1、指针的初始化</p>
+<p>指针初始化时，“=”的右操作数必须为内存中数据的地址，不可以是变量，也不可以直接用整型地址值(但是int<em>p=0;除外，该语句表示指针为空)。此时，</em>p只是表示定义的是个指针变量，并没有间接取值的意思。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如： <span class="keyword">int</span> a = <span class="number">25</span>; <span class="keyword">int</span> *ptr = &amp;a; <span class="keyword">int</span> b[<span class="number">10</span>]; <span class="keyword">int</span> *<span class="built_in">point</span> = b; <span class="keyword">int</span> *p = &amp;b[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+
+<p>如果：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>  *p; *p = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+<p>则编译器（vs2008）会提示The variable ‘p’ is being used without being initialized.即使用了未初始化的变量p。<br>因为p是指向7所在的地址，*p = 7给p所指向的内存赋值，p没有赋值，所以p所指向的内存位置是随机的，没有初始化的。 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> k; <span class="keyword">int</span> *p; p = &amp;k;  <span class="comment">//给p赋值 *p = 7; //给p所指向的内存赋值，即k= 7 2、指针的赋值 int *p; int a; int b[1]; p = &amp;a; p = b;</span></span><br></pre></td></tr></table></figure>
+<p>指针的赋值，“=”的左操作数可以是*p，也可以是p。</p>
+<p>当“=”的左操作数是*p时，改变的是p所指向的地址存放的数据；当“=”的左操作数是p时，改变的是p所指向的地址。<br>数组的变量名b表示该数组的首地址，因此p=b；也是正确的 同类型的指针赋值： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> val1 = <span class="number">18</span>,val2 = <span class="number">19</span>; <span class="keyword">int</span> *p1,*p2; p1 = &amp;val1; p2 = &amp;val2; p1 = p2;</span><br></pre></td></tr></table></figure>
+<p>//注意啦，p1指向了val2，而没有指向val1 备注：字符串与指针的初始化和赋值 初始化： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *cp = <span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
+<p>//这个初始化过程，是将指针cp指向字符串的首地址，而并不是传递字符串的值。</p>
+<p>因为，在c语言里面，没有整体处理一个字符串的机制 赋值： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp &#x3D; &quot;abcdefg&quot;; *cp&#x3D;”abcdefg” ;</span><br></pre></td></tr></table></figure>
+
+<p>//错误！字符串常量传递的是它的首地址，不可以通过*cp修改该字符串的值，因为该字符串为常量，而它只是简单的将指针指向该字符串常量 3、指针常量 在c语言中没有一种内建（built-in）的方法去表示指针常量，所以当我们使用它的时候通常先写成整型常量的形式，然后再通过强制类型转换把它转换成相应的类型，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">int</span> * , <span class="keyword">double</span> * , <span class="keyword">char</span> *等。</span><br></pre></td></tr></table></figure>
+
+<p> 所以后面所示的做法是不行的： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p &#x3D; 0x12345678 ; 正确的方式应为：int *p &#x3D; (int *) 0x12345678;</span><br></pre></td></tr></table></figure>
+
+<p>要注意指针中只能存放地址，不能将一个非0值整型常量表达式或者其他非地址类型的数据赋给一个指针，原因就在此。在大多数计算机中，内存地址确实是以无符号整型数来表示的，而且多以16进制表示，但我们在c语言中不能用整型数去表示地址，只能用指针常量来表示，因为它是被用来赋给一个指针的。 </p>
+<p>对于这个赋值问题还可以换一个角度去理解，在c语言中，使用赋值操作符时，赋值操作符左边和右边的表达式类型应该是相同的，如果不是，赋值操作符将试图把右边表达式的值转换为左边的类型。</p>
+<p>所以如果写出</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p = 0x12345678 ; 这条语句编译器会报错：'=' : cannot convert from ' const int ' to ' int * '</span><br></pre></td></tr></table></figure>
+
+
+<p>因为赋值操作符左边和右边的表达式的类型应该相同，而0x12345678是int型常量，p是一个指向int型的指针，两者类型不同，所以正确的方式是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = (<span class="keyword">int</span> *) <span class="number">0x12345678</span> ;</span><br></pre></td></tr></table></figure>
+
+<p>4、指针初始化补充 ANSI C定义了零指针常量的概念：一个具有0值的整形常量表达式，或者此类表达式被强制转换为void *类型，则称为空指针常量，它可以用来初始化或赋给任何类型的指针。</p>
+<p>也就是说，我们可以将0、0L、’/0’、2–2、0*5以及(void *)0赋给一个任何类型的指针，此后这个指针就成为一个空指针，由系统保证空指针不指向任何对象或函数。<br>ANSI C还定义了一个宏NULL，用来表示空指针常量。</p>
+<p>大多数c语言的实现中NULL是采用后面这种方式定义的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  NULL  ((void *)0)。</span></span><br></pre></td></tr></table></figure>
+<p> 对指针进行初始化时常用的有以下几种方式： 1.采用NULL或空指针常量，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">int</span> *p = <span class="literal">NULL</span>;或 <span class="keyword">char</span> *p = <span class="number">2</span><span class="number">-2</span>; 或<span class="keyword">float</span> *p = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>2.取一个对象的地址然后赋给一个指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">int</span> i = <span class="number">3</span>;  <span class="keyword">int</span> *ip = &amp;i；</span><br></pre></td></tr></table></figure>
+<p>3.将一个指针常量赋给一个指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">long</span> *p = (<span class="keyword">long</span> *)<span class="number">0xfffffff0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>4.将一个T类型数组的名字赋给一个相同类型的指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">char</span> ary[<span class="number">100</span>]; <span class="keyword">char</span> *cp = ary;</span><br></pre></td></tr></table></figure>
+<p>5.将一个指针的地址赋给一个指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">int</span> i = <span class="number">3</span>;  <span class="keyword">int</span> *ip = &amp;i；<span class="keyword">int</span> **pp = &amp;ip;</span><br></pre></td></tr></table></figure>
+<p>6.将一个字符串常量赋给一个字符指针，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如：<span class="keyword">char</span> *cp = “abcdefg”;</span><br></pre></td></tr></table></figure>
+<p>对指针进行初始化或赋值的实质是将一个地址或同类型(或相兼容的类型)的指针赋给它，而不管这个地址是怎么取得的。 要注意的是：对于一个不确定要指向何种类型的指针，在定义它之后最好把它初始化为NULL，并在解引用这个指针时对它进行检验，防止解引用空指针。另外，为程序中任何新创建的变量提供一个合法的初始值是一个好习惯，它可以帮你避免一些不必要的麻烦。</p>
+<p>5、void *型指针 ANSI C定义了一种void *型指针，表示定义一个指针，但不指定它指向何种类型的数据。void *型指针作为一种通用的指针，可以和其它任何类型的指针(函数指针除外)相互转化而不需要类型强制转换，但不能对它进行解引用及下标操作。  c语言中的malloc函数的返回值就是一个void *型指针，我们可以把它直接赋给一个其他类型的指针，但从安全的编程风格角度以及兼容性上讲，最好还是将返回的指针强制转换为所需的类型，另外，malloc在无法满足请求时会通过返回一个空指针来作为“内存分配失败”的信号，所以要注意返回值指针的判空。</p>
+<p>6、指向指针的指针 在指针初始化的第5种方式中提到了用一个指针的地址来初始化一个指针。回忆一下上一讲的内容：指针是一种变量，它也有自己的地址，所以它本身也是可用指针指向的对象。 </p>
+<p>我们可以将指针的地址存放在另一个指针中，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如： <span class="keyword">int</span> i = <span class="number">5000</span>; <span class="keyword">int</span> *pi = &amp;i; <span class="keyword">int</span> **ppi = &amp;pi;</span><br></pre></td></tr></table></figure>
+<p>此时的ppi即是一个指向指针的指针,i的地址为108，pi的内容就是i的地址，而pi的地址为104，ppi的内容即是pi的地址。<br>对ppi解引用照常会得到ppi所指的对象，所获得的对象是指向int型变量的指针pi。想要真正地访问到i.，必须对ppi进行两次解引用，如下面代码所示： printf(“%d”, i ); printf(“%d”, *pi ); printf(“%d”, **ppi ); 以上三条语句的输出均为5000。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BB%8B%E7%BB%8D/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c语言-运算符介绍
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E6%95%B0%E7%BB%84/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c语言-数组</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

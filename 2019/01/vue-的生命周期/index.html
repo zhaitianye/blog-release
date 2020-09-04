@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    vue-的生命周期 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vue-的生命周期"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vue-的生命周期
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/vue-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time datetime="2019-01-07T02:25:26.000Z" itemprop="datePublished">2019-01-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="有哪些生命周期方法"><a href="#有哪些生命周期方法" class="headerlink" title="有哪些生命周期方法"></a>有哪些生命周期方法</h3><p>把所有生命周期打印一遍</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="comment">// el: '#root',</span></span><br><span class="line">  template: <span class="string">'&lt;div&gt;&#123; &#123;text&#125;&#125;&lt;/div&gt;'</span>,</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  beforeCreate () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'breforeCreate'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'created'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeMount () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'beforeMount'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'mounted'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeUpdate () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'beforeUpdate'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  updated () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'updated'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  activated () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'activated'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  deactivated () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'deactivated'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeDestroy () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'beforeDestroy'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  destroyed () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>, <span class="string">'destroyed'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.$mount(<span class="string">'#root'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>显示结果 结果依次显示 “breforeCreate” “created” “beforeMount” “mounted”，说明在new Vue()时，这四个方法执行了。 breforeMount 和 mounted 如果把<code>el:&#39;#root&#39;</code>注释掉，就只显示“breforeCreate” “created” ，因为mount的作用就是把vue组件生成的html内容，挂载到html节点上，所以当我们没有指定<code>el:&#39;#root&#39;</code>或通过<code>$mount</code>进行，是不会挂载到html节点上的。 breforeCreate 和 created 而 breforeCreate created 在初始化阶段就执行了。 beforeUpdate 和 updated 数据更新时，才会执行。 例如，每一秒钟更改数据，相应的每秒都会执行这两个生命周期</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  app.text = app.text += <span class="number">1</span></span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>beforeDestroy 和 destroyed vue实例销毁时执行。 例如，设置一秒钟后销毁，控制台就会显示 “beforeDestroy” 和 “destroyed”</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  app.$destroy()</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>activated 和 deactivated 和vue中一个原生的组件 keep-alive有关系。 分别打印出不同周期对应的$el</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">beforeCreate () &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.$el, <span class="string">'breforeCreate'</span>)</span><br><span class="line">&#125;,</span><br><span class="line">created () &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.$el, <span class="string">'created'</span>)</span><br><span class="line">&#125;,</span><br><span class="line">beforeMount () &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.$el, <span class="string">'beforeMount'</span>)</span><br><span class="line">&#125;,</span><br><span class="line">mounted () &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.$el, <span class="string">'mounted'</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>显示结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">undefined &quot;beforeCreate&quot;</span><br><span class="line">undefined &quot;created&quot;</span><br><span class="line">&lt;div id&#x3D;&quot;root&quot;&gt;&lt;&#x2F;div&gt; &quot;beforeMount&quot;</span><br><span class="line">&lt;div&gt;0&lt;&#x2F;div&gt; &quot;mounted&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 beforeCreate 和 created 的 <code>$el</code> 是undefined，所以 beforeCreate 和 created 阶段是不能进行dom操作的，因为拿不到 dom 节点。 brforeMount 时，<code>$el</code>变成了我们写在 html 中 div 节点。 mounted 时， <code>$el</code>变成了 template 中的html，说明覆盖了html原来的 div 节点。 mounted之后，我们调用的所有生命周期方法，拿到的节点，都是渲染之后的节点。 所以一般</p>
+<ul>
+<li>做 dom 相关操作会在 mounted 阶段</li>
+<li>数据相关操作，可以在 created 或 mounted 阶段</li>
+</ul>
+<h3 id="生命周期的调用顺序"><a href="#生命周期的调用顺序" class="headerlink" title="生命周期的调用顺序"></a>生命周期的调用顺序</h3><p>beforeCreate created beforeMount mounted 都是一次性的，组件只会调用一次。 beforeMount mounted 在服务端渲染，是不会被调用的，服务端渲染过程中，只会调用 beforeCreate created，因为 mount 是和 dom 操作相关的，服务端根本没有 dom 执行的环境， 所以不会有。 当数据发生变化时，beforeUpdate 和 updated 会调用。 当组件销毁时，beforeDestroy 和 destroyed 会调用。</p>
+<h3 id="声明周期中-VUE-实例有哪些区别"><a href="#声明周期中-VUE-实例有哪些区别" class="headerlink" title="声明周期中 VUE 实例有哪些区别"></a>声明周期中 VUE 实例有哪些区别</h3><p>在不同的生命周期阶段，<code>this.$el</code>是不同的，而在 mounted之后，一般不会改动 <code>this.$el</code>，而是围绕阶段做某些操作，要尽量避免 <code>this.$el</code>的变动，它会导致一些 vue 错误。</p>
+<ol>
+<li>init，new Vue() 先执行 init 操作，这个操作是默认执行的。<ol>
+<li>init Events $ Lifecycle，调用 _beforeCreate_，所以此时，事件OK，但reactive不OK，所以这个阶段不要修改数据 data 中的数据。</li>
+<li>init injections $ reactivity，调用 <em>created</em> ，ajax请求获取数据赋值，最早在 created 阶段做。</li>
+</ol>
+</li>
+<li>判断 Has “el” option<ol>
+<li>如果有，执行下一步。</li>
+<li>如果没有，等我们调用 <code>vm.$mounted(el)</code>。</li>
+</ol>
+</li>
+<li>判断 Has “template” options<ol>
+<li>如果有，把 template 解析生一个 render 函数。render 函数会用 template 中的 html 去覆盖 html 中的 div 标签。在使用 <code>.vue</code> 文件进行开发的过程中，是没有 template 的，我们在 <code>.vue</code> 文件中写的 template 都经过了 vue-loader 处理，直接变成了 render 函数，放在vue-loader 解析过的文件中；这样做的好处，把 template 解析成 render 函数，比较耗时，vue-loader 处理后，我们在页面上执行代码时，效率会变高。</li>
+<li>如果没有，Compile el’s outerHTML as template</li>
+</ol>
+</li>
+<li>有了 render 函数之后<ol>
+<li><em>beforeMount</em> 执行</li>
+</ol>
+</li>
+<li>执行 render 函数<ol>
+<li>Create vm.$el and replace “el” with it</li>
+</ol>
+</li>
+<li>执行 render 函数之后<ol>
+<li><em>mounted</em> 执行</li>
+</ol>
+</li>
+<li>mounted之后，实例创建完成，后续过程，都是通过外部触发进行的。</li>
+<li>当数据变化时<ol>
+<li><em>beforeUpdate 执行</em></li>
+<li>Virtual DOM re-render and patch</li>
+<li><em>updated 执行</em></li>
+</ol>
+</li>
+<li>当组件销毁时<ol>
+<li><em>beforeDestroy 执行</em></li>
+<li>Teardown watchers,child comonents and event listeners</li>
+<li><em>destroyed 执行</em></li>
+</ol>
+</li>
+</ol>
+<h3 id="render-函数"><a href="#render-函数" class="headerlink" title="render 函数"></a>render 函数</h3><p>直接使用 render 函数和使用 template 一样的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="comment">// template: '&lt;div&gt;&#123; &#123;text&#125;&#125;&lt;/div&gt;',</span></span><br><span class="line">  data: &#123;</span><br><span class="line">    text: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    <span class="keyword">return</span> h(<span class="string">'div'</span>, &#123;&#125;, <span class="keyword">this</span>.text) <span class="comment">// 参数1，创建的标签；参数2，对象配置；参数3，标签内容</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.$mount(<span class="string">'#root'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>render 函数执行时机</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">render (h) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'render function invoked'</span>)</span><br><span class="line">  <span class="keyword">return</span> h(<span class="string">'div'</span>, &#123;&#125;, <span class="keyword">this</span>.text)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>控制台结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">undefined &quot;beforeCreate&quot;</span><br><span class="line">undefined &quot;created&quot;</span><br><span class="line">&lt;div id&#x3D;&quot;root&quot;&gt;&lt;&#x2F;div&gt; &quot;beforeMount&quot;</span><br><span class="line">render function invoked</span><br><span class="line">&lt;div&gt;0&lt;&#x2F;div&gt; &quot;mounted&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在beforeMount 和 mounted 之间执行的</p>
+<h3 id="renderError-方法"><a href="#renderError-方法" class="headerlink" title="renderError 方法"></a>renderError 方法</h3><p>renderError 方法，只有在开发时，才会被调用，正式打包上线时，不会被调用。帮助我们调试 render 中的错误。renderError 方法，只有在本组件 render 出现错误时，才会被调用；如果是子组件报错，是不会被捕获到的。 当 render 函数报错时，renderError 方法会执行。</p>
+<pre><code class="js">render (h) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'render error'</span>)
+  <span class="comment">// console.log('render function invoked')</span>
+  <span class="comment">// return h('div', {}, this.text)</span>
+},
+renderError (h, err) {
+  <span class="keyword">return</span> h(<span class="string">'div'</span>, {}, err.stack)
+}</code></pre>
+<h3 id="errorCaptured-方法"><a href="#errorCaptured-方法" class="headerlink" title="errorCaptured 方法"></a>errorCaptured 方法</h3><p>可以用在正式开发环境中，帮助我们搜集线上的错误。如果在根组件使用这个方法，而根组件的子组件报的任何错误都可捕捉到，除非子组件把向上冒泡停止掉。 errorCaptured 方法使用与 renderError 相似，唯一的区别是：errorCaptured 会向上冒泡，并且正式环境可以使用。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/01/Express-%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%9D%97%E5%8C%96/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Express-路由模块化
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/NPM-underscore.string%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%BA%93/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">NPM-underscore.string字符串操作库</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

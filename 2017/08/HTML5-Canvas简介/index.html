@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    HTML5-Canvas简介 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-HTML5-Canvas简介"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  HTML5-Canvas简介
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/08/HTML5-Canvas%E7%AE%80%E4%BB%8B/" class="article-date">
+  <time datetime="2017-08-16T13:28:54.000Z" itemprop="datePublished">2017-08-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HTML/">HTML</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><code>&lt;canvas&gt;</code> 标签定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。</p>
+<p>在画布上（Canvas）画一个红色矩形，渐变矩形，彩色矩形，和一些彩色的文字。</p>
+<h2 id="什么是-canvas"><a href="#什么是-canvas" class="headerlink" title="什么是 canvas?"></a>什么是 canvas?</h2><p>HTML5 <code>&lt;canvas&gt;</code> 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成.<code>&lt;canvas&gt;</code> 标签只是图形容器，您必须使用脚本来绘制图形。 你可以通过多种方法使用 canvas 绘制路径,盒、圆、字符以及添加图像。</p>
+<h2 id="创建一个画布（Canvas）"><a href="#创建一个画布（Canvas）" class="headerlink" title="创建一个画布（Canvas）"></a>创建一个画布（Canvas）</h2><p>一个画布在网页中是一个矩形框，通过 <code>&lt;canvas&gt;</code> 元素来绘制. <strong>注意:</strong> 默认情况下 <code>&lt;canvas&gt;</code> 元素没有边框和内容。 <code>&lt;canvas&gt;</code> 简单实例如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas id&#x3D;&quot;myCanvas&quot; width&#x3D;&quot;200&quot; height&#x3D;&quot;100&quot;&gt;&lt;&#x2F;canvas&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong> 标签通常需要指定一个id属性 (脚本中经常引用), width 和 height 属性定义的画布的大小. <strong>提示:</strong>你可以在HTML页面中使用多个 <code>&lt;canvas&gt;</code> 元素. 使用 style 属性来添加边框:</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas id&#x3D;&quot;myCanvas&quot; width&#x3D;&quot;200&quot; height&#x3D;&quot;100&quot; style&#x3D;&quot;border:1px solid #000000;&quot;&gt; &lt;&#x2F;canvas&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-JavaScript-来绘制图像"><a href="#使用-JavaScript-来绘制图像" class="headerlink" title="使用 JavaScript 来绘制图像"></a>使用 JavaScript 来绘制图像</h2><p>canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成：</p>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var c&#x3D;document.getElementById(&quot;myCanvas&quot;); var ctx&#x3D;c.getContext(&quot;2d&quot;); ctx.fillStyle&#x3D;&quot;#FF0000&quot;; ctx.fillRect(0,0,150,75);</span><br></pre></td></tr></table></figure>
+<p><strong>实例解析:</strong> 首先，找到 <code>&lt;canvas&gt;</code> 元素:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var c&#x3D;document.getElementById(&quot;myCanvas&quot;);</span><br></pre></td></tr></table></figure>
+<p>然后，创建 context 对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var ctx&#x3D;c.getContext(&quot;2d&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><code>getContext(&quot;2d&quot;)</code> 对象是内建的 HTML5 对象，拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。 下面的两行代码绘制一个红色的矩形：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle&#x3D;&quot;#FF0000&quot;;</span><br><span class="line">ctx.fillRect(0,0,150,75);</span><br></pre></td></tr></table></figure>
+<p>设置fillStyle属性可以是CSS颜色，渐变，或图案。fillStyle 默认设置是<code>#000000</code>（黑色）。 <code>fillRect(_x,y,width,height_)</code> 方法定义了矩形当前的填充方式。</p>
+<hr>
+<h2 id="Canvas-坐标"><a href="#Canvas-坐标" class="headerlink" title="Canvas 坐标"></a>Canvas 坐标</h2><p>canvas 是一个二维网格。 canvas 的左上角坐标为 (0,0) 上面的 fillRect 方法拥有参数 (0,0,150,75)。 意思是：在画布上绘制 150x75 的矩形，从左上角开始 (0,0)。 <strong>坐标实例</strong> 如下图所示，画布的 X 和 Y 坐标用于在画布上对绘画进行定位。鼠标移动的矩形框上，显示定位坐标。</p>
+<p>X</p>
+<p>Y</p>
+<hr>
+<h2 id="Canvas-路径"><a href="#Canvas-路径" class="headerlink" title="Canvas - 路径"></a>Canvas - 路径</h2><p>在Canvas上画线，我们将使用以下两种方法：</p>
+<ul>
+<li>moveTo(<em>x,y</em>) 定义线条开始坐标</li>
+<li>lineTo(<em>x,y</em>) 定义线条结束坐标</li>
+</ul>
+<p>绘制线条我们必须使用到 “ink” 的方法，就像stroke().</p>
+<h2 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h2><p>定义开始坐标(0,0), 和结束坐标 (200,100)。然后使用 stroke() 方法来绘制线条: JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var c&#x3D;document.getElementById(&quot;myCanvas&quot;); var ctx&#x3D;c.getContext(&quot;2d&quot;); </span><br><span class="line"> ctx.moveTo(0,0); </span><br><span class="line"> ctx.lineTo(200,100); </span><br><span class="line"> ctx.stroke();</span><br></pre></td></tr></table></figure>
+
+<p>在canvas中绘制圆形, 我们将使用以下方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arc(x,y,r,start,stop)</span><br></pre></td></tr></table></figure>
+<p>实际上我们在绘制圆形时使用了 “ink” 的方法, 比如 stroke() 或者 fill().</p>
+<h2 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h2><p>使用 arc() 方法 绘制一个圆 JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">ctx.beginPath();</span><br><span class="line">ctx.arc(95, 50, 40, 0, 2 * Math.PI);</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="Canvas-文本"><a href="#Canvas-文本" class="headerlink" title="Canvas - 文本"></a>Canvas - 文本</h2><p>使用 canvas 绘制文本，重要的属性和方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* font - 定义字体</span><br><span class="line">* fillText(_text,x,y_) - 在 canvas 上绘制实心的文本</span><br><span class="line">* strokeText(_text,x,y_) - 在 canvas 上绘制空心的文本</span><br></pre></td></tr></table></figure>
+<p>使用 fillText():</p>
+<h2 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h2><p>使用 “Arial” 字体在画布上绘制一个高 30px 的文字（实心）： JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">ctx.font &#x3D; &quot;30px Arial&quot;;</span><br><span class="line">ctx.fillText(&quot;Hello World&quot;, 10, 50);</span><br></pre></td></tr></table></figure>
+<p>使用 strokeText():</p>
+<h2 id="实例-5"><a href="#实例-5" class="headerlink" title="实例"></a>实例</h2><p>使用 “Arial” 字体在画布上绘制一个高 30px 的文字（空心）： JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">ctx.font &#x3D; &quot;30px Arial&quot;;</span><br><span class="line">ctx.strokeText(&quot;Hello World&quot;, 10, 50);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Canvas-渐变"><a href="#Canvas-渐变" class="headerlink" title="Canvas - 渐变"></a>Canvas - 渐变</h2><p>渐变可以填充在矩形, 圆形, 线条, 文本等等, 各种形状可以自己定义不同的颜色。 以下有两种不同的方式来设置Canvas渐变：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* createLinearGradient(_x,y,x1,y1_) \- 创建线条渐变</span><br><span class="line">* createRadialGradient(_x,y,r,x1,y1,r1_) \- 创建一个径向&#x2F;圆渐变</span><br></pre></td></tr></table></figure>
+<p>当我们使用渐变对象，必须使用两种或两种以上的停止颜色。 addColorStop()方法指定颜色停止，参数使用坐标来描述，可以是0至1. 使用渐变，设置fillStyle或strokeStyle的值为 渐变，然后绘制形状，如矩形，文本，或一条线。 使用 createLinearGradient():</p>
+<h2 id="实例-6"><a href="#实例-6" class="headerlink" title="实例"></a>实例</h2><p>创建一个线性渐变。使用渐变填充矩形: JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">var grd &#x3D; ctx.createLinearGradient(0, 0, 200, 0);</span><br><span class="line">grd.addColorStop(0, &quot;red&quot;);</span><br><span class="line">grd.addColorStop(1, &quot;white&quot;);</span><br><span class="line">ctx.fillStyle &#x3D; grd;</span><br><span class="line">ctx.fillRect(10, 10, 150, 80);</span><br></pre></td></tr></table></figure>
+<p>使用 createRadialGradient():</p>
+<h2 id="实例-7"><a href="#实例-7" class="headerlink" title="实例"></a>实例</h2><p>创建一个径向/圆渐变。使用渐变填充矩形： JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">var grd &#x3D; ctx.createRadialGradient(75, 50, 5, 90, 60, 100);</span><br><span class="line">grd.addColorStop(0, &quot;red&quot;);</span><br><span class="line">grd.addColorStop(1, &quot;white&quot;);</span><br><span class="line">ctx.fillStyle &#x3D; grd;</span><br><span class="line">ctx.fillRect(10, 10, 150, 80);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Canvas-图像"><a href="#Canvas-图像" class="headerlink" title="Canvas - 图像"></a>Canvas - 图像</h2><p>把一幅图像放置到画布上, 使用以下方法:</p>
+<ul>
+<li>drawImage(<em>image,x,y</em>)</li>
+</ul>
+<h2 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h2><p>把一幅图像放置到画布上: JavaScript:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var c &#x3D; document.getElementById(&quot;myCanvas&quot;);</span><br><span class="line">var ctx &#x3D; c.getContext(&quot;2d&quot;);</span><br><span class="line">var img &#x3D; document.getElementById(&quot;scream&quot;);</span><br><span class="line">ctx.drawImage(img, 10, 10);</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/08/Jquery-%E4%BA%8B%E4%BB%B6%E6%96%B9%E6%B3%95%E5%A4%A7%E5%85%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Jquery-事件方法大全
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/08/HTML5-%E6%96%B0%E5%85%83%E7%B4%A0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">HTML5-新元素</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

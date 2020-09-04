@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    mysql-交叉表、行列转换和交叉查询经典 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-mysql-交叉表、行列转换和交叉查询经典"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  mysql-交叉表、行列转换和交叉查询经典
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/10/mysql-%E4%BA%A4%E5%8F%89%E8%A1%A8%E3%80%81%E8%A1%8C%E5%88%97%E8%BD%AC%E6%8D%A2%E5%92%8C%E4%BA%A4%E5%8F%89%E6%9F%A5%E8%AF%A2%E7%BB%8F%E5%85%B8/" class="article-date">
+  <time datetime="2017-10-11T11:19:49.000Z" itemprop="datePublished">2017-10-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/mysql/">mysql</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>一、什么是交叉表 “交叉表”对象是一个网格，用来根据指定的条件返回值。</p>
+<p>数据显示在压缩行和列中。这种格式易于比较数据并辨别其趋势。</p>
+<p>它由三个元素组成： 行 列 摘要字段 “交叉表”中的行沿水平方向延伸（从一侧到另一侧）。在上面的示例中，“手套”(Gloves) 是一行。 “交叉表”中的列沿垂直方向延伸（上下）。在上面的示例中，“美国”(USA) 是一列。 汇总字段位于行和列的交叉处。每个交叉处的值代表对既满足行条件又满足列条件的记录的汇总（求和、计数等）。在上面的示例中，“手套”和“美国”交叉处的值是四，这是在美国销售的手套的数量。 “交叉表”还可以包括若干总计： 每行的结尾是该行的总计。在上面的例子中，该总计代表一个产品在所有国家/地区的销售量。“手套”行结尾处的值是 8，这就是手套在所有国家/地区销售的总数。 </p>
+<p>注意： 总计列可以出现在每一行的开头。 每列的底部是该列的总计。在上面的例子中，该总计代表所有产品在一个国家/地区的销售量。“美国”一列底部的值是四，这是所有产品（手套、腰带和鞋子）在美国销售的总数。 注意： 总计列可以出现在每一行的顶部。 “总计”(Total) 列（产品总计）和“总计”(Total) 行（国家/地区总计）的交叉处是总计。在上面的例子中，“总计”列和“总计”行交叉处的值是 12，这是所有产品在所有国家/地区销售的总数。 </p>
+<p>二、行列转换和交叉查询： 1: 列转为行: eg1: 假设有张学生成绩表(CJ)如下</p>
+<p>name      subject         result<br>张三         语文             80<br>张三         数学             90<br>张三         物理             85<br>李四         语文             85<br>李四         数学             92<br>李四         物理             82</p>
+<p>相关sql语句： </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Create</span> <span class="keyword">table</span> CJ(<span class="keyword">name</span> <span class="built_in">char</span>(<span class="number">10</span>),subject <span class="built_in">char</span>(<span class="number">10</span>),<span class="keyword">result</span> <span class="built_in">int</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'张三'</span>,<span class="string">'语文'</span>,<span class="number">99</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'张三'</span>,<span class="string">'数学'</span>,<span class="number">86</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'张三'</span>,<span class="string">'英语'</span>,<span class="number">75</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'李四'</span>,<span class="string">'语文'</span>,<span class="number">78</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'李四'</span>,<span class="string">'数学'</span>,<span class="number">85</span>); <span class="keyword">insert</span> <span class="keyword">into</span> CJ(<span class="keyword">name</span>,subject,<span class="keyword">result</span>) <span class="keyword">values</span>(<span class="string">'李四'</span>,<span class="string">'英语'</span>,<span class="number">78</span>) <span class="keyword">select</span> * <span class="keyword">from</span> CJ</span><br></pre></td></tr></table></figure>
+
+<p>想变成如下的交叉表</p>
+<p>姓名        语文        数学        物理<br>张三         99          90           85<br>李四         85          92           82</p>
+<p>我们首先来看一下如何建立静态的交叉表，也就是说列数固定的交叉表，这种情况其实只要一句简单的Select查询就可以搞定：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'语文'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"语文"</span>, <span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'数学'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"数学"</span>, <span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'英语'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"英语"</span> <span class="keyword">from</span> CJ a <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>;</span><br></pre></td></tr></table></figure>
+
+<p>当要增加“总计”列：”合计总分”时，如下表所示：</p>
+<p>姓名        合计总分 语文        数学        物理<br>张三          260             99          90          85<br>李四          241             85          92          82</p>
+<p>只需增加sum(a.result) as “合计总分”，sql如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,<span class="keyword">sum</span>(a.result) <span class="keyword">as</span> <span class="string">"合计总分"</span>, <span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'语文'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"语文"</span>, <span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'数学'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"数学"</span>, <span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> a.subject=<span class="string">'英语'</span> <span class="keyword">then</span> <span class="keyword">result</span> <span class="keyword">else</span> <span class="literal">null</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">"英语"</span> <span class="keyword">from</span> CJ a <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span>;</span><br></pre></td></tr></table></figure>
+
+
+<p>其中利用了CASE语句判断，如果是相应的列，则取需要统计的cj数值，否则取NULL，然后再合计。 其中有两个常见问题说明一下： a、用NULL而不用0是有道理的，假如用0，虽然求和函数SUM可以取到正确的数，但类似COUNT函数（取记录个数），结果就不对了，因为Null不算一条记录，而0要算，同理空字串（””）也是这样，总之在这里应该用NULL,这样任何函数都没问题。 </p>
+<p>b、假如在视图的设计界面保存以上的查询，则会报错“没有输出列”，从而无法保存，其实只要在查询前面加上一段：Create View ViewName AS …，ViewName是你准备给查询起的名称，…就是我们的查询，然后运行一下，就可以生成视图了，对于其他一些设计器不支持的语法，也可以这样保存。 以上查询作用也很大，对于很多情况，比如产品销售表中按照季度统计、按照月份统计等列头内容固定的情况，这样就行了，但往往大多数情况下列头内容是不固定的，象City，用户随时可能删除、添加一些城市，这种情况就是我们所说的动态交叉表，在SQLServer中我们可以用存储过程来解决。下面我们补充一些知识： 相关子查询 相关子查询和普通子查询区别在于：相关子查询引用了外部查询的列。这种引用外部查询的能力意味着相关子查询不能自己独立运行，其中对于外部查询引用会使会使其无法正常执行。因此相关子查询的执行顺序如下： 1.首先执行一遍外部查询 2.对于外部查询的每一行分别执行一遍子查询，而且每次执行子查询时候都会引用外部的当前行的值。使用子查询的结果来确定外部查询的结果集。 举个例子； </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> t1.type <span class="keyword">FROM</span> titles t1 <span class="keyword">GROUP</span> <span class="keyword">BY</span> t1.type <span class="keyword">HAVING</span> <span class="keyword">MAX</span>(t1.advance) &gt;=<span class="keyword">ALL</span> (<span class="keyword">SELECT</span> <span class="number">2</span> * <span class="keyword">AVG</span>(t2.advance) <span class="keyword">FROM</span> titles t2 <span class="keyword">WHERE</span> t1.type = t2.type)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这个结果返回最高预付款超过给定组中平均预付款两倍的书籍类型。 再举个例子： 要求返回每一个编号的最大值(列出id,name,score)</p>
+<p>ID Name（编号） Score（分数）<br>1          a                   88<br>2          b                   76<br>3          c                   66<br>4          c                   90<br>5          b                   77<br>6          a                   56<br>7          b                   77<br>8          c                   67<br>9          a                   44</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t a <span class="keyword">where</span> score= (<span class="keyword">select</span> <span class="keyword">Max</span>(Score) <span class="keyword">from</span> t b <span class="keyword">where</span> a.name=b.name) [/<span class="keyword">sql</span>] 再给一个排位的<span class="keyword">sql</span>语句 [<span class="keyword">sql</span>] <span class="keyword">SELECT</span> ( <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="number">1</span> <span class="keyword">as</span> dd <span class="keyword">FROM</span> [<span class="keyword">Test</span> ] <span class="keyword">as</span> a <span class="keyword">where</span> a.[F2]&lt;b.[F2] ) <span class="keyword">AS</span> <span class="keyword">ord</span>,b.[F1], b.[F2] <span class="keyword">FROM</span> [<span class="keyword">Test</span> ] <span class="keyword">as</span> b <span class="keyword">order</span> <span class="keyword">by</span> b.[F2];</span><br></pre></td></tr></table></figure>
+
+
+<p>好了关于sql的相关子查询先讲到这里。 SQLServer中局部变量赋值方法 有两种:</p>
+<p>一种: set @变量名 = 值<br>二种: select @变量名 = 值</p>
+<p>第二种可以从某个表中得到数据再赋值给变量</p>
+<p>例: 从用户信息表中查询中cid为 20 的用户姓名将他赋值给变量 name </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declare @name varchar(10) --用户名 </span><br><span class="line">select @name&#x3D;userName from userInfo where cid &#x3D; 20 </span><br><span class="line">print &#39;cid为20的用户姓名:&#39; + @name</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
+
+<p>递归的select变量<br>递归的select变量是指使用select语句和子查询将一个变量与其自身拼接起来。语法形式如下：select @variable = @variable + table.column from table,这是一种很优美的查询方法.从而将基础表中垂直的列数据改为水平方向的数据。这样就可以替代游标。动态的交叉表这样就代替了传统的游标。<br>SQL语句解决方法：<br>写法一：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> @<span class="keyword">sql</span> <span class="built_in">varchar</span>(<span class="number">4000</span>) <span class="keyword">set</span> @<span class="keyword">sql</span> = <span class="string">'select name'</span> <span class="keyword">select</span> @<span class="keyword">sql</span> = @<span class="keyword">sql</span> + <span class="string">',sum(case subject when '''</span>+subject+<span class="string">''' then result end) as '</span>+subject <span class="keyword">from</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> subject <span class="keyword">from</span> CJ) <span class="keyword">as</span> a <span class="keyword">select</span> @<span class="keyword">sql</span> = @<span class="keyword">sql</span>+<span class="string">' from CJ group by name'</span> exec(@<span class="keyword">sql</span>) [<span class="keyword">sql</span>] 写法二： [<span class="keyword">sql</span>] <span class="keyword">declare</span> @<span class="keyword">sql</span> <span class="built_in">varchar</span>(<span class="number">4000</span>) <span class="keyword">set</span> @<span class="keyword">sql</span> = <span class="string">'select name'</span> <span class="keyword">select</span> @<span class="keyword">sql</span> = @<span class="keyword">sql</span> + <span class="string">',sum(case subject when '''</span>+subject+<span class="string">''' then result end) as '</span>+subject +<span class="string">' from CJ group by subject select @sql = @sql+'</span> <span class="keyword">from</span> CJ <span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">name</span><span class="string">' exec(@sql)</span></span><br></pre></td></tr></table></figure>
+
+<p>说明 使用交叉表查询来摘要数据时，从指定的字段或表达式中选定值作为列标题， 这样，可以用比选定查询更紧凑的格式来观察数据。 TRANSFORM 是可选的，但在使用它时，要作为 SQL 字符串中的第一个语句。 它出现在 SELECT 语句（指定作为行标题的字段的）之前，还出现在 GROUP BY 子句 （指定行分组的）之前。可以有选择地包含其它子句，例如 WHERE 子句，它指定附 加的选择或排序条件。也可以将子查询当作谓词，特别是在叉表查询的 WHERE 子句中。 pivotfield 返回的值被用作查询结果集中的列标题。 例如，在交叉表查询中，将根据销售图表按销售月份创建 12 个列。 可以限制 pivotfield 用列在可选的 IN 子句中的固定值（value1, value2）来创建标题。 也可以用没有数据存在的固定值来创建附加的列。 2. 列行转换 暂时保留 3. 行列转换–加合并 有表A,</p>
+<p>id pid<br>1        1<br>1        2<br>1        3<br>2        1<br>2        2<br>3        1<br>如何化成表B:<br>id      pid<br>1       1,2,3<br>2       1,2<br>3       1</p>
+<p>创建一个合并的函数 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> fmerg(@<span class="keyword">id</span> <span class="built_in">int</span>) <span class="keyword">returns</span> <span class="built_in">varchar</span>(<span class="number">8000</span>) <span class="keyword">as</span> <span class="keyword">begin</span> <span class="keyword">declare</span> @<span class="keyword">str</span> <span class="built_in">varchar</span>(<span class="number">8000</span>) <span class="keyword">set</span> @<span class="keyword">str</span>=<span class="string">''</span> <span class="keyword">select</span> @<span class="keyword">str</span>=@<span class="keyword">str</span>+<span class="string">','</span>+<span class="keyword">cast</span>(pid <span class="keyword">as</span> <span class="built_in">varchar</span>) <span class="keyword">from</span> 表A <span class="keyword">where</span> <span class="keyword">id</span>=@<span class="keyword">id</span> <span class="keyword">set</span> @<span class="keyword">str</span>=<span class="keyword">right</span>(@<span class="keyword">str</span>,<span class="keyword">len</span>(@<span class="keyword">str</span>)<span class="number">-1</span>) <span class="keyword">return</span>(@<span class="keyword">str</span>) <span class="keyword">End</span> <span class="keyword">go</span></span><br></pre></td></tr></table></figure>
+
+
+<p>–调用自定义函数得到结果 select distinct id,dbo.fmerg(id) from 表A</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/10/js-%E4%BD%BF%E7%94%A8%E8%AF%AF%E5%8C%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            js-使用误区
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/10/Jquery-%E5%B0%BA%E5%AF%B8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Jquery-尺寸</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

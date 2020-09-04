@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    NodeJs-Stream(流) |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-NodeJs-Stream(流)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  NodeJs-Stream(流)
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/06/NodeJs-Stream(%E6%B5%81)/" class="article-date">
+  <time datetime="2018-06-18T15:02:07.000Z" itemprop="datePublished">2018-06-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/NodeJs/">NodeJs</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。 Node.js，Stream 有四种流类型：</p>
+<ul>
+<li>Readable - 可读操作。</li>
+<li>Writable - 可写操作。</li>
+<li>Duplex - 可读可写操作.</li>
+<li>Transform - 操作被写入数据，然后读出结果。</li>
+</ul>
+<p>所有的 Stream 对象都是 EventEmitter 的实例。常用的事件有：</p>
+<ul>
+<li>data - 当有数据可读时触发。</li>
+<li>end - 没有更多的数据可读时触发。</li>
+<li>error - 在接收和写入过程中发生错误时触发。</li>
+<li>finish - 所有数据已被写入到底层系统时触发。</li>
+</ul>
+<p>本教程会为大家介绍常用的流操作。</p>
+<h2 id="从流中读取数据"><a href="#从流中读取数据" class="headerlink" title="从流中读取数据"></a>从流中读取数据</h2><p>创建 input.txt 文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">百度官网地址：www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>创建 main.js 文件, 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line">var data &#x3D; &#39;&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建可读流</span><br><span class="line">var readerStream &#x3D; fs.createReadStream(&#39;input.txt&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 设置编码为 utf8。 readerStream.setEncoding(&#39;UTF8&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 处理流事件 --&gt; data, end, and error readerStream.on(&#39;data&#39;, function(chunk) &#123; data +&#x3D; chunk;</span><br><span class="line">&#125;); readerStream.on(&#39;end&#39;,function()&#123; console.log(data);</span><br><span class="line">&#125;); readerStream.on(&#39;error&#39;, function(err)&#123; console.log(err.stack);</span><br><span class="line">&#125;); console.log(&quot;程序执行完毕&quot;);</span><br></pre></td></tr></table></figure>
+<p>以上代码执行结果如下：</p>
+<p>程序执行完毕</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">百度官网地址：www.baidu.com</span><br></pre></td></tr></table></figure>
+<h2 id="写入流"><a href="#写入流" class="headerlink" title="写入流"></a>写入流</h2><p>创建 main.js 文件, 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line">var data &#x3D; &#39;菜鸟教程官网地址：www.runoob.com&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个可以写入的流，写入到文件 output.txt 中</span><br><span class="line">var writerStream &#x3D; fs.createWriteStream(&#39;output.txt&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 使用 utf8 编码写入数据 writerStream.write(data,&#39;UTF8&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 标记文件末尾 writerStream.end();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 处理流事件 --&gt; data, end, and error writerStream.on(&#39;finish&#39;, function() &#123; console.log(&quot;写入完成。&quot;);</span><br><span class="line">&#125;); writerStream.on(&#39;error&#39;, function(err)&#123; console.log(err.stack);</span><br><span class="line">&#125;); console.log(&quot;程序执行完毕&quot;);</span><br></pre></td></tr></table></figure>
+<p>以上程序会将 data 变量的数据写入到 output.txt 文件中。代码执行结果如下：</p>
+<p>$ node main.js 程序执行完毕<br>写入完成。</p>
+<p>查看 output.txt 文件的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat output.txt 百度官网地址：www.baidu.com</span><br></pre></td></tr></table></figure>
+<h2 id="管道流"><a href="#管道流" class="headerlink" title="管道流"></a>管道流</h2><p>管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。如上面的图片所示，我们把文件比作装水的桶，而水就是文件里的内容，我们用一根管子(pipe)连接两个桶使得水从一个桶流入另一个桶，这样就慢慢的实现了大文件的复制过程。 以下实例我们通过读取一个文件内容并将内容写入到另外一个文件中。 设置 input.txt 文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">百度官网地址：www.baidu.com 管道流操作实例</span><br></pre></td></tr></table></figure>
+<p>创建 main.js 文件, 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个可读流</span><br><span class="line">var readerStream &#x3D; fs.createReadStream(&#39;input.txt&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 创建一个可写流</span><br><span class="line">var writerStream &#x3D; fs.createWriteStream(&#39;output.txt&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 管道读写操作</span><br><span class="line">&#x2F;&#x2F; 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中 readerStream.pipe(writerStream); console.log(&quot;程序执行完毕&quot;);</span><br></pre></td></tr></table></figure>
+<p>代码执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js 程序执行完毕</span><br><span class="line"></span><br><span class="line">查看 output.txt 文件的内容：</span><br><span class="line"></span><br><span class="line">$ cat output.txt 百度官网地址：www.baidu.com 管道流操作实例</span><br></pre></td></tr></table></figure>
+
+<h2 id="链式流"><a href="#链式流" class="headerlink" title="链式流"></a>链式流</h2><p>链式是通过连接输出流到另外一个流并创建多个流操作链的机制。链式流一般用于管道操作。 接下来我们就是用管道和链式来压缩和解压文件。 创建 compress.js 文件, 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line">var zlib &#x3D; require(&#39;zlib&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 压缩 input.txt 文件为 input.txt.gz fs.createReadStream(&#39;input.txt&#39;)</span><br><span class="line">  .pipe(zlib.createGzip())</span><br><span class="line">  .pipe(fs.createWriteStream(&#39;input.txt.gz&#39;)); console.log(&quot;文件压缩完成。&quot;);</span><br></pre></td></tr></table></figure>
+<p>代码执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node compress.js 文件压缩完成。</span><br></pre></td></tr></table></figure>
+
+<p>执行完以上操作后，我们可以看到当前目录下生成了 input.txt 的压缩文件 input.txt.gz。 接下来，让我们来解压该文件，创建 decompress.js 文件，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line">var zlib &#x3D; require(&#39;zlib&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 解压 input.txt.gz 文件为 input.txt fs.createReadStream(&#39;input.txt.gz&#39;)</span><br><span class="line">  .pipe(zlib.createGunzip())</span><br><span class="line">  .pipe(fs.createWriteStream(&#39;input.txt&#39;)); console.log(&quot;文件解压完成。&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>代码执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node decompress.js 文件解压完成。</span><br></pre></td></tr></table></figure>
+
+<p>那我现在又这么一个需求，我想把input里面的内容写到outInput里面去，但是上面的方法都是把文档里面的内容重置了，我只想添加，而且保留原内容怎么办呢，可以在可读流创建完毕的回调函数里面进行操作，看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">let fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line">let data &#x3D; &#39;&#39;;</span><br><span class="line">let data2 &#x3D; &#39;你的小青蛙是真的可爱&#39;;</span><br><span class="line">&#x2F;&#x2F;1.读取流</span><br><span class="line">&#x2F;&#x2F;创建可读流</span><br><span class="line">let readStream &#x3D; fs.createReadStream(&quot;input.txt&quot;);</span><br><span class="line">&#x2F;&#x2F;设置utf-8编码</span><br><span class="line">readStream.setEncoding(&#39;UTF8&#39;);</span><br><span class="line">&#x2F;&#x2F;处理流事件</span><br><span class="line">readStream.on(&#39;data&#39;, chunk &#x3D;&gt; data +&#x3D; chunk);</span><br><span class="line">readStream.on(&#39;end&#39;, () &#x3D;&gt; writeS(data));</span><br><span class="line">readStream.on(&quot;error&quot;, err &#x3D;&gt; console.log(err.strck));</span><br><span class="line">console.log(&quot;程序1执行完毕&quot;);</span><br><span class="line">&#x2F;&#x2F;2.写入流</span><br><span class="line">&#x2F;&#x2F;创建可写流</span><br><span class="line">let writeS &#x3D; dataS &#x3D;&gt;&#123;</span><br><span class="line">    let writeStream &#x3D; fs.createWriteStream(&quot;outInput.txt&quot;);</span><br><span class="line">    &#x2F;&#x2F;使用utf-8写入流 </span><br><span class="line">    writeStream.write(data2+dataS, &quot;UTF8&quot;);</span><br><span class="line">    &#x2F;&#x2F;标记文件末尾</span><br><span class="line">    writeStream.end();</span><br><span class="line">    &#x2F;&#x2F;处理事件流 </span><br><span class="line">    writeStream.on(&quot;finish&quot;, () &#x3D;&gt; console.log(&quot;写入完成&quot;)); </span><br><span class="line">    writeStream.on(&quot;error&quot;, err &#x3D;&gt; console.log(err.stack)); </span><br><span class="line">    console.log(&quot;程序2执行完毕&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面可能存在覆盖状态,可以设置写入流的追加参数来解决:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line">var read &#x3D; fs.createReadStream(&#39;..&#x2F;data&#x2F;input.txt&#39;);</span><br><span class="line">&#x2F;&#x2F;设置第二个参数append</span><br><span class="line">var write &#x3D; fs.createWriteStream(&#39;..&#x2F;data&#x2F;out.txt&#39;, &#123; &#39;flags&#39;: &#39;a&#39; &#125;);</span><br><span class="line">&#x2F;&#x2F;管道流读写操作</span><br><span class="line">read.pipe(write);</span><br><span class="line">console.log(&#39;执行完毕&#39;);</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2018/06/AngularJS-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            AngularJS-依赖注入
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/06/AngularJS-%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">AngularJS-作用域</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

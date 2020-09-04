@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    vc++-多线程随机单元测试实例之测试vld库 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vc++-多线程随机单元测试实例之测试vld库"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vc++-多线程随机单元测试实例之测试vld库
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/03/vc++-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9A%8F%E6%9C%BA%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%BE%8B%E4%B9%8B%E6%B5%8B%E8%AF%95vld%E5%BA%93/" class="article-date">
+  <time datetime="2016-03-25T02:30:35.000Z" itemprop="datePublished">2016-03-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vc/">vc++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="直接上代码"><a href="#直接上代码" class="headerlink" title="直接上代码"></a>直接上代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt; #include &lt;cstdio&gt; #include &lt;windows.h&gt; #include &lt;vld.h&gt; enum action_e &#123; a_calloc, a_comalloc, a_getprocmalloc, a_heapalloc, a_icomalloc, a_ignored, a_malloc, a_new, numactions &#125;; //我这里是vs2013 </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CRTDLLNAME “msvcr120d.dll” <span class="comment">// Name of the debug C Runtime Library DLL on this system </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXALLOC 1000 <span class="comment">// Maximum number of allocations of each type to perform, per thread </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXBLOCKS (MAXALLOC * numactions) <span class="comment">// Total maximum number of allocations, per thread </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXDEPTH 32 <span class="comment">// Maximum depth of the allocation call stack </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 64 <span class="comment">// Maximum block size to allocate </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MINDEPTH 0 <span class="comment">// Minimum depth of the allocation call stack </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MINSIZE 16 <span class="comment">// Minimum block size to allocate </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUMDUPLEAKS 0 <span class="comment">// Number of times to duplicate each leak </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUMTHREADS 72 <span class="comment">// Number of threads to run simultaneously </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ONCEINAWHILE 10 <span class="comment">// Free a random block approx. once every… typedef struct blockholder_s </span></span></span><br><span class="line">&#123; action_e action; PVOID block; BOOL leak; &#125; <span class="keyword">blockholder_t</span>; <span class="keyword">typedef</span> <span class="keyword">void</span>* (__cdecl *<span class="keyword">free_t</span>) (<span class="keyword">void</span>* mem); <span class="keyword">typedef</span> <span class="keyword">void</span>* (__cdecl *<span class="keyword">malloc_t</span>) (<span class="keyword">size_t</span> size); <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">threadcontext_s</span> &#123;</span> UINT index; BOOL leaky; DWORD seed; BOOL terminated; DWORD threadid; &#125; <span class="keyword">threadcontext_t</span>; __declspec(thread) <span class="keyword">blockholder_t</span> blocks [MAXBLOCKS]; __declspec(thread) ULONG counts [numactions] = &#123; <span class="number">0</span> &#125;; __declspec(thread) IMalloc *imalloc = <span class="literal">NULL</span>; __declspec(thread) <span class="keyword">free_t</span> pfree = <span class="literal">NULL</span>; __declspec(thread) <span class="keyword">malloc_t</span> pmalloc = <span class="literal">NULL</span>; __declspec(thread) HANDLE threadheap; __declspec(thread) ULONG total_allocs = <span class="number">0</span>; <span class="function">ULONG <span class="title">random</span> <span class="params">(ULONG max)</span> </span>&#123; FLOAT d; FLOAT r; ULONG v; r = ((FLOAT)rand()) / ((FLOAT)RAND_MAX); r = ((FLOAT)max); d = r - ((ULONG)r); <span class="keyword">if</span> (d &gt;= <span class="number">0.5</span>) &#123; v = ((ULONG)r) + <span class="number">1</span>; &#125; <span class="keyword">else</span> &#123; v = (ULONG)r; &#125; <span class="keyword">return</span> v; &#125; <span class="function">VOID <span class="title">allocateblock</span> <span class="params">(action_e action, SIZE_T size)</span> </span>&#123; HMODULE crt; ULONG index; LPCSTR name; PVOID *pblock; HRESULT status; <span class="comment">// Find the first unused index. </span></span><br><span class="line"><span class="keyword">for</span> (index = <span class="number">0</span>; index &lt; MAXBLOCKS; index++) &#123; <span class="keyword">if</span> (blocks[index].block == <span class="literal">NULL</span>) &#123; <span class="keyword">break</span>; &#125; &#125; blocks[index].action = action; <span class="comment">// Now do the randomized allocation. </span></span><br><span class="line">pblock = &amp;blocks[index].block; <span class="keyword">switch</span> (action) &#123; <span class="keyword">case</span> a_calloc: name = “<span class="built_in">calloc</span>”; *pblock = <span class="built_in">calloc</span>(<span class="number">1</span>, size); <span class="keyword">break</span>; <span class="keyword">case</span> a_comalloc: name = “CoTaskMemAlloc”; *pblock = CoTaskMemAlloc(size); <span class="keyword">break</span>; <span class="keyword">case</span> a_getprocmalloc: name = “GetProcAddress”; <span class="keyword">if</span> (pmalloc == <span class="literal">NULL</span>) &#123; crt = LoadLibrary(CRTDLLNAME); assert(crt != <span class="literal">NULL</span>); pmalloc = (<span class="keyword">malloc_t</span>)GetProcAddress(crt, “<span class="built_in">malloc</span>”); assert(pmalloc != <span class="literal">NULL</span>); &#125; *pblock = pmalloc(size); <span class="keyword">break</span>; <span class="keyword">case</span> a_heapalloc: name = “HeapAlloc”; <span class="keyword">if</span> (threadheap == <span class="literal">NULL</span>) &#123; threadheap = HeapCreate(<span class="number">0x0</span>, <span class="number">0</span>, <span class="number">0</span>); &#125; *pblock = HeapAlloc(threadheap, <span class="number">0x0</span>, size); <span class="keyword">break</span>; <span class="keyword">case</span> a_icomalloc: name = “IMalloc”; <span class="keyword">if</span> (imalloc == <span class="literal">NULL</span>) &#123; status = CoGetMalloc(<span class="number">1</span>, &amp;imalloc); assert(status == S_OK); &#125; *pblock = imalloc-&gt;Alloc(size); <span class="keyword">break</span>; <span class="keyword">case</span> a_ignored: name = “Ignored”; VLDDisable(); *pblock = <span class="built_in">malloc</span>(size); VLDEnable(); <span class="keyword">break</span>; <span class="keyword">case</span> a_malloc: name = “<span class="built_in">malloc</span>”; *pblock = <span class="built_in">malloc</span>(size); <span class="keyword">break</span>; <span class="keyword">case</span> a_new: name = “<span class="keyword">new</span>”; *pblock = <span class="keyword">new</span> BYTE [size]; <span class="keyword">break</span>; <span class="keyword">default</span>: assert(FALSE); &#125; counts[action]++; total_allocs++; strncpy_s((<span class="keyword">char</span>\)*pblock, size, name, _TRUNCATE); &#125; <span class="function">VOID <span class="title">freeblock</span> <span class="params">(ULONG index)</span> </span>&#123; PVOID block; HMODULE crt; block = blocks[index].block; <span class="keyword">switch</span> (blocks[index].action) &#123; <span class="keyword">case</span> a_calloc: <span class="built_in">free</span>(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_comalloc: CoTaskMemFree(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_getprocmalloc: <span class="keyword">if</span> (pfree == <span class="literal">NULL</span>) &#123; crt = GetModuleHandle(CRTDLLNAME); assert(crt != <span class="literal">NULL</span>); pfree = (<span class="keyword">free_t</span>)GetProcAddress(crt, “<span class="built_in">free</span>”); assert(pfree != <span class="literal">NULL</span>); &#125; pfree(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_heapalloc: HeapFree(threadheap, <span class="number">0x0</span>, block); <span class="keyword">break</span>; <span class="keyword">case</span> a_icomalloc: imalloc-&gt;Free(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_ignored: <span class="built_in">free</span>(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_malloc: <span class="built_in">free</span>(block); <span class="keyword">break</span>; <span class="keyword">case</span> a_new: <span class="keyword">delete</span> [] block; <span class="keyword">break</span>; <span class="keyword">default</span>: assert(FALSE); &#125; blocks[index].block = <span class="literal">NULL</span>; counts[blocks[index].action]–; total_allocs–; &#125; <span class="function">VOID <span class="title">recursivelyallocate</span> <span class="params">(UINT depth, action_e action, SIZE_T size)</span> </span>&#123; <span class="keyword">if</span> (depth == <span class="number">0</span>) &#123; allocateblock(action, size); &#125; <span class="keyword">else</span> &#123; recursivelyallocate(depth - <span class="number">1</span>, action, size); &#125; &#125; <span class="function">DWORD __stdcall <span class="title">runtestsuite</span> <span class="params">(LPVOID param)</span> </span>&#123; action_e action; USHORT action_index; BOOL allocate_more = TRUE; <span class="keyword">threadcontext_t</span> *context = (<span class="keyword">threadcontext_t</span>*)param; UINT depth; ULONG index; UINT leaks_selected; SIZE_T size; srand(context-&gt;seed); <span class="keyword">for</span> (index = <span class="number">0</span>; index &lt; MAXBLOCKS; index++) &#123; blocks[index].block = <span class="literal">NULL</span>; blocks[index].leak = FALSE; &#125; <span class="keyword">while</span> (allocate_more == TRUE) &#123; <span class="comment">// Select a random allocation action and a random size. </span></span><br><span class="line">action = (action_e)random(numactions - <span class="number">1</span>); size = random(MAXSIZE); <span class="keyword">if</span> (size &lt; MINSIZE) &#123; size = MINSIZE; &#125; <span class="keyword">if</span> (counts[action] == MAXALLOC) &#123; <span class="comment">// We’ve done enough of this type of allocation. Select another. </span></span><br><span class="line"><span class="keyword">continue</span>; &#125; <span class="comment">// Allocate a block, using recursion to build up a stack of random // depth. </span></span><br><span class="line">depth = random(MAXDEPTH); <span class="keyword">if</span> (depth &lt; MINDEPTH) &#123; depth = MINDEPTH; &#125; recursivelyallocate(depth, action, size); <span class="comment">// Every once in a while, free a random block. </span></span><br><span class="line"><span class="keyword">if</span> (random(ONCEINAWHILE) == ONCEINAWHILE) &#123; index = random(total_allocs); <span class="keyword">if</span> (blocks[index].block != <span class="literal">NULL</span>) &#123; freeblock(index); &#125; &#125; <span class="comment">// See if we have allocated enough blocks using each type of action.</span></span><br><span class="line"> <span class="keyword">for</span> (action_index = <span class="number">0</span>; action_index &lt; numactions; action_index++) &#123; <span class="keyword">if</span> (counts[action_index] &lt; MAXALLOC) &#123; allocate_more = TRUE; <span class="keyword">break</span>; &#125; allocate_more = FALSE; &#125; &#125; <span class="keyword">if</span> (context-&gt;leaky == TRUE) &#123; <span class="comment">// This is the leaky thread. Randomly select one block to be leaked from // each type of allocation action. </span></span><br><span class="line"> <span class="keyword">for</span> (action_index = <span class="number">0</span>; action_index &lt; numactions; action_index++) &#123; leaks_selected = <span class="number">0</span>; <span class="keyword">do</span> &#123; index = random(MAXBLOCKS); <span class="keyword">if</span> ((blocks[index].block != <span class="literal">NULL</span>) &amp;&amp; (blocks[index].action == (action_e)action_index)) &#123; blocks[index].leak = TRUE; leaks_selected++; &#125; &#125; <span class="keyword">while</span> (leaks_selected &lt; (<span class="number">1</span> + NUMDUPLEAKS)); &#125; &#125; <span class="comment">// Free all blocks except for those marked as leaks. </span></span><br><span class="line"> <span class="keyword">for</span> (index = <span class="number">0</span>; index &lt; MAXBLOCKS; index++) &#123; <span class="keyword">if</span> ((blocks[index].block != <span class="literal">NULL</span>) &amp;&amp; (blocks[index].leak == FALSE)) &#123; freeblock(index); &#125; &#125; <span class="comment">// Do a sanity check. </span></span><br><span class="line"> <span class="keyword">if</span> (context-&gt;leaky == TRUE) &#123; assert(total_allocs == (numactions * (<span class="number">1</span> + NUMDUPLEAKS))); &#125; <span class="keyword">else</span> &#123; assert(total_allocs == <span class="number">0</span>); &#125; context-&gt;terminated = TRUE; <span class="built_in">printf</span>(“pid=%d tid=%d run runtestsuite finish!\n”,GetCurrentProcessId(),GetCurrentThreadId()); <span class="keyword">return</span> <span class="number">0</span>; &#125; <span class="comment">//vc++多线程随机单元测试实例之测试vld库。 int main (int argc, char *argv []) &#123; threadcontext_t contexts [NUMTHREADS]; DWORD end; UINT index; </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MESSAGESIZE 512 char message [512]; DWORD start; UINT leakythread; start = GetTickCount(); srand(start); <span class="comment">// Select a random thread to be the leaker. </span></span></span><br><span class="line">leakythread = random(NUMTHREADS - <span class="number">1</span>); <span class="keyword">for</span> (index = <span class="number">0</span>; index &lt; NUMTHREADS; ++index) &#123; contexts[index].index = index; <span class="keyword">if</span> (index == leakythread) &#123; contexts[index].leaky = TRUE; &#125; contexts[index].seed = random(RAND_MAX); contexts[index].terminated = FALSE; CreateThread(<span class="literal">NULL</span>, <span class="number">0</span>, runtestsuite, &amp;contexts[index], <span class="number">0</span>, &amp;contexts[index].threadid); &#125; <span class="comment">// Wait for all threads to terminate. </span></span><br><span class="line"><span class="keyword">for</span> (index = <span class="number">0</span>; index &lt; NUMTHREADS; ++index) &#123; <span class="keyword">while</span> (contexts[index].terminated == FALSE) &#123; Sleep(<span class="number">10</span>); &#125; &#125; end = GetTickCount(); _snprintf_s(message, <span class="number">512</span>, _TRUNCATE, “Elapsed Time = %ums\n”, end - start); OutputDebugString(message); <span class="built_in">printf</span>(message); </span><br><span class="line"><span class="built_in">printf</span>(“random=%lu”, random(<span class="number">15</span>)); <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vc/" rel="tag">vc++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/03/vc++-%E7%AC%94%E8%AE%B0%E4%B8%80/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vc++-笔记一
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/03/vc++-ADO%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vc++-ADO事务处理</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

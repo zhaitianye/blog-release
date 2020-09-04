@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    数据结构-搜索二叉树递归&amp;非递归 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构-搜索二叉树递归&amp;非递归"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据结构-搜索二叉树递归&amp;非递归
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E9%80%92%E5%BD%92&%E9%9D%9E%E9%80%92%E5%BD%92/" class="article-date">
+  <time datetime="2016-05-04T13:53:45.000Z" itemprop="datePublished">2016-05-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><strong>一.搜索二叉树的性质&gt;</strong> </p>
+<p>1). 每个节点都有一个作为搜索依据的关键码(key),所有节点的关键码互不相同。 </p>
+<p>2). 左子树上所有节点的关键码(key)都小于根节点的关键码(key). </p>
+<p>3). 右子树上所有节点的关键码(key)都大于根节点的关键码(key) </p>
+<p>4). 左右子树都是二叉搜索树. 类似这样的一棵树就叫做搜索二叉树： </p>
+<p><strong>二.搜索二叉树的基本操作</strong> </p>
+<p><strong>1.插入</strong> 此时我们就需要考虑三种情况: </p>
+<p>(1).空树的情况 </p>
+<p>(2).要插入的结点已经在搜索二叉树中 </p>
+<p>(3).要插入的结点不存在搜索二叉树中. 如果是空树则直接创建结点使指向根结点的指针指向新创建的结点；如果不是空树那仫就要找到合适的位置插入，使得插入这个新的节点之后这颗树依然是一颗搜索二叉树:如果你要插入的结点的关键码比当前结点的关键码大则在右树中找到合适的位置，反之在左树中找，如果遍历完这颗树找到相同的关键码则不用处理，如果没有再次判断父关键码和要插入结点的关键码的大小，决定新的节点是插入到左子树还是右子树上. 非递归&gt; </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">bool</span> <span class="title">Remove</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span> </span>&#123; </span><br><span class="line">  <span class="keyword">if</span>(_root == <span class="literal">NULL</span>) &#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">  &#125; Node *cur=_root; Node *parent=<span class="literal">NULL</span>; </span><br><span class="line">  <span class="keyword">while</span> (cur) &#123; </span><br><span class="line">    <span class="keyword">if</span> (cur-&gt;_key &lt; key) &#123; </span><br><span class="line">      parent=cur; cur=cur-&gt;_right; </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cur-&gt;_key &gt; key) &#123; </span><br><span class="line">      parent=cur; cur=cur-&gt;_left; </span><br><span class="line">    &#125; <span class="keyword">else</span> &#125; <span class="keyword">if</span>(cur) &#123; </span><br><span class="line">      <span class="keyword">if</span> (cur-&gt;_left == <span class="literal">NULL</span>) &#123; <span class="keyword">if</span>(_root == cur)  _root=cur-&gt;_right; <span class="keyword">else</span> &#123; <span class="keyword">if</span>(parent-&gt;_right == cur) parent-&gt;_right=cur-&gt;_right; <span class="keyword">else</span> <span class="keyword">if</span>(parent-&gt;_left == cur) parent-&gt;_left=cur-&gt;_right; &#125; &#125; <span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_right == <span class="literal">NULL</span>)  &#123; <span class="keyword">if</span>(_root == cur)  _root=cur-&gt;_left; <span class="keyword">else</span> &#123; <span class="keyword">if</span>(parent-&gt;_left == cur) parent-&gt;_left=cur-&gt;_left; <span class="keyword">else</span> <span class="keyword">if</span>(parent-&gt;_right ==cur) parent-&gt;_right=cur-&gt;_left; &#125; &#125; <span class="keyword">else</span>  &#123;  parent=cur; Node *tmp=cur-&gt;_right; <span class="keyword">while</span> (tmp-&gt;_left) &#123; parent=tmp; tmp=tmp-&gt;_left; &#125; cur-&gt;_key=tmp-&gt;_key; <span class="keyword">if</span>(parent-&gt;_left == tmp) parent-&gt;_left=tmp-&gt;_right; <span class="keyword">else</span> parent-&gt;_right=tmp-&gt;_right; cur=tmp; &#125; <span class="keyword">delete</span> cur; cur=<span class="literal">NULL</span>; &#125; <span class="keyword">return</span> <span class="literal">true</span>; &#125; [/cpp] 递归&gt; [cpp] <span class="keyword">bool</span> _RemoveR(Node *&amp;root,<span class="keyword">const</span> K&amp; key) &#123; <span class="keyword">if</span>(root == <span class="literal">NULL</span>) &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; <span class="keyword">if</span>(root-&gt;_key &lt; key) <span class="keyword">return</span> _RemoveR(root-&gt;_right,key); <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_key &gt; key) <span class="keyword">return</span> _RemoveR(root-&gt;_left,key); <span class="keyword">else</span> &#123; Node *del=root; <span class="keyword">if</span> (root-&gt;_left == <span class="literal">NULL</span>)  root=root-&gt;_right; <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_right == <span class="literal">NULL</span>)  root=root-&gt;_left; <span class="keyword">else</span>  &#123; Node *parent=root; Node *tmp=root-&gt;_right; <span class="keyword">while</span> (tmp-&gt;_left) &#123; parent=tmp; tmp=tmp-&gt;_left; &#125; del=tmp; root-&gt;_key=tmp-&gt;_key; <span class="keyword">if</span>(parent-&gt;_left == tmp) parent-&gt;_left=tmp-&gt;_right; <span class="keyword">else</span> parent-&gt;_right=tmp-&gt;_right; </span><br><span class="line">    &#125; <span class="keyword">delete</span> del; del=<span class="literal">NULL</span>; </span><br><span class="line">  &#125; <span class="keyword">return</span> <span class="literal">true</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.删除 在搜索二叉树中最不好解决的就是删除一个结点了，根据删除结点的位置，我们需要分情况讨论： </p>
+<p>(1).左子树为空或者右子树为空 </p>
+<p>(2).左右子树都不为空 要删除一个叶子(左右子树都为空)的结点可以和左子树或者右子树为空归结为一类问题&gt;在这里我们要考虑一种极端的情况就是你要删除的结点既是根结点也是左为空或者右为空的情况—就是出现单链的二叉树. 在删除一个结点时我们用了一个parent指针来记录当前结点的父结点，如果要删除的结点既是根结点也是左为空或者右为空的情况，此时这个parent指针就是NULL,就无法利用这个父结点了，此时我们就需要对这种情况进行处理. 要删除左右子树都不为空的结点，在这里就用到了之前实现无头单链表的删除的类似的替换思想了，可是应该用哪个节点替换呢?根据二叉搜索树的性质可知根结点的关键码一定比左子树所有的关键码都大，比右子树所有的关键码都小,要保证替换之后的根结点依然满足这样的性质，我们是否可以从当前结点的左子树中找到最大关键码的结点或者从当前结点的右子树中找到最小关键码的结点来实现呢？当然可以啦！在这里我用的替换元素是找当前结点右子树中的最小结点(在右子树中找中序遍历的第一个结点)来实现的.找到替换元素后直接交换两个结点的关键码,修改结点指针域.这样就删除了搜索二叉树中的一刻结点了. 非递归&gt; </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Remove</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span> </span>&#123; <span class="keyword">if</span>(_root == <span class="literal">NULL</span>) &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; Node *cur=_root; Node *parent=<span class="literal">NULL</span>; <span class="keyword">while</span> (cur) &#123; <span class="keyword">if</span> (cur-&gt;_key &lt; key) &#123; parent=cur; cur=cur-&gt;_right; &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cur-&gt;_key &gt; key) &#123; parent=cur; cur=cur-&gt;_left; &#125; <span class="keyword">else</span> <span class="comment">//找到了,或者不存在 </span></span><br><span class="line"><span class="keyword">break</span>; &#125; <span class="keyword">if</span>(cur) <span class="comment">//存在该结点 </span></span><br><span class="line">&#123; <span class="keyword">if</span> (cur-&gt;_left == <span class="literal">NULL</span>) <span class="comment">//左为空 </span></span><br><span class="line">&#123; <span class="keyword">if</span>(_root == cur) <span class="comment">//删除的是根结点且左为空 </span></span><br><span class="line">_root=cur-&gt;_right; <span class="keyword">else</span> &#123; <span class="keyword">if</span>(parent-&gt;_right == cur) parent-&gt;_right=cur-&gt;_right; <span class="keyword">else</span> <span class="keyword">if</span>(parent-&gt;_left == cur) parent-&gt;_left=cur-&gt;_right; &#125; &#125; <span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_right == <span class="literal">NULL</span>) <span class="comment">//右为空 </span></span><br><span class="line">&#123; <span class="keyword">if</span>(_root == cur) <span class="comment">//要删除的结点是根结点且右为空 </span></span><br><span class="line">_root=cur-&gt;_left; <span class="keyword">else</span> &#123; <span class="keyword">if</span>(parent-&gt;_left == cur) parent-&gt;_left=cur-&gt;_left; <span class="keyword">else</span> <span class="keyword">if</span>(parent-&gt;_right ==cur) parent-&gt;_right=cur-&gt;_left; &#125; &#125; <span class="keyword">else</span> <span class="comment">//左右都不为空—用替换的方法 </span></span><br><span class="line">&#123; <span class="comment">//找当前结点右树中最小的一个结点</span></span><br><span class="line">parent=cur; Node *tmp=cur-&gt;_right; <span class="keyword">while</span> (tmp-&gt;_left) &#123; parent=tmp; tmp=tmp-&gt;_left; &#125; cur-&gt;_key=tmp-&gt;_key; <span class="keyword">if</span>(parent-&gt;_left == tmp) parent-&gt;_left=tmp-&gt;_right; <span class="keyword">else</span> parent-&gt;_right=tmp-&gt;_right; cur=tmp; &#125; <span class="keyword">delete</span> cur; cur=<span class="literal">NULL</span>; &#125; <span class="keyword">return</span> <span class="literal">true</span>; &#125; [/cpp] 递归&gt; [cpp] <span class="keyword">bool</span> _RemoveR(Node *&amp;root,<span class="keyword">const</span> K&amp; key) &#123; <span class="keyword">if</span>(root == <span class="literal">NULL</span>) &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125; <span class="keyword">if</span>(root-&gt;_key &lt; key) <span class="keyword">return</span> _RemoveR(root-&gt;_right,key); <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_key &gt; key) <span class="keyword">return</span> _RemoveR(root-&gt;_left,key); <span class="keyword">else</span> &#123; Node *del=root; <span class="keyword">if</span> (root-&gt;_left == <span class="literal">NULL</span>) <span class="comment">//左子树为空 </span></span><br><span class="line">root=root-&gt;_right; <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_right == <span class="literal">NULL</span>) <span class="comment">//右子树为空 </span></span><br><span class="line">root=root-&gt;_left; <span class="keyword">else</span> <span class="comment">//左右子树都不为空 </span></span><br><span class="line">&#123; Node *parent=root; Node *tmp=root-&gt;_right; <span class="keyword">while</span> (tmp-&gt;_left) &#123; parent=tmp; tmp=tmp-&gt;_left; &#125; del=tmp; root-&gt;_key=tmp-&gt;_key; <span class="keyword">if</span>(parent-&gt;_left == tmp) parent-&gt;_left=tmp-&gt;_right; <span class="keyword">else</span> parent-&gt;_right=tmp-&gt;_right; &#125; <span class="keyword">delete</span> del; del=<span class="literal">NULL</span>; &#125; <span class="keyword">return</span> <span class="literal">true</span>; &#125; </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">**<span class="number">3.</span>查找** </span><br><span class="line"></span><br><span class="line">通过判断要查找的关键码和当前结点的关键码的大小，要查找的关键码大在右树中找，否则在左树中找.找到就返回<span class="literal">true</span>，否则返回<span class="literal">false</span> 非递归&gt; </span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Find</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span> </span>&#123; Node *cur=_root; <span class="keyword">while</span> (cur) &#123; <span class="keyword">if</span>(cur-&gt;_key &lt; key) cur=cur-&gt;_right; <span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_key &gt; key) cur=cur-&gt;_left; <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">//找到了 </span></span><br><span class="line">&#125; <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//没有找到 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">递归&gt; [cpp] </span><br><span class="line"><span class="keyword">bool</span> _FindR(Node *root,<span class="keyword">const</span> K&amp; key) &#123; <span class="keyword">if</span> (root == <span class="literal">NULL</span>) <span class="comment">//空 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="literal">false</span>; &#125; <span class="keyword">if</span>(root-&gt;_key &lt; key) <span class="keyword">return</span> _FindR(root-&gt;_right,key); <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_key &gt; key) <span class="keyword">return</span> _FindR(root-&gt;_left,key); <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;_key == key) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">//找到了 </span></span><br><span class="line"><span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">//没有找到 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/05/linux-%E9%85%8D%E7%BD%AEsecureCRT%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%9B%BE%E5%BD%A2%E5%8C%96%E6%98%BE%E7%A4%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            linux-配置secureCRT远程连接图形化显示
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数据结构-二叉树的递归实现</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

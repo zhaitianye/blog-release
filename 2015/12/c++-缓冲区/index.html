@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c++-缓冲区 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c++-缓冲区"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c++-缓冲区
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/12/c++-%E7%BC%93%E5%86%B2%E5%8C%BA/" class="article-date">
+  <time datetime="2015-12-19T04:35:28.000Z" itemprop="datePublished">2015-12-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>什么是缓冲区 缓冲区又称为缓存，它是内存空间的一部分。也就是说，在内存空间中预留了一定的存储空间，这些存储空间用来缓冲输入或输出的数据，这部分预留的空间就叫做缓冲区。 缓冲区根据其对应的是输入设备还是输出设备，分为输入缓冲区和输出缓冲区。 </p>
+<p>为什么要引入缓冲区 我们为什么要引入缓冲区呢？ </p>
+<p>比如我们从磁盘里取信息，我们先把读出的数据放在缓冲区，计算机再直接从缓冲区中取数据，等缓冲区的数据取完后再去磁盘中读取，这样就可以减少磁盘的读写次数，再加上计算机对缓冲区的操作大大快于对磁盘的操作，故应用缓冲区可大大提高计算机的运行速度。 又比如，我们使用打印机打印文档，由于打印机的打印速度相对较慢，我们先把文档输出到打印机相应的缓冲区，打印机再自行逐步打印，这时我们的CPU可以处理别的事情。 </p>
+<p>现在您基本明白了吧，缓冲区就是一块内存区，它用在输入输出设备和CPU之间，用来缓存数据。它使得低速的输入输出设备和高速的CPU能够协调工作，避免低速的输入输出设备占用CPU，解放出CPU，使其能够高效率工作。 缓冲区的类型 缓冲区 分为三种类型：全缓冲、行缓冲和不带缓冲。 </p>
+<p>1、全缓冲 在这种情况下，当填满标准I/O缓存后才进行实际I/O操作。全缓冲的典型代表是对磁盘文件的读写。 </p>
+<p>2、行缓冲 在这种情况下，当在输入和输出中遇到换行符时，执行真正的I/O操作。这时，我们输入的字符先存放在缓冲区，等按下回车键换行时才进行实际的I/O操作。典型代表是键盘输入数据。 </p>
+<p>3、不带缓冲 也就是不进行缓冲，标准出错情况stderr是典型代表，这使得出错信息可以直接尽快地显示出来。 缓冲区的刷新 下列情况会引发缓冲区的刷新: </p>
+<p>1、缓冲区满时； 2、执行flush语句； 3、执行endl语句； 4、关闭文件。 </p>
+<p>可见，缓冲区满或关闭文件时都会刷新缓冲区，进行真正的I/O操作。另外，在C++中，我们可以使用flush函数来刷新缓冲区（执行I/O操作并清空缓冲区），</p>
+<p>通过实例演示说明 1、文件操作演示全缓冲 创建一个控制台工程，输入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>　<span class="meta-string">&lt;fstream&gt;　</span></span></span><br><span class="line"><span class="keyword">using</span>　<span class="keyword">namespace</span>　<span class="built_in">std</span>;　</span><br><span class="line">　</span><br><span class="line"><span class="function"><span class="keyword">int</span>　<span class="title">main</span><span class="params">()</span>　</span></span><br><span class="line"><span class="function"></span>&#123;　</span><br><span class="line">　　<span class="comment">//创建文件test.txt并打开　</span></span><br><span class="line">　<span class="function">ofstream　<span class="title">outfile</span><span class="params">(<span class="string">"test.txt"</span>)</span></span>;　</span><br><span class="line">　</span><br><span class="line">　　<span class="comment">//向test.txt文件中写入4096个字符’a’　</span></span><br><span class="line">　<span class="keyword">for</span>(<span class="keyword">int</span>　n=<span class="number">0</span>;n&lt;<span class="number">4096</span>;n++)　</span><br><span class="line">　&#123;　</span><br><span class="line">　outfile&lt;&lt;<span class="string">'a'</span>;　</span><br><span class="line">　&#125;　</span><br><span class="line">　　<span class="comment">//暂停，按任意键继续　</span></span><br><span class="line">　system(<span class="string">"PAUSE"</span>);　</span><br><span class="line">　　　</span><br><span class="line">　　<span class="comment">//继续向test.txt文件中写入字符’b’，也就是说，第4097个字符是’b’　</span></span><br><span class="line">　outfile&lt;&lt;<span class="string">'b'</span>;　</span><br><span class="line">　</span><br><span class="line">　　<span class="comment">//暂停，按任意键继续　</span></span><br><span class="line">　system(<span class="string">"PAUSE"</span>);　</span><br><span class="line">　</span><br><span class="line">　<span class="keyword">return</span>　<span class="number">0</span>;　</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码很容易理解，已经在代码内部作了注释。 编写这段小代码的目的是验证WindowsXP下全缓冲的大小是4096个字节，并验证缓冲区满后会刷新缓冲区，执行真正的I/O操作。 编译并执行，运行结果如下：<br>此时打开工程所在文件夹下的test.txt文件，您会发现该文件是空的，这说明4096个字符“a”还在缓冲区，并没有真正执行I/O操作。敲一下回车键，窗口变为如下： ![C++编程对缓冲区的理解] 此时再打开test.txt文件，您就会发下该文件中已经有了4096个字符“a”。这说明全缓冲区的大小是4K（4096），缓冲区满后执行了I/O操作，而字符“b”还在缓冲区。 再次敲一下回车键，窗口变为如下： 此时再打开test.txt文件，您就会发现字符“b”也在其中了。这一步验证了文件关闭时刷新了缓冲区。 2、键盘操作演示行缓冲 先介绍getchar()函数。 函数原型：int getchar(void); 说明：当程序调用getchar()函数时，程序就等着用户按键，用户输入的字符被存放在键盘缓冲区中，直到用户按回车为止（回车字符也放在缓冲区中）。当用户键入回车之后，getchar()函数才开始从键盘缓冲区中每次读入一个字符。也就是说，后续的getchar()函数调用不会等待用户按键，而直接读取缓冲区中的字符，直到缓冲区中的字符读完后，才重新等待用户按键。 不知道您明白了没有，再通俗一点讲，当程序调用getchar()函数时，程序就等着用户按键，并等用户按下回车键返回。期间按下的字符存放在缓冲区，第一个字符作为函数返回值。继续调用getchar()函数，将不再等用户按键，而是返回您刚才输入的第2个字符；继续调用，返回第3个字符，直到缓冲区中的字符读完后，才等待用户按键。 如果您还没有明白，只能怨我表达能力有限，您可以结合以下实例体会。 创建一个控制台工程，输入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span>　<span class="meta-string">&lt;iostream&gt;　</span></span></span><br><span class="line"><span class="keyword">using</span>　<span class="keyword">namespace</span>　<span class="built_in">std</span>;　</span><br><span class="line">　</span><br><span class="line"><span class="function"><span class="keyword">int</span>　<span class="title">main</span><span class="params">()</span>　</span></span><br><span class="line"><span class="function"></span>&#123;　</span><br><span class="line">　</span><br><span class="line">　<span class="keyword">char</span>　c;　</span><br><span class="line">　</span><br><span class="line"><span class="comment">//第一次调用getchar()函数　</span></span><br><span class="line"><span class="comment">//程序执行时，您可以输入一串字符并按下回车键，按下回车键后该函数才返回　</span></span><br><span class="line">　c=getchar();　</span><br><span class="line">　</span><br><span class="line">　　<span class="comment">//显示getchar()函数的返回值　</span></span><br><span class="line">　<span class="built_in">cout</span>&lt;&lt;c&lt;&lt;<span class="built_in">endl</span>;　</span><br><span class="line">　</span><br><span class="line">　　<span class="comment">//暂停　</span></span><br><span class="line">　system(<span class="string">"PAUSE"</span>);　</span><br><span class="line">　</span><br><span class="line"><span class="comment">//循环多次调用getchar()函数　</span></span><br><span class="line"><span class="comment">//将每次调用getchar()函数的返回值显示出来　</span></span><br><span class="line"><span class="comment">//直到遇到回车符才结束　</span></span><br><span class="line">　while((c=getchar())!='/n')　</span><br><span class="line">　&#123;　</span><br><span class="line">　<span class="built_in">printf</span>(<span class="string">"%c"</span>,c);　</span><br><span class="line">　&#125;　</span><br><span class="line">　</span><br><span class="line">　　<span class="comment">//暂停　</span></span><br><span class="line">　system(<span class="string">"PAUSE"</span>);　</span><br><span class="line">　</span><br><span class="line">　<span class="keyword">return</span>　<span class="number">0</span>;　</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段小代码也很简单，同样在代码内部都有注释。 getchar()函数的执行就是采用了行缓冲。第一次调用getchar()函数，会让程序使用者（用户）输入一行字符并直至按下回车键 函数才返回。此时用户输入的字符和回车符都存放在行缓冲区。 再次调用getchar()函数，会逐步输出行缓冲区的内容。 好了，本人表达能力有限，还是编译运行程序，通过运行结果自己领会吧。 编译运行程序，会提示您输入字符，您可以交替按下一些字符，如下： 您一直按下去，您就会发现当您按到第4094个字符时，不允许您继续输入字符。这说明行缓冲区的大小也是4K。 此时您按下回车键，返回第一个字符’a’，继续敲一下回车键，将缓冲区的其它的字符全部输出</p>
+<p>3、标准错误输出不带缓冲 如错误输出时使用： cerr&lt;&lt;”错误，请检查输入的参数!”; 这条语句等效于： fprintf(stderr, ”错误，请检查输入的参数!”); 好了，就说到这吧，祝您好运，希望能对您有所帮助。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/12/c++-%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c++-实现双向链表
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/12/c++-%E5%AE%9E%E5%9E%8B(Real)/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c++-实型(Real)</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

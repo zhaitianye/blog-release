@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    2019年大前端技术趋势分析 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-2019年大前端技术趋势分析"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  2019年大前端技术趋势分析
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/2019%E5%B9%B4%E5%A4%A7%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%B6%8B%E5%8A%BF%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2019-05-22T00:17:38.000Z" itemprop="datePublished">2019-05-22</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/">前端方向</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="技术采用生命周期"><a href="#技术采用生命周期" class="headerlink" title="技术采用生命周期"></a>技术采用生命周期</h2><ul>
+<li>创新者（Innovators）：技术的冒险者，第一时间尝试新技术。</li>
+<li>早期采用者（Early Adopters）：技术早期采用者，具备一定探索精神，某个领域的意见领袖。</li>
+<li>早期大众（early majority）：技术早期大众使用者，深思熟虑者，往往采用相对成熟的技术。</li>
+<li>晚期大众（late majority）：技术的平民老百姓，跟随趋势采用当前主流的技术。</li>
+<li>落后者（laggards）：技术的落后者，长时间不更新技术栈，存在大量技术债。</li>
+</ul>
+<p>技术方向按照大前端技术架构图进行分层，大体分为：状态管理、UI 组件、小程序、跨平台、框架层、编程语言、工程化、监控、测试和服务端。</p>
+<h2 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h2><p>随着 React、Vue 这类前端框架的流行，组件化开发成为主流，然而随着页面复杂度越来越高，在一个组件文件中，要做 UI 渲染、事件处理、状态管理等等事情，于是一个文件变的越来越复杂。同时，页面组件层级变的复杂后，跨组件间的数据通信也变的很繁琐，需要将数据上提到父节点，通过 property 传输数据、回调方法更新父节点状态等等。 Facebook 首先提出 Flux 框架，引入单向数据流的编程模式，把 Action 和 Store 从 View 中解耦出去，极大的优化了原有状态管理的架构。 Redux=Flux+Reducer，由于 Store 的唯一性加上 Reducer 纯函数，使得数据状态具有可预测性，于是配套出现了很多基于 TimeMachine 机制的调试工具，极大的提升了研发调试效率。不过由于 Reducer 的纯函数性质，对于一些异步请求的副作用又要引入中间件，导致了一定的复杂度。 Vuex 作为 Vue 框架的状态管理的不二选择，核心思想和 Flux/Redux 一脉相承，弱化了 Reducer 的概念而改用 Mutations，使得整套框架更易于理解了。 Mobx 是一个非常轻量级的状态管理框架，引入了 observable state、computed value，极大的简化了状态修改的方式，相对于 Redux 减少了不少模板代码，上手迅速使用友好，不过由于缺乏 Redux 这类的强制规范，需要在使用中进行必要约束。 dva 是蚂蚁金服出品的数据状态管理框架，dva=React+Redux+Saga，通过约定大大简化了编程体验，值得持续关注。 状态管理不是每个前端应用都必须使用的，要结合自身业务复杂度来决定，只有业务逻辑有一定复杂度需要做到各个模块解耦才考虑采用，如果一个 Todo 都用上 Redux，我怀疑你是在炫技~</p>
+<h2 id="UI-组件"><a href="#UI-组件" class="headerlink" title="UI 组件"></a>UI 组件</h2><p>在前端三大框架还未一统江湖的时候，组件库百花争鸣有 Dojo、Bootstrap、Extjs 等等。自从 React 横空出世，组件化变成了前端开发的标准模式，同时也应运而生了两大 UI 组件库：基于 React 的 Ant Design 和基于 Vue 的 ElementUI。 作为两大成熟 UI 组件库，如果你的系统是属于中后台业务，对于 UI 定制化要求不那么严格，那么这两个一定是不二选择，两者功能上没有太大区别，基础 UI 控件、多语言、主题配置等等要啥有啥，唯一的风险就是圣诞节给你来个下雪的彩蛋（政府网站高危预警）。 UI 组件库可以持续关注 Web Components，毕竟是 Chrome 浏览器亲生的，背后有 Google 这个老爹撑腰，而且现在 React/Vue 不也变的越来越像 Web Components 了吗？另外前端数据可视化、3D 化也是一个很好方向，一些酷炫的前端库小伙伴们可以撸起来了~</p>
+<h2 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h2><p>2019 年小程序百花齐放，各大超级 App 都推出了自己的小程序应用，前端同学们要支持众多小程序，摸摸头发又稀疏了不少吧（em…离资深研发又迈出了坚实的一步）。小程序的实现有多种方式，需要结合自身的业务场景来做选择。选择一，小程序原生开发方式，以微信为主开发小程序，再通过少量修改移植到其他平台（工作量多少没有做过不好估计，但既然当初支付宝小程序 demo 都抄微信的，感觉应该不大吧~）选择二，H5 内嵌开发方式，天然多平台跨端，但会有些许性能损失，也会有些功能限制，例如微信里面的消息通知不能通过 H5 来推送选择三，mpvue 这类基于某种框架的开发方式，mpvue 就是基于 Vue 框架来开发小程序，对于熟悉 Vue 的同学学习曲线很低，同时也可以实现代码逻辑的复用选择四，Taro 跨多端的实现方式，支持用 React 的开发方式编写一次代码，生成能运行在微信 / 百度 / 支付宝 / 字节跳动 / QQ 小程序、快应用、H5、React Native 等的应用。对于功能需要同时满足多个小程序应用的场景比较适合。</p>
+<h2 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h2><p>锦涛在 Qcon 分享 - 美团移动端动态化实践 中总结了业界和美团在移动端跨平台 &amp; 动态化的实践，可以看到公司在跨平台 &amp; 动态化方面进行了多维度的研究和投入，这样可以适用于不同的业务形态。 自从移动端有了 iOS、Android 两大平台，在加上原有的 H5 Web 端，跨平台就成了这几年大前端最热闹的地方，毕竟一个功能实现三套换谁都不乐意干，于是在用户体验和研发体验中的一场拉锯战就开始了，各大厂商各显神通。 最早出现的是 Phonegap 这类基于 WebView 的实现方式，由于 WebView 天然跨平台能力很好的解决了展示层的问题，然后通过 jsBridge 打通 WebView 和 Native 之间通信，使得浏览器中的 H5 代码也能有原生能力。这种方式研发体验最好，但是用户体验最差。 然后就是 React Native、Weex、Picasso，它们基于 Virtual Dom 或者模板语言，通过 js 代码编写 UI，然后渲染成原生组件，完美了实现了用户体验和研发体验的平衡。但要用好这些框架还是需要对性能优化、差异性抹平、工程化有比较高的要求，小团队小公司慎用，否则入坑容易出坑难。 今年大热是 Flutter，可以持续关注，技术架构很优秀，野心很庞大，大有一统江湖的气势。 跨平台热热闹闹多年，我个人认为当前的解决方案都是折中方案，随着手机性能逐步优化、浏览器原生能力的增强，也许大家都会回归本源，走上 H5 这条道路。</p>
+<h2 id="框架层"><a href="#框架层" class="headerlink" title="框架层"></a>框架层</h2><p>上半年框架层没有太大变化，依旧三大前端框架把持：React，Vue，Angular。从团队使用情况来看，React、Vue 依旧是主流，Angular 似乎慢慢不那么受待见，也许太难学了吧 (手动捂脸) React 16.x 上半年发布，推出了不少新特性，例如 hooks、lazy、suspense 等等，如果是 React 技术栈的同学鼓励第一时间进行尝试。hooks 还需要再多多实践，整体实现理念和原有 class 方式有很大不同，习惯了原有的生命周期的写法的同学还需要适应。 Vue 3.x 难产至今，根据路线图 3.0 会有大量的更新，比如 virtual dom 的重写、框架会更小更快、全面拥抱 TypeScript、使用 Proxy 来实现检测机制等等。呼唤尤大大赶紧更新，Vue 的同学恨的牙痒痒的，下半年的 KPI 就指望这个啦~ Angular 近期没有太多关注，不过 Angular 是一个真正意义的 MVVM 框架，不比 React 或者 Vue 其实都是 View 框架，所以这是一个大而全的框架。但是团队方面期望技术栈进行收敛，所以这方面就没有太多的投入了。 在框架层，可以持续关注 PWA 和 WebAssembly，PWA 对于弱网环境的用户体验提升很有帮助，而且还可以作为桌面应用的技术框架。WebAssembly 可以让前端在高密度计算性能上得到很大提升，不过应用场景有限。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/" rel="tag">前端方向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/05/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3Promise/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            深入了解Promise
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/05/JavaScript-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">JavaScript-函数式编程</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

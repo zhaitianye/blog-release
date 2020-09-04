@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    NodeJs-Express框架 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-NodeJs-Express框架"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  NodeJs-Express框架
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/05/NodeJs-Express%E6%A1%86%E6%9E%B6/" class="article-date">
+  <time datetime="2018-05-07T11:26:09.000Z" itemprop="datePublished">2018-05-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/NodeJs/">NodeJs</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="Express-简介"><a href="#Express-简介" class="headerlink" title="Express 简介"></a>Express 简介</h2><p>Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。 使用 Express 可以快速地搭建一个完整功能的网站。 Express 框架核心特性：</p>
+<ul>
+<li>可以设置中间件来响应 HTTP 请求。</li>
+<li>定义了路由表用于执行不同的 HTTP 请求动作。</li>
+<li>可以通过向模板传递参数来动态渲染 HTML 页面。</li>
+</ul>
+<h2 id="安装-Express"><a href="#安装-Express" class="headerlink" title="安装 Express"></a>安装 Express</h2><p>安装 Express 并将其保存到依赖列表中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install express --save</span><br></pre></td></tr></table></figure>
+<p>以上命令会将 Express 框架安装在当前目录的 node_modules 目录中， node_modules 目录下会自动创建 express 目录。以下几个重要的模块是需要与 express 框架一起安装的：</p>
+<ul>
+<li>body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。</li>
+<li>cookie-parser - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。</li>
+<li>multer - node.js 中间件，用于处理 enctype=”multipart/form-data”（设置表单的MIME编码）的表单数据。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm install body-parser --save</span><br><span class="line">$ cnpm install cookie-parser --save</span><br><span class="line">$ cnpm install multer --save</span><br></pre></td></tr></table></figure>
+安装完后，我们可以查看下 express 使用的版本号：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm list express &#x2F;data&#x2F;www&#x2F;node └── express@4.15.2  -&gt; &#x2F;Users&#x2F;tianqixin&#x2F;www&#x2F;node&#x2F;node_modules&#x2F;.4.15.2@express</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="express-demo-js-文件代码："><a href="#express-demo-js-文件代码：" class="headerlink" title="express_demo.js 文件代码："></a>express_demo.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;express_demo.js 文件 var express &#x3D; require(&#39;express&#39;); var app &#x3D; express(); app.get(&#39;&#x2F;&#39;, function (req, res) &#123; res.send(&#39;Hello World&#39;); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node express_demo.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="请求和响应"><a href="#请求和响应" class="headerlink" title="请求和响应"></a>请求和响应</h2><p>Express 应用使用回调函数的参数： request 和 response 对象来处理请求和响应的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(&#39;&#x2F;&#39;, function (req, res) &#123;</span><br><span class="line">   &#x2F;&#x2F; --</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>request 和 response 对象的具体介绍： Request 对象 - request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：</p>
+<ol>
+<li>req.app：当callback为外部文件时，用req.app访问express的实例</li>
+<li>req.baseUrl：获取路由当前安装的URL路径</li>
+<li>req.body / req.cookies：获得「请求主体」/ Cookies</li>
+<li>req.fresh / req.stale：判断请求是否还「新鲜」</li>
+<li>req.hostname / req.ip：获取主机名和IP地址</li>
+<li>req.originalUrl：获取原始请求URL</li>
+<li>req.params：获取路由的parameters</li>
+<li>req.path：获取请求路径</li>
+<li>req.protocol：获取协议类型</li>
+<li>req.query：获取URL的查询参数串</li>
+<li>req.route：获取当前匹配的路由</li>
+<li>req.subdomains：获取子域名</li>
+<li>req.accepts()：检查可接受的请求的文档类型</li>
+<li>req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages：返回指定字符集的第一个可接受字符编码</li>
+<li>req.get()：获取指定的HTTP请求头</li>
+<li>req.is()：判断请求头Content-Type的MIME类型</li>
+</ol>
+<p>Response 对象 - response 对象表示 HTTP 响应，即在接收到请求时向客户端发送的 HTTP 响应数据。常见属性有：</p>
+<ol>
+<li>res.app：同req.app一样</li>
+<li>res.append()：追加指定HTTP头</li>
+<li>res.set()在res.append()后将重置之前设置的头</li>
+<li>res.cookie(name，value [，option])：设置Cookie</li>
+<li>opition: domain / expires / httpOnly / maxAge / path / secure / signed</li>
+<li>res.clearCookie()：清除Cookie</li>
+<li>res.download()：传送指定路径的文件</li>
+<li>res.get()：返回指定的HTTP头</li>
+<li>res.json()：传送JSON响应</li>
+<li>res.jsonp()：传送JSONP响应</li>
+<li>res.location()：只设置响应的Location HTTP头，不设置状态码或者close response</li>
+<li>res.redirect()：设置响应的Location HTTP头，并且设置状态码302</li>
+<li>res.render(view,[locals],callback)：渲染一个view，同时向callback传递渲染后的字符串，如果在渲染过程中有错误发生next(err)将会被自动调用。callback将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。</li>
+<li>res.send()：传送HTTP响应</li>
+<li>res.sendFile(path [options] [fn])：传送指定路径的文件 -会自动根据文件extension设定Content-Type</li>
+<li>res.set()：设置HTTP头，传入object可以一次设置多个头</li>
+<li>res.status()：设置HTTP状态码</li>
+<li>res.type()：设置Content-Type的MIME类型</li>
+</ol>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>我们已经了解了 HTTP 请求的基本应用，而路由决定了由谁(指定脚本)去响应客户端请求。 在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST参数。 接下来我们扩展 Hello World，添加一些功能来处理更多类型的 HTTP 请求。 创建 express_demo2.js 文件，代码如下所示：</p>
+<h2 id="express-demo2-js-文件代码："><a href="#express-demo2-js-文件代码：" class="headerlink" title="express_demo2.js 文件代码："></a>express_demo2.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;); var app &#x3D; express(); &#x2F;&#x2F; 主页输出 &quot;Hello World&quot; app.get(&#39;&#x2F;&#39;, function (req, res) &#123; console.log(&quot;主页 GET 请求&quot;); res.send(&#39;Hello GET&#39;); &#125;) &#x2F;&#x2F; POST 请求 app.post(&#39;&#x2F;&#39;, function (req, res) &#123; console.log(&quot;主页 POST 请求&quot;); res.send(&#39;Hello POST&#39;); &#125;) &#x2F;&#x2F; &#x2F;del_user 页面响应 app.get(&#39;&#x2F;del_user&#39;, function (req, res) &#123; console.log(&quot;&#x2F;del_user 响应 DELETE 请求&quot;); res.send(&#39;删除页面&#39;); &#125;) &#x2F;&#x2F; &#x2F;list_user 页面 GET 请求 app.get(&#39;&#x2F;list_user&#39;, function (req, res) &#123; console.log(&quot;&#x2F;list_user GET 请求&quot;); res.send(&#39;用户列表页面&#39;); &#125;) &#x2F;&#x2F; 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求 app.get(&#39;&#x2F;ab*cd&#39;, function(req, res) &#123; console.log(&quot;&#x2F;ab*cd GET 请求&quot;); res.send(&#39;正则匹配&#39;); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node express_demo2.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="静态文件"><a href="#静态文件" class="headerlink" title="静态文件"></a>静态文件</h2><p>Express 提供了内置的中间件 express.static 来设置静态文件如：图片， CSS, JavaScript 等。 你可以使用 express.static 中间件来设置静态文件路径。例如，如果你将图片， CSS, JavaScript 文件放在 public 目录下，你可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.static(&#39;public&#39;));</span><br></pre></td></tr></table></figure>
+<p>我们可以到 public/images 目录下放些图片,如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node_modules</span><br><span class="line">server.js public&#x2F;</span><br><span class="line">public&#x2F;images public&#x2F;images&#x2F;logo.png</span><br></pre></td></tr></table></figure>
+<p>让我们再修改下 “Hello World” 应用添加处理静态文件的功能。 创建 express_demo3.js 文件，代码如下所示：</p>
+<h2 id="express-demo3-js-文件代码："><a href="#express-demo3-js-文件代码：" class="headerlink" title="express_demo3.js 文件代码："></a>express_demo3.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;); var app &#x3D; express(); app.use(express.static(&#39;public&#39;)); app.get(&#39;&#x2F;&#39;, function (req, res) &#123; res.send(&#39;Hello World&#39;); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br><span class="line"></span><br><span class="line">$ node express_demo3.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="GET-方法"><a href="#GET-方法" class="headerlink" title="GET 方法"></a>GET 方法</h2><p>以下实例演示了在表单中通过 GET 方法提交两个参数，我们可以使用 server.js 文件内的 process_get 路由器来处理输入：</p>
+<h2 id="index-htm-文件代码："><a href="#index-htm-文件代码：" class="headerlink" title="index.htm 文件代码："></a>index.htm 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt; &lt;body&gt; &lt;form action&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8081&#x2F;process_get&quot; method&#x3D;&quot;GET&quot;&gt; First Name: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;first_name&quot;&gt; &lt;br&gt; Last Name: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;last_name&quot;&gt; &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;Submit&quot;&gt; &lt;&#x2F;form&gt; &lt;&#x2F;body&gt; &lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="server-js-文件代码："><a href="#server-js-文件代码：" class="headerlink" title="server.js 文件代码："></a>server.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;);</span><br><span class="line">var app &#x3D; express();</span><br><span class="line">app.use(express.static(&#39;public&#39;));</span><br><span class="line">app.get(&#39;&#x2F;index.htm&#39;, function(req, res) &#123; res.sendFile(__dirname + &quot;&#x2F;&quot; + &quot;index.htm&quot;); &#125;) app.get(&#39;&#x2F;process_get&#39;, function(req, res) &#123; &#x2F;&#x2F; 输出 JSON 格式 var response &#x3D; &#123; &quot;first_name&quot;:req.query.first_name, &quot;last_name&quot;:req.query.last_name &#125;; console.log(response); res.end(JSON.stringify(response)); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="POST-方法"><a href="#POST-方法" class="headerlink" title="POST 方法"></a>POST 方法</h2><p>以下实例演示了在表单中通过 POST 方法提交两个参数，我们可以使用 server.js 文件内的 process_post 路由器来处理输入：</p>
+<h2 id="index-htm-文件代码：-1"><a href="#index-htm-文件代码：-1" class="headerlink" title="index.htm 文件代码："></a>index.htm 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;form action&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:8081&#x2F;process_post&quot; method&#x3D;&quot;POST&quot;&gt; First Name:</span><br><span class="line"> &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;first_name&quot;&gt;</span><br><span class="line"> &lt;br&gt; Last Name:</span><br><span class="line"> &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;last_name&quot;&gt;</span><br><span class="line"> &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;Submit&quot;&gt; &lt;&#x2F;form&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="server-js-文件代码：-1"><a href="#server-js-文件代码：-1" class="headerlink" title="server.js 文件代码："></a>server.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;);</span><br><span class="line">var app &#x3D; express();</span><br><span class="line">var bodyParser &#x3D; require(&#39;body-parser&#39;); &#x2F;&#x2F; 创建 application&#x2F;x-www-form-urlencoded 编码解析 </span><br><span class="line">var urlencodedParser &#x3D; bodyParser.urlencoded(&#123; extended: false &#125;) app.use(express.static(&#39;public&#39;)); app.get(&#39;&#x2F;index.htm&#39;, function (req, res) &#123; res.sendFile( __dirname + &quot;&#x2F;&quot; + &quot;index.htm&quot; ); &#125;) app.post(&#39;&#x2F;process_post&#39;, urlencodedParser, function (req, res) &#123; &#x2F;&#x2F; 输出 JSON 格式 </span><br><span class="line">var response &#x3D; &#123; &quot;first_name&quot;:req.body.first_name, &quot;last_name&quot;:req.body.last_name &#125;; console.log(response); res.end(JSON.stringify(response)); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node server.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>以下我们创建一个用于上传文件的表单，使用 POST 方法，表单 enctype 属性设置为 multipart/form-data。</p>
+<h2 id="index-htm-文件代码：-2"><a href="#index-htm-文件代码：-2" class="headerlink" title="index.htm 文件代码："></a>index.htm 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line"> &lt;title&gt;文件上传表单&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> &lt;h3&gt;文件上传：&lt;&#x2F;h3&gt; 选择一个文件上传:</span><br><span class="line"> &lt;br &#x2F;&gt;</span><br><span class="line"> &lt;form action&#x3D;&quot;&#x2F;file_upload&quot; method&#x3D;&quot;post&quot; enctype&#x3D;&quot;multipart&#x2F;form-data&quot;&gt;</span><br><span class="line"> &lt;input type&#x3D;&quot;file&quot; name&#x3D;&quot;image&quot; size&#x3D;&quot;50&quot; &#x2F;&gt;</span><br><span class="line"> &lt;br &#x2F;&gt;</span><br><span class="line"> &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;上传文件&quot; &#x2F;&gt; &lt;&#x2F;form&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="server-js-文件代码：-2"><a href="#server-js-文件代码：-2" class="headerlink" title="server.js 文件代码："></a>server.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;);</span><br><span class="line">var app &#x3D; express();</span><br><span class="line">var fs &#x3D; require(&quot;fs&quot;);</span><br><span class="line">var bodyParser &#x3D; require(&#39;body-parser&#39;);</span><br><span class="line">var multer &#x3D; require(&#39;multer&#39;);</span><br><span class="line">app.use(express.static(&#39;public&#39;));</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; extended: false &#125;));</span><br><span class="line">app.use(multer(&#123; dest: &#39;&#x2F;tmp&#x2F;&#39; &#125;).array(&#39;image&#39;));</span><br><span class="line">app.get(&#39;&#x2F;index.htm&#39;, function(req, res) &#123; res.sendFile(__dirname + &quot;&#x2F;&quot; + &quot;index.htm&quot;); &#125;) app.post(&#39;&#x2F;file_upload&#39;, function(req, res) &#123; console.log(req.files[0]); &#x2F;&#x2F; 上传的文件信息 </span><br><span class="line">var des_file &#x3D; __dirname + &quot;&#x2F;&quot; + req.files[0].originalname; fs.readFile( req.files[0].path, function (err, data) &#123; fs.writeFile(des_file, data, function (err) &#123; if( err )&#123; console.log( err ); &#125;else&#123; response &#x3D; &#123; message:&#39;File uploaded successfully&#39;, filename:req.files[0].originalname &#125;; &#125; console.log( response ); res.end( JSON.stringify( response ) ); &#125;); &#125;); &#125;) var server &#x3D; app.listen(8081, function () &#123; var host &#x3D; server.address().address var port &#x3D; server.address().port console.log(&quot;应用实例，访问地址为 http:&#x2F;&#x2F;%s:%s&quot;, host, port) &#125;)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node server.js 应用实例，访问地址为 http:&#x2F;&#x2F;0.0.0.0:8081</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Cookie-管理"><a href="#Cookie-管理" class="headerlink" title="Cookie 管理"></a>Cookie 管理</h2><p>我们可以使用中间件向 Node.js 服务器发送 cookie 信息，以下代码输出了客户端发送的 cookie 信息：</p>
+<h2 id="express-cookie-js-文件代码："><a href="#express-cookie-js-文件代码：" class="headerlink" title="express_cookie.js 文件代码："></a>express_cookie.js 文件代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;) ;</span><br><span class="line">var cookieParser &#x3D; require(&#39;cookie-parser&#39;);</span><br><span class="line">var util &#x3D; require(&#39;util&#39;); var app &#x3D; express() app.use(cookieParser()) app.get(&#39;&#x2F;&#39;, function(req, res) &#123; console.log(&quot;Cookies: &quot; + util.inspect(req.cookies)); &#125;) app.listen(8081)</span><br></pre></td></tr></table></figure>
+<p>执行以上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node express_cookie.js</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2018/05/MongoDB-%E8%BF%9E%E6%8E%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            MongoDB-连接
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/05/AngularJS-%E6%8E%A7%E5%88%B6%E5%99%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">AngularJS-控制器</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

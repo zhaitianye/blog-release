@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    vc++6.0-菜单、工具栏和状态栏 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vc++6.0-菜单、工具栏和状态栏"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vc++6.0-菜单、工具栏和状态栏
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/03/vc++6.0-%E8%8F%9C%E5%8D%95%E3%80%81%E5%B7%A5%E5%85%B7%E6%A0%8F%E5%92%8C%E7%8A%B6%E6%80%81%E6%A0%8F/" class="article-date">
+  <time datetime="2016-03-15T08:40:10.000Z" itemprop="datePublished">2016-03-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vc-6-0/">vc++6.0</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">4 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><strong>实验目的：</strong> （1）创建一个单文档应用程序Ex_SDI。在“查看”菜单下添加一个子菜单“鼠标位置”，ID为ID_VIEW_MOUSE，当选择该菜单命令后，鼠标当前的位置显示到状态栏上，同时该菜单项呈选中状态。再次选择该菜单命令，状态栏不再显示当前鼠标位置，同时该菜单项的选中状态被去除。 （2）在工具栏上添加并设计一个工具按钮图标，使该按钮和ID_VIEW_MOUSE菜单命令联动，并添加一个快捷键Ctrl+M和该菜单命令联动。 （3）在窗口客户区中右击鼠标，弹出快捷菜单，显示主菜单“查看”中的菜单命令。结果如图5.1所示。</p>
+<p><img src="sy5-1.png" alt=""></p>
+<p>图5.1 Ex_SDI运行结果</p>
+<p><strong>实验仪器：</strong> 电脑一台(CPU：Inter(R) Xeon(R) E3-1230 v3 @ 3.3GHz 内存：8.0GB 操作系统：Win8.1虚拟机xp 使用软件：VC++ 6.0) 1．启动Visual C++ 6.0 打开计算机，启动Visual C++ 6.0系统。 </p>
+<p><img src="sy5-2.png" alt=""></p>
+<p>2．用MFC AppWizard（exe）创建一个默认的单文档应用程序Ex_SDI ① 选择“文件”→“新建”菜单，在弹出的“新建”对话框中选择“工程”标签，在应用程序项目类型列表框中选择MFC AppWizard（exe）的项目类型，将工程文件夹定位到“…\Visual C++程序\实验\实验5”，并在工程框中输入项目名Ex_SDI。 </p>
+<p><img src="sy5-3.png" alt=""></p>
+<p>② 单击“确定”按钮，从出现的对话框中，选择单个文档（Single Document，SDI）应用程序类型。 </p>
+<p><img src="sy5-4.png" alt=""><br>③ 保留其他的默认选项，单击“完成”按钮出现一个对话框，显示出用户在步骤中作出的选择，单击“确定”按钮，系统开始创建。</p>
+<p><img src="sy5-5.png" alt=""></p>
+<p>3．添加菜单 ① 在项目工作区窗口中选择ResourceView页面，双击资源Menu项中的IDR_ MAINFRAME，则菜单编辑器窗口出现在主界面的右边，相应的Ex_SDI项目的菜单资源被显示出来。 </p>
+<p><img src="sy5-6.png" alt=""></p>
+<p>② 单击“查看”菜单，则在该菜单的最后一项，Visual C++为用户留出了一个空位置，用来输入新的菜单项。 ③ 在菜单的空位置上双击鼠标左键，则出现它的属性对话框，如图5.2所示，在标题框中输入“鼠标位置（&amp;M）\tCtrl+1”，在ID框输入该菜单项的资源标识：ID_VIEW_MOUSE，在提示框中输入“在状态栏上显示当前鼠标位置\n鼠标位置”，其中\n前一部分的文本是显示在状态栏上的，后一部分是联动的工具图标按钮的提示文本。 </p>
+<p><img src="sy5-7.png" alt=""> </p>
+<p>4．添加并设计一个工具图标按钮 ① 在项目工作区窗口的ResourceView页面中，双击Toolbar中的IDR_MAINFRAME，打开工具栏资源。 </p>
+<p><img src="sy5-8.png" alt=""></p>
+<p><img src="sy5-9.png" alt=""></p>
+<p>② 单击工具栏最右端的空白按钮，在资源编辑器的按钮设计窗口中绘制一个“箭头”，颜色为黑色，然后将其拖动到“帮助”按钮的前面，并使该按钮的前后均有半个空格，结果如图5.3所示。 ③ 双击刚才设计的工具按钮，在弹出的属性对话框中将其ID设为ID_VIEW_MOUSE。 </p>
+<p><img src="sy5-10.png" alt=""></p>
+<p>5．菜单命令和工具按钮的更新 ① 为CMainFrame类添加一个BOOL型的成员变量m_bIsMouse，在CMainFrame类构造函数中将m_bIsMouse的初值设为FALSE。 ② 用MFC ClassWizard在CMainFrame类中添加工具按钮ID_VIEW_MOUSE的COMMAND和UPDATE_COMMAND_UI消息映射函数，并添加下列代码： ③ 编译运行并测试。 </p>
+<p><img src="sy5-11.png" alt="">  </p>
+<p><img src="sy5-12.png" alt=""></p>
+<p>6．设置快捷键 ① 在项目工作区窗口的ResourceView页面中，双击Accelerator中的IDR_ MAINFRAME，打开快捷键资源。 </p>
+<p><img src="sy5-13.png" alt=""><br>② 双击加速键列表的最下端的空行，弹出如图5.4所示的Accel Properities对话框，选择菜单项ID_VIEW_MOUSE作为要联动的快捷键的ID号，然后单击“下一键”按钮，并按下Ctrl+1作为此加速键的键值。 </p>
+<p><img src="sy5-14.png" alt=""></p>
+<p>③ 编译运行并测试。 </p>
+<p><img src="sy5-15.png" alt=""></p>
+<p>7．添加状态栏窗格并显示鼠标当前位置 ① 打开MainFrm.cpp文件，将原先的indicators数组修改如下： </p>
+<p><img src="sy5-16.png" alt=""></p>
+<p>② 用MFC ClassWizard在CEx_SDIView类中映射WM_MOUSEMOVE（移动鼠标）消息，并在映射函数中添加下列代码： ③ 将MainFrm.h文件中的受保护变量m_wndStatusBar变成公共变量。 </p>
+<p><img src="sy5-17.png" alt=""></p>
+<p>④ 在Ex_SDIView.cpp文件的开始处增加下列语句： ⑤ 编译运行并测试。 8．实现快捷菜单 ① 用MFC ClassWizard在CMainFrame类添加WM_CONTEXTMENU消息映射，并在映射函数添加下列代码：</p>
+<p>② 编译运行并测试。 9．写出实验报告 分析上述运行结果以及思考与练习，写出实验报告。 思考与练习 实验结果分析 了解菜单的操作，定义快捷键，显示鼠标位置，实验中代码有问题，看书中的代码完成的实验。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vc-6-0/" rel="tag">vc++6.0</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/03/sqlServer-%E5%AE%89%E8%A3%85%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            sqlServer-安装遇到的问题
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/03/vc++6.0-%E5%88%97%E8%A1%A8%E6%8E%A7%E4%BB%B6%E5%92%8C%E6%A0%91%E6%8E%A7%E4%BB%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">vc++6.0-列表控件和树控件</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

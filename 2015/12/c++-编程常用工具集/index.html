@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c++-编程常用工具集 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c++-编程常用工具集"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c++-编程常用工具集
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/12/c++-%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E9%9B%86/" class="article-date">
+  <time datetime="2015-12-08T13:02:04.000Z" itemprop="datePublished">2015-12-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>…开发环境 —-＞Turbo c </p>
+<p>DOS时代c语言开发的经典工具，目前适合两类人使用：c语言beginner（尤其是学生一族），具有怀旧情节的专业人士：）</p>
+<p>—-＞Visual C++ 6.0/7.0 稳定而强大的IDE开发环境，具有丰富的调试功能，定制宏的功能也是其一大特色。</p>
+<p>Microsoft的经典之作，功能强大自不必言说。附带的一些工具也很不错，比如：Spy++。但编译器较之同类，支持c++标准的程度不够好，尤其6.0及以前的版本。 —-＞BCB Borland的C++ Builder是可以与VC匹敌的另一个功能强大的IDE，速度和稳定性稍逊，但对c++标准支持的程度较好。 —-＞Cygwin Windows平台下的C++编译器，基于gcc，又完全兼容Window特有的东西，比如对winsock的支持。从<a href="http://www.cygwin.com/" target="_blank" rel="noopener">http://www.cygwin.com</a>可以找到有关Cygwin的详细信息。</p>
+<p>—-＞Dev-c++ Windows平台下，一个类似VC、BCB的c++ IDE开发环境，属于共享软件。界面亲切优雅，size也不大，其4.9.x版有中文语言支持，无需汉化。编译器基于gcc，完全支持STL。但是对于规模较大的软件项目，恐怕难以胜任。可以从: <a href="http://www.bloodshed.net/dev/devcpp.html" target="_blank" rel="noopener">http://www.bloodshed.net/dev/devcpp.html</a> 找到有关Dev-c++的有关信息。 </p>
+<p>—-＞Source Insight 有着和Dev c++一样漂亮的界面，提供代码的编辑和察看功能，具有丰富的语法加亮功能，可以像VC一样自动弹出成员函数的提示，并具有快速方便的函数跳转功能（但是跳转速度似乎有点慢）。只是默认设置不适合时，需要仔细的调整和修改。无法查找经typedef之后的名字。 ■…辅助 </p>
+<p>—-＞Visual Assist VC IDE环境下的辅助编程工具，能识别各种关键字、函数、成员变量，自动给出tip，并自动更正大小写错误，标示拼写错误等。是VC开发的良好伴侣。 </p>
+<p>—-＞Understand for C++ 一款c/c++IDE编程的辅助工具，支持反向工程，代码导向和一些统计功能，从<a href="http://www.scitools.com/" target="_blank" rel="noopener">http://www.scitools.com</a>可以找到有关Understand for C++的详细信息。 ■…程序编辑器 </p>
+<p>—-＞EditPlus 一款很不错的文本编辑软件，功能强大却又十分轻巧。支持不同语言的语法加亮，还有Project组织功能，具有丰富的自定义功能。通过设置User Tool，可以和其他语言编译器结合，形成一个简单的IDE。 </p>
+<p>—-＞Ultra Edit 功能和EditPlus相当，通过脚本文件提供的配置功能可以定制编辑环境，但自6.0版以后一直没多大变化，就编程而言，自定义设置没有EditPlus方便。 —-＞EMACS 公认的世界上功能最多，最复杂的文本编辑器，其实也可以当作程序员用的编辑器。 —-＞Visual Slick Edit 一个功能强大的程序员用编辑器。最值得一提的是其定制功能，很好用，可以和EMACS相比。自带了一套PCODE解释器，用c的语法，还可以挂接动态库。配合mingw一起使用很方便。从<a href="http://www.slickedit.com/" target="_blank" rel="noopener">http://www.slickedit.com</a>可以找到有关SlickEdit的详细信息。 </p>
+<p>—-＞IQEdit 全功能的程序员用编辑器，界面很漂亮，从<a href="http://pwksoftware.com/" target="_blank" rel="noopener">http://pwksoftware.com</a>可以找到有关IQEdit的详细信息。 ■…UML/建模 </p>
+<p>—-＞Rational Rose 强大的建模工具，早已“家喻户晓”，功过自然不必多加评说了。从<a href="http://www.rationalsoftware.com.cn/" target="_blank" rel="noopener">http://www.rationalsoftware.com.cn</a>可以找到有关Rational Rose的详细信息。 </p>
+<p>—-＞Visual Modeler MS Visual Studio 6.0所附的小工具。属于Rational和MicroSoft合作的战略产品，是Rose的简化版。 </p>
+<p>—-＞Visio Microsoft的建模工具，感觉更人性化一些，但功能没有Rose多、强、专，支持正向的代码生成，以及对代码的反向工程。 </p>
+<p>—-＞Together 另一款功能强大的建模工具，用java编写而成，口碑不错，不过速度稍稍慢了一些。从<a href="http://www.togethersoft.com/" target="_blank" rel="noopener">http://www.togethersoft.com</a>可以找到有关Togather的详细信息，另外，以下网址提供了一个有关Together的教程： 　　　<a href="http://www.cc.puv.fi/~tka/kurssit/Tietojarjestelmien_suunnittelu/together/TCCGuide6" target="_blank" rel="noopener">http://www.cc.puv.fi/~tka/kurssit/Tietojarjestelmien_suunnittelu/together/TCCGuide6</a> </p>
+<p>—-＞Visual UML 支持多种语言类型，比如：VC、VB、DELPHI、CORBA IDL等，可以直接从UML设计图生成代码，简单易用，完全适合Personal use，界面也很清爽。从<a href="http://www.visualobject.com/" target="_blank" rel="noopener">http://www.visualObject.com</a>可以找到有关Visual UML的详细信息。 </p>
+<p>—-＞SmartDraw 通用图表制作软件，可以用来制作组织机构图、流程图、统计图表等。随带有图库，基本满足制作各类图表的需要。从<a href="http://www.smartdraw.com/" target="_blank" rel="noopener">http://www.smartdraw.com</a>可以找到有关SmartDraw的详细信息。 </p>
+<p>—-＞PlayCase 国产面向对象的建模软件，兼容UML和IDEF，轻量级软件，只是界面看起来有点简朴，乃是高展先生用Delphi完成的。 ■…版本控制 </p>
+<p>—-＞ClearCase Rational的版本控制管理软件，功能强大，可以控制多种类型的文档，甚至包括Word、Excel、PowerPoint文档。但使用复杂，不易上手，且不是免费软件。 </p>
+<p>—-＞CVS 为基于Web的分布式协同开发提供了版本控制管理手段，且是免费软件，可以通过脚本定制功能。但在权限控制方面功能相对较弱。 </p>
+<p>—-＞VSS 微软的版本控制管理工具，功能相对简单，适合于小型团队开发，将其整合到微软的其他开发工具中，使用起来十分方便。 </p>
+<p>—-＞SourceOffSite 微软为开发人员提供的远程访问VSS数据库的工具，使数据库得以远程更新，以支持远程办公。其他的版本管理工具还包括：PVCS、VCS、RCS等。 ■…XML </p>
+<p>—-＞expat 用于读取和处理XML文档的c函数库，最初是James Clark的个人作品，简单轻巧，且速度快。但支持的编码方式有限，最遗憾的是不支持中文。从<a href="http://expat.sourceforge.net/" target="_blank" rel="noopener">http://expat.sourceforge.net</a>可以找到有关expat的详细信息。 </p>
+<p>—-＞xml4c IBM的XML Parser，用c++语言写就，功能超级强大。号称支持多达100种字符编码，能够支持中文，适合于大规模的xml应用。若只是很小范围的应用，则非最佳选择，毕竟，你需要“背负”约12M左右的dll的沉重负担。从<a href="http://www.alphaworks.ibm.com/tech/xml4c" target="_blank" rel="noopener">http://www.alphaworks.ibm.com/tech/xml4c</a>可以找到有关xml4c的详细信息。 </p>
+<p>—-＞Xerces c++ Apache的XML项目，同样是c++实现，来源于IBM的xml4c，因此编程接口也是和xml4c一致的。但是目前只支持少数的字符编码，如ASCII，UTF-8，UTF-16等，不能处理包含中文字符的XML文档。从 <a href="http://xml.apache.org/xerces-c" target="_blank" rel="noopener">http://xml.apache.org/xerces-c</a>可以找到有关Xerces c++的详细信息。 ■…测试 </p>
+<p>—-＞CppUnit 一个c++的单元测试框架，可以通过派生测试类的方式，定制具体的测试方案。xUnit家族的一员，从JUnit移植而来，JUnit是Java语言的单元测试框架。从<a href="http://cppuint.sourceforge.net/" target="_blank" rel="noopener">http://cppuint.sourceforge.net</a>可以找到有关CppUint的详细信息。 </p>
+<p>—-＞Rational ROBOT Rational的自动化测试工具，通过编写脚本的方式提供自动化测试特性。其GUI方式的脚本录制功能，有助于对GUI软件进行功能测试；其VU方式的脚本录制功能，有助于测试某些软件的数据通讯功能。 </p>
+<p>—-＞Rational Purify 同样是Rational的自动化测试工具，不需要被测程序的源代码，可以用来检查内存访问错误、Windows API调用错误等，以完成软件的可靠性测试，属于白盒测试。 其他的Rational测试工具还包括：TestFactory、PureCoverage、TestManager等。 ■…日志 </p>
+<p>—-＞log4cpp 一个用于日志记录的c++函数库，可以将内容以定制的方式记录到不同的目的地，比如：文件、控制台syslog等，同时还可以通过控制记录级别来屏蔽掉某些无关记录。从<a href="http://log4cpp.sourceforge.net/" target="_blank" rel="noopener">http://log4cpp.sourceforge.net</a>可以找到有关log4cpp的详细信息。 ■…注释 </p>
+<p>—-＞Doc++ 注释文档生成工具，根据源程序中的文档注释，可以输出TeX和HTML格式的文档。除了支持c/c++语言外，还支持IDL和java。仅提供命令行使用方式。从<a href="http://docpp.sourceforge.net/" target="_blank" rel="noopener">http://docpp.sourceforge.net</a>可以找到有关Doc++的详细信息。 </p>
+<p>—-＞Doxygen 注释文档生成工具，较之Doc++功能更为齐全，可以生成包括HTML、PDF、RTF在内的多种格式的文档，并有GUI界面，除了支持c/c++语言外，还支持IDL、java、PHP、c#等。从<a href="http://www.stack.nl/~dimitri/doxygen" target="_blank" rel="noopener">http://www.stack.nl/~dimitri/doxygen</a>可以找到有关Doxygen的详细信息。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/12/c++-%E5%AE%9E%E5%9E%8B(Real)/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c++-实型(Real)
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/12/c++-unique%E5%87%BD%E6%95%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c++-unique函数</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    React中组件的生命周期 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-React中组件的生命周期"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  React中组件的生命周期
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/08/React%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time datetime="2019-08-12T14:40:08.000Z" itemprop="datePublished">2019-08-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>为了进一步了解React的工作过程,已经晓得了怎么编写React组件,知道了React的数据流,那么是时候学习React组件的生命周期了,每个组件都包含生命周期方法,生命周期如同四季更替,一个人的生,老,病,死.在每个特殊的年龄阶段,做着不同的事情 在React编写组件中,每个组件在网页中都有被创建,更新,删除这么一过程,就像有机的生命体一样 理解生命周期函数对于编写React组件代码是非常重要的 如果你不清楚生命周期,以及生命周期的应用场景,那么本篇就是你想要知道的</p>
+<p>生命周期(钩子)函数</p>
+<p>定义: 在特定的阶段,能够自动执行的函数(方法) 在前面的JSX学习中,一个React元素渲染到页面当中,本质上是通过底层的React.CreateElement的一个方法实现的,它是一个javascript对象,将虚拟DOM转化为真实的DOM,最后通过ReactDOM.render()方法将真实的DOM渲染挂载到对应的页面位置上 一个组件的渲染,经历了以下几个过程:可以对照这个完整的生命周期图谱的</p>
+<ul>
+<li>组件的装载(Mount):React组件第一次在DOM树中渲染的过程</li>
+<li>componentWillMount:组件即将被挂载,在Render方法之前调用:<ul>
+<li>应用场景: 常用于组件的启动工作,例如:Ajax数据的获取,定时器的启动,类似Render函数的前哨,调用setState修改状态也不会引起重新绘制,这个时候没有任何渲染,需要注意的是,它可以在服务器端被调用,也可以在浏览器端调用</li>
+</ul>
+</li>
+<li>componentDidMount:组件被加载完之后调用,也就是render函数执行之后调用，相当于render函数的后卫,当这个生命周期执行时,render函数会引发渲染,组件重新挂载到DOM树上<ul>
+<li>注意:它只能在浏览器端调用,在服务器端使用React的时候不会调用,装载是将组件渲染,并且构造DOM元素,然后塞入页面的过程,这个状态是不可能在服务器端完成的,服务器端不可能产生DOM树的</li>
+<li>应用场景:我们往往在这个生命周期内进行Ajax的获取,填充组件的内容,因为在componentDidMount被调用时,组件已经挂载到DOM树上了,而往往若需要结合第三方库的使用,例如:JQ等,也是放到这个生命周期函数中进行处理的</li>
+</ul>
+</li>
+<li>getSnapshotBeforeUpdate(prevProps, prevState):<ul>
+<li>使用场景：该函数在最终render结果提交到DOM之前被调用,记录DOM刷新前的特性，如：滚动位置</li>
+<li>注意：该函数的返回值会作为参数传递给componentDidUpdate</li>
+</ul>
+</li>
+<li>componentWillUnmount: 当组件对应的 DOM 元素从页面中删除之前调用</li>
+<li>组件的更新(update): 当组件被重新渲染的过程(state与props发生改变都会引起渲染)<ul>
+<li>componentWillReceiveProps</li>
+<li>shouldComponentUpdate</li>
+<li>componentWillUpdate</li>
+<li>componentDidUpdate</li>
+</ul>
+</li>
+<li>组件的卸载(unmount): 组件从DOM中删除的过程<ul>
+<li>componentWillUnmount: 组件从页面销毁时,会触发该函数,当需要对数据进行清理时,例如定时器的清理,放到该函数里面去做</li>
+</ul>
+</li>
+</ul>
+<p>三种不同的过程,React库会依次调用组件的一些成员函数(生命周期函数)</p>
+<p>组件装载过程</p>
+<p>当组件第一次被渲染的时候,会依次的调用如下生命周期函数</p>
+<ul>
+<li>constructor:构造器函数</li>
+<li>getDerivedStateFromProps(props,state):</li>
+</ul>
+<p>使用场景：当组件内部的state变化依赖于props时,调用该生命周期函数 注意：不要过度使用该函数,如果你的操作依赖于props的更改并有副作用，最好放到componentDidUpdate中</p>
+<ul>
+<li>componentWillMount:组件挂载开始之前调用,也就是render函数之前被自动调用,在React16.3版本之后不应该使用,由于该函数在Render函数之前调用,因此使用同步的setState方法不会触发额外的render处理</li>
+</ul>
+<p>它也只会在初始化的时候调用一次,所以this环境的绑定放在这里面也是可以的,但是最好是放在constructor构造器函数里面,如果是处理带有后续异步操作或者有副作用的订阅事件处理,例如：Ajax数据获取,则放到componentDidMount中</p>
+<ul>
+<li>render:组件的渲染,插入到DOM元素中,</li>
+<li>componentDidMount:组件挂载完之后调用,也就是在render函数之后调用,DOM已经插入到页面中了的,可以在这里使用refs</li>
+</ul>
+<p>constructor:构造器函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(ptops) &#123;</span><br><span class="line"> <span class="keyword">super</span>(props); <span class="comment">// 一定要调用super,并且接收props参数,否则该组件的实例方法无法获取到外部的props值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至于constructor在上节当中已经提及过,并不是每个组件都需要定义constructor构造器函数，函数式(无状态)组件就不需要定义构造函数 一般使用constructor构造函数有如下两种情况</p>
+<ul>
+<li>组件内部初始化state,因为生命周期内的任何函数都可能要访问state,取它的值,进行相应的逻辑处理,它是该组件一个私有的对象变量</li>
+<li>在对JSX元素上绑定事件监听处理函数时,也就是组件内部成员函数(方法)this环境的绑定,因为在Es6中类的成员方法在执行时this并不会和类的实例化本身自动的绑定,你需要手动bind的方式进行绑定</li>
+</ul>
+<p>为了方便调用,在构造函数中,this就是当前组件的实例,往往在构造函数中将组件实例下的成员方法绑定this为当前的实例对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">  <span class="keyword">super</span>(props);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 事件监听处理函数，this环境的绑定</span></span><br><span class="line"><span class="keyword">this</span>.handleBtnClick = <span class="keyword">this</span>.handleBtnCLick.bind(<span class="keyword">this</span>);</span><br><span class="line"><span class="keyword">this</span>.handleInputChange = <span class="keyword">this</span>.handleInputChange.bind(<span class="keyword">this</span>)</span><br></pre></td></tr></table></figure>
+<p>在执行了constructor构造器函数后,执行componentWillMount方法,然后在执行render方法,执行完render方法后,在执行componentDidMount方法,整个装载过程就结束了的 当然这其中的一个componentWillUnmount方法是在组件销毁前进行触发,也就是删除DOM元素之前调用,这个常用于当组件从页面删除销毁时,做一些数据清理的时候能用得上,例如定时器的清理,取消网络请求,在该生命周期函数内,不应该调用setState函数,因为该组件销毁后,将不会被重新渲染 具体的实例代码如下所示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Fragment, Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LifeCycle</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"1-constructor函数被调用执行"</span>);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      isShow: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.handleBtnClick = <span class="keyword">this</span>.handleBtnClick.bind(<span class="keyword">this</span>);</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillMount()&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"2-componentWillMount函数已执行,组件挂载之前,在render方法之前调用"</span>, <span class="keyword">this</span>.state.isShow);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"4-componentDidMount函数已执行,组件挂载完之后,DOM元素已经插入到页面后调用"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"3-render函数执行"</span>);</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Fragment&gt;</span><br><span class="line">          &lt;div&gt;</span><br><span class="line">               &#123; <span class="keyword">this</span>.state.isShow? <span class="xml"><span class="tag">&lt;<span class="name">Text</span> /&gt;</span></span>:<span class="string">""</span>&#125;</span><br><span class="line">               &lt;button onClick=&#123; <span class="keyword">this</span>.handleBtnClick &#125;&gt;更改&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>div&gt;</span><br><span class="line">      &lt;<span class="regexp">/Fragment&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  handleBtnClick()&#123;</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      isShow:!this.state.isShow</span></span><br><span class="line"><span class="regexp">    &#125;)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">class Text extends Component &#123;</span></span><br><span class="line"><span class="regexp">  componentWillUnmount()&#123;</span></span><br><span class="line"><span class="regexp">    console.log("componentWillUnmount函数已执行,组件从页面中移除之前调用,Text组件移除");</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  render()&#123;</span></span><br><span class="line"><span class="regexp">    console.log("Text组件被渲染");</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">       &lt;h1&gt;itclanCoder&lt;/</span>h1&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> container = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">LifeCycle</span>   /&gt;</span></span>, container);</span><br></pre></td></tr></table></figure>
+<p>说完了组件的装载,那么接下来就是组件的更新了</p>
+<p>组件的更新 </p>
+<p>当props或者state发生改变的时候,就会引起render函数的渲染,也就是会引发组件的更新,它与组件的装载一样,会触发一些生命周期函数 更新组件时:生命周期函数执行的顺序</p>
+<ul>
+<li>componentWillReceiveProps(nextProps,nextState):只要父组件的render函数被调用,在render函数里面被渲染的子组件就会经历更新的过程,无论父组件传给子组件的props有没有改变,都会触发子组件的componentWillReceiveProps函数</li>
+</ul>
+<p>你可以理解为,第一次渲染时,父组件的componentWillReceiveProps函数不会被执行,如果是第二次渲染时,已经存在于父组件中,则该componentWillReceiveProps才会执行 注意:在挂载过程中,React不会针对初始props调用此方法,通过触发setState方法更新过程不会调用这个函数,这是因为这个函数适合根据新的props值(也就是nextProps)来计算出是不是要更新内部状态state 应用场景:当你希望只有在接收新的props时做一些逻辑,props改变需要相应改变内部state状态时,则使用componentWillReceiveProps，比如:根据父组件传入的数据初始化或重置组件内部的某些state状态</p>
+<ul>
+<li>shouldComponentUpdate:它决定一个组件什么时候不需要被渲染,在组件更新过程中,Render函数之前调用执行,它同Render函数一样,要求有返回结果的函数</li>
+</ul>
+<p>返回一个boolean值,告诉React库这个组件在这次更新过程是否要继续,如果该函数返回true,那么继续更新,调用render函数,反之,若函数返回false,那么立刻停止更新过程,便不会执行render函数了的 这个函数是提高React的性能的,如果发现没必要的渲染,那就干脆不用渲染了的,这个shouldComponentUpdate就可以做到 注意: forceUpdate不会触发该函数,也可以使用PureComponent替代该函数,该函数做了内部的优化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nextProps表示的是接下来我的props值会样,nextState表示的是我的state会变成什么样</span></span><br><span class="line">shouldComponentUpdate(nextProps, nextState)&#123;</span><br><span class="line">  <span class="keyword">if</span>(nextProps.props属性 !== <span class="keyword">this</span>.props.props属性 || nextState.state属性 !== <span class="keyword">this</span>.state.state属性)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>componentWillUpdate: 组件即将更新时调用,在Render函数之前调用</li>
+</ul>
+<p>注意: 不要在该函数中通过this.setState再次改变state,如果需要,则在componentWillReceiveProps函数中改变</p>
+<ul>
+<li>render:决定该组件UI渲染结果,返回的结果用于构造DOM对象</li>
+</ul>
+<p>注意:不能在render函数中调用setState，如果在shouldComponentUpdate返回false，则render函数不会被调用</p>
+<ul>
+<li>componentDidUpdate:组件更新完之后执行，有两个参数prevProps和prevState，无论是父组件props的修改还是状态的更改都会触发该方法</li>
+</ul>
+<p>应用场景:如果希望无论props更改还是组件内的状态更改都能触发一些逻辑,则可以使用componentDidUpdate,进行业务处理,发送网络请求 注意:在处理业务或发送网络请求时,一定要做好条件比较,否则容易造成死循环</p>
+<p>组件的卸载</p>
+<p>React组件从页面中移除时,在卸载的过程中,只涉及一个生命周期函数componentWillUnmount,由于该函数在组件删除之前会被调用,所以该函数适合做一些清理性的工作 应用场景: 清理无效的timer,取消未完成的网络请求,清理已注册的订阅 注意：在这里使用setState时无效的 当然对于React的生命周期,不同的版本,官方对它做了一些优化和改动,这里介绍的是React Version 16.2.0版本的</p>
+<p>只要理解了生命周期的图谱,生命周期也就差不多了的,在constructor构造器中初始化工作,componentWillMount在组件即将挂载之前执行调用,常用于组件的启动工作,例如:Ajax数据的获取,定时器的启动 当然数据的请求最好放在componentDidMount函数中,而当props或者state发生改变时,会引起组件的渲染,也就是组件的更新,只要父组件的render函数被渲染了 就会触发子组件的componentWillReceiveProps,而当shouldComponentUpdate的函数返回true时,则render函数会渲染,要是返回false时,则render函数不会渲染 当组件从页面中移除时,在卸载之前会触发componentWillUnmount函数,该函数常常用于组件销毁时调用,清理无效的定时器timer，取消未完成的网络(Ajax)请求,清理已注册的订阅</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/08/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84JS%E5%86%99%E5%BE%97%E6%9B%B4%E6%BC%82%E4%BA%AE/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            如何让你的JS写得更漂亮
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/08/js-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">js-开发常用工具函数</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

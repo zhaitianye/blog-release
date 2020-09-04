@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    8个提高JS性能的方法 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-8个提高JS性能的方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  8个提高JS性能的方法
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/8%E4%B8%AA%E6%8F%90%E9%AB%98JS%E6%80%A7%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2019-05-01T08:34:50.000Z" itemprop="datePublished">2019-05-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>前言 在一些年以前性能问题，我们前端开发能做的还是很有限的；不过随着 JavaScript 应用越来越复杂，优化 JavaScript 性能的重要性就越发的凸显出来了。这里我分享 8 个提高 JavaScript 性能的方法。</p>
+<h2 id="入题"><a href="#入题" class="headerlink" title="入题"></a>入题</h2><h3 id="1-尽可能的缓存"><a href="#1-尽可能的缓存" class="headerlink" title="1. 尽可能的缓存"></a>1. 尽可能的缓存</h3><p>我们知道缓存一些资源或者结果是为了减少再次获得这些资源所需要的时间，所以这是一条很常见的通识。 有两种选择。</p>
+<ol>
+<li>第一种是使用 JavaScript Cache API，我们可以使用 service worker。</li>
+<li>第二种是使用 HTTP 协议缓存。</li>
+</ol>
+<p>通过把重复访问的对象存储在用户定义的变量中，以及在后续对该对象的引用中使用变量，可以立即实现性能的提升。</p>
+<h3 id="2-延迟不必要的-JS-首屏加载"><a href="#2-延迟不必要的-JS-首屏加载" class="headerlink" title="2. 延迟不必要的 JS 首屏加载"></a>2. 延迟不必要的 JS 首屏加载</h3><p>我们希望页面的加载时间能不让用户焦虑，推迟不必要的 JS 首屏加载是一个很好地方法。 程序中不是所有函数都需要在页面的初始加载时就要用到。有很多是用户必须执行某个操作才能执行某个函数，那么你可以将该函数的加载推迟到初始页面加载之后。</p>
+<h4 id="一些通用方法"><a href="#一些通用方法" class="headerlink" title="一些通用方法"></a>一些通用方法</h4><ol>
+<li>使用 defer 和 async 属性</li>
+<li>使用类似 getScript() 方法</li>
+<li>动态创建 DOM 方式</li>
+<li>使用延时器</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadScript</span> (<span class="params">src, onload</span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> scriptTag = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</span><br><span class="line">scriptTag.src = src;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> onload === <span class="string">"function"</span>) &#123;</span><br><span class="line">scriptTag.onload = onload;</span><br><span class="line">scriptTag.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (scriptTag.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">onload();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.body.appendChild(scriptTag);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-删除未使用的-JavaScript"><a href="#3-删除未使用的-JavaScript" class="headerlink" title="3. 删除未使用的 JavaScript"></a>3. 删除未使用的 JavaScript</h3><p>这个步骤是十分必要的，很多人在不使用某些代码的时候仅仅只是注释掉；因为他们生怕产品经理又反悔。其实你删除这些代码，不仅会缩短传输时间，还会缩短浏览器分析和编译代码所需的时间。 提供几点作为参考：</p>
+<ol>
+<li>未使用的代码直接删掉，就算后期产品返回，你也可以在 git 历史中找回来。</li>
+<li>一些常用的方法不要在自己写一遍，团队一定要有一个常用方法的公共库；公用方法都应该写入这个公共库，而不是写在业务代码里面。</li>
+<li>不要因为一个小功能就引入一个第三方插件/库，你可以使用模块化的方式引入，或者自己写一个类似的方法放在项目的公共库中。</li>
+</ol>
+<h3 id="4-避免内存泄漏"><a href="#4-避免内存泄漏" class="headerlink" title="4. 避免内存泄漏"></a>4. 避免内存泄漏</h3><p>如果内存正在泄漏，则加载的页面将保留越来越多的内存，并最终占用设备的所有可用内存并严重影响性能。你可能见过此类故障（并且可能对此类故障感到懊恼），例如轮播。 在 Chrome 开发者工具中，你可以通过在“Performance ”标签中记录时间线来分析你的网站是否存在内存泄漏。 若内存占用基本平稳，就说明不存在内存泄漏，反之便是存在。</p>
+<h4 id="几种常见的内存泄漏原因："><a href="#几种常见的内存泄漏原因：" class="headerlink" title="几种常见的内存泄漏原因："></a>几种常见的内存泄漏原因：</h4><ol>
+<li>意外的全局变量</li>
+<li>没有销毁的计时器</li>
+<li>已经删除的 DOM 还是被引用，（删除 DOM 后将变量设值为 null 可以避免这个问题）</li>
+</ol>
+<h3 id="5-避免使用全局变量-amp-优先使用局部变量"><a href="#5-避免使用全局变量-amp-优先使用局部变量" class="headerlink" title="5. 避免使用全局变量 &amp; 优先使用局部变量"></a>5. 避免使用全局变量 &amp; 优先使用局部变量</h3><p>这一点主要是想说定义变量的时候用最近原则，即可以在当前作用域定义的变量就一定不要定义在上一级，更不要一股脑的直接定义在全局。也就是缩短作用域链的查找长度。 我们知道 JS 查找变量是按照作用域链查找的，多查找一层势必会多一点处理时间。定义在当前作用域可以加快代码的执行速度。 当作用域丢失时，该作用域的变量将被销毁。</p>
+<h3 id="6-使用-web-workers-处理需要大量执行时间的代码"><a href="#6-使用-web-workers-处理需要大量执行时间的代码" class="headerlink" title="6. 使用 web workers 处理需要大量执行时间的代码"></a>6. 使用 web workers 处理需要大量执行时间的代码</h3><p>web workers 使 Web 应用程序的主执行线程分开的后台线程中运行脚本操作成为可能。这样做的好处是，可以在单独的线程中执行费力的处理，允许主线程(通常是UI)运行，而不会阻塞/减慢速度。</p>
+<h4 id="web-workers-的几个使用场景"><a href="#web-workers-的几个使用场景" class="headerlink" title="web workers 的几个使用场景"></a>web workers 的几个使用场景</h4><p><strong>预取数据</strong> — 优化网站的加载时间，可用 web workers 来提前加载数据。 <strong>轮询工作</strong>  </p>
+<h3 id="7-合理使用事件代理"><a href="#7-合理使用事件代理" class="headerlink" title="7. 合理使用事件代理"></a>7. 合理使用事件代理</h3><p>我们知道事件代理可以合并类似的操作，可以直接降低与 DOM 的交互。使用事件代理的优点就可想而知了：</p>
+<ol>
+<li>节约内存空间，性能自然提升（合并的函数占用内存比优化前少多了）</li>
+<li>减少 DOM 操作（优化性能，减少 DOM 操作一直很重要，这也是 Virtual Dom 流行的几个基本原因）</li>
+</ol>
+<h3 id="8-将重复的代码一定抽象成函数"><a href="#8-将重复的代码一定抽象成函数" class="headerlink" title="8. 将重复的代码一定抽象成函数"></a>8. 将重复的代码一定抽象成函数</h3><p>我们在写代码的时候，有一些代码会在很多模块中出现。有些人会觉得不以为然，这样不会消耗太多的性能，也就没有抽象出来。 其实这是必要的，这样做的目的是：</p>
+<ol>
+<li>是你的项目具有更高的可读性和扩展性，并且团队协作更加融洽</li>
+<li>减少代码的解析和编译的时间</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>还有一些诸如代码压缩、使用 CDN、合并代码、Gzip、减少 HTTP 请求、DOM操作优化、图片优化等也是优化性能的常见方法，不过这些都更加偏向前端工程一些。所以这里只是总结了一些优化 JavaScript 代码性能的方法。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/05/20%E9%81%93JS%E5%8E%9F%E7%90%86%E9%A2%98/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            20道JS原理题
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/04/NPM-mongodb/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">NPM-mongodb</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

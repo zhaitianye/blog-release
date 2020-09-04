@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    数据结构-二叉树的递归实现 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构-二叉树的递归实现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据结构-二叉树的递归实现
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2016-05-04T02:41:34.000Z" itemprop="datePublished">2016-05-04</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><strong>二叉树的概念篇&gt;</strong> </p>
+<p>(1).二叉树是一颗特殊的树,二叉树每个结点最多有两个孩子结点,即就是左孩子和右孩子 </p>
+<p>(2).满二叉树：若一颗树的高度为h,则h层均满 </p>
+<p>(3).完全二叉树：若一棵树的高度为h,则前h-1层均满最后一层可以不满,且最后一层的结点都连续集中在最左边. 我们知道一个数组可以表示一颗树,它的思想是如果该处有结点则直接将该结点放在对应的下标处，如果没有结点则以符号占位 </p>
+<p>(1).假若一个子结点的下标为i,那仫它的父节点的下标为:(i-1)/2; </p>
+<p>(2).假若一个父结点的下标为i，那仫它的左孩子的下标为:2*i+1,它的右孩子的下标为:2*i+2. </p>
+<p>(3).缺点：如果不是满二叉树和完全二叉树则有太多的内存浪费，且插入删除不便. 用数组表示一个树适用于满二叉树和完全二叉树. </p>
+<p><strong>实例分析篇&gt;</strong> </p>
+<p>如果一个数组表示的二叉树:int array={1,2,’#’,3,’#’,’#’,4,5,’#’,6,’#’,7,’#’,’#’,8},’#’代表该位置没有结点，该树被还原之后为:  递归求一个树的前序遍历，中序遍历，后序遍历，层序遍历,树的叶子节点的数量，树的总结点的数量，树的深度，统计每一层的结点总数. </p>
+<p>(1).前序遍历：先访问根结点，再递归访问左子树，最后访问右子树. </p>
+<p>(2).中序遍历：先访问左子树，再访问根结点，最后访问右子树. </p>
+<p>(3).后序遍历：先访问左子树，再访问右子树，最后访问根结点. </p>
+<p>(4).层序遍历：一层层结点依次遍历，在实现层序遍历的时候用到了队列先进先出的性质,将每一层的数据一次进队列，而每次出队列的元素就是层序遍历的当前元素. </p>
+<p>(5).树的总结点数：根结点+左子树的结点数+右子树的结点数. </p>
+<p>(6).树的叶子节点数:叶子节点(即没有左子树也没有右子树),左子树的叶子节点总数+右子树的叶子节点总数. </p>
+<p><strong>代码实现&gt;,</strong> </p>
+<p>BinaryTree.h </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once template struct BinaryTreeNode &#123; BinaryTreeNode(const T&amp; data=T()) :_data(data) ,_left(NULL) ,_right(NULL) &#123;&#125; T _data; BinaryTreeNode *_left; BinaryTreeNode *_right; &#125;; template class BinaryTree &#123; typedef BinaryTreeNode Node; public: BinaryTree() :_root(NULL) &#123;&#125; BinaryTree(const T *array,size_t size,const T&amp; invalid) &#123; size_t index=0; _root=_CreatTree(array,size,index,invalid); &#125; BinaryTree(const BinaryTree&amp; bt) &#123; _root=_Copy(bt._root); &#125; <span class="comment">//BinaryTree&amp; </span></span></span><br><span class="line"><span class="keyword">operator</span>=(<span class="keyword">const</span> BinaryTree&amp; bt) <span class="comment">//&#123; // //传统的写法 // if (this != &amp;bt) // &#123; // Node *root=_Copy(bt._root); // _Destroy(_root); // _root=root; // &#125; // return *this; //&#125; BinaryTree&amp; operator=(const BinaryTree&amp; bt) &#123; //现代的写法 if (this != &amp;bt) //防止自赋值 &#123; BinaryTree tmp(bt); std::swap(_root,tmp._root); &#125; return *this; &#125; ~BinaryTree() &#123; _Destroy(_root); &#125; public: void PrevOrder() //前序遍历 &#123; _PrevOrder(_root); cout&lt;&lt;endl; &#125; void InOrder() //中序遍历 &#123; _InOrder(_root); cout&lt;&lt;endl; &#125; void PostOrder() //后序遍历 &#123; _PostOrder(_root); cout&lt;&lt;endl; &#125; void LevelOrder() //层序遍历 &#123; _LevelOrder(_root); cout&lt;&lt;endl; &#125; size_t Size() //求该树的总结点数 &#123; size_t size=_Size(_root); return size; &#125; size_t Depth() //求该树的深度 &#123; size_t depth=_Depth(_root); return depth; &#125; size_t LeafSize() //求一个树叶子节点的总数 &#123; size_t leaf=_LeafSize(_root); return leaf; &#125; size_t GetKLevel(int level) //level层的所有节点的个数 &#123; size_t count=_GetKLevel(_root,level); return count; &#125; protected: Node *_CreatTree(const T *array,size_t size,size_t&amp; index,const T&amp; invalid) &#123; assert(array); Node *root=NULL; if (index &lt; size &amp;&amp; array[index] != invalid) &#123; root=new Node(array[index]); root-&gt;_left=_CreatTree(array,size,++index,invalid); root-&gt;_right=_CreatTree(array,size,++index,invalid); &#125; return root; &#125; Node *_Copy(Node *root) &#123; //proot是拷贝的新树的根节点 Node *cur=root; Node *proot=NULL; if (cur) &#123; proot=new Node(cur-&gt;_data); proot-&gt;_left=_Copy(cur-&gt;_left); proot-&gt;_right=_Copy(cur-&gt;_right); &#125; return proot; &#125; void _Destroy(Node *root) &#123; Node *cur=root; if (cur) &#123; _Destroy(cur-&gt;_left); _Destroy(cur-&gt;_right); delete cur; cur=NULL; &#125; &#125; protected: void _PrevOrder(Node *root) &#123; Node *cur=root; if (cur) &#123; cout&lt;_data&lt;&lt;” “; _PrevOrder(root-&gt;_left); _PrevOrder(root-&gt;_right); &#125; &#125; void _InOrder(Node *root) &#123; Node *cur=root; if (cur) &#123; _InOrder(cur-&gt;_left); cout&lt;_data&lt;&lt;” “; _InOrder(cur-&gt;_right); &#125; &#125; void _PostOrder(Node *root) &#123; Node *cur=root; if (cur) &#123; _PostOrder(cur-&gt;_left); _PostOrder(cur-&gt;_right); cout&lt;_data&lt;&lt;” “; &#125; &#125; void _LevelOrder(Node *root) &#123; queue&lt;Node &gt; q; Node \cur=root; q.push(cur); while(!q.empty()) &#123; Node *t=q.front(); cout&lt;_data&lt;&lt;” “; if (t-&gt;_left != NULL) &#123; q.push(t-&gt;_left); &#125; if (t-&gt;_right != NULL) &#123; q.push(t-&gt;_right); &#125; q.pop(); &#125; &#125; size_t _Size(Node *root) &#123; if (root == NULL) &#123; return 0; //空树 &#125; return 1+_Size(root-&gt;_left)+_Size(root-&gt;_right); &#125; size_t _Depth(Node *root) &#123; Node *cur=root; if (root == NULL) &#123; return 0; &#125; return 1+(_Depth(cur-&gt;_left)&gt;_Depth(cur-&gt;_right) ?_Depth(cur-&gt;_left):_Depth(cur-&gt;_right)); &#125; size_t _LeafSize(Node *root) &#123; Node *cur=root; if (cur == NULL) //空树 &#123; return 0; &#125; else if ((cur-&gt;_left == NULL) &amp;&amp; (cur-&gt;_right == NULL)) &#123; //叶子结点–一个结点即没有左子树也没有右子树 return 1; &#125; else return _LeafSize(cur-&gt;_left)+_LeafSize(cur-&gt;_right); &#125; size_t _GetKLevel(Node *root,int level) &#123; size_t count=0; if (root == NULL) &#123; return 0; &#125; if (level == 1) &#123; count++; &#125; else &#123; count += _GetKLevel(root-&gt;_left,level-1); count += _GetKLevel(root-&gt;_right,level-1); &#125; return count; &#125; protected: Node *_root; &#125;; [/cpp] test.cpp [cpp] void testBinaryTree() &#123; int array[]=&#123;1,2,’#’,3,’#’,’#’,4,5,’#’,6,’#’,7,’#’,’#’,8&#125;; size_t sz=sizeof(array)/sizeof(array[0]); BinaryTree bt(array,sz,’#’); bt.PrevOrder(); //1 2 3 4 5 6 7 8 bt.InOrder(); //2 3 1 5 6 7 4 8 bt.PostOrder(); //3 2 7 6 5 8 4 1 bt.LevelOrder(); //1 2 4 3 5 8 6 7 cout&lt;&lt;bt.Size()&lt;&lt;endl; //8 cout&lt;&lt;bt.Depth()&lt;&lt;endl; //5 BinaryTree bt1(bt); bt1.PrevOrder(); bt1.InOrder(); bt1.PostOrder(); bt1.LevelOrder(); cout&lt;&lt;bt1.Size()&lt;&lt;endl; //8 cout&lt;&lt;bt1.Depth()&lt;&lt;endl; //5 BinaryTree bt2; bt2=bt; bt2.PrevOrder(); bt2.InOrder(); bt2.PostOrder(); bt2.LevelOrder(); cout&lt;&lt;bt2.Size()&lt;&lt;endl; //8 cout&lt;&lt;bt2.Depth()&lt;&lt;endl; //5 cout&lt;&lt;bt2.LeafSize()&lt;&lt;endl; //3 //该树的每一层共有多少个结点 cout&lt;&lt;bt2.GetKLevel(1)&lt;&lt;endl;; //1 cout&lt;&lt;bt2.GetKLevel(2)&lt;&lt;endl;; //2 cout&lt;&lt;bt2.GetKLevel(3)&lt;&lt;endl;; //3 cout&lt;&lt;bt2.GetKLevel(4)&lt;&lt;endl;; //1 cout&lt;&lt;bt2.GetKLevel(5)&lt;&lt;endl;; //1 &#125;</span></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E9%80%92%E5%BD%92&%E9%9D%9E%E9%80%92%E5%BD%92/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据结构-搜索二叉树递归&amp;非递归
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%B8%89%E5%A4%A7%E7%BB%93%E6%9E%84/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数据结构-三大结构</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

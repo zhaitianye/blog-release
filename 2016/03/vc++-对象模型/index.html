@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    vc++-对象模型 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vc++-对象模型"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vc++-对象模型
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/03/vc++-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time datetime="2016-03-16T10:49:45.000Z" itemprop="datePublished">2016-03-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vc/">vc++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">12 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>了解你所使用的编程语言究竟是如何实现的，对于C++程序员可能特别有意义。</p>
+<p>首先，它可以去除我们对于所使用语言的神秘感，使我们不至于对于编译器干的活感到完全不可思议；尤其重要的是，它使我们在Debug和使用语言高级特性的时候，有更多的把握。当需要提高代码效率的时候，这些知识也能够很好地帮助我们。 </p>
+<p>首先，我们顺次考察C兼容的结构（struct）的布局，单继承，多重继承，以及虚继承； 接着，我们讲成员变量和成员函数的访问，当然，这里面包含虚函数的情况； </p>
+<p>再接下来，我们考察构造函数，析构函数，以及特殊的赋值操作符成员函数是如何工作的，数组是如何动态构造和销毁的； 最后，简单地介绍对异常处理的支持。 对每个语言特性，我们将简要介绍该特性背后的动机，该特性自身的语意（当然，</p>
+<p>本文决不是“C++入门”，大家对此要有充分认识），以及该特性在微软的VC++中是如何实现的。这里要注意区分抽象的C++语言语意与其特定实现。微软之外的其他C++厂商可能提供一个完全不同的实现，我们偶尔也会将VC++的实现与其他实现进行比较。 2 类布局 本节讨论不同的继承方式造成的不同内存布局。 2.1 C结构（struct） 由于C++基于C，所以C++也“基本上”兼容C。特别地，</p>
+<p>C++规范在“结构”上使用了和C相同的，简单的内存布局原则：成员变量按其被声明的顺序排列，按具体实现所规定的对齐原则在内存地址上对齐。所有的C/C++厂商都保证他们的C/C++编译器对于有效的C结构采用完全相同的布局。这里，A是一个简单的C结构，其成员布局和对齐方式都一目了然</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span> </span><br><span class="line"><span class="keyword">char</span> c; </span><br><span class="line"><span class="keyword">int</span> i; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>A在内存中占有8个字节，按照声明成员的顺序，前4个字节包含一个字符（实际占用1个字节，3个字节空着，补对齐），后4个字节包含一个整数。A的指针就指向字符开始字节处。 2.2 有C++特征的C结构 当然了，C++不是复杂的C，C++本质上是面向对象的语言：包含继承、封装，以及多态。原始的C结构经过改造，成了面向对象世界的基石——类。除了成员变量外，C++类还可以封装成员函数和其他东西。然而，有趣的是，除非为了实现虚函数和虚继承引入的隐藏成员变量外，C++类实例的大小完全取决于一个类及其基类的成员变量！成员函数基本上不影响类实例的大小。 这里提供的B是一个C结构，然而，该结构有一些C++特征：控制成员可见性的“public/protected/private”关键字、成员函数、静态成员，以及嵌套的类型声明。虽然看着琳琅满目，实际上只有成员变量才占用类实例的空间。要注意的是，C++标准委员会不限制由“public/protected/private”关键字分开的各段在实现时的先后顺序，因此，不同的编译器实现的内存布局可能并不相同。（在VC++中，成员变量总是按照声明时的顺序排列）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span> </span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line"><span class="keyword">int</span> bm1; </span><br><span class="line"><span class="keyword">protected</span>: </span><br><span class="line"><span class="keyword">int</span> bm2; </span><br><span class="line"><span class="keyword">private</span>: </span><br><span class="line"><span class="keyword">int</span> bm3; </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> bsm; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bf</span><span class="params">()</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bsf</span><span class="params">()</span></span>; </span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>* bpv; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">N</span> &#123;</span> &#125;; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>B中，为何static int bsm不占用内存空间？因为它是静态成员，该数据存放在程序的数据段中，不在类实例中。 2.3 单继承 C++提供继承的目的是在不同的类型之间提取共性。比如，科学家对物种进行分类，从而有种、属、纲等说法。有了这种层次结构，我们才可能将某些具备特定性质的东西归入到最合适的分类层次上，如“怀孩子的是哺乳动物”。由于这些属性可以被子类继承，所以，我们只要知道“鲸鱼、人”是哺乳动物，就可以方便地指出“鲸鱼、人都可以怀孩子”。那些特例，如鸭嘴兽（生蛋的哺乳动物），则要求我们对缺省的属性或行为进行覆盖。 C++中的继承语法很简单，在子类后加上“:base”就可以了。下面的D继承自基类C。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span> &#123;</span> </span><br><span class="line"><span class="keyword">int</span> c1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cf</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">D</span> :</span> C &#123; </span><br><span class="line"><span class="keyword">int</span> d1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">df</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>既然派生类要保留基类的所有属性和行为，自然地，每个派生类的实例都包含了一份完整的基类实例数据。在D中，并不是说基类C的数据一定要放在D的数据之前，只不过这样放的话，能够保证D中的C对象地址，恰好是D对象地址的第一个字节。这种安排之下，有了派生类D的指针，要获得基类C的指针，就不必要计算偏移量了。几乎所有知名的C++厂商都采用这种内存安排（基类成员在前）。在单继承类层次下，每一个新的派生类都简单地把自己的成员变量添加到基类的成员变量之后。看看上图，C对象指针和D对象指针指向同一地址。 2.4 多重继承 大多数情况下，其实单继承就足够了。但是，C++为了我们的方便，还提供了多重继承。 比如，我们有一个组织模型，其中有经理类（分任务），工人类（干活）。那么，对于一线经理类，即既要从上级经理那里领取任务干活，又要向下级工人分任务的角色来说，如何在类层次中表达呢？单继承在此就有点力不胜任。我们可以安排经理类先继承工人类，一线经理类再继承经理类，但这种层次结构错误地让经理类继承了工人类的属性和行为。反之亦然。当然，一线经理类也可以仅仅从一个类（经理类或工人类）继承，或者一个都不继承，重新声明一个或两个接口，但这样的实现弊处太多：多态不可能了；未能重用现有的接口；最严重的是，当接口变化时，必须多处维护。最合理的情况似乎是一线经理从两个地方继承属性和行为——经理类、工人类。 C++就允许用多重继承来解决这样的问题：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Manager</span> … &#123;</span> … &#125;; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Worker</span> … &#123;</span> … &#125;; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MiddleManager</span> :</span> Manager, Worker &#123; … &#125;;</span><br></pre></td></tr></table></figure>
+<p>这样的继承将造成怎样的类布局呢？下面我们还是用“字母类”来举例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">E</span> &#123;</span> </span><br><span class="line"><span class="keyword">int</span> e1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ef</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">F</span> :</span> C, E &#123; </span><br><span class="line"><span class="keyword">int</span> f1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ff</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>结构F从C和E多重继承得来。与单继承相同的是，F实例拷贝了每个基类的所有数据。与单继承不同的是，在多重继承下，内嵌的两个基类的对象指针不可能全都与派生类对象指针相同：<br>F f; </p>
+<p>// (void<em>)&amp;f == (void</em>)(C<em>)&f;<br>// (void</em>)&amp;f &lt; (void<em>)(E</em>)&f;<br>上面那行说明C对象指针与F对象指针相同，下面那行说明E对象指针与F对象指针不同。</p>
+<p>观察类布局，可以看到F中内嵌的E对象，其指针与F指针并不相同。正如后文讨论强制转化和成员函数时指出的，这个偏移量会造成少量的调用开销。 具体的编译器实现可以自由地选择内嵌基类和派生类的布局。VC++按照基类的声明顺序先排列基类实例数据，最后才排列派生类数据。当然，派生类数据本身也是按照声明顺序布局的（本规则并非一成不变，我们会看到，当一些基类有虚函数而另一些基类没有时，内存布局并非如此）。 2.5 虚继承 回到我们讨论的一线经理类例子。让我们考虑这种情况：如果经理类和工人类都继承自“雇员类”，将会发生什么？ struct Employee { … }; struct Manager : Employee { … }; struct Worker : Employee { … }; struct MiddleManager : Manager, Worker { … }; 如果经理类和工人类都继承自雇员类，很自然地，它们每个类都会从雇员类获得一份数据拷贝。如果不作特殊处理，一线经理类的实例将含有两个雇员类实例，它们分别来自两个雇员基类。如果雇员类成员变量不多，问题不严重；如果成员变量众多，则那份多余的拷贝将造成实例生成时的严重开销。更糟的是，这两份不同的雇员实例可能分别被修改，造成数据的不一致。因此，我们需要让经理类和工人类进行特殊的声明，说明它们愿意共享一份雇员基类实例数据。 很不幸，在C++中，这种“共享继承”被称为“虚继承”，把问题搞得似乎很抽象。虚继承的语法很简单，在指定基类时加上virtual关键字即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Employee</span> &#123;</span> … &#125;; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Manager</span> :</span> <span class="keyword">virtual</span> Employee &#123; … &#125;; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Worker</span> :</span> <span class="keyword">virtual</span> Employee &#123; … &#125;; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MiddleManager</span> :</span> Manager, Worker &#123; … &#125;;</span><br></pre></td></tr></table></figure>
+<p>使用虚继承，比起单继承和多重继承有更大的实现开销、调用开销。回忆一下，在单继承和多重继承的情况下，内嵌的基类实例地址比起派生类实例地址来，要么地址相同（单继承，以及多重继承的最靠左基类），要么地址相差一个固定偏移量（多重继承的非最靠左基类）。然而，当虚继承时，一般说来，派生类地址和其虚基类地址之间的偏移量是不固定的，因为如果这个派生类又被进一步继承的话，最终派生类会把共享的虚基类实例数据放到一个与上一层派生类不同的偏移量处。请看下例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">G</span> :</span> <span class="keyword">virtual</span> C &#123; </span><br><span class="line"><span class="keyword">int</span> g1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">gf</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">H</span> :</span> <span class="keyword">virtual</span> C &#123; </span><br><span class="line"><span class="keyword">int</span> h1; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hf</span><span class="params">()</span></span>; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">I</span> :</span> G, H &#123; </span><br><span class="line"><span class="keyword">int</span> i1; </span><br><span class="line"><span class="keyword">void</span> _if(); </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>暂时不追究vbptr成员变量从何而来。在G对象中，内嵌的C基类对象的数据紧跟在G的数据之后，在H对象中，内嵌的C基类对象的数据也紧跟在H的数据之后。但是，在I对象中，内存布局就并非如此了。VC++实现的内存布局中，G对象实例中G对象和C对象之间的偏移，不同于I对象实例中G对象和C对象之间的偏移。当使用指针访问虚基类成员变量时，由于指针可以是指向派生类实例的基类指针，所以，编译器不能根据声明的指针类型计算偏移，而必须找到另一种间接的方法，从派生类指针计算虚基类的位置。 在VC++中，对每个继承自虚基类的类实例，将增加一个隐藏的“虚基类表指针”（vbptr）成员变量，从而达到间接计算虚基类位置的目的。该变量指向一个全类共享的偏移量表，表中项目记录了对于该类而言，“虚基类表指针”与虚基类之间的偏移量。 其它的实现方式中，有一种是在派生类中使用指针成员变量。这些指针成员变量指向派生类的虚基类，每个虚基类一个指针。这种方式的优点是：获取虚基类地址时，所用代码比较少。然而，编译器优化代码时通常都可以采取措施避免重复计算虚基类地址。况且，这种实现方式还有一个大弊端：从多个虚基类派生时，类实例将占用更多的内存空间；获取虚基类的虚基类的地址时，需要多次使用指针，从而效率较低等等。 在VC++中，G拥有一个隐藏的“虚基类表指针”成员，指向一个虚基类表，该表的第二项是GdGvbptrC。（在G中，虚基类对象C的地址与G的“虚基类表指针”之间的偏移量（当对于所有的派生类来说偏移量不变时，省略“d”前的前缀））。比如，在32位平台上，GdGvptrC是8个字节。同样，在I实例中的G对象实例也有“虚基类表指针”，不过该指针指向一个适用于“G处于I之中”的虚基类表，表中一项为IdGvbptrC，值为20。 观察前面的G、H和I，我们可以得到如下关于VC++虚继承下内存布局的结论： 首先排列非虚继承的基类实例； 有虚基类时，为每个基类增加一个隐藏的vbptr，除非已经从非虚继承的类那里继承了一个vbptr； 排列派生类的新数据成员； 在实例最后，排列每个虚基类的一个实例。 该布局安排使得虚基类的位置随着派生类的不同而“浮动不定”，但是，非虚基类因此也就凑在一起，彼此的偏移量固定不变。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vc/" rel="tag">vc++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/03/vc++-ADO%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vc++-ADO事务处理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/03/sqlServer-%E5%AE%89%E8%A3%85%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">sqlServer-安装遇到的问题</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

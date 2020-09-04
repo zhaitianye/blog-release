@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c++-编程要点 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c++-编程要点"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c++-编程要点
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/11/c++-%E7%BC%96%E7%A8%8B%E8%A6%81%E7%82%B9/" class="article-date">
+  <time datetime="2015-11-02T04:16:31.000Z" itemprop="datePublished">2015-11-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>要点1: &lt;iostream.h&gt; 还是 <iostream>? </p>
+<p>很多C++程序员还在使用&lt;iostream.h&gt;而不是用更新的标准的<iostream>库。 </p>
+<p>这两者都有什么不同呢？首先，5年前我们就开始反对把.h符号继续用在标准的头 文件中。继续使用过时的规则可不是个好的方法。</p>
+<p>从功能性的角度来讲， <iostream>包含了一系列模板化的I/O类，相反地&lt;iostream.h&gt;只仅仅是支持字符 流。另外，输入输出流的C++标准规范接口在一些微妙的细节上都已改进，因此， <iostream>和&lt;iostream.h&gt;在接口和执行上都是不同的。最后，<iostream>的各组 成都是以STL的形式声明的，然而&lt;iostream.h&gt;的各组成都是声明成全局型的。 因为这些实质上的不同，你不能在一个程序中混淆使用这两个库。</p>
+<p>做为一种习 惯，在新的代码中一般使用<iostream>，但如果你处理的是过去编写的代码，为了 继承可以用继续用&lt;iostream.h&gt;旧保持代码的一致性。 要点2：用引用传递参数时应注意的地方 在用引用传递参数时，最好把引用声明为const类型。这样做的好处是：告诉 程序不能修改这个参数。</p>
+<p>在下面的这个例子中函数f()就是传递的引用： void f(const int &amp; i); int main() { f(2); /* OK */ } 这个程序传递一个参数2给f()。在运行时，C++创建一个值为2的int类型的临 时变量，并传递它的引用给f().这个临时变量和它的引用从f()被调用开始被创建 并存在直到函数返回。返回时，就被马上删除。</p>
+<p>注意，如果我们不在引用前加上 const限定词，则函数f()可能会更改它参数的值，更可能会使程序产生意想不到的 行为。所以，别忘了const。</p>
+<p>这个要点也适用于用户定义的对象。你可以给临时对象也加上引用如果是 const类型： struct A{}; void f(const A&amp; a); int main() { f(A()); // OK,传递的是一个临时A的const引用 } 要点3：“逗号分离”表达形式 “逗号分离”表达形式是从C继承来的，使用在for-和while-循环中。当然，这 条语法规则被认为是不直观的。</p>
+<p>首先，我们来看看什么是“逗号分离”表达形式。 一个表达式由一个或多个其它表达式构成，由逗号分开，如： if(++x, –y, cin.good()) //三个表达式 这个if条件包含了三个由逗号分离的表达式。C++会计算每个表达式，但完整 的“逗号分离”表达式的结果是最右边表达式的值。</p>
+<p>因此，仅当cin.good()返回 true时，if条件的值才是true。下面是另一个例子： int j=10; int i=0; while( ++i, –j) { //直到j＝0时，循环结束，在循环时，i不断自加 } 要点4，使用全局对象的构造函数在程序启动前调用函数 有一些应用程序需要在主程序启动前调用其它函数。如：转态过程函数、登记 功能函数都是必须在实际程序运行前被调用的。</p>
+<p>最简单的办法是通过一个全局对象 的构造函数来调用这些函数。因为全局对象都是在主程序开始前被构造，这些函数 都将会在main()之前返回结果。如： class Logger { public: Logger() { activate_log();//译者注：在构造函数中调用你需要先运行的函数 } }; Logger log; //一个全局实例 int main() { record * prec=read_log();//译者注：读取log文件数据 //.. 程序代码 } 全局对象log在main()运行之前被构造，log调用了函数activate_log()。</p>
+<p>从 而，当main()开始执行时，它就可以从log文件中读取数据。 毫无疑问地，在C++编程中内存管理是最复杂和最容易出现bug的地方。直接访 问原始内存、动态分配存储和最大限度的发挥C++指令效率，都使你必须尽力避免 有关内存的bug。</p>
+<p>要点5：避免使用复杂构造的指向函数的指针 指向函数的指针是C++中可读性最差的语法之一。你能告诉我下面语句的意思 吗？ void (*p[10]) (void (*)()); P是一个“由10个指针构成的指向一个返回void类型且指向另一个无返回和无 运算的函数的数组”。这个麻烦的语法真是让人难以辨认，不是吗？你其实可以简 单的通过typedef来声明相当于上面语句的函数。</p>
+<p>首先，使用typedef声明“指向一 个无返回和无运算的函数的指针”： typedef void (*pfv)(); 接着，声明“另一个指向无返回且使用pfv的函数指针”： typedef void (*pf_taking_pfv) (pfv); 现在，声明一个由10个上面这样的指针构成的数组： pf_taking_pfv p[10]; 与void (*p[10]) (void (*)())达到同样效果。</p>
+<p>但这样是不是更具有可读性 了！ 要点6：指向成员的指针 一个类有两种基本的成员：函数成员和数据成员。同样的，指向成员的指针也 有两种：指向函数成员的指针和指向数据成员的指针。后则其实并不常用，因为类 一般是不含有公共数据成员的，仅当用在继承用C写的代码时协调结构（struct)和 类(class)时才会用到。</p>
+<p>指向成员的指针是C++语法中最难以理解的构造之一，但是这也是一个C++最强 大的特性。它可以让你调用一个类的函数成员而不必知道这个函数的名字。这一个 非常敏捷的调用工具。</p>
+<p>同样的，你也可以通过使用指向数据成员的指针来检查并改 变这个数据而不必知道它的成员名字。</p>
+<p>指向数据成员的指针 尽管刚开始时，指向成员的指针的语法会使你有一点点的迷惑，但你不久会发 现它其实同普通的指针差不多，只不过是<em>号的前面多了::符号和类的名字，例： 定义一个指向int型的指针： int * pi; 定义一个指向为int型的类的数据成员： int A::\</em>pmi; //pmi是指向类A的一个int型的成员 你可以这样初始化它： class A { public: int num; int x; }; int A::*pmi = &amp; A::num; 上面的代码是声明一个指向类A的一个int型的num成员并将它初始化为这个num 成员的地址.通过在pmi前面加上<em>你就可以使用和更改类A的num成员的值： A a1, a2; int n=a1.\</em>pmi; //把a1.num赋值给n a1.*pmi=5; // 把5赋值给a1.num a2.*pmi=6; // 把6赋值给6a2.num 如果你定义了一个指向类A的指针，那么上面的操作你必须用 -&gt;*操作符代 替： A * pa=new A; int n=pa-&gt;*pmi; pa-&gt;*pmi=5; 指向函数成员的指针 它由函数成员所返回的数据类型构成，类名后跟上::符号、指针名和函数的参 数列表。举个例子：一个指向类A的函数成员（该函数返回int类型）的指针： class A { public: int func (); }; int (A::*pmf) (); 上面的定义也就是说pmf是一个指向类A的函数成员func()的指针.实际上，这 个指针和一个普通的指向函数的指针没什么不同，只是它包含了类的名字和::符 号。</p>
+<p>你可以在在任何使用*pmf的地方调用这个函数 func()： pmf=&amp;A::func; A a; (a.*pmf)(); //调用a.func() 如果你先定义了一个指向对象的指针，那么上面的操作要用-&gt;*代替： A *pa=&a; (pa-&gt;*pmf)(); //调用pa-&gt;func() 指向函数成员的指针要考虑多态性。所以，当你通过指针调用一个虚函数成员 时，这个调用将会被动态回收。</p>
+<p>另一个需要注意的地方，你不能取一个类的构造函 数和析构函数的地址。 要点7、避免产生内存碎片 经常会有这样的情况：你的应用程序每运行一次时就因为程序自身缺陷而产生 内存漏洞而泄漏内存，而你又在周期性地重复着你的程序，结果可想而知,它也会 使系统崩溃。但怎样做才能预防呢？首先，尽量少使用动态内存。</p>
+<p>在大多数情况 下，你可能使用静态或自动存储或者是STL容器。第二，尽量分配大块的内存而不 是一次只分配少量内存。</p>
+<p>举个例子：一次分配一个数组实例所需的内存，而不是一 次只分配一个数组元素的内存。 要点8、是delete还是delete[] 在程序员中有个荒诞的说法：使用delete来代替delete[]删除数组类型时是可 以的！ 举个例子吧： int *p=new int[10]; delete p; //错误，应该是：delete[] p 上面的程序是完全错误的。</p>
+<p>事实上，在一个平台上使用delete代替delete[]的 应用程序也许不会造成系统崩溃，但那纯粹是运气。你不能保证你的应用程序是不 是会在另一个编译器上编译，在另一个平台上运行，所以还是请使用delete[]。</p>
+<p>要点9、优化成员的排列 一个类的大小可以被下面的方式改变： struct A { bool a; int b; bool c; }; //sizeof (A) == 12 在我的电脑上sizeof (A) 等于12。这个结果可能会让你吃惊，因为A的成员总 数是6个字节：1+4+1个字节。那另6字节是哪儿来的？编译器在每个bool成员后面 都插入了3个填充字节以保证每个成员都是按4字节排列，以便分界。</p>
+<p>你可以减少A 的大小，通过以下方式： struct B { bool a; bool c; int b; }; // sizeof (B) == 8 这一次，编译器只在成员c后插入了2个字节。因为b占了4个字节，所以就很自 然地把它当作一个字的形式排列，而a和c的大小1+1=2，再加上2个字节就刚好按两 个字的形式排列B。 要点10、为什么继承一个没有虚析构函数的类是危险的？ 一个没有虚析构函数的类意味着不能做为一个基类。如std::string, std::complex, 和 std::vector 都是这样的。</p>
+<p>为什么继承一个没有虚析构函数的 类是危险的？当你公有继承创建一个从基类继承的相关类时，指向新类对象中的指 针和引用实际上都指向了起源的对象。因为析构函数不是虚函数，所以当你delete 一个这样的类时，C++就不会调用析构函数链。</p>
+<p>举个例子说明： class A { public: ~A() // 不是虚函数 { // … } }; class B: public A //错; A没有虚析构函数 { public: ~B() { // … } }; int main() { A * p = new B; //看上去是对的 delete p; //错，B的析构函没有被调用 } 要点11、以友元类声明嵌套的类 当你以友元类声明一个嵌套的类时，把友元声明放在嵌套类声明的后面，而不 前面。 class A { private: int i; public: class B //嵌套类声明在前 { public: B(A &amp; a) { a.i=0;}; }; friend class B;//友元类声明 }; 如果你把友元类声明放在声明嵌套类的前面，编译器将抛弃友元类后的其它声 明。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/11/c++-%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%BD%BF%E7%94%A8sprintf_s%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%8B%BC%E6%8E%A5%E4%B8%8E%E8%BE%93%E5%87%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c++-编程中使用sprintf_s实现字符串的格式化拼接与输出
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/10/c++-lambda%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c++-lambda简单了解</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

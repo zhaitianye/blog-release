@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    sqlServer-if else和case |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-sqlServer-if else和case"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  sqlServer-if else和case
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/04/sqlServer-if%20else%E5%92%8Ccase/" class="article-date">
+  <time datetime="2016-04-29T13:11:16.000Z" itemprop="datePublished">2016-04-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/sqlServer/">sqlServer</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h2><p>要提示的是，写语句的时候 单引号的引用：用到单引号的一律两个单引号代替 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USE</span> [a] <span class="keyword">GO</span> <span class="comment">/** Object: StoredProcedure [a].[Processname] Script Date: 02/24/2011 11:49:55 **/</span> <span class="keyword">SET</span> ANSI_NULLS <span class="keyword">ON</span> <span class="keyword">GO</span> <span class="keyword">SET</span> QUOTED_IDENTIFIER <span class="keyword">ON</span> <span class="keyword">GO</span> – ============================================= – Author: &amp;amp;lt;Author,,Name&amp;amp;gt; – <span class="keyword">Create</span> <span class="built_in">date</span>: &amp;amp;lt;<span class="keyword">Create</span> <span class="built_in">Date</span>,,&amp;amp;gt; – Description: &amp;amp;lt;Description,,&amp;amp;gt; – ============================================= <span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> [a].[Processname] @FromDateTime <span class="built_in">varchar</span>(<span class="number">200</span>), @ToDateTime <span class="built_in">varchar</span>(<span class="number">200</span>), @CountryCode <span class="built_in">varchar</span>(<span class="number">200</span>), @<span class="keyword">Version</span> <span class="built_in">varchar</span>(<span class="number">200</span>) <span class="keyword">AS</span> <span class="keyword">declare</span> @<span class="keyword">sql</span> <span class="built_in">varchar</span>(<span class="number">1000</span>) <span class="keyword">set</span> @<span class="keyword">sql</span>=’<span class="keyword">select</span> AccessDateTime,IpAddress,Area,AreaDetail <span class="keyword">as</span> description,City,<span class="keyword">Version</span> <span class="keyword">from</span> a.TableName <span class="keyword">where</span> AccessDateTime <span class="keyword">between</span> ‘’’ + @FromDateTime+’’’ <span class="keyword">and</span> ‘’’+ @ToDateTime+’’’’ <span class="keyword">BEGIN</span> <span class="keyword">if</span>(@CountryCode=’’) <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span>=@<span class="keyword">sql</span> <span class="keyword">if</span>(@<span class="keyword">Version</span>=’’) <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span> = @<span class="keyword">sql</span> +’ <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">desc</span>’ <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span> = @<span class="keyword">sql</span> + ‘ <span class="keyword">and</span> <span class="keyword">Version</span>=’’’+@<span class="keyword">Version</span> +’’’ <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">desc</span>’ <span class="keyword">end</span> <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span>=@<span class="keyword">sql</span> <span class="keyword">if</span>(@<span class="keyword">Version</span>=’’) <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span>=@<span class="keyword">sql</span> +’ <span class="keyword">and</span> Area=’’’+@CountryCode+’’’ <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">desc</span>’ <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span> <span class="keyword">set</span> @<span class="keyword">sql</span>=@<span class="keyword">sql</span> +’ <span class="keyword">and</span> Area=’’’+@CountryCode+’’’ <span class="keyword">and</span> <span class="keyword">Version</span>=’’’+ @<span class="keyword">Version</span> +’’’ <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span> <span class="keyword">desc</span>’ <span class="keyword">end</span> <span class="keyword">end</span> exec(@<span class="keyword">sql</span>) <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<h2 id="CASE"><a href="#CASE" class="headerlink" title="CASE :"></a>CASE :</h2><p>Case When用法</p>
+<p>SQL中Case的使用方法</p>
+<p>Case具有两种格式。简单Case函数和Case搜索函数。</p>
+<p>–简单Case函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CASE sex</span><br><span class="line"></span><br><span class="line">         WHEN '1' THEN '男'</span><br><span class="line"></span><br><span class="line">         WHEN '2' THEN '女'</span><br><span class="line"></span><br><span class="line">ELSE '其他' <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>–Case搜索函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CASE WHEN sex = '1' THEN '男'</span><br><span class="line"></span><br><span class="line">         WHEN sex = '2' THEN '女'</span><br><span class="line"></span><br><span class="line">ELSE '其他' <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>这两种方式，可以实现相同的功能。简单Case函数的写法相对比较简洁，但是和Case搜索函数相比，功能方面会有些限制，比如写判断式。</p>
+<p>还有一个需要注意的问题，Case函数只返回第一个符合条件的值，剩下的Case部分将会被自动忽略。</p>
+<p>–比如说，下面这段SQL，你永远无法得到“第二类”这个结果</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CASE WHEN col_1 IN ( 'a', 'b') THEN '第一类'</span><br><span class="line"></span><br><span class="line">         WHEN col_1 IN ('a')       THEN '第二类'</span><br><span class="line"></span><br><span class="line">ELSE'其他' <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+<p>下面我们来看一下，使用Case函数都能做些什么事情。</p>
+<p>一，已知数据按照另外一种方式进行分组，分析。</p>
+<p>有如下数据:(为了看得更清楚，我并没有使用国家代码，而是直接用国家名作为Primary Key)</p>
+<p>国家（country）人口（population）<br>中国600<br>美国100<br>加拿大100<br>英国200<br>法国300<br>日本250<br>德国200<br>墨西哥50<br>印度250</p>
+<p>根据这个国家人口数据，统计亚洲和北美洲的人口数量。应该得到下面这个结果。</p>
+<p>洲人口<br>亚洲1100<br>北美洲250<br>其他700</p>
+<p>想要解决这个问题，你会怎么做？生成一个带有洲Code的View，是一个解决方法，但是这样很难动态的改变统计的方式。</p>
+<p>如果使用Case函数，SQL代码如下:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(population), <span class="keyword">CASE</span> country <span class="keyword">WHEN</span> ‘中国’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘印度’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘日本’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘美国’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">WHEN</span> ‘加拿大’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">WHEN</span> ‘墨西哥’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">ELSE</span> ‘其他’ <span class="keyword">END</span> <span class="keyword">FROM</span> Table_A <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">CASE</span> country <span class="keyword">WHEN</span> ‘中国’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘印度’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘日本’ <span class="keyword">THEN</span> ‘亚洲’ <span class="keyword">WHEN</span> ‘美国’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">WHEN</span> ‘加拿大’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">WHEN</span> ‘墨西哥’ <span class="keyword">THEN</span> ‘北美洲’ <span class="keyword">ELSE</span> ‘其他’ <span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+
+<p>同样的，我们也可以用这个方法来判断工资的等级，并统计每一等级的人数。SQL代码如下；</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> salary &amp;amp;lt;= 500 THEN ‘1’ WHEN salary &amp;amp;gt; 500 AND salary &amp;amp;lt;= 600 THEN ‘2’ WHEN salary &amp;amp;gt; 600 AND salary &amp;amp;lt;= 800 THEN ‘3’ WHEN salary &amp;amp;gt; 800 AND salary &amp;amp;lt;= 1000 THEN ‘4’ ELSE NULL <span class="keyword">END</span> salary_class, <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> Table_A <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> salary &amp;amp;lt;= 500 THEN ‘1’ WHEN salary &amp;amp;gt; 500 AND salary &amp;amp;lt;= 600 THEN ‘2’ WHEN salary &amp;amp;gt; 600 AND salary &amp;amp;lt;= 800 THEN ‘3’ WHEN salary &amp;amp;gt; 800 AND salary &amp;amp;lt;= 1000 THEN ‘4’ ELSE NULL <span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+<p>二，用一个SQL语句完成不同条件的分组。</p>
+<p>有如下数据</p>
+<p>国家（country）性别（sex）人口（population）</p>
+<p>中国1 340</p>
+<p>中国2 260</p>
+<p>美国1 45</p>
+<p>美国2 55</p>
+<p>加拿大1 51</p>
+<p>加拿大2 49</p>
+<p>英国1 40</p>
+<p>英国2 60</p>
+<p>按照国家和性别进行分组，得出结果如下</p>
+<p>国家男女</p>
+<p>中国340 260</p>
+<p>美国45 55</p>
+<p>加拿大51 49</p>
+<p>英国40 60</p>
+<p>普通情况下，用UNION也可以实现用一条语句进行查询。但是那样增加消耗(两个Select部分)，而且SQL语句会比较长。</p>
+<p>下面是一个是用Case函数来完成这个功能的例子</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> country, <span class="keyword">SUM</span>( <span class="keyword">CASE</span> <span class="keyword">WHEN</span> sex = ‘<span class="number">1</span>’ <span class="keyword">THEN</span> population <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>), –男性人口 <span class="keyword">SUM</span>( <span class="keyword">CASE</span> <span class="keyword">WHEN</span> sex = ‘<span class="number">2</span>’ <span class="keyword">THEN</span> population <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span>) –女性人口 <span class="keyword">FROM</span> Table_A <span class="keyword">GROUP</span> <span class="keyword">BY</span> country;</span><br></pre></td></tr></table></figure>
+
+<p>这样我们使用Select，完成对二维表的输出形式，充分显示了Case函数的强大。</p>
+<p>三，在Check中使用Case函数。</p>
+<p>在Check中使用Case函数在很多情况下都是非常不错的解决方法。可能有很多人根本就不用Check，那么我建议你在看过下面的例子之后也尝试一下在SQL中使用Check。</p>
+<p>下面我们来举个例子</p>
+<p>公司A，这个公司有个规定，女职员的工资必须高于1000。如果用Check和Case来表现的话，如下所示</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTRAINT check_salary <span class="keyword">CHECK</span></span><br><span class="line">   ( <span class="keyword">CASE</span> <span class="keyword">WHEN</span> sex = <span class="string">'2'</span></span><br><span class="line">         <span class="keyword">THEN</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> salary &gt; <span class="number">1000</span></span><br><span class="line">         <span class="keyword">THEN</span> <span class="number">1</span> <span class="keyword">ELSE</span> <span class="number">0</span> <span class="keyword">END</span></span><br><span class="line">         <span class="keyword">ELSE</span> <span class="number">1</span> <span class="keyword">END</span> = <span class="number">1</span> )</span><br></pre></td></tr></table></figure>
+<p>如果单纯使用Check，如下所示</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONSTRAINT check_salary <span class="keyword">CHECK</span></span><br><span class="line">           ( sex = <span class="string">'2'</span> <span class="keyword">AND</span> salary &gt; <span class="number">1000</span> )</span><br></pre></td></tr></table></figure>
+<p>女职员的条件倒是符合了，男职员就无法输入了。</p>
+<p>四，根据条件有选择的UPDATE。</p>
+<p>例，有如下更新条件</p>
+<p>工资5000以上的职员，工资减少10%</p>
+<p>工资在2000到4600之间的职员，工资增加15%</p>
+<p>很容易考虑的是选择执行两次UPDATE语句，如下所示</p>
+<p>–条件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Personnel</span><br><span class="line"><span class="keyword">SET</span> salary = salary * <span class="number">0.9</span></span><br><span class="line"><span class="keyword">WHERE</span> salary &gt;= <span class="number">5000</span>;</span><br></pre></td></tr></table></figure>
+<p>–条件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Personnel</span><br><span class="line"><span class="keyword">SET</span> salary = salary * <span class="number">1.15</span></span><br><span class="line"><span class="keyword">WHERE</span> salary &gt;= <span class="number">2000</span> <span class="keyword">AND</span> salary &lt; <span class="number">4600</span>;</span><br></pre></td></tr></table></figure>
+<p>但是事情没有想象得那么简单，假设有个人工资5000块。首先，按照条件，工资减少10%，变成工资。接下来运行第二个SQL时候，因为这个人的工资是在到的范围之内，需增加15%，最后这个人的工资结果是,不但没有减少，反而增加了。如果要是反过来执行，那么工资的人相反会变成减少工资。暂且不管这个规章是多么荒诞，如果想要一个SQL 语句实现这个功能的话，我们需要用到Case函数。代码如下:</p>
+<p>CASE WHEN 搜索函數</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Personnel</span><br><span class="line"><span class="keyword">SET</span> salary = <span class="keyword">CASE</span> <span class="keyword">WHEN</span> salary &gt;= <span class="number">5000</span></span><br><span class="line">　           <span class="keyword">THEN</span> salary * <span class="number">0.9</span></span><br><span class="line"><span class="keyword">WHEN</span> salary &gt;= <span class="number">2000</span> <span class="keyword">AND</span> salary &lt; <span class="number">4600</span></span><br><span class="line"><span class="keyword">THEN</span> salary * <span class="number">1.15</span></span><br><span class="line"><span class="keyword">ELSE</span> salary <span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+<p>这里要注意一点，最后一行的ELSE salary是必需的，要是没有这行，不符合这两个条件的人的工资将会被写成NUll,那可就大事不妙了。在Case函数中Else部分的默认值是NULL，这点是需要注意的地方。</p>
+<p>这种方法还可以在很多地方使用，比如说变更主键这种累活。</p>
+<p>一般情况下，要想把两条数据的Primary key,a和b交换，需要经过临时存储，拷贝，读回数据的三个过程，要是使用Case函数的话，一切都变得简单多了。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p\_key col\_1 col_2</span><br><span class="line">a 1 张三</span><br><span class="line">b 2 李四</span><br><span class="line">c 3 王五</span><br></pre></td></tr></table></figure>
+<p>假设有如上数据，需要把主键a和b相互交换。用Case函数来实现的话，代码如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> SomeTable</span><br><span class="line"><span class="keyword">SET</span> p\_key = <span class="keyword">CASE</span> <span class="keyword">WHEN</span> p\_key = <span class="string">'a'</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="string">'b'</span></span><br><span class="line"><span class="keyword">WHEN</span> p_key = <span class="string">'b'</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="string">'a'</span></span><br><span class="line"><span class="keyword">ELSE</span> p_key <span class="keyword">END</span></span><br><span class="line"><span class="keyword">WHERE</span> p_key <span class="keyword">IN</span> (<span class="string">'a'</span>, <span class="string">'b'</span>);</span><br></pre></td></tr></table></figure>
+<p>同样的也可以交换两个Unique key。需要注意的是，如果有需要交换主键的情况发生，多半是当初对这个表的设计进行得不够到位，建议检查表的设计是否妥当。</p>
+<p>五，两个表数据是否一致的检查。</p>
+<p>Case函数不同于DECODE函数。在Case函数中，可以使用BETWEEN,LIKE,IS NULL,IN,EXISTS等等。比如说使用IN,EXISTS，可以进行子查询，从而实现更多的功能。</p>
+<p>下面具个例子来说明，有两个表，tbl_A,tbl_B，两个表中都有keyCol列。现在我们对两个表进行比较，tbl_A中的keyCol列的数据如果在tbl_B的keyCol列的数据中可以找到，返回结果’Matched’,如果没有找到，返回结果’Unmatched’。</p>
+<p>要实现下面这个功能，可以使用下面两条语句</p>
+<p>–使用IN的时候</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> keyCol,</span><br><span class="line"><span class="keyword">CASE</span> <span class="keyword">WHEN</span> keyCol <span class="keyword">IN</span> ( <span class="keyword">SELECT</span> keyCol <span class="keyword">FROM</span> tbl_B )</span><br><span class="line"><span class="keyword">THEN</span> <span class="string">'Matched'</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">'Unmatched'</span> <span class="keyword">END</span> Label</span><br><span class="line"><span class="keyword">FROM</span> tbl_A;</span><br></pre></td></tr></table></figure>
+<p>–使用EXISTS的时候</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> keyCol,</span><br><span class="line"><span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">EXISTS</span> ( <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_B</span><br><span class="line"><span class="keyword">WHERE</span> tbl\_A.keyCol = tbl\_B.keyCol )</span><br><span class="line"><span class="keyword">THEN</span> <span class="string">'Matched'</span></span><br><span class="line"><span class="keyword">ELSE</span> <span class="string">'Unmatched'</span> <span class="keyword">END</span> Label</span><br><span class="line"><span class="keyword">FROM</span> tbl_A;</span><br></pre></td></tr></table></figure>
+<p>使用IN和EXISTS的结果是相同的。也可以使用NOT IN和NOT EXISTS，但是这个时候要注意NULL的情况。</p>
+<p>六，在Case函数中使用合计函数</p>
+<p>假设有下面一个表</p>
+<p>学号(std_id) 课程ID(class_id) 课程名(class_name) 主修flag（main_class_flg)</p>
+<p>100 1 经济学Y</p>
+<p>100 2 历史学N</p>
+<p>200 2 历史学N</p>
+<p>200 3 考古学Y</p>
+<p>200 4 计算机N</p>
+<p>300 4 计算机N</p>
+<p>400 5 化学N</p>
+<p>500 6 数学N</p>
+<p>有的学生选择了同时修几门课程(100,200)也有的学生只选择了一门课程(300,400,500)。选修多门课程的学生，要选择一门课程作为主修，主修flag里面写入Y。只选择一门课程的学生，主修flag为N(实际上要是写入Y的话，就没有下面的麻烦事了，为了举例子，还请多多包含)。</p>
+<p>现在我们要按照下面两个条件对这个表进行查询</p>
+<p>只选修一门课程的人，返回那门课程的ID</p>
+<p>选修多门课程的人，返回所选的主课程ID</p>
+<p>简单的想法就是，执行两条不同的SQL语句进行查询。</p>
+<p>条件</p>
+<p>–条件：只选择了一门课程的学生</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> std_id, <span class="keyword">MAX</span>(class_id) <span class="keyword">AS</span> main_class</span><br><span class="line"><span class="keyword">FROM</span> Studentclass</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> std_id</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(*) = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<p>STD_ID   MAIN_class</p>
+<hr>
+<p>300      4</p>
+<p>400      5</p>
+<p>500      6</p>
+<p>条件</p>
+<p>–条件：选择多门课程的学生</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> std_id, class_id <span class="keyword">AS</span> main_class</span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> Studentclass</span><br><span class="line"></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">main</span>\_class\_flg = <span class="string">'Y'</span> ;</span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<p>STD_ID  MAIN_class</p>
+<hr>
+<p>100     1<br>200     3</p>
+<p>如果使用Case函数，我们只要一条SQL语句就可以解决问题，具体如下所示</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  std_id,</span><br><span class="line"><span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">COUNT</span>(*) = <span class="number">1</span>  <span class="comment">--只选择一门课程的学生的情况</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">MAX</span>(class_id)</span><br><span class="line"><span class="keyword">ELSE</span> <span class="keyword">MAX</span>(<span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="keyword">main</span>\_class\_flg = <span class="string">'Y'</span></span><br><span class="line"><span class="keyword">THEN</span> class_id</span><br><span class="line"><span class="keyword">ELSE</span> <span class="literal">NULL</span> <span class="keyword">END</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">AS</span> main_class</span><br><span class="line"><span class="keyword">FROM</span> Studentclass</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> std_id;</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p>STD_ID   MAIN_class</p>
+<hr>
+<p>100      1<br>200      3<br>300      4<br>400      5<br>500      6</p>
+<p>通过在Case函数中嵌套Case函数，在合计函数中使用Case函数等方法，我们可以轻松的解决这个问题。使用Case函数给我们带来了更大的自由度。</p>
+<p>最后提醒一下使用Case函数的新手注意不要犯下面的错误</p>
+<p>CASE col_1<br>WHEN 1    　  THEN ‘Right’<br>WHEN NULL  THEN ‘Wrong’<br>END</p>
+<p>在这个语句中When Null这一行总是返回unknown，所以永远不会出现Wrong的情况。因为这句可以替换成WHEN col_1 = NULL，这是一个错误的用法，这个时候我们应该选择用WHEN col_1 IS NULL。  </p>
+<p>行转列（case when用法）</p>
+<p>数据库原来的数据修改后的数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span>  ball <span class="keyword">as</span> <span class="string">"球"</span>,<span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">type</span> <span class="keyword">when</span> <span class="string">'红'</span> <span class="keyword">then</span> <span class="keyword">num</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">'红'</span>,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span>  <span class="keyword">type</span> <span class="keyword">when</span> <span class="string">'蓝'</span> <span class="keyword">then</span> <span class="keyword">num</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">'蓝'</span>,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span>  <span class="keyword">type</span> <span class="keyword">when</span> <span class="string">'绿'</span> <span class="keyword">then</span> <span class="keyword">num</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) <span class="keyword">as</span> <span class="string">'绿'</span></span><br><span class="line"><span class="keyword">from</span> T_ball <span class="keyword">group</span> <span class="keyword">by</span> ball;</span><br></pre></td></tr></table></figure>
+<h2 id="范围分组查询（group-by-case）"><a href="#范围分组查询（group-by-case）" class="headerlink" title="范围分组查询（group by, case）"></a>范围分组查询（group by, case）</h2><p>需求：查询在指定年龄段的人数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">case</span> <span class="keyword">when</span> age&gt;<span class="number">1</span> <span class="keyword">and</span> age &lt;<span class="number">26</span>  <span class="keyword">then</span> <span class="number">1</span></span><br><span class="line"> <span class="keyword">when</span> age&gt;<span class="number">25</span> <span class="keyword">and</span> age &lt;<span class="number">27</span> <span class="keyword">then</span> <span class="number">2</span></span><br><span class="line"> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span> <span class="keyword">as</span> stage ,<span class="keyword">count</span>(*) <span class="keyword">as</span> population <span class="keyword">from</span> student</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="keyword">case</span> <span class="keyword">when</span> age&gt;<span class="number">1</span> <span class="keyword">and</span> age &lt;<span class="number">26</span>  <span class="keyword">then</span> <span class="number">1</span></span><br><span class="line"> <span class="keyword">when</span> age&gt;<span class="number">25</span> <span class="keyword">and</span> age &lt;<span class="number">27</span> <span class="keyword">then</span> <span class="number">2</span></span><br><span class="line"> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<p>stage   population<br>1        1             2<br>2        2             5</p>
+<p>可通过stage的值区分该条记录是属于哪个年龄段</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlServer/" rel="tag">sqlServer</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%B8%89%E5%A4%A7%E7%BB%93%E6%9E%84/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据结构-三大结构
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/04/sqlServer-%E6%9F%A5%E8%AF%A2%E5%BC%80%E9%94%80/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">sqlServer-查询开销</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

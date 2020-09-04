@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c++-容易被忽略的编程细节 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c++-容易被忽略的编程细节"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c++-容易被忽略的编程细节
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/12/c++-%E5%AE%B9%E6%98%93%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E7%BC%96%E7%A8%8B%E7%BB%86%E8%8A%82/" class="article-date">
+  <time datetime="2015-12-01T01:30:44.000Z" itemprop="datePublished">2015-12-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>罗列了一些容易被忽略的C++编程细节，在阅读ROS源代码时时常会遇到，理解它们的作用内涵，有助于对源代码的深入理解。</p>
+<h3 id="1-变量的隐式初始化形式"><a href="#1-变量的隐式初始化形式" class="headerlink" title="1.变量的隐式初始化形式"></a>1.变量的隐式初始化形式</h3><p>一般来说，声明一个变量，然后显示地对其初始化，形式如下：</p>
+<pre><code>int ival = 1024;
+string project = &quot;Fantasia 2000&quot;;</code></pre><p>下面是不太常用的变量初始化的隐式形式，变量的初始值被放在括号中：</p>
+<pre><code>int ival( 1024 );
+string project( &quot;Fantasia 2001&quot; )</code></pre><p>该方法产生的效果与上面显示的赋值是一样的。 另外，每种内置数据类型都支持一种特殊的构造函数语法，可将对象初始化为0。 例如</p>
+<pre><code>// 设置 ival 为 0 dval 为 0.0
+int ival = int();
+double dval = double();</code></pre><h3 id="2-静态局部变量（static）"><a href="#2-静态局部变量（static）" class="headerlink" title="2.静态局部变量（static）"></a>2.静态局部变量（static）</h3><p>声明变量的时候，在变量前增加static关键字，即声明了静态局部变量。 静态局部变量属于静态存储方式，它具有以下特点： (1)静态局部变量在函数内定义，但不像自动变量那样，当调用时就存在，退出函数时就消失。静态局部变量始终存在着，也就是说它的生存期为整个源程序。 (2)静态局部变量的生存期虽然为整个源程序，但是其作用域仍与自动变量相同，即只能在定义该变量的函数内使用该变量。退出该函数后， 尽管该变量还继续存在，但不能使用它。 (3)允许对构造类静态局部量赋初值。若未赋以初值，则由系统自动赋值。数值型变量自动赋初值0，字符型变量赋空字符。 (4)对基本类型的静态局部变量若在说明时未赋以初值，则系统自动赋予0值。而对自动变量不赋初值，则其值是不定的。 根据静态局部变量的特点， 可以看出它是一种生存期为整个源文件的量。虽然离开定义它的函数后不能使用，但如再次调用定义它的函数时，它又可继续使用， 而且保存了前次被调用后留下的值。 因此，当多次调用一个函数且要求在调用之间保留某些变量的值时，可考虑采用静态局部变量。虽然用全局变量也可以达到上述目的，但全局变量有时会造成意外的副作用，因此仍以采用局部静态变量为宜。 给读者一个简单直白的例子（区别静态局部变量和动态局部变量）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> f=<span class="number">1</span>;</span><br><span class="line">    f=f*n;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=<span class="number">5</span>;i++)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"fun(%d)=%d\n"</span>,i,fun(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的运行结果是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fun(<span class="number">1</span>)=<span class="number">1</span></span><br><span class="line">fun(<span class="number">2</span>)=<span class="number">2</span></span><br><span class="line">fun(<span class="number">3</span>)=<span class="number">6</span></span><br><span class="line">fun(<span class="number">4</span>)=<span class="number">24</span></span><br><span class="line">fun(<span class="number">5</span>)=<span class="number">120</span></span><br></pre></td></tr></table></figure>
+<p>说明f在加了static的类型限制之后，就相当于全局变量，函数调用完了之后，修改过的f的值仍然是有效的（即这个程序相当于求i的阶乘了）。而如果不加static的类型限制，那么，会是什么结果呢，我们看下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f=<span class="number">1</span>;</span><br><span class="line">    f = f * n;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=<span class="number">5</span>;i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"fun(%d)=%d\n"</span>,i,fun(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序的运行结果是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fun(<span class="number">1</span>)=<span class="number">1</span></span><br><span class="line">fun(<span class="number">2</span>)=<span class="number">2</span></span><br><span class="line">fun(<span class="number">3</span>)=<span class="number">3</span></span><br><span class="line">fun(<span class="number">4</span>)=<span class="number">4</span></span><br><span class="line">fun(<span class="number">5</span>)=<span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>也就是说，这时函数fun中的变量f的生命周期就仅限于fun函数的范围内了，在main中每次传入新的参数i，f就会计算1*i的值并返回，而不会像之前那样不断的累乘了。</p>
+<h3 id="3-const常量"><a href="#3-const常量" class="headerlink" title="3.const常量"></a>3.const常量</h3><p>const修饰的数据类型是指常类型，常类型的变量或对象的值是不能被更新的。 const关键字的作用主要有以下几点： （1）可以定义const常量，具有不可变性。 例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Max=<span class="number">100</span>; <span class="keyword">int</span> Array[Max];</span><br></pre></td></tr></table></figure>
+<p>（2）便于进行类型检查，使编译器对处理内容有更多了解，消除了一些隐患。例如： void f(const int i) { ………} 编译器就会知道i是一个常量，不允许修改； （3）可以避免意义模糊的数字出现，同样可以很方便地进行参数的调整和修改。 （4）可以保护被修饰的东西，防止意外的修改，增强程序的健壮性。 还是上面的例子，如果在函数体内修改了i，编译器就会报错； 例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> i)</span> </span>&#123; i=<span class="number">10</span>;<span class="comment">//error! &#125;</span></span><br></pre></td></tr></table></figure>
+<p>（5） 为函数重载提供了一个参考。 class A { …… void f(int i) {……} //一个函数 void f(int i) const {……} //上一个函数的重载 …… }; （6） 可以节省空间，避免不必要的内存分配。 例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.14159 <span class="comment">//常量宏</span></span></span><br><span class="line"><span class="keyword">const</span> doulbe Pi=<span class="number">3.14159</span>; <span class="comment">//此时并未将Pi放入ROM中 ......</span></span><br><span class="line"><span class="keyword">double</span> i=Pi; <span class="comment">//此时为Pi分配内存，以后不再分配！</span></span><br><span class="line"><span class="keyword">double</span> I=PI; <span class="comment">//编译期间进行宏替换，分配内存</span></span><br><span class="line"><span class="keyword">double</span> j=Pi; <span class="comment">//没有内存分配</span></span><br><span class="line"><span class="keyword">double</span> J=PI; <span class="comment">//再进行宏替换，又一次分配内存！</span></span><br></pre></td></tr></table></figure>
+<p>const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是象#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干个拷贝。 （7） 提高了效率。 编译器通常不为普通const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。</p>
+<h3 id="4-内联函数inline"><a href="#4-内联函数inline" class="headerlink" title="4.内联函数inline"></a>4.内联函数inline</h3><p>内联函数是指用inline关键字修饰的函数。在类内定义的函数被默认成内联函数。内联函数从源代码层看，有函数的结构，而在编译后，却不具备函数的性质。 内联函数不是在调用时发生控制转移，而是在编译时将函数体嵌入在每一个调用处。编译时，类似宏替换，使用函数体替换调用处的函数名。一般在代码中用inline修饰，但是能否形成内联函数，需要看编译器对该函数定义的具体处理。 内联扩展是用来消除函数调用时的时间开销。它通常用于频繁执行的函数，对于小内存空间的函数非常受益。</p>
+<h3 id="5-union型变量"><a href="#5-union型变量" class="headerlink" title="5.union型变量"></a>5.union型变量</h3><p>union，共用体，也叫联合体，在一个“联合”内可以定义多种不同的数据类型， 一个被说明为该“联合”类型的变量中，允许装入该“联合”所定义的任何一种数据，这些数据共享同一段内存，以达到节省空间的目的。union变量所占用的内存长度等于最长的成员的内存长度。 union与struct有几分类似，我们通过对比来说明union的特性。 先看一个关于struct的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">     <span class="keyword">char</span> mark;</span><br><span class="line">     <span class="keyword">long</span> num;</span><br><span class="line">     <span class="keyword">float</span> score;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>sizeof(struct student)的值为12bytes，即mark、num和score三个变量所占空间之和。 下面是关于union的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> test</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">char</span> mark;</span><br><span class="line">     <span class="keyword">long</span> num;</span><br><span class="line">     <span class="keyword">float</span> score;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>sizeof(union test)的值为4。因为共用体将一个char类型的mark、一个long类型的num变量和一个float类型的score变量存放在同一个地址开始的内存单元中，而char类型和long类型所占的内存字节数是不一样的，但是在union中都是从同一个地址存放的，也就是使用的覆盖技术，这三个变量互相覆盖，而这种使几个不同的变量共占同一段内存的结构，称为“共用体”类型的结构。 因union中的所有成员起始地址都是一样的，所以&amp;a.mark、&amp;a.num和&amp;a.score的值都是一样的。</p>
+<h3 id="6-虚函数-virtual-function"><a href="#6-虚函数-virtual-function" class="headerlink" title="6.虚函数(virtual function)"></a>6.虚函数(virtual function)</h3><p>在面向对象编程中，虚函数是一种可继承的、可重载的函数。虚函数概念的提出是为了解决以下问题： 在面向对象程序设计中，C++通过虚函数实现多态.”无论发送消息的对象属于什么类，它们均发送具有同一形式的消息，对消息的处理方式可能随接手消息的对象而变”的处理方式被称为多态性。而虚函数是通过Virtual关键字来限定的。 关于虚函数，我们知道在类Base中加了Virtual关键字的函数就是虚拟函数（例如函数print），于是在Base的派生类Derived中就可以通过重写虚拟函数来实现对基类虚拟函数的覆盖。当基类Base的指针point指向派生类Derived的对象时，对point的print函数的调用实际上是调用了Derived的print函数而不是Base的print函数。这是面向对象中的多态性的体现。（关于虚拟机制是如何实现的，参见Inside the C++ Object Model ，Addison Wesley 1996） 例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>  </span></span><br><span class="line"><span class="class">&#123;</span>  </span><br><span class="line"><span class="keyword">public</span>:Base()&#123;&#125;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"Base"</span>;&#125;  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span>:</span><span class="keyword">public</span> Base  </span><br><span class="line">&#123;  </span><br><span class="line"><span class="keyword">public</span>:Derived()&#123;&#125;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"Derived"</span>;&#125;  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">Base *<span class="built_in">point</span>=<span class="keyword">new</span> Derived();  </span><br><span class="line"><span class="built_in">point</span>-&gt;<span class="built_in">print</span>();  </span><br><span class="line">&#125;   </span><br><span class="line"><span class="comment">//---------------------------------------------------------  </span></span><br><span class="line">Output：  </span><br><span class="line">Derived</span><br></pre></td></tr></table></figure>
+<p>这也许会使人联想到函数的重载，但稍加对比就会发现两者是完全不同的： （1） 重载的几个函数必须在同一个类中； 覆盖的函数必须在有继承关系的不同的类中 （2） 覆盖的几个函数必须函数名、参数、返回值都相同； 重载的函数必须函数名相同，参数不同。参数不同的目的就是为了在函数调用的时候编译器能够通过参数来判断程序是在调用的哪个函数。这也就很自然地解释了为什么函数不能通过返回值不同来重载，因为程序在调用函数时很有可能不关心返回值，编译器就无法从代码中看出程序在调用的是哪个函数了。 （3） 覆盖的函数前必须加关键字Virtual； 重载和Virtual没有任何瓜葛，加不加都不影响重载的运作。 那么，使用虚函数的意义何在？请看下面的例子，这个例子中WindowB和WindowC不同时存在，这在实际应用中是常有的情况，为了节省内存。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowA</span>  </span></span><br><span class="line"><span class="class">&#123;</span>  </span><br><span class="line"><span class="keyword">public</span>:   </span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Draw</span><span class="params">()</span></span>&#123;&#125;;  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowB</span>:</span><span class="keyword">public</span> WindowA  </span><br><span class="line">&#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">WindowB()&#123;&#125;;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Draw</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowC</span>:</span><span class="keyword">public</span> WindowA  </span><br><span class="line">&#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">WindowC()&#123;&#125;;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Draw</span><span class="params">()</span></span>;  </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">WindowB::Draw</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">画一个圆；  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">WindowC::Draw</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">画一个正方形；  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当在定义WindowA时，不确定它的派生类WindowB和WindowC在Draw函数中要画什么，这时把Draw定义成C++虚函数，在派生类中具体实现。 说到这，读者会问：那我把Draw在WindowB和WindowC中写好，还会少写一个类WindowA。 是的，是少写了，如你所说，你会如此使用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">WindowB* b = <span class="keyword">new</span> WindowB;  </span><br><span class="line">b-&gt;Draw(); <span class="comment">//画个圆  </span></span><br><span class="line"><span class="keyword">delete</span> b;  </span><br><span class="line">WindowC* c = <span class="keyword">new</span> WindowC;  </span><br><span class="line">c-&gt;Draw(); <span class="comment">//画个正方形  </span></span><br><span class="line"><span class="keyword">delete</span> c;</span><br></pre></td></tr></table></figure>
+<p>我这里用指针实现，在上面的代码中，b和c是两个独立的对象的指针。但如果派生类不是一两个，而是几十个，几百个，那你该怎么办呢？在头文件中定义几百个变量？ 非也,到时候用C++虚函数的作用了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">WindowA* a = <span class="keyword">new</span> WindowsB;  </span><br><span class="line">a-&gt;Draw(); <span class="comment">//画个圆，此处调用了WindowB中的Draw函数实现  </span></span><br><span class="line"><span class="keyword">if</span>（a）  </span><br><span class="line"><span class="keyword">delete</span> a; <span class="comment">//new 出来的一定要delete  </span></span><br><span class="line">WindowA* a=<span class="keyword">new</span> WindowC;  </span><br><span class="line">a-&gt;Draw(); <span class="comment">//画个正方形，此处调用了WindowC中的Draw函数实现  </span></span><br><span class="line"><span class="keyword">if</span>（a）  </span><br><span class="line"><span class="keyword">delete</span> a;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，a实现了一个中转变量的作用，只要是从WindowA派生的，我都能赋值给a，而b和c都是临时变量。再来多少个WindowA的派生类都没问题了，我只要在头文件中定义一个WindowA的指针变量就行了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/12/c++-STL%20stack%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c++-STL stack介绍与使用方法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/11/c++-%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E5%B8%83/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c++-进程内存的分布</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

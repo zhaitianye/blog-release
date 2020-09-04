@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    ES6-字符串的扩展 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ES6-字符串的扩展"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ES6-字符串的扩展
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/07/ES6-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95/" class="article-date">
+  <time datetime="2018-07-20T11:19:59.000Z" itemprop="datePublished">2018-07-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ES/">ES</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1、对Unicode-的支持：codePointAt-、fromCodePoint"><a href="#1、对Unicode-的支持：codePointAt-、fromCodePoint" class="headerlink" title="1、对Unicode 的支持：codePointAt()、fromCodePoint()"></a>1、对Unicode 的支持：codePointAt()、fromCodePoint()</h4><p>在ES5中，我们经常使用charAt() 来表示字符存储位置，用charCodeAt() 来表示对应位置字符Unicode 的编码。在JavaScript 内部，字符以UTF-16 的形式存储，每个字符固定为2个字节，对于那些需要4个字节存储的字符并不支持。因此，ES6使用 codePointAt() 方法来支持存储4字节的字符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var s &#x3D; &#39;猿&#39;;</span><br><span class="line">console.log(s.codePointAt(0)); &#x2F;&#x2F; 29503</span><br></pre></td></tr></table></figure>
+
+<p>在 ES5 中，从码点返回对应的字符的方法是 fromCharCode()，这个并不能返回字符为32位的utf-16 的字符。ES6 中使用 String.fromCodePoint() 代替：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(String.fromCodePoint(29503)); &#x2F;&#x2F; 猿</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、字符串的遍历接口：-for-of…"><a href="#2、字符串的遍历接口：-for-of…" class="headerlink" title="2、字符串的遍历接口： for..of…"></a>2、字符串的遍历接口： for..of…</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(let str of &#39;yuan&#39;) &#123;</span><br><span class="line">   console.log(str);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; y</span><br><span class="line">&#x2F;&#x2F; u</span><br><span class="line">&#x2F;&#x2F; a</span><br><span class="line">&#x2F;&#x2F; n</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、判断字符串是否包含在另一个字符串中"><a href="#3、判断字符串是否包含在另一个字符串中" class="headerlink" title="3、判断字符串是否包含在另一个字符串中"></a>3、判断字符串是否包含在另一个字符串中</h4><p>在ES5 中使用的是 indexOf() 方法，在ES6中可以使用includes()、startsWith()、endsWith()三个方法。 includes(): 返回布尔值，表示是否找到了参数字符串。 startsWith()：返回布尔值，参数是否在源字符串的头部。 endsWith()： 返回布尔值，参数是否在源字符串的尾部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var str &#x3D; &quot;yuan is an animal&quot;;</span><br><span class="line">str.startsWith(&quot;is&quot;); &#x2F;&#x2F; false</span><br><span class="line">str.endsWith(&quot; animal&quot;); &#x2F;&#x2F; true</span><br><span class="line">str.includes(&quot;an&quot;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
+
+<p>接受第二个参数，可选的，表示开始搜索的位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var str &#x3D; &quot;yuan is an animal&quot;;</span><br><span class="line">str.startsWith(&quot;a&quot;, 1); &#x2F;&#x2F; false</span><br><span class="line">str.endsWith(&quot;an&quot;, 3); &#x2F;&#x2F; false</span><br><span class="line">str.includes(&quot;w&quot;, 4); &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure>
+
+<p>使用第二个参数n时，endsWith() 指的是针对前n 个字符，二其它两个方法是指开始位置的字符到结束位置的字符。</p>
+<h4 id="4、字符串重复复制：repeat"><a href="#4、字符串重复复制：repeat" class="headerlink" title="4、字符串重复复制：repeat();"></a>4、字符串重复复制：repeat();</h4><p>repeat() 方法返回一个新字符串，表示将院字符串重复n 次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#39;o&#39;.repeat(3); &#x2F;&#x2F; &#39;ooo&#39;</span><br><span class="line">&#39;ha&#39;.repeat(2); &#x2F;&#x2F; &#39;haha&#39;</span><br><span class="line">&#39;yuan&#39;.repeat(0); &#39;&#39;</span><br></pre></td></tr></table></figure>
+
+<p>注意：当repeat() 方法里的参数为小数时，会自动取整；为负数或者Infinity 时会报错；参数接近为0时，参数为0；参数为NaN、字符串时会先转化为Number 再进行转化。</p>
+<h4 id="5、字符串补全：padStart-、padEnd"><a href="#5、字符串补全：padStart-、padEnd" class="headerlink" title="5、字符串补全：padStart()、padEnd()"></a>5、字符串补全：padStart()、padEnd()</h4><p>表达式：str.padEnd(targetLength [, padString]) 第一个参数targetLength 表示指定字符串的长度，第二个参数padString（可选）表示用来补全的字符串。 其它注意事项参照： padStart()：用于头部补全。 padEnd()：用于尾部补全。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#39;s&#39;.padStart(4, &#39;ab&#39;); &#x2F;&#x2F; &#39;abas&#39;</span><br><span class="line">&#39;s&#39;.padEnd(7, &#39;dd2&#39;); &#x2F;&#x2F; &#39;7dd2dd2&#39;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6、模板字符串"><a href="#6、模板字符串" class="headerlink" title="6、模板字符串"></a>6、模板字符串</h4><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#96;string text&#96;</span><br><span class="line"></span><br><span class="line">&#96;string text line 1</span><br><span class="line"> string text line 2&#96;</span><br><span class="line"></span><br><span class="line">&#96;string text $&#123;expression&#125; string text&#96;</span><br><span class="line"></span><br><span class="line">tag &#96;string text $&#123;expression&#125; string text&#96;</span><br></pre></td></tr></table></figure>
+
+<p>模板字符串使用反引号（）来代替普通字符串的单引号和双引号。模板字符串可以包含特定语法（${expression}）的占位符。占位符中的表达式和周围的文本会一起传递给一个默认的函数，该函数负责将所有的部分连接起来，如果模板字符串由表达式开头，则该字符串被称为带标签的模板字符串，该表达式通常是一个函数，它会在模板字符串处理后被调用，在输出最终结果前，你都可以通过该函数来对模板字符串进行操作处理，在模板字符中使用反引号（`）时，需要在它前面加上转义符（）。 多行字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">console.log(&#96;string text line 1</span><br><span class="line">string text line 2&#96;)</span><br><span class="line">&#x2F;&#x2F; string text line 1</span><br><span class="line">&#x2F;&#x2F; string text line 2</span><br></pre></td></tr></table></figure>
+
+<p>表达式插补</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a &#x3D; 2;</span><br><span class="line">var b &#x3D; 4;</span><br><span class="line">console.log(&#96;$&#123;a + b&#125; is six&#96;) &#x2F;&#x2F; 6 is six</span><br></pre></td></tr></table></figure>
+
+<h4 id="带标签的模板字符串"><a href="#带标签的模板字符串" class="headerlink" title="带标签的模板字符串"></a>带标签的模板字符串</h4><p>更高级的形式模板字面值被标记模板文本。标记使您可以分析模板文本功能。标记功能的第一个参数包含一个字符串值的数组。其余参数时相关的表达式。最后，你的函数可以返回处理好的字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var person &#x3D; &#39;Mike&#39;;</span><br><span class="line">var age &#x3D; 28;</span><br><span class="line">function tagFunc(strings, personExp, ageExp) &#123;</span><br><span class="line"></span><br><span class="line">  var str0 &#x3D; strings[0]; &#x2F;&#x2F; &quot;that &quot;</span><br><span class="line">  var str1 &#x3D; strings[1]; &#x2F;&#x2F; &quot; is a &quot;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 在技术上,有一个字符串在</span><br><span class="line">  &#x2F;&#x2F; 最终的表达式 (在我们的例子中)的后面,</span><br><span class="line">  &#x2F;&#x2F; 但它是空的(&quot;&quot;), 所以被忽略.</span><br><span class="line">  &#x2F;&#x2F; var str2 &#x3D; strings[2];</span><br><span class="line"></span><br><span class="line">  var ageStr;</span><br><span class="line">  if (ageExp &gt; 60)&#123;</span><br><span class="line">    ageStr &#x3D; &#39;old person&#39;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    ageStr &#x3D; &#39;young person&#39;;</span><br><span class="line">  &#125;</span><br><span class="line">  return str0 + personExp + str1 + ageStr;</span><br><span class="line">&#125;</span><br><span class="line">var output &#x3D; myTag&#96;that $&#123; person &#125; is a $&#123; age &#125;&#96;;</span><br><span class="line">console.log(output);    &#x2F;&#x2F; that Mike is a young person</span><br></pre></td></tr></table></figure>
+
+<h4 id="rest-参数的写法"><a href="#rest-参数的写法" class="headerlink" title="rest 参数的写法"></a>rest 参数的写法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let name &#x3D; &#39;张三&#39;,</span><br><span class="line">    age &#x3D; 20,</span><br><span class="line">    message &#x3D; show&#96;我来给大家介绍:$&#123;name&#125;的年龄是$&#123;age&#125;.&#96;;</span><br><span class="line"></span><br><span class="line">function show(stringArr,...values)&#123;</span><br><span class="line">  let output &#x3D;&quot;&quot;;</span><br><span class="line">  let index &#x3D; 0</span><br><span class="line">  for(;index&lt;values.length;index++)&#123;</span><br><span class="line">        output +&#x3D; stringArr [index]+values[index];</span><br><span class="line">    &#125;</span><br><span class="line">    output +&#x3D; stringArr [index];</span><br><span class="line">    return output;</span><br><span class="line">&#125;</span><br><span class="line">message;       &#x2F;&#x2F;&quot;我来给大家介绍:张三的年龄是20.&quot;</span><br></pre></td></tr></table></figure>
+
+<p>标签函数并不一定需要返回一个字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function template(strings, ...keys) &#123;</span><br><span class="line">  return (function(...values) &#123;</span><br><span class="line">    var dict &#x3D; values[values.length - 1] || &#123;&#125;;</span><br><span class="line">    var result &#x3D; [strings[0]];</span><br><span class="line">    keys.forEach(function(key, i) &#123;</span><br><span class="line">      var value &#x3D; Number.isInteger(key) ? values[key] : dict[key];</span><br><span class="line">      result.push(value, strings[i + 1]);</span><br><span class="line">    &#125;);</span><br><span class="line">    return result.join(&#39;&#39;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var t1Closure &#x3D; template&#96;$&#123;0&#125;$&#123;1&#125;$&#123;0&#125;!&#96;;</span><br><span class="line">t1Closure(&#39;Y&#39;, &#39;A&#39;);  &#x2F;&#x2F; &quot;YAY!&quot; </span><br><span class="line">var t2Closure &#x3D; template&#96;$&#123;0&#125; $&#123;&#39;foo&#39;&#125;!&#96;;</span><br><span class="line">t2Closure(&#39;Hello&#39;, &#123;foo: &#39;World&#39;&#125;);  &#x2F;&#x2F; &quot;Hello World!&quot;</span><br></pre></td></tr></table></figure>
+
+<p>原始字符串 在标签函数的第一个参数中，存在一个特殊的属性raw，我们可以通过它来访问模板字符串的原始字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function tag(strings, ...values) &#123;</span><br><span class="line">  console.log(strings.raw[0]);</span><br><span class="line">&#125;</span><br><span class="line">tag&#96;strings text line 1 n string text line 2&#96;;</span><br><span class="line">&#x2F;&#x2F; strings text line 1 n string text line 2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">此外，使用String.raw()方法创建原始字符串和使用默认的模板函数和字符串连接创建时一样的。</span><br><span class="line"></span><br><span class="line">String.raw&#96;hellon$&#123;44+44&#125;!&#96;</span><br><span class="line">&#x2F;&#x2F; &quot;hellon88!&quot;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES/" rel="tag">ES</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2018/08/Express-%E7%9B%B8%E5%85%B3%E6%9D%82%E9%A1%B9%E6%96%B9%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Express-相关杂项方法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/07/NodeJs-assert%E6%96%AD%E8%A8%80%E6%A8%A1%E5%9D%97/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">NodeJs-assert断言模块</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

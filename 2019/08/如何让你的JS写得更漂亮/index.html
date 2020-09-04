@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    如何让你的JS写得更漂亮 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-如何让你的JS写得更漂亮"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  如何让你的JS写得更漂亮
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/08/%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%A0%E7%9A%84JS%E5%86%99%E5%BE%97%E6%9B%B4%E6%BC%82%E4%BA%AE/" class="article-date">
+  <time datetime="2019-08-14T03:35:20.000Z" itemprop="datePublished">2019-08-14</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">12 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ol>
+<li><p>按强类型风格写代码 JS是弱类型的，但是写代码的时候不能太随意，写得太随意也体现了编码风格不好。下面分点说明： （1）定义变量的时候要指明类型，告诉JS解释器这个变量是什么数据类型的，而不要让解释器去猜，例如不好的写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num,</span><br><span class="line">   str,</span><br><span class="line">   obj;</span><br></pre></td></tr></table></figure>
+<p>声明了三个变量，但其实没什么用，因为解释器不知道它们是什么类型的，好的写法应该是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>,</span><br><span class="line">   str = <span class="string">''</span>,</span><br><span class="line">   obj = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>定义变量的时候就给他一个默认值，这样不仅方便了解释器，也方便了阅读代码的人，他会在心里有数——知道这些变量可能会当作什么用。 （2）不要随意地改变变量的类型，例如下面代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">5</span>;</span><br><span class="line">num = <span class="string">"-"</span> + num;</span><br></pre></td></tr></table></figure>
+<p>第1行它是一个整型，第2行它变成了一个字符串。因为JS最终都会被解释成汇编的语言，汇编语言变量的类型肯定是要确定的，你把一个整型的改成了字符串，那解释器就得做一些额外的处理。并且这种编码风格是不提倡的，有一个变量第1行是一个整型，第10行变成了一个字符串，第20行又变成了一个object，这样就让阅读代码的人比较困惑，上面明明是一个整数，怎么突然又变成一个字符串了。好的写法应该是再定义一个字符串的变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> sign = <span class="string">"-"</span> + num;</span><br></pre></td></tr></table></figure>
+<p>（3）函数的返回类型应该是要确定的，例如下面不确定的写法： function getPrice(count){ if(count &lt; 0) return “”; else return count * 100; } getPrice这个函数有可能返回一个整数，也有可能返回一个空的字符串。这样写也不太好，虽然它是符合JS语法的，但这种编码风格是不好的。使用你这个函数的人会有点无所适从，不敢直接进行加减乘除，因为如果返回字符串进行运算的话值就是NaN了。函数的返回类型应该是要确定的，如下面是返回整型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(count &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">return</span> count * <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后告诉使用者，如果返回-1就表示不合法。如果类型确定，解释器也不用去做一些额外的工作，可以加快运行速度。 </p>
+</li>
+<li><p>减少作用域查找 （1）不要让代码暴露在全局作用域下 例如以下运行在全局作用域的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">   var map &#x3D; document.querySelector(&quot;#my-map&quot;);</span><br><span class="line">   map.style.height &#x3D; &quot;600px&quot;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<p>有时候你需要在页面直接写一个script，要注意在一个script标签里面，代码的上下文都是全局作用域的，由于全局作用域比较复杂，查找比较慢。例如上面的map变量，第二行在使用的时候，需要在全局作用域查找一下这个变量，假设map是在一个循环里面使用，那可能就会有效率问题了。所以应该要把它搞成一个局部的作用域：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">!function()&#123;</span><br><span class="line">   var map &#x3D; document.querySelector(&quot;#my-map&quot;);</span><br><span class="line">   map.style.height &#x3D; &quot;600px&quot;;</span><br><span class="line">&#125;()</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<p>上面用了一个function制造一个局部作用域，也可以用ES6的块级作用域。由于map这个变量直接在当前的局部作用域命中了，所以就不用再往上一级的作用域（这里是全局作用域）查找了，而局部作用域的查找是很快的。同时直接在全局作用域定义变量，会污染window对象。 （2）不要滥用闭包 闭包的作用在于可以让子级作用域使用它父级作用域的变量，同时这些变量在不同的闭包是不可见的。这样就导致了在查找某个变量的时候，如果当前作用域找不到，就得往它的父级作用域查找，一级一级地往上直到找到了，或者到了全局作用域还没找到。因此如果闭包嵌套得越深，那么变量查找的时间就越长。如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getResult</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">   count++;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> factor = <span class="number">2</span>;</span><br><span class="line">       <span class="keyword">return</span> count * factor - <span class="number">5</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> process();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码定义了一个process函数，在这个函数里面count变量的查找时间要高于局部的factor变量。其实这里不太适合用闭包，可以直接把count传给process：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getResult</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">   count++;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">process</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> factor = <span class="number">2</span>;</span><br><span class="line">       <span class="keyword">return</span> count * factor - <span class="number">5</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> process(count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样count的查找时间就和factor一样，都是在当前作用域直接命中。这个就启示我们如果某个全局变量需要频繁地被使用的时候，可以用一个局部变量缓存一下，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.location.protocal === <span class="string">"https:"</span>)&#123;</span><br><span class="line">   url = <span class="string">"wss://xxx.com"</span> + <span class="built_in">window</span>.location.pathname + <span class="built_in">window</span>.location.search;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>频繁地使用了window.location对象，所以可以先把它缓存一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">var</span> location = <span class="built_in">window</span>.location;</span><br><span class="line"><span class="keyword">if</span>(location.protocal === <span class="string">"https:"</span>)&#123;</span><br><span class="line">   url = <span class="string">"wss://xxx.com"</span> + location.pathname + location.search;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搞成了一个局变变量，这样查找就会明显快于全局的查找，代码也可以写少一点。 </p>
+</li>
+<li><p>避免==的使用 这里你可能会有疑问了，有些人喜欢用==，有些人喜欢用===，大家的风格不一样，你为什么要强制别人用===呢？习惯用==的人，不能仅仅是因为==比===少敲了一次键盘。为什么不提倡用==呢？ （1）如果你确定了变量的类型，那么就没必要使用==了，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> num != <span class="string">"undefined"</span>)&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> num = <span class="built_in">parseInt</span>(value);</span><br><span class="line"><span class="keyword">if</span>(num == <span class="number">10</span>)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的两个例子都是确定类型的，一个是字符串，一个是整数。就没必要使用==了，直接用===就可以了。 （2）如果类型不确定，那么应该手动做一下类型转换，而不是让别人或者以后的你去猜这里面有类型转换，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> totalPage = <span class="string">"5"</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">parseInt</span>(totalPage) === <span class="number">1</span>)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）使用==在JSLint检查的时候是不通过的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a == b)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下JSLint的输出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expected ‘===’ and instead saw ‘==’.</span><br><span class="line"><span class="keyword">if</span>(a == b)&#123;</span><br></pre></td></tr></table></figure>
+<p>（4）并且使用==可能会出现一些奇怪的现象，这些奇怪的现象可能会给代码埋入隐患：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>          <span class="comment">//true</span></span><br><span class="line"><span class="string">''</span> == <span class="string">'0'</span>                  <span class="comment">//false</span></span><br><span class="line"><span class="number">0</span>  == <span class="string">''</span>                   <span class="comment">//true</span></span><br><span class="line"><span class="number">0</span>  == <span class="string">'0'</span>                  <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="string">''</span> == <span class="number">0</span>            <span class="comment">//true</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"abc"</span>) == <span class="string">"abc"</span> <span class="comment">//true</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) == <span class="literal">true</span>  <span class="comment">//true</span></span><br><span class="line"><span class="literal">true</span> == <span class="number">1</span>                  <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>上面的比较在用===的时候都是false，这样才是比较合理的。例如第一点null居然会等于undefined，就特别地奇怪，因为null和undefined是两个毫无关系的值，null应该是作为初始化空值使用，而undefined是用于检验某个变量是否未定义。 这和第1点介绍强类型的思想是相通的。 </p>
+</li>
+<li><p>合并表达式 如果用1句代码就可以实现5句代码的功能，那往往1句代码的执行效率会比较高，并且可读性可能会更好 （1）用三目运算符取代简单的if-else 如上面的getPrice函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(count &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">return</span> count * <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以改成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> count &lt; <span class="number">0</span> ? <span class="keyword">return</span> <span class="number">-1</span> : count * <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个比写一个if-else看起来清爽多了。当然，如果你写了if-else，压缩工具也会帮你把它改三目运算符的形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">return</span> <span class="number">0</span>&gt;e?<span class="number">-1</span>:<span class="number">100</span>*e&#125;</span><br></pre></td></tr></table></figure>
+<p>（2）连等 连等是利用赋值运算表达式会返回所赋的值，并且执行顺序是从右到左的，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">overtime = favhouse = listingDetail = &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>有时候你会看到有人这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> age = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>((age = +form.age.value) &gt;= <span class="number">18</span>)&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">"你是成年人"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   consoe.log(<span class="string">"小朋友，你还有"</span> + (<span class="number">18</span> - age) + <span class="string">"就成年了"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也是利用了赋值表达式会返回一个值，在if里面赋值的同时用它的返回值做判断，然后else里面就已经有值了。上面的+号把字符串转成了整数。 （3）自增 利用自增也可以简化代码。如下，每发出一条消息，localMsgId就自增1：</p>
+</li>
+</ol>
+<p>chatService.sendMessage(localMsgId++, msgContent);</p>
+<ol start="5">
+<li><p>减少魔数 例如，在某个文件的第800行，冒出来了一句：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dialogHandler.showQuestionNaire（<span class="string">"seller"</span>, <span class="string">"sell"</span>, <span class="number">5</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>就会让人很困惑了，上面的四个常量分别代表什么呢，如果我不去查一个那个函数的变量说明就不能够很快地意会到这些常量分别有什么用。这些意义不明的常量就叫“魔数”。 所以最好还是给这些常量取一个名字，特别是在一些比较关键的地方。例如上面的代码可改成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> naireType = <span class="string">"seller"</span>,</span><br><span class="line">   dialogType = <span class="string">"sell"</span>,</span><br><span class="line">   questionsCount = <span class="number">5</span>,</span><br><span class="line">   reloadWindow = <span class="literal">true</span>;</span><br><span class="line">naireHandler.showNaire(naireType, dialogType, questionsCount, reloadWindow);</span><br></pre></td></tr></table></figure>
+<p>这样意义就很明显了。 </p>
+</li>
+<li><p>使用ES6简化代码 ES6已经发展很多年了，兼容性也已经很好了。恰当地使用，可以让代码更加地简洁优雅。 （1）使用箭头函数取代小函数 有很多使用小函数的场景，如果写个function，代码起码得写3行，但是用箭头函数一行就搞定了，例如实现数组从大到小排序：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nums = [<span class="number">4</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>];</span><br><span class="line">nums.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> b - a;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//输出[9, 8, 4, 1, 0]</span></span><br></pre></td></tr></table></figure>
+<p>如果用箭头函数，排序只要一行就搞定了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nums = [<span class="number">4</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>];</span><br><span class="line">nums.sort(a, b =&gt; b - a);</span><br></pre></td></tr></table></figure>
+<p>代码看起来简洁多了，还有setTimeout里面经常会遇到只要执行一行代码就好了，写个function总感觉有点麻烦，用字符串的方式又不太好，所以这种情况用箭头函数也很方便：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"hi"</span>), <span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+<p>箭头函数在C++/Java等其它语言里面叫做Lambda表达式，Ruby比较早就有这种语法形式了，后来C++/Java也实现了这种语法。 当然箭头函数或者Lambda表达式不仅适用于这种一行的，多行代码也可以，不过在一行的时候它的优点才比较明显。 （2）使用ES6的class 虽然ES6的class和使用function的prototype本质上是一样的，都是用的原型。但是用class可以减少代码量，同时让代码看起来更加地高大上，使用function要写这么多：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">   <span class="keyword">this</span>.age = age;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.addAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.age++;</span><br><span class="line">&#125;;</span><br><span class="line">Person.prototype.setName = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>用class代码看加地简洁易懂：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">   <span class="keyword">constructor</span>(name, age)&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">   &#125;</span><br><span class="line">   addAge()&#123;</span><br><span class="line">       <span class="keyword">this</span>.age++;</span><br><span class="line">   &#125;</span><br><span class="line">   setName(name)&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且class还可以很方便地实现继承、静态的成员函数，就不需要自己再去通过一些技巧去实现了。 （3）字符串拼接 以前要用+号拼接：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tpl =</span><br><span class="line">   <span class="string">'&lt;div&gt;'</span> +</span><br><span class="line">   <span class="string">'    &lt;span&gt;1&lt;/span&gt;'</span> +</span><br><span class="line">   <span class="string">'&lt;/div&gt;'</span>;</span><br></pre></td></tr></table></figure>
+<p>现在只要用两个反引号“`”就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tpl =<span class="string">`   &lt;div&gt;</span></span><br><span class="line"><span class="string">       &lt;span&gt;1&lt;/span&gt;</span></span><br><span class="line"><span class="string">   &lt;/div&gt;`</span>;</span><br></pre></td></tr></table></figure>
+<p>另外反引号还支持占位替换，原本你需要：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> page = <span class="number">5</span>,</span><br><span class="line">   type = encodeURIComponet(<span class="string">"#js"</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="string">"/list?page="</span> + page + <span class="string">"&amp;type="</span> + type;</span><br></pre></td></tr></table></figure>
+<p>现在只需要：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">`/list?page=<span class="subst">$&#123;page&#125;</span>&amp;type=<span class="subst">$&#123;type&#125;</span>`</span>;</span><br></pre></td></tr></table></figure>
+<p>就不用使用+号把字符串拆散了。 （4）块级作用域变量 块级作用域变量也是ES6的一个特色，下面的代码是一个任务队列的模型抽象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tasks = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   tasks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">"i is "</span> + i);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; tasks.length; j++)&#123;</span><br><span class="line">   tasks[j]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是上面代码的执行输出是4，4，4，4，并且不是想要输出：0，1，2，3，所以每个task就不能取到它的index了，这是因为闭包都是用的同一个i变量，i已经变成4了，所以执行闭包的时候就都是4了。那怎么办呢？可以这样解决：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tasks = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">   !<span class="function"><span class="keyword">function</span>(<span class="params">k</span>)</span>&#123;</span><br><span class="line">       tasks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="built_in">console</span>.log(<span class="string">"i is "</span> + k);</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; tasks.length; j++)&#123;</span><br><span class="line">   tasks[j]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把i赋值给了k，由于k它是一个function的一个参数，每次执行函数的时候，肯定会实例化新的k，所以每次的k都是不同的变量，这样就输出就正常了。 但是代码看起来有点别扭，如果用ES6，只要把var改成let就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tasks = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= <span class="number">4</span>; i++)&#123;</span><br><span class="line">   tasks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">"i is "</span> + i);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; tasks.length; j++)&#123;</span><br><span class="line">   tasks[j]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只改动了3个字符就达到了目的。因为for循环里面有个大括号，大括号就是一个独立的作用域，let定义的变量在独立的作用域里面它的值也是独立的。当然即使没写大括号for循环执行也是独立的。 除了以上几点，ES6还有其它一些比较好用的功能，如Object的assign，Promise等，也是可以帮助写出简洁高效的代码。</p>
+</li>
+</ol>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/08/%E9%AB%98%E9%A2%91JavaScript%E6%89%8B%E5%86%99%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            高频JavaScript手写面试题及答案
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/08/React%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">React中组件的生命周期</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    软件工程-要点整理 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-软件工程-要点整理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  软件工程-要点整理
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B-%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86/" class="article-date">
+  <time datetime="2016-12-02T07:47:33.000Z" itemprop="datePublished">2016-12-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">7.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">25 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="SE的定义、目的、方法及作用"><a href="#SE的定义、目的、方法及作用" class="headerlink" title="SE的定义、目的、方法及作用"></a>SE的定义、目的、方法及作用</h3><p>定义：软件工程是一种系统工程，不止包括对技术问题的分析与解决，还包括对开发过程和给参与者分配合适的角色等方面的管理 目的：生产出高质量的软件进而找到解决方案，并考虑那些对质量有影响的特性 方法及作用： 分析（analysis）—分析问题，调查软件正反两方面， 设计（design）—给出解决方案， 发展团队（developing team）—描述在团队中的人员的角色和职责， 发展（develop）—实现解决方案（实现对象、活动、封装等等）， 项目管理（project management）—将系统分为小部分，逐步明确过程，控制进度，处理每个改变等等</p>
+<h2 id="开发模式（paradiam）"><a href="#开发模式（paradiam）" class="headerlink" title="开发模式（paradiam）"></a>开发模式（paradiam）</h2><p>它表示开发软件时特定的方法或哲学。</p>
+<h3 id="说明错误、缺陷、失效的含义与联系。（请举例说明）"><a href="#说明错误、缺陷、失效的含义与联系。（请举例说明）" class="headerlink" title="说明错误、缺陷、失效的含义与联系。（请举例说明）"></a>说明错误、缺陷、失效的含义与联系。（请举例说明）</h3><p>错误[error]，是进行软件开发过程中人为出错造成的 例如，设计人员可能误解了某个需求，创建出与需求分析人员和用户的实际意图不相符的设计。这个设计故障是一种错误的编码，可能导致其他故障，如不正确的代码或用户手册中不正确的描述等。 故障/缺陷[fault]：当人们在进行软件开发活动的过程中出现错误时，就会引起缺陷。（静态存在） 失效[failure]是指系统违背了它应有的行为（由于故障产生）。（动态存在） 例如，需求文档可能会包含故障，所以即使系统按照需求规格来运行，如果它未进行应有的行为，也称为失效。 联系：单个错误可能产生多个故障。故障是系统的内部视图，这是从开发人员的角度看待系统；而失效是系统的外部视图，它是用户所看到的问题。并非每一个故障都对应于一个失效（不执行故障代码就不会是代码失效）。</p>
+<h3 id="软件质量应从哪几个方面来衡量？论述之。"><a href="#软件质量应从哪几个方面来衡量？论述之。" class="headerlink" title="软件质量应从哪几个方面来衡量？论述之。"></a>软件质量应从哪几个方面来衡量？论述之。</h3><p>产品质量 特性的重要性取决于分析这个软件的人，如果软件用易于学习或是易于使用的方式做了用户想做的事情，用户就断定软件是高质量的。 软件还必须由那些设计和编写代码的人员以及维护该程序的人员来评价，这些时间人员倾向于考虑产品的内部特性，有时甚至会在产品交付给用户之前就考虑这些内部特性。 过程质量 有很多活动会影响到最终的产品质量。只要活动出了差错，产品的质量就会受到影响。因此，许多软件工程师认为开发和维护过程的质量与产品的质量是同等重要的。 商业价值 在商业环境中，质量是根据软件所处的商业环境提供的产品和服务来看待的。也就是说，我们考虑的是产品的技术价值，而不是更广泛的商业价值。</p>
+<h2 id="软件系统的系统组成"><a href="#软件系统的系统组成" class="headerlink" title="软件系统的系统组成"></a>软件系统的系统组成</h2><p>1. 活动和对象 2. 关系和系统边界 A system = entities(实体) + activities(活动) + relationships(关系) + boundary(边界)</p>
+<h3 id="现代软件工程大致包含的几个阶段及各个阶段文档"><a href="#现代软件工程大致包含的几个阶段及各个阶段文档" class="headerlink" title="现代软件工程大致包含的几个阶段及各个阶段文档"></a>现代软件工程大致包含的几个阶段及各个阶段文档</h3><p>1. 需求分析和定义───需求规格说明 2. 系统设计────设计描述 3. 程序设计─┐ 4. 程序实现─┴─程序文档 5. 单元测试─┐ 6. 集成测试─┼─测试数据 7. 系统测试─┘ 8. 系统交付─┬─培训手册 9. 维护 ─┘</p>
+<h3 id="使现代SE实践发生变化的（七个）关键因素是什么？"><a href="#使现代SE实践发生变化的（七个）关键因素是什么？" class="headerlink" title="使现代SE实践发生变化的（七个）关键因素是什么？"></a>使现代SE实践发生变化的（七个）关键因素是什么？</h3><p>商业软件的投放市场时间的紧迫性 计算经济学的改变 强力的桌面计算平台的出现 局域网和广域网的延伸 面向对象技术的出现和采用 使用窗口、图标、菜单和指针的图形用户界面 瀑布模型用于软件开发的不可预测性</p>
+<h3 id="什么是抽象？"><a href="#什么是抽象？" class="headerlink" title="什么是抽象？"></a>什么是抽象？</h3><p>抽象（abstraction）是在某种概括层次上对问题的描述，使得我们能够集中于问题的关键方面而不会陷入细节。</p>
+<h3 id="什么是软件过程？软件过程的重要性是什么？包含几个阶段？"><a href="#什么是软件过程？软件过程的重要性是什么？包含几个阶段？" class="headerlink" title="什么是软件过程？软件过程的重要性是什么？包含几个阶段？"></a>什么是软件过程？软件过程的重要性是什么？包含几个阶段？</h3><p>定义：软件开发活动中的各种组织及规范方法。 重要性：具有通用性（一致性、结构性）和指导性。 阶段：上有</p>
+<h3 id="什么是复用？"><a href="#什么是复用？" class="headerlink" title="什么是复用？"></a>什么是复用？</h3><p>重复采用以前开发的软件系统中具有共性的部件, 用到新的开发项目中去。</p>
+<h3 id="瀑布模型及各阶段文档，优缺点？"><a href="#瀑布模型及各阶段文档，优缺点？" class="headerlink" title="瀑布模型及各阶段文档，优缺点？"></a>瀑布模型及各阶段文档，优缺点？</h3><p>瀑布模型将开发阶段描述为从一个阶段瀑布般转到另外一个阶段。一个开发阶段必须在另一个开发阶段之前完成。 优点：·在帮助开发人员布置他们需要做的工作时，瀑布模型是非常有用的； ·它的简单性使得开发人员很容易向不熟悉软件开发的客户作出解释。 ·是其他复杂模型的基础 缺点：·瀑布模型最大的问题是它并不能反映实际的代码开发方式。 ·面临软件变动时, 该模型无法处理实际过程中的重复开发问题 ·文档转换有困难</p>
+<h2 id="原型的概念"><a href="#原型的概念" class="headerlink" title="原型的概念"></a>原型的概念</h2><p>原型（prototype）是一个部分开发的产品，用来让用户和开发者共同研究，提出意见，为最终产品定型。</p>
+<h3 id="论述分阶段开发模型的含义-其基本分类及特点是什么？"><a href="#论述分阶段开发模型的含义-其基本分类及特点是什么？" class="headerlink" title="论述分阶段开发模型的含义, 其基本分类及特点是什么？"></a>论述分阶段开发模型的含义, 其基本分类及特点是什么？</h3><p>definition: 系统被设计成部分提交, 每次用户只能得到部分功能, 而其他部分处于开发过程中。 分类及特点： 增量开发：系统需求按照功能分成若干子系统，开始建造的版本是规模小的、部分功能的系统，后续版本添加包含新功能的子系统，最后版本是包含全部功能的子系统集。 迭代开发：系统开始就提供了整体功能框架，后续版本陆续增强各个子系统，最后版本使各个子系统的功能达到最强。</p>
+<h3 id="螺旋模型四个象限的任务及四重循环的含义？"><a href="#螺旋模型四个象限的任务及四重循环的含义？" class="headerlink" title="螺旋模型四个象限的任务及四重循环的含义？"></a>螺旋模型四个象限的任务及四重循环的含义？</h3><p>四象限：·确定目标、可选方案及约束； ·评估可选方案及风险 ·计划 ·开发与测试 操作概念是第一次迭代的产品，而需求则是第二次迭代的主要产品，第三次迭代系统开发产生设计，第四次迭代能够进行测试。</p>
+<h3 id="针对本章描述的每一种过程模型，讨论使用该模型的优点和缺点分别是什么？针对本章描述的每一种过程模型，讨论该模型是如何处理开发后期重要的需求变化的？"><a href="#针对本章描述的每一种过程模型，讨论使用该模型的优点和缺点分别是什么？针对本章描述的每一种过程模型，讨论该模型是如何处理开发后期重要的需求变化的？" class="headerlink" title="针对本章描述的每一种过程模型，讨论使用该模型的优点和缺点分别是什么？针对本章描述的每一种过程模型，讨论该模型是如何处理开发后期重要的需求变化的？"></a>针对本章描述的每一种过程模型，讨论使用该模型的优点和缺点分别是什么？针对本章描述的每一种过程模型，讨论该模型是如何处理开发后期重要的需求变化的？</h3><p>瀑布模型 V模型 原型化模型 可操作规格模型 分阶段开发模型 螺旋模型 瀑布模型从一种非常高层的角度描述了软件开发过程中进行的活动，并且提出了要求开发人员经过的事件序列。该模型适用于项目开始时需求已确定的情况。V模型是瀑布模型的变种，它说明测试活动是如何与分析和设计相联系的。原型模型允许开发人员快速地构造整个系统或系统的一部分以理解或澄清问题。原型的用途是获知用户的真正需求，因此原型模型可以有效地引发系统需求。螺旋模型把开发活动和风险管理结合起来，以将风险减到最小并控制风险。</p>
+<h3 id="在所有的软件开发过程模型中，你认为哪些过程给予你最大的灵活性以应对需求的变更？"><a href="#在所有的软件开发过程模型中，你认为哪些过程给予你最大的灵活性以应对需求的变更？" class="headerlink" title="在所有的软件开发过程模型中，你认为哪些过程给予你最大的灵活性以应对需求的变更？"></a>在所有的软件开发过程模型中，你认为哪些过程给予你最大的灵活性以应对需求的变更？</h3><p>1. 设计对于分析模型应该是可跟踪的：软件的模块可能被映射到多个需求上。 2. 设计结构应当尽可能的模拟实际问题。 3. 设计应当表现出一致性。 4. 不要把设计当成编写代码。 5. 在创建设计时就应该能够评估质量。 6. 评审设计以减少语义性的错误。</p>
+<h3 id="什么是UP，-RUP"><a href="#什么是UP，-RUP" class="headerlink" title="什么是UP， RUP?"></a>什么是UP， RUP?</h3><p>统一过程（RUP/UP，Rational Unified Process）是一种以用例驱动、以体系结构为核心、迭代及增量的软件过程模型，由UML方法和工具支持，广泛应用于各类面向对象项目。 统一过程是一个面向对象且基于网络的程序开发方法论。</p>
+<h3 id="什么是项目调度？活动？里程碑？"><a href="#什么是项目调度？活动？里程碑？" class="headerlink" title="什么是项目调度？活动？里程碑？"></a>什么是项目调度？活动？里程碑？</h3><p>项目调度：通过列举项目的各个阶段，把每个阶段分解成离散的任务或活动，来描述特定项目的软件开发周期。 项目进度是对特定项目的软件开发周期的刻画。 活动：是项目的一部分，它在一段时间内发生。 里程碑：是活动的完成——某一特定的时刻。 如何计算软件项目活动图的关键路径？（习题2，3）冗余时间？最早和最迟开始时间（课堂习题讲解） 关键路径是一条每个节点的时差都为零的路径。最长路径就是一条关键路径。 时差=可用时间-真实时间 时差=最晚开始时间-最早开始时间</p>
+<h3 id="软件人员应该具备的能力是什么？"><a href="#软件人员应该具备的能力是什么？" class="headerlink" title="软件人员应该具备的能力是什么？"></a>软件人员应该具备的能力是什么？</h3><p>完成工作的能力，对工作的兴趣，开发类似应用的经验， 使用类似工具或语言、开发环境、技术的经验，培训， 与其他人交流的能力，与其他人共同承担责任的能力。管理技能</p>
+<h3 id="软件项目组织的基本结构？专家估算法的大致含义？，算式估算法的大致含义？"><a href="#软件项目组织的基本结构？专家估算法的大致含义？，算式估算法的大致含义？" class="headerlink" title="软件项目组织的基本结构？专家估算法的大致含义？，算式估算法的大致含义？"></a>软件项目组织的基本结构？专家估算法的大致含义？，算式估算法的大致含义？</h3><p>专家估算：请几位专家做出3种预测，来形式化地表示类推过程：一个悲观的预测（x）、一个乐观的预测（y），和最可能的预测（z），通过公式（x+4y+z）/6计算这些数的beta概率分布的平均值。通过使用这种技术，产生的估算是对个人估算的“规范化”。 算式估算（这个不用看）：研究人员已经创建出表示工作量和影响工作量的因素之间关系的模型。这些模型通常用方程式描述。大部分模型认为项目规模是方程式中影响最大的因素，表示工作量的方程是：E = (a + bSc) m(X)。其中S是估算的系统规模，而a、b、c是常量。X是从x1到xn的一个成本因素的向量，m是基于这些因素的一个调整因子。</p>
+<h3 id="试述COCOMO模型的三个阶段基本工作原理或含义。"><a href="#试述COCOMO模型的三个阶段基本工作原理或含义。" class="headerlink" title="试述COCOMO模型的三个阶段基本工作原理或含义。"></a>试述COCOMO模型的三个阶段基本工作原理或含义。</h3><p>阶段1（应用组装）：根据高层的工作量生成器来获取项目的规模。 阶段2（早期设计）：使用功能点对规模进行测量。 阶段3（后体系结构）：根据功能点或代码行来进行规模预算。</p>
+<h3 id="什么是软件风险？有几种降低风险的策略？"><a href="#什么是软件风险？有几种降低风险的策略？" class="headerlink" title="什么是软件风险？有几种降低风险的策略？"></a>什么是软件风险？有几种降低风险的策略？</h3><p>风险：人们不希望看到的、有负面结果的事件。 ·通过改变性能或功能需求来降低风险 ·通过把风险分配到其他系统中，或者购买保险以便在风险成为事实弥补经济上的损失 ·假设风险会发生，接受并用项目资源控制风险</p>
+<h3 id="需求的含义是什么"><a href="#需求的含义是什么" class="headerlink" title="需求的含义是什么?"></a>需求的含义是什么?</h3><p>需求，就是对期望的行为的表达。</p>
+<h3 id="需求作为一个工程，其确定需求的过程是什么？举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。"><a href="#需求作为一个工程，其确定需求的过程是什么？举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。" class="headerlink" title="需求作为一个工程，其确定需求的过程是什么？举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。"></a>需求作为一个工程，其确定需求的过程是什么？举例说明获取需求时，若有冲突发生时，如何考虑根据优先级进行需求分类。</h3><p>（1） 绝对要满足的需求（必须的） （2） 非常值得要的但并非必须的需求（值得要的） （3） 可要可不要的需求（可选的） 例如：信用卡记账系统，要求列出最近的费用（1）、要求加起来并要求在某日期前支付（2）、要求购买类型分析（3）</p>
+<h3 id="如何使需求变得可测试？"><a href="#如何使需求变得可测试？" class="headerlink" title="如何使需求变得可测试？"></a>如何使需求变得可测试？</h3><p>A: 针对需求确定一种量化的描述方法，避免模糊的表达方式 B: 将各种指代用词替换为实体的正式名称 C: 每个名词或款项应在需求文档中给出唯一定义。</p>
+<h3 id="需求文档分为哪两类？"><a href="#需求文档分为哪两类？" class="headerlink" title="需求文档分为哪两类？"></a>需求文档分为哪两类？</h3><p>需求定义，它面向的是业务相关的人员，例如：委托人，客户以及用户； 需求规格说明，它面向的是技术性人员，例如：设计人员、测试人员以及项目经理。 什么是功能性需求和非功能性需求/质量需求？</p>
+<h3 id="设计约束？过程约束？"><a href="#设计约束？过程约束？" class="headerlink" title="设计约束？过程约束？"></a>设计约束？过程约束？</h3><p>功能需求根据要求的活动（如对输入的反应，活动发生时每一个实体之前和之后的状态）来描述需要的行为。 非功能性需求/质量需求，描述一些软件解决方案必须拥有的质量特性，如快速的响应时间、易使用性、高可靠性或低维护代价。 设计约束是已经作出的设计决策或限制问题解决方案集的设计决策，例如平台或构建接口的选择。 过程约束是对于构建系统的技术和资源的限制。例如，客户可能坚持使用敏捷方法，以便在继续增加新特征的时候能够使用早期版本。</p>
+<h3 id="需求的特性？（正确性、一致性、完整性）"><a href="#需求的特性？（正确性、一致性、完整性）" class="headerlink" title="需求的特性？（正确性、一致性、完整性）"></a>需求的特性？（正确性、一致性、完整性）</h3><p>·正确：我们和客户都应该评审需求文档，确保它们符合我们对需求的理解 ·一致：一般来讲，如果不可能同时满足两个需求，那么这两个需求就是不一致的。 ·无二义：如果需求的多个读者能够一致、有效地解释需求，那么需求就是无二义性的。 ·完备：如果需求指定了所有约束下的、所有状态下的、所有可能的输入的输出以及必需的行为，那么这组需求就是完备的。 ·可行：当用户要求两个或更多的质量需求时，常常会出现可行性问题 ·相关：有时，某个需求会不必要地限制开发人员，或者会包含与客户需要没有直接关系的功能。 ·可测试：如果需求能够提示验收测试（明确证明最终系统是否满足需求），需求就是可测试的。 ·可跟踪：对需求进行精心组织并唯一标记，已达到易于引用的目的；求定义中的每一条都在需求规格说明中有对应，反之亦然。</p>
+<h3 id="了解DFD图的构成及画法"><a href="#了解DFD图的构成及画法" class="headerlink" title="了解DFD图的构成及画法"></a>了解DFD图的构成及画法</h3><p>DFD：Data Flow Diagrams 数据流图</p>
+<h3 id="在需求原型化方面，什么是抛弃型原型？什么是演化型原型？"><a href="#在需求原型化方面，什么是抛弃型原型？什么是演化型原型？" class="headerlink" title="在需求原型化方面，什么是抛弃型原型？什么是演化型原型？"></a>在需求原型化方面，什么是抛弃型原型？什么是演化型原型？</h3><p>抛弃型原型是为了对问题或者提议的解决方案有更多的了解而开发的软件。 演化型原型是这样的软件： 不仅帮助我们回答问题，而且还要演变为最终的产品。 Chapter05</p>
+<h3 id="什么是软件体系结构？设计模式？设计公约？设计？概念设计？技术设计？"><a href="#什么是软件体系结构？设计模式？设计公约？设计？概念设计？技术设计？" class="headerlink" title="什么是软件体系结构？设计模式？设计公约？设计？概念设计？技术设计？"></a>什么是软件体系结构？设计模式？设计公约？设计？概念设计？技术设计？</h3><p>早期的设计决策专注于系统的体系结构，用以解释如何将系统分解为单元以及这些单元又如何相互关联</p>
+<h2 id="三种设计层次及其关系？"><a href="#三种设计层次及其关系？" class="headerlink" title="三种设计层次及其关系？"></a>三种设计层次及其关系？</h2><p>体系结构设计:由软件需求中的系统能力与系统部件关联起来而得到软件整体结构的过程 代码设计:各个部件（模块）的算法、数据结构的设计 运行设计:最底层设计—内存分配、数据格式、位模式等等 关系：流程工作中，先是体系结构设计，然后是代码设计，最后是运行设计； 随着设计人员对解决方案及其含义有更多的理解，他们就会往返于各层次之间。 （程序设计由代码设计和运行设计组成）</p>
+<h3 id="论述设计用户界面应考虑的问题。"><a href="#论述设计用户界面应考虑的问题。" class="headerlink" title="论述设计用户界面应考虑的问题。"></a>论述设计用户界面应考虑的问题。</h3><p>·设计界面要注意解决的要素（寓意/比喻、思维模型、领航规则、外观、感觉）； ·文化差异问题； ·用户爱好问题 Chapter06</p>
+<h3 id="什么是模块化？什么是抽象？"><a href="#什么是模块化？什么是抽象？" class="headerlink" title="什么是模块化？什么是抽象？"></a>什么是模块化？什么是抽象？</h3><p>模块化，也称作关注点分离，是一种把系统中各不相关的部分进行分离的原则，以便于各部分能够独立研究。 对细节的隐藏称为抽象。</p>
+<h3 id="模块独立性-耦合与内聚的概念及各个层次划分？"><a href="#模块独立性-耦合与内聚的概念及各个层次划分？" class="headerlink" title="模块独立性,耦合与内聚的概念及各个层次划分？"></a>模块独立性,耦合与内聚的概念及各个层次划分？</h3><p>耦合：两个软件部件之间的相互关联程度 内聚：软件部件内部的关联程度 层次划分：如下</p>
+<h3 id="举例说明耦合与内聚的基本分类。以及各个分类的含义与特征？"><a href="#举例说明耦合与内聚的基本分类。以及各个分类的含义与特征？" class="headerlink" title="举例说明耦合与内聚的基本分类。以及各个分类的含义与特征？"></a>举例说明耦合与内聚的基本分类。以及各个分类的含义与特征？</h3><p>非直接耦合 ：模块相互之间没有信息传递 数据耦合 ：模块间传递的是数据 特征耦合：模块间传递的是数据结构 控制耦合：模块间传递的是控制量 公共耦合：不同模块访问公共数据 内容耦合：一个模块直接修改另一个 偶然性内聚：不相关的功能, 过程,数据等出现在同一个部件中 逻辑性内聚：逻辑上相关或相似的功能或数据放置在同一个部件内 时间性内聚：部件各部分要求在同一时间完成 通讯性内聚：各部分访问共享数据 过程性内聚：各部分有特定次序 顺序性内聚：各部分有输入输出关系 功能性内聚：各部分组成单一功能</p>
+<h3 id="什么是面向对象？"><a href="#什么是面向对象？" class="headerlink" title="什么是面向对象？"></a>什么是面向对象？</h3><p>面向对象是一种软件开发方法，它将问题及其解决方法组织成一系列独立的对象，数据结构和动作都被包括在内</p>
+<h3 id="OO有几个基本特征？如何使用高级语言实现这些基本特-征？了解并使用高级语言的OO基本编程方法和技巧。"><a href="#OO有几个基本特征？如何使用高级语言实现这些基本特-征？了解并使用高级语言的OO基本编程方法和技巧。" class="headerlink" title="OO有几个基本特征？如何使用高级语言实现这些基本特//征？了解并使用高级语言的OO基本编程方法和技巧。"></a>OO有几个基本特征？如何使用高级语言实现这些基本特//征？了解并使用高级语言的OO基本编程方法和技巧。</h3><p>基本特征：一致性、抽象、分类、封装、继承、多态、持久性</p>
+<h3 id="什么是设计模式？"><a href="#什么是设计模式？" class="headerlink" title="什么是设计模式？"></a>什么是设计模式？</h3><p>设计模式编写了设计决策以及最好的实践，它们根据设计原则来解决一些特定的问题； 它们不是拿来就可以使用的打包的解决方案，而是解决方案的模板，必须针对特定的状况进行修改和调整。</p>
+<h3 id="OO设计的基本原则？"><a href="#OO设计的基本原则？" class="headerlink" title="OO设计的基本原则？"></a>OO设计的基本原则？</h3><p>模块化、接口、信息隐藏、增量式开发、抽象、通用性</p>
+<h3 id="OO开发有何优势？"><a href="#OO开发有何优势？" class="headerlink" title="OO开发有何优势？"></a>OO开发有何优势？</h3><p>语言具有一致性（在同一时期同时描述问题和解决方案）； 过程具有一致性（从需求到测试，所有的过程采用相同的语义构造）。</p>
+<h3 id="OO开发过程有几个步骤？"><a href="#OO开发过程有几个步骤？" class="headerlink" title="OO开发过程有几个步骤？"></a>OO开发过程有几个步骤？</h3><p>OO需求、OO高级设计、OO低级设计、OOP、OO测试</p>
+<h3 id="熟悉用例图的组成和画法，用例的几个要素的含义，掌握用例图的实例解析方法。用例图、类图等对面向对象的项目开发的意义是什么？"><a href="#熟悉用例图的组成和画法，用例的几个要素的含义，掌握用例图的实例解析方法。用例图、类图等对面向对象的项目开发的意义是什么？" class="headerlink" title="熟悉用例图的组成和画法，用例的几个要素的含义，掌握用例图的实例解析方法。用例图、类图等对面向对象的项目开发的意义是什么？"></a>熟悉用例图的组成和画法，用例的几个要素的含义，掌握用例图的实例解析方法。用例图、类图等对面向对象的项目开发的意义是什么？</h3><p>这些表示法每种都显现了系统的某个方面，因此相应地，这种表达也提供了对于问题或解决方案的详细描述。 熟悉类图中各个类之间的基本关系分类 熟悉类图等的组成和画法 了解UML其他图的基本用途。</p>
+<h3 id="为什么说编码工作是纷繁复杂甚至令人气馁？"><a href="#为什么说编码工作是纷繁复杂甚至令人气馁？" class="headerlink" title="为什么说编码工作是纷繁复杂甚至令人气馁？"></a>为什么说编码工作是纷繁复杂甚至令人气馁？</h3><p>第一， 设计对于编码来说并不总是简单明了的； 第二， 编码应该是可懂的 第三， 需要考虑重用</p>
+<h3 id="一般性的编程原则应该从哪三个方面考虑？"><a href="#一般性的编程原则应该从哪三个方面考虑？" class="headerlink" title="一般性的编程原则应该从哪三个方面考虑？"></a>一般性的编程原则应该从哪三个方面考虑？</h3><p>编程标准对自身的用处 编程标准对他人的用处 设计与编程实现相匹配</p>
+<h3 id="论述编码阶段实现某种算法时所涉及的问题。"><a href="#论述编码阶段实现某种算法时所涉及的问题。" class="headerlink" title="论述编码阶段实现某种算法时所涉及的问题。"></a>论述编码阶段实现某种算法时所涉及的问题。</h3><p>编写更快代码的代价。可能会使代码更加复杂，从而花费更多的时间编写代码。 测试代码的时间代价。代码的复杂度要求有更多的测试用例或测试数据。 用户理解代码的时间代价。 需要修改代码时，修改代码的时间代价。</p>
+<h3 id="在编写程序内部文档时，除了HCB外，还应添加什么注释信息？"><a href="#在编写程序内部文档时，除了HCB外，还应添加什么注释信息？" class="headerlink" title="在编写程序内部文档时，除了HCB外，还应添加什么注释信息？"></a>在编写程序内部文档时，除了HCB外，还应添加什么注释信息？</h3><p>1.其他程序注释、2.有意义的变量名和语句标记、3.安排格式以增强理解、4.文档化数据</p>
+<h3 id="什么是极限编程-XP-以及派对编程？"><a href="#什么是极限编程-XP-以及派对编程？" class="headerlink" title="什么是极限编程(XP)? 以及派对编程？"></a>什么是极限编程(XP)? 以及派对编程？</h3><p>极限编程（XP）是一种轻量级的软件开发方法论，属于敏捷开发方法。XP从实践中来，是对实践的总结，也是经过实践检验的，其主要特征是要适应环境变化和需求变化，充分发挥开发人员的主动精神。XP承诺降低软件项目风险，改善业务变化的反应能力，提高开发期间的生产力，为软件开发过程增加乐趣等等 。 派对编程属于主要的敏捷开发方法，其开发方式是两个程序员共同开发程序，且角色分工明确。一个负责编写程序，另一个负责复审与测试。两人定期交换角色。</p>
+<h3 id="产生软件缺陷的原因？"><a href="#产生软件缺陷的原因？" class="headerlink" title="产生软件缺陷的原因？"></a>产生软件缺陷的原因？</h3><p>·规格说明可能是错误的，或者遗漏了某个需求； ·对于指定的硬件和软件，规格说明中可能包含不可能实现的需求 ·系统设计中可能包含故障。 ·程序设计中可能包含故障。 ·程序代码可能是错误的。</p>
+<h3 id="将软件缺陷进行分类的理由？"><a href="#将软件缺陷进行分类的理由？" class="headerlink" title="将软件缺陷进行分类的理由？"></a>将软件缺陷进行分类的理由？</h3><p>当不存在明显的故障时，我们就测试程序，通过创造一些条件，使代码不能像计划的那样做出反应，看一看能否发现更多的故障。因此，知道我们正在查找什么类型的故障是很重要的。</p>
+<h3 id="几种主要的缺陷类型？"><a href="#几种主要的缺陷类型？" class="headerlink" title="几种主要的缺陷类型？"></a>几种主要的缺陷类型？</h3><p>A. 算法故障 B. 计算故障和精度故障 C. 文档故障 D. 压力故障或过载故障 E. 能力故障或边界故障 F. 计时故障 G. 性能故障 H. 恢复故障 I. 硬盘和系统软件故障 J. 标准和过程路障</p>
+<h3 id="什么是正交缺陷分类？"><a href="#什么是正交缺陷分类？" class="headerlink" title="什么是正交缺陷分类？"></a>什么是正交缺陷分类？</h3><p>其中，故障被分为不同的类别，这些类别共同勾画出开发过程的哪些部分需要关注，因为它们是产生很多故障的原因。因此，分类方案必须是产品无关的和组织无关的，并且可适用于开发的所有阶段的。</p>
+<h3 id="测试的态度问题？（为什么要独立设置测试团队？）"><a href="#测试的态度问题？（为什么要独立设置测试团队？）" class="headerlink" title="测试的态度问题？（为什么要独立设置测试团队？）"></a>测试的态度问题？（为什么要独立设置测试团队？）</h3><p>即使用忘我方法开发一个系统，有时也难以从测试过程中排除个人感情。因此，通常使用一个独立的测试小组来测试系统，这样，避免了故障的个人责任与尽可能多地发现故障的需要之间的冲突。</p>
+<h3 id="测试的各个阶段及其任务？测试的方法—-黑盒、白盒的概念？"><a href="#测试的各个阶段及其任务？测试的方法—-黑盒、白盒的概念？" class="headerlink" title="测试的各个阶段及其任务？测试的方法—-黑盒、白盒的概念？"></a>测试的各个阶段及其任务？测试的方法—-黑盒、白盒的概念？</h3><p>黑盒：从外部观察测试对象，将其看做是一个不了解其内容的闭盒或黑盒，那么，我们的测试就是向闭盒提供输入数据，并记录产生的输出。 白盒：将测试对象看成是一个开盒（透明盒）或白盒，然后可以根据测试对象的结构用不同的方式来进行测试。</p>
+<h3 id="什么是单元测试？什么是走查和审查？"><a href="#什么是单元测试？什么是走查和审查？" class="headerlink" title="什么是单元测试？什么是走查和审查？"></a>什么是单元测试？什么是走查和审查？</h3><p>单元测试：检查集成的系统是否按照需求中指定的那样执行它的功能 在走查中，程序员向评审小组提交代码及其相关文档，然后评审小组评论它们的正确性。 在审查中，评审小组按照一个事前准备好的关注问题清单来检查代码和文档（更正式）。  </p>
+<h2 id="集成测试及其主要方法的分类？"><a href="#集成测试及其主要方法的分类？" class="headerlink" title="集成测试及其主要方法的分类？"></a>集成测试及其主要方法的分类？</h2><p>（1） 自低向上集成（驱动程序） 优点：易生成测试用例；适合于面向对象开发系统；底层为通用模块比较好 缺点：顶层设计缺陷为主要的缺陷，不能及时地发现改正 （2） 自顶向下集成（桩） 优点：顶层模块缺陷尽早发现 缺点：产生测试用例比较难，需要大量的桩</p>
+<h3 id="传统测试和OO测试有何不同？OO测试有何困难？"><a href="#传统测试和OO测试有何不同？OO测试有何困难？" class="headerlink" title="传统测试和OO测试有何不同？OO测试有何困难？"></a>传统测试和OO测试有何不同？OO测试有何困难？</h3><p>面向对象系统的测试中更容易和更困难的部分：</p>
+<h3 id="测试计划涉及的几个步骤？"><a href="#测试计划涉及的几个步骤？" class="headerlink" title="测试计划涉及的几个步骤？"></a>测试计划涉及的几个步骤？</h3><p>（1）制定测试目标 （2）设计测试用例 （3）编写测试用例 （4）测试测试用例 （5）执行测试 （6）评估测试结果 （了解）</p>
+<h3 id="系统测试的主要步骤及各自含义？"><a href="#系统测试的主要步骤及各自含义？" class="headerlink" title="系统测试的主要步骤及各自含义？"></a>系统测试的主要步骤及各自含义？</h3><p>1. 功能测试：系统是否按照需求中指定的那样执行它的功能 2. 性能测试：软件与非功能系统需求进行比较 3. 验收测试：根据用户的需求描述检查系统 4. 安装测试：保证系统按照它应有的方式进行</p>
+<h3 id="什么是系统配置？软件配置管理？基线？"><a href="#什么是系统配置？软件配置管理？基线？" class="headerlink" title="什么是系统配置？软件配置管理？基线？"></a>什么是系统配置？软件配置管理？基线？</h3><p>系统配置是向特定客户交付的一组系统组件。 配置管理控制不同系统配置之间的差别，将风险和错误降低到最低程度。 某个特定系统的一个配置有时称为一个版本 基线是软件文档或源码的一个稳定版本,它是进一步开发的基础（这基线我百度的）</p>
+<h3 id="什么是回归测试？"><a href="#什么是回归测试？" class="headerlink" title="什么是回归测试？"></a>什么是回归测试？</h3><p>回归测试是用于新的版本或发布的一种测试，以验证与旧版本或发布相比，它是否以同样的方式执行相同的功能。</p>
+<h3 id="功能测试的含义及其作用？"><a href="#功能测试的含义及其作用？" class="headerlink" title="功能测试的含义及其作用？"></a>功能测试的含义及其作用？</h3><p>功能测试基于系统功能性需求，属于闭盒测试。我们不必知道正在执行哪个构件，相反，必须知道系统应该做什么。 作用：将系统的实际表现与其需求进行比较。</p>
+<h3 id="功能测试的基本指导原则？"><a href="#功能测试的基本指导原则？" class="headerlink" title="功能测试的基本指导原则？"></a>功能测试的基本指导原则？</h3><p>·具有很高的故障检测概率 ·使用独立于设计人员和程序员的测试小组 ·了解期望的动作和输出 ·既要测试合法输入， 也要测试不合法输入 ·永远不要为了使测试更加容易而去修改系统 ·制定停止测试标准</p>
+<h3 id="性能测试的含义与作用？"><a href="#性能测试的含义与作用？" class="headerlink" title="性能测试的含义与作用？"></a>性能测试的含义与作用？</h3><p>在我们确定系统能执行需求所要求的功能之后，就要考虑这些功能执行的方式。 因此，功能测试针对的是功能需求，而性能测试针对的是非功能需求。</p>
+<h3 id="性能测试的主要分类？"><a href="#性能测试的主要分类？" class="headerlink" title="性能测试的主要分类？"></a>性能测试的主要分类？</h3><p>压力测试、容量测试、配置测试、兼容性测试、安全性测试、计时测试、环境测试、质量测试、恢复测试、维护测试、文档测试、人为因素测试</p>
+<h3 id="什么是可靠性、可用性和可维护性？"><a href="#什么是可靠性、可用性和可维护性？" class="headerlink" title="什么是可靠性、可用性和可维护性？"></a>什么是可靠性、可用性和可维护性？</h3><p>可靠性是指一个系统对于给定的时间间隔内、在给定的条件下无失效运作的概率。 可用性是指在给定的时间点上，一个系统能够按照规格说明正确运作的概率。 可维护性是在给定的使用条件下，在规定的时间间隔内，使用规定的过程和资源完成维护活动的概率。</p>
+<h3 id="确认测试-确认测试分类？（基准测试和引导测试）"><a href="#确认测试-确认测试分类？（基准测试和引导测试）" class="headerlink" title="确认测试, 确认测试分类？（基准测试和引导测试）"></a>确认测试, 确认测试分类？（基准测试和引导测试）</h3><p>当功能测试和性能测试完成后，我们确信，系统满足在软件开发的初始阶段过程中指定的所有需求，下一步要询问客户和用户，他们是否持有同样的观点。 在基准测试中，客户准备一组代表在实际安装后系统运作的典型情况的测试用例。针对每一个测试用例，客户评估系统的执行情况。 在并行测试中，新系统与先前版本并行运转，用户逐渐地适应新系统，但是继续使用与新系统功能相同的老系统。</p>
+<h3 id="什么是alpha测试？β测试？"><a href="#什么是alpha测试？β测试？" class="headerlink" title="什么是alpha测试？β测试？"></a>什么是alpha测试？β测试？</h3><p>在客户进行实际的试验性测试之前先让来自自己组织机构或公司的用户来测试这个系统，这样的内部测试称为α测试。 β测试：客户的测试，属于试用性质的非正式的验收测试。</p>
+<h3 id="什么是安装测试？"><a href="#什么是安装测试？" class="headerlink" title="什么是安装测试？"></a>什么是安装测试？</h3><p>即在用户的场所安装系统。 如果验收测试已经是在实地进行，就不一定需要安装测试了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/12/mysql-ALTER%E5%91%BD%E4%BB%A4/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            mysql-ALTER命令
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/11/mysql-%E4%BA%8B%E5%8A%A1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">mysql-事务</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    2019年大前端技术趋势分析-转 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-2019年大前端技术趋势分析-转"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  2019年大前端技术趋势分析-转
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/2019%E5%B9%B4%E5%A4%A7%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E8%B6%8B%E5%8A%BF%E5%88%86%E6%9E%90-%E8%BD%AC/" class="article-date">
+  <time datetime="2019-06-26T02:46:23.000Z" itemprop="datePublished">2019-06-26</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/">前端方向</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">14 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="编程语言"><a href="#编程语言" class="headerlink" title="编程语言"></a>编程语言</h2><p>来自statesofjs的统计，在类JS编程语言上，ES6遥遥领先，TypeScript也获得接近半数的使用量。其次是Flow、Reason、Elm和ClojureScript。 目前主流编程语言已经是ES6/7+Babel的组合，用过ES6/7后基本没法再回到原始的ES5时代了，出现了类和模块的概念方便JS代码模块化加载，再加上各种语法糖用的快乐的飞起。async await的语法也替代promise的写法，使得代码逻辑变得更加简洁。ES的规范依旧在快速迭代，每年都会出一个更新的版本，引入不少语言特性，同时有Babel加持可以将新的语法都转译成ES5版本运行在浏览器中。 TypeScript是作为2019年的编程语言的大黑马受到极大关注，现在有大量框架例如Mobx、Vue3.x都是用TypeScript进行编写，由于TypeScript引入类型能够做到静态检查，因此解决了大量JS运行时类型错误，对于大型项目的代码安全性有很大的帮助。引入TypeScript需要团队对于新的特性有充分的了解，好好利用其中的精华，否则就会变成仅仅把.js后缀改成.ts而已。 在2019 stateofcss也有关于CSS特性使用情况的统计，每个特性的外圈代表听过过的数量，内圈表示真正使用过的数量。 其实CSS特性的使用覆盖面很大因素取决于浏览器的支持程度，浏览器支持越好越容易获得更高的使用率。可以看到几个高使用率的CSS特性在浏览器支持方面都非常好，除去Opera Mini和少量IE11，其他主流浏览器都能完美支持。 一个有趣的现象是在布局方面Flexbox使用率要高于Grid，可能的原因在于在低版本浏览器的支持方面Flexbox要更好，但其实在当前主流浏览器的支持度上已经没有区别。另一个因素可能是React Native也是推荐使用Flexbox来做布局，具有较大的群众基础吧。 CSS in JS的理念应该来自React Native，最开始接触的时候相当颠覆，在JS文件中直接写相应的CSS定义，使得组件内聚化达到极致，解决了css全局污染的问题。在web前端，css in js有很多的实现方式，但目前来看还是比较早期，传统的Less、Sass的这类css预处理框架已经能够比较好的解决一些问题，从编程习惯上也一脉相承，因此css in js理念不错，但要得到推广还需要时间。 CSS Houdini 提出了一个前无古人的的设想：开放 CSS 的 API 给开发者，开发者可以通过这套接口自行扩展 CSS，并提供相应的工具允许开发者介入浏览器渲染引擎的样式和布局流程中。简单的说houdini可以让大家去写css 的polyfill从而极大的改善css新特性引入的速度。不过讽刺的是，它本身也需要浏览器支持，w3c标准还处于working draft，大多数浏览器都还没很好支持，大家可以期待一下～</p>
+<h2 id="工程化"><a href="#工程化" class="headerlink" title="工程化"></a>工程化</h2><p>提到工程化先拿腾讯直播团队分享过的一张图来镇楼，很多小伙伴会狭隘的认为工程化就是webpack或者gulp打包而已，其实这个应该涵盖从项目创建、开发、编译、打包、测试、发布、监控全流程。 项目初始化 项目脚手架目前已经非常普遍，例如create-react-app或者vue-cli都是官方标准的脚手架工具。对于一些稍大的公司都建议自己包装一套自己的脚手架，这样可以沉淀很多最佳实践，例如工程目录结构、lint配置、监控配置、打点配置等等，因此脚手架是落地前端架构标准化不可或缺的一环。 本地开发 lint的规范一定要在项目初期就落地，可以直接拿airbnb的规范或者再定制化一下。lint可以极大的提升代码质量，至少从代码风格来看可以保证统一。 Sonar的引入可以进一步提升代码质量，帮助分析出潜在的问题，同时分析代码的重复率，过长的高数等等，这些都是所谓的代码bad smell，如果任其发展下去，项目维护成本会直线上升。 Mock工具的必要性在前后端联调时就能充分提现，很多时候由于前后端接口定义不清晰导致联调过程就是一个扯皮过程，如果缺乏mock工具，前端也会沦为后端接口调试的触发器，前端页面点一下，后端调试大半天，前端小伙伴们伤不起啊。Mock工具至少要有接口定义和本地mock的能力，能够极大提升大家研发体验。 打包 前端工程打包工具强烈推荐webpack 4，强大的插件能力能够让你做几乎任何事情。webpack4中引入了更为强大智能的code split能力，能够极大缩减包大小，经过实践通常减小幅度都在30%-50%，而且在打包速度上也有很大改进，通常也有30%的提升。</p>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><p>当老板给你发一个线上问题的截屏，你本地又无法重现，又没有足够的日志，这时候是不是郁闷，和老板信任的小船说翻就翻了。 监控从能力来看分为几个阶段： 第一阶段：硬件运维能力，例如服务器运行情况，CPU、内存、磁盘、网络等等，在拓机情况下能够快速响应。 第二阶段：应用服务的监控，例如服务可用性、异常流量监控、页面接口的响应时间、App crash等等。 第三阶段：核心业务指标监控，例如业务核心链路数据同比环比的对比等等。 第四阶段：全链路的数据监控，从客户端、前端到服务层，到数据层，能够通过唯一id串联起来，可以方便回溯用户操作，重现问题现场。 很显然要做到监控这四个阶段需要做大量的基础设施，往往大厂都有一套完备的轮子。对于小团队而言，采用开源方案能够快速补全能力。 Cat 是美团开源的业界良心监控方案，对于前后端都有不错的监控能力，数据收集也很完备，能够提供实时的性能指标、健康状况、实时告警等数据，在多家互联网公司也得到实践，实属拯救码农头发的必备工具，你值得拥有～ umeng 作为移动端行为分析工具已经有非常广泛的使用，不过对于大厂而言用户数据非常关键，如果有能力还是建议自研，毕竟用户的行为数据是核心资产，将来可以基于这些数据做推荐、分析等等有价值的事情。 lighthouse/perf curve/perf budget 这些都是作为性能监控的工具，不仅仅可以得到线上环境真实数据，还能在开发阶段提前预警性能问题、落地性能优化的最佳实践，也是小伙伴们不可或缺的好伴侣～</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>这里通常指的是自动化测试而非手工测试，从测试覆盖范围可以分为单元测试、UI测试、接口测试和功能自动化测试。我所经历的公司或团队，几乎没有能把自动化测试能够做好的，时间和需求频繁变更往往是最大的借口，不过程序员内心都不愿意写测试用例的吧（手动捂脸）。 从落地难易程度来看，接口测试和单元测试最好落地，接口不说了难度不高收益还不错，主要需要对数据准备有些要求。单元测试首推Jest，同时还能统计出覆盖率，但是单元测试要明确好可以测试的范围，一般业务逻辑和底层通用方法比较适合。所以业务逻辑代码从UI层代码抽离非常重要，这时候redux这类状态管理框架就有了天然优势了，里面reducer、action部分就可以单测覆盖。 UI的测试一般对于组件库有点帮助，简单的做法就是通过snapshot进行dom对比，简单粗暴。功能自动化很少能够落地，appium或者selenium都是其中翘楚，需要看业务情况，如果有频繁页面改动，一开始功能自动化写的爽，后续维护成本大的惊人，而且由于功能覆盖时间差，还是需要大量手动测试的。</p>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><p>自从出现Node之后，前端技术正式进入服务端开发，从而让前端的小伙伴们可以进行全栈的开发，技术栈的范畴变的更大，对于业务的把控能力也变强了。 Node可以带来几个明显的好处 第一，可以作为BFF(Backend for Frontend)层，解决前后端接口频繁变更的问题，通过BFF层可以实现更加灵活的接口，接口字段的过滤，接口的聚合等等 第二，可以用做SSR(Server Side Render)，通过Node层同构直出，可以将前端渲染代码放在服务端，实现首屏的服务端渲染，提升首屏渲染时间 第三，基于“只要能用JS实现，最终都会用JS实现”定律，Node让前端同学可以用JS撸后端代码，这个掌控一切的感觉太爽了~ Node也存在一些缺点 第一，需要额外的服务器，很多场景下Node层仅仅做接口透传的工作，对于服务器是一种浪费，而且作为一个核心节点如果一旦挂掉整个应用都不可用 第二，需要对Node服务有一整套的打包、部署、监控等能力，这个对于前端同学来说提出了较高的运维能力的要求，这些事情往往让前端同学苦不堪言 服务端最近可以持续关注GraphQL/Serverless，这两项技术对于前后端的架构设计都会带来深远的影响。</p>
+<h2 id="2019年下半年展望"><a href="#2019年下半年展望" class="headerlink" title="2019年下半年展望"></a>2019年下半年展望</h2><p>中后台的重塑 针对中后台业务特点，缺乏详尽的交互设计，缺乏足够的前端资源，页面样式相对统一，业界提出通过少量代码或者无代码方式搭建中后台前端系统。目前有的一些最佳实践：Fusion Design，飞冰，Ant Design Pro。大家都是从几个方向去实现中后台前端系统的无代码化，Ant Design Pro基于Ant Design提供了一整套中后台的网站框架和页面模板，对于快速搭建很有帮助。Fusion Design和飞冰是通过打通设计和编码环节，直接从sketch文档导出相应的页面代码，也是极大的释放了前端同学码页面的工作量。 Flutter跨平台解决方案 Flutter作为一个跨多端(iOS，Android，PC，Embedded)，具有美观、快速、高效、开放的特点，目前在闲鱼、贝壳、阿里等公司都有落地场景，作为下一代跨平台解决方案我们可以持续关注，它具有一个非常宏大的野心，背靠Google大厂，能够从系统底层开始抹平各端差异，具有一个强大的技术架构来支持，长期来看还是挺值得期待的。 阿里前端委员会四大技术方向 以下内容摘抄自圆心的分享文稿</p>
+<ol>
+<li>搭建服务：<em>_可以看到整个搭建服务无论是在中后台还是整个无线端，以及 PC 端都有大量场景，这样大量场景需要把整个框架标准化，希望把里面的元件、组件以及模块标准化，还希望把这样的服务能够服务于今天所有无论是中后台也好，C 端页面也好，希望有这样的体系——服务化标准化的方式服务，打通整个体系，这就是为什么把搭建服务认为是面向未来最重要的方向。</em></li>
+<li>Serverless：<strong>可以让前端更加贴近业务，可以让更多能力下沉。</strong>前端转到 Node 体系有一个很大的挑战，但是到了 Serverless 我们可以不用关注部署，不用关注运维，不需要关注所有的 DevOps，也不需要关注底层数据库的状态，他会让我们前后端整个的体系像前后端分层一样又往前迈一步。_</li>
+<li>智能化：<strong>因为在 AI 来临的时候，我们能否从一个 Design 变成一个 Code？</strong>今天每个公司的前端都有大量的设计、大量原代码，我们通过大量设计稿和原代码进行机器学习，让中间的布局可学习，让中间的元件可学习，我相信未来 D2C 一定能够解决前端生产力瓶颈，让前端从今天大量低端开发、手工工作中解放出来，将精力转移到很多领域深度的参与、深度的突破。_</li>
+<li>IDE： 今天阿里的前端我们做了叫工程中台，工程中台做到了前端代码从提交到发布的管控，当然包括中间提交之后整个代码的编译、构建、检测以及发布。但是在前台的部分，每个团队都有一个工具，而这个工具在各团队之间割裂的，无法复用。<br>因为工程不仅仅是提交到发布，前端工程化应该从编码开始到发布，应该是一个完整的链路、完整的格局<br>前端技术栈标准化 前端发展到现在，整个技术栈依旧处于百花齐放的阶段，但是对于公司或者团队而言，需要逐步从草莽时代走向正规军时代，这就需要在技术栈标准化上做一些事情。例如对于一个10人左右的前端团队而言，如果还是三大前端框架并存，那么技术沉淀、代码复用都无从谈起。所以对于一个前端团队而言，标准化的技术栈是非常重要的，需要统一的脚手架、lint配置、mock工具、编程语言、框架、监控等等。</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>大前端的技术非常繁杂，由于个人和团队精力有限，总是有不少遗漏还需要各位小伙伴们补充。对于各个技术所处的采用生命周期也限于个人的体验，总是难免有些争议，我只能尽可能做到相对合理。 将各个技术放在不同的生命周期中，本意不是去贬低某项技术，其实恰恰相反，能够出现在Laggards周期往往说明这个技术得到岁月的洗礼，经过长时间的验证。只是一个时代总是有一个时代主流的技术，这个总结期望大家能够不断自省审视当前的技术栈，保持在业界主流对于未来项目维护、吸引人才都是很有帮助的。 无论什么样的技术总会有过时的那一天，身为码农还是要持续不断学习，不要仅仅修炼术的方面停留在各种技术的使用之上，还要多多修炼道的方面，能够拨开技术的表面，看清它背后的原理以及解决问题的本质。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/" rel="tag">前端方向</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/06/vue-%E8%AE%A9%E9%A6%96%E9%A1%B5%E7%A7%92%E5%BC%80/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vue-让首页秒开
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/06/js-%E5%87%BD%E6%95%B0%E7%9A%846%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">js-函数的6个基本术语</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

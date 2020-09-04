@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    css-伪类 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-css-伪类"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  css-伪类
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/11/css-%E4%BC%AA%E7%B1%BB/" class="article-date">
+  <time datetime="2017-11-25T10:49:20.000Z" itemprop="datePublished">2017-11-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">4 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>CSS伪类是用来添加一些选择器的特殊效果。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>伪类的语法：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">selector</span><span class="selector-pseudo">:pseudo-class</span> &#123;<span class="attribute">property</span>:value;&#125;</span><br></pre></td></tr></table></figure>
+<p>CSS类也可以使用伪类：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">selector</span><span class="selector-class">.class</span><span class="selector-pseudo">:pseudo-class</span> &#123;<span class="attribute">property</span>:value;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="anchor伪类"><a href="#anchor伪类" class="headerlink" title="anchor伪类"></a>anchor伪类</h2><p>在支持 CSS 的浏览器中，链接的不同状态都可以以不同的方式显示</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: <span class="number">#FF0000</span>;</span><br><span class="line">&#125;</span><br><span class="line">/\* 未访问的链接 */</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: <span class="number">#00FF00</span>;</span><br><span class="line">&#125;</span><br><span class="line">/\* 已访问的链接 */</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: <span class="number">#FF00FF</span>;</span><br><span class="line">&#125;</span><br><span class="line">/\* 鼠标划过链接 */</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: <span class="number">#0000FF</span>;</span><br><span class="line">&#125;</span><br><span class="line">/\* 已选中的链接 */</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong> 在CSS定义中，a:hover 必须被置于 a:link 和 a:visited 之后，才是有效的。</p>
+<p><strong>注意：</strong> 在 CSS 定义中，a:active 必须被置于 a:hover 之后，才是有效的。 <strong>注意：</strong>伪类的名称不区分大小写。</p>
+<h2 id="伪类和CSS类"><a href="#伪类和CSS类" class="headerlink" title="伪类和CSS类"></a>伪类和CSS类</h2><p>伪类可以与 CSS 类配合使用：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.red:visited &#123;color:#FF0000;&#125; &lt;a class="red" href="css-syntax.html"&gt;CSS 语法&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>如果在上面的例子的链接已被访问，它会显示为红色。</p>
+<hr>
+<h2 id="CSS-first-child伪类"><a href="#CSS-first-child伪类" class="headerlink" title="CSS - :first - child伪类"></a>CSS - :first - child伪类</h2><p>您可以使用 :first-child 伪类来选择元素的第一个子元素 <strong>注意：</strong>在IE8的之前版本必须声明<code>&lt;!DOCTYPE&gt;</code> ，这样 :first-child 才能生效。</p>
+<h2 id="匹配第一个-元素"><a href="#匹配第一个-元素" class="headerlink" title="匹配第一个  元素"></a>匹配第一个 <p> 元素</h2><p>在下面的例子中，选择器匹配作为任何元素的第一个子元素的 <code>&lt;p&gt;</code> 元素：</p>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:first-child</span> &#123; <span class="attribute">color</span>:blue; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="匹配所有-lt-p-gt-元素中的第一个-lt-i-gt-元素"><a href="#匹配所有-lt-p-gt-元素中的第一个-lt-i-gt-元素" class="headerlink" title="匹配所有&lt;p&gt; 元素中的第一个 &lt;i&gt; 元素"></a>匹配所有<code>&lt;p&gt;</code> 元素中的第一个 <code>&lt;i&gt;</code> 元素</h2><p>在下面的例子中，选择相匹配的所有<code>&lt;p&gt;</code>元素的第一个 <code>&lt;i&gt;</code> 元素：</p>
+<h2 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span> &gt; <span class="selector-tag">i</span><span class="selector-pseudo">:first-child</span> &#123; <span class="attribute">color</span>:blue; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="匹配所有作为第一个子元素的-lt-p-gt-元素中的所有-lt-i-gt-元素"><a href="#匹配所有作为第一个子元素的-lt-p-gt-元素中的所有-lt-i-gt-元素" class="headerlink" title="匹配所有作为第一个子元素的 &lt;p&gt; 元素中的所有 &lt;i&gt; 元素"></a>匹配所有作为第一个子元素的 <code>&lt;p&gt;</code> 元素中的所有 <code>&lt;i&gt;</code> 元素</h2><p>在下面的例子中，选择器匹配所有作为元素的第一个子元素的 <code>&lt;p&gt;</code> 元素中的所有 <code>&lt;i&gt;</code> 元素：</p>
+<h2 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">:first-child</span> <span class="selector-tag">i</span> &#123; <span class="attribute">color</span>:blue; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CSS-lang-伪类"><a href="#CSS-lang-伪类" class="headerlink" title="CSS - :lang 伪类"></a>CSS - :lang 伪类</h2><p>:lang 伪类使你有能力为不同的语言定义特殊的规则 <strong>注意：</strong>IE8必须声明<code>&lt;!DOCTYPE&gt;</code>才能支持;lang伪类。 在下面的例子中，:lang 类为属性值为 no 的q元素定义引号的类型：</p>
+<h2 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">q</span><span class="selector-pseudo">:lang(no)</span> &#123;<span class="attribute">quotes</span>: <span class="string">"~"</span> <span class="string">"~"</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="所有CSS伪类-元素"><a href="#所有CSS伪类-元素" class="headerlink" title="所有CSS伪类/元素"></a>所有CSS伪类/元素</h2><p>选择器</p>
+<p>示例</p>
+<p>示例说明</p>
+<p><code>:checked</code></p>
+<p><code>input:checked</code></p>
+<p>选择所有选中的表单元素</p>
+<p><code>:disabled</code></p>
+<p><code>input:disabled</code></p>
+<p>选择所有禁用的表单元素</p>
+<p><code>:empty</code></p>
+<p><code>p:empty</code></p>
+<p>选择所有没有子元素的p元素</p>
+<p><code>:enabled</code></p>
+<p><code>input:enabled</code></p>
+<p>选择所有启用的表单元素</p>
+<p><code>:firstof-type</code></p>
+<p><code>p:first-of-type</code></p>
+<p>选择每个父元素是p元素的第一个p子元素</p>
+<p><code>:in-range</code></p>
+<p><code>input:in-range</code></p>
+<p>选择元素指定范围内的值</p>
+<p><code>:invalid</code></p>
+<p><code>input:invalid</code></p>
+<p>选择所有无效的元素</p>
+<p><code>:last-child</code></p>
+<p><code>p:last-child</code></p>
+<p>选择所有p元素的最后一个子元素</p>
+<p><code>:last-of-type</code></p>
+<p><code>p:last-of-type</code></p>
+<p>选择每个p元素是其母元素的最后一个p元素</p>
+<p><code>:not(selector)</code></p>
+<p><code>:not(p)</code></p>
+<p>选择所有p以外的元素</p>
+<p><code>:nth-child(n)</code></p>
+<p><code>p:nth-child(2)</code></p>
+<p>选择所有p元素的第二个子元素</p>
+<p><code>:nth-last-child(n)</code></p>
+<p><code>p:nth-last-child(2)</code></p>
+<p>选择所有p元素倒数的第二个子元素</p>
+<p><code>:nth-last-of-type(n)</code></p>
+<p><code>p:nth-last-of-type(2)</code></p>
+<p>选择所有p元素倒数的第二个为p的子元素</p>
+<p><code>:nth-of-type(n)</code></p>
+<p><code>p:nth-of-type(2)</code></p>
+<p>选择所有p元素第二个为p的子元素</p>
+<p><code>:only-of-type</code></p>
+<p><code>p:only-of-type</code></p>
+<p>选择所有仅有一个子元素为p的元素</p>
+<p><code>:only-child</code></p>
+<p><code>p:only-child</code></p>
+<p>选择所有仅有一个子元素的p元素</p>
+<p><code>:optional</code></p>
+<p><code>input:optional</code></p>
+<p>选择没有”required”的元素属性</p>
+<p><code>:out-of-range</code></p>
+<p><code>input:out-of-range</code></p>
+<p>选择指定范围以外的值的元素属性</p>
+<p><code>:read-only</code></p>
+<p><code>input:read-only</code></p>
+<p>选择只读属性的元素属性</p>
+<p><code>:read-write</code></p>
+<p><code>input:read-write</code></p>
+<p>选择没有只读属性的元素属性</p>
+<p><code>:required</code></p>
+<p><code>input:required</code></p>
+<p>选择有”required”属性指定的元素属性</p>
+<p><code>:root</code></p>
+<p><code>root</code></p>
+<p>选择文档的根元素</p>
+<p><code>:target</code></p>
+<p><code>#news:target</code></p>
+<p>选择当前活动#news元素(点击URL包含锚的名字)</p>
+<p><code>:valid</code></p>
+<p><code>input:valid</code></p>
+<p>选择所有有效值的属性</p>
+<p><code>:link</code></p>
+<p><code>a:link</code></p>
+<p>选择所有未访问链接</p>
+<p><code>:visited</code></p>
+<p><code>a:visited</code></p>
+<p>选择所有访问过的链接</p>
+<p><code>:active</code></p>
+<p><code>a:active</code></p>
+<p>选择正在活动链接</p>
+<p><code>:hover</code></p>
+<p><code>a:hover</code></p>
+<p>把鼠标放在链接上的状态</p>
+<p><code>:focus</code></p>
+<p><code>input:focus</code></p>
+<p>选择元素输入后具有焦点</p>
+<p><code>:first-letter</code></p>
+<p><code>p:first-letter</code></p>
+<p>选择每个<p> 元素的第一个字母</p>
+<p><code>:first-line</code></p>
+<p><code>p:first-line</code></p>
+<p>选择每个<p> 元素的第一行</p>
+<p><code>:first-child</code></p>
+<p><code>p:first-child</code></p>
+<p>选择器匹配属于任意元素的第一个子元素的 <code>&lt;p&gt;</code> 元素</p>
+<p><code>:before</code></p>
+<p><code>p:before</code></p>
+<p>在每个<p>元素之前插入内容</p>
+<p><code>:after</code></p>
+<p><code>p:after</code></p>
+<p>在每个<p>元素之后插入内容</p>
+<p><code>:lang(_language_)</code></p>
+<p><code>p:lang(it)</code></p>
+<p>为<code>&lt;p&gt;</code>元素的lang属性选择一个开始值</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/11/js-%E6%AF%94%E8%BE%83%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            js-比较和逻辑运算符
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/11/Jquery-%E9%80%89%E6%8B%A9%E5%99%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Jquery-选择器</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

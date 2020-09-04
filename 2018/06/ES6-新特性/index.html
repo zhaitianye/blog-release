@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    ES6-新特性 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-ES6-新特性"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ES6-新特性
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/06/ES6-%E6%96%B0%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2018-06-03T12:01:44.000Z" itemprop="datePublished">2018-06-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ES/">ES</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">16 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>ES6 是 Javascript 的下一个版本，它有很多很棒的新特性。这些特性复杂程度各不相同，但对于简单的脚本和复杂的应用都很有用。在本文中，我们将讨论一些精心挑选的 ES6 特性，这些特性可以用于你日常的 Javascript 编码中。 请注意，当前浏览器已经全面展开对这些 ES6 新特性的支持，尽管目前的支持程度还有所差异。如果你需要支持一些缺少很多 ES6 特性的旧版浏览器，我将介绍一些当前可以帮助你开始使用 ES6 的解决方案。 文中大多数代码示例都带有“运行代码”链接，你可以查看代码并运行它。</p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="LET"><a href="#LET" class="headerlink" title="LET"></a>LET</h4><p>你习惯于用 <code>var</code> 声明变量。现在你也可以用 <code>let</code> 了。两者微妙的差别在于作用域。<code>var</code> 声明的变量作用域为包围它的函数，而 <code>let</code> 声明的变量作用域仅在它所在的块中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(true) &#123;</span><br><span class="line"> let x &#x3D; 1;</span><br><span class="line">&#125;</span><br><span class="line">console.log(x); &#x2F;&#x2F; undefined</span><br></pre></td></tr></table></figure>
+<p>这样使得代码更加干净，减少滞留的变量。看看以下经典的数组遍历：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(let i &#x3D; 0, l &#x3D; list.length; i &amp;lt; l; i++) &#123;</span><br><span class="line"> &#x2F;&#x2F; do something with list[i]</span><br><span class="line">&#125;</span><br><span class="line">console.log(i); &#x2F;&#x2F; undefined</span><br></pre></td></tr></table></figure>
+<p>举个例子，通常情况下，我们在同一作用域里使用变量 <code>j</code> 来完成另一个遍历。但是，现在有了 <code>let</code>，可以安全地再一次声明 <code>i</code> 变量。因为它只在被声明的块中有效。</p>
+<h4 id="CONST"><a href="#CONST" class="headerlink" title="CONST"></a>CONST</h4><p>还有另一个用于声明块作用域变量的方法。使用 <code>const</code>，你可以声明一个值的只读引用。必须直接给一个变量赋值。如果尝试修改变量或者没有立即给变量赋值，都将报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const MY_CONSTANT &#x3D; 1;</span><br><span class="line"></span><br><span class="line">MY_CONSTANT &#x3D; 2 &#x2F;&#x2F; Error</span><br><span class="line"></span><br><span class="line">const SOME_CONST; &#x2F;&#x2F; Error</span><br></pre></td></tr></table></figure>
+<p>注意，对象的属性或数组成员还是可以改变的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const MY_OBJECT &#x3D; &#123;some: 1&#125;;</span><br><span class="line">MY_OBJECT.some &#x3D; &#39;body&#39;; &#x2F;&#x2F; Cool</span><br></pre></td></tr></table></figure>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>箭头函数为 Javascript 语言增色不少。它使得代码更简洁。我们早早地在本文中介绍箭头函数，这样就可以在后面的示例中加以利用了。以下代码片段是箭头函数和我们熟悉的 ES5 版本的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let books &#x3D; [&#123;title: &#39;X&#39;, price: 10&#125;, &#123;title: &#39;Y&#39;, price: 15&#125;];</span><br><span class="line">let titles &#x3D; books.map( item &#x3D;&gt; item.title );</span><br><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">var titles &#x3D; books.map(function(item) &#123;</span><br><span class="line"> return item.title;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果我们观察箭头函数的语法，会发现其中并没有出现 <code>function</code> 关键词。只保留零或多个参数，“胖箭头”（<code>=&gt;</code>）和函数表达式。<code>return</code> 声明被隐式加入。</p>
+<p>带有零或多个参数时，必须使用括号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">books.map( () &#x3D;&amp;gt; 1 ); &#x2F;&#x2F; [1, 1]</span><br><span class="line">&#x2F;&#x2F; Multiple arguments</span><br><span class="line">[1,2].map( (n, index) &#x3D;&amp;gt; n * index ); &#x2F;&#x2F; [0, 2]</span><br></pre></td></tr></table></figure>
+<p>如果需要写更多的逻辑或更多的空格，可以把函数表达式放在（<code>{...}</code>）块中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let result &#x3D; [1, 2, 3, 4, 5].map( n &#x3D;&gt; &#123;</span><br><span class="line"> n &#x3D; n % 3;</span><br><span class="line"> return n;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>  箭头函数不单只是为了输入更少的字符，它们的表现也和一般函数不同。它继承了当前上下文的 <code>this</code> 和 <code>arguments</code>。这就意味着，你可以避免写 <code>var that = this</code> 这样丑陋的代码，也不需要把函数绑定到正确的上下文了。举例如下（注意对比 <code>this.title</code> 和 ES5 版本的 <code>that.title</code> 的不同）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let book &#x3D; &#123;</span><br><span class="line"> title: &#39;X&#39;,</span><br><span class="line"> sellers: [&#39;A&#39;, &#39;B&#39;],</span><br><span class="line"> printSellers() &#123;</span><br><span class="line">this.sellers.forEach(seller &#x3D;&amp;gt;console.log(seller + &#39; sells &#39; + this.title));</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">var book &#x3D; &#123;</span><br><span class="line"> title: &#39;X&#39;,</span><br><span class="line"> sellers: [&#39;A&#39;, &#39;B&#39;],</span><br><span class="line"> printSellers: function() &#123;</span><br><span class="line">var that &#x3D; this;</span><br><span class="line">this.sellers.forEach(function(seller) &#123;</span><br><span class="line"> console.log(seller + &#39; sells &#39; + that.title)</span><br><span class="line">&#125;)</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>字符串</p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>几个方便的方法被添加到 <code>String</code> 的原型中。其中大多数用于简化需要用 <code>indexOf()</code> 方法来解决的问题的复杂度，并达到同样的效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#39;my string&#39;.startsWith(&#39;my&#39;); &#x2F;&#x2F;true</span><br><span class="line">&#39;my string&#39;.endsWith(&#39;my&#39;); &#x2F;&#x2F; false</span><br><span class="line">&#39;my string&#39;.includes(&#39;str&#39;); &#x2F;&#x2F; true</span><br></pre></td></tr></table></figure>
+<p>很简单但是很有效。添加了另外一个方便的用于创建重复字符串的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;my &#39;.repeat(3); &#x2F;&#x2F; &#39;my my my &#39;</span><br></pre></td></tr></table></figure>
+<h4 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h4><p>模板字符串提供一个简洁的方式来实现字符串插值。你可能已经对这种语法很熟悉了；它基于美元符号和花括号 <code>${..}</code>。模板字符串置于引号之中。以下是快速示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let name &#x3D; &#39;John&#39;,</span><br><span class="line"> apples &#x3D; 5,</span><br><span class="line"> pears &#x3D; 7,</span><br><span class="line"> bananas &#x3D; function() &#123; return 3; &#125;</span><br><span class="line">console.log(&#96;This is $&#123;name&#125;.&#96;);</span><br><span class="line">console.log(&#96;He carries $&#123;apples&#125; apples, $&#123;pears&#125; pears, and $&#123;bananas()&#125; bananas.&#96;);</span><br><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">console.log(&#39;He carries &#39; + apples + &#39; apples, &#39; + pears + &#39; pears, and &#39; + bananas() +&#39; bananas.&#39;);</span><br></pre></td></tr></table></figure>
+<p>以上形式对比 ES5 仅仅是便于字符串拼接。事实上，模板字符串还可以用于多行字符串。记住空格也是字符串的一部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let x &#x3D; &#96;1...</span><br><span class="line">2...</span><br><span class="line">3 lines long!&#96;; &#x2F;&#x2F; Yay</span><br><span class="line">&#x2F;&#x2F; ES5 equivalents:</span><br><span class="line">var x &#x3D; &quot;1...n&quot; +</span><br><span class="line">&quot;2...n&quot; +</span><br><span class="line">&quot;3 lines long!&quot;;</span><br><span class="line">var x &#x3D; &quot;1...n2...n3 lines long!&quot;;</span><br></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p><code>Array</code> 对象增加了一些新的静态方法，<code>Array</code> 原型上也增加了一些新方法。 首先， <code>Array.from</code> 从类数组和可遍历对象中创建 <code>Array</code> 的实例。类数组对象示例包括：</p>
+<ul>
+<li>函数中的 <code>arguments</code>；</li>
+<li>由 <code>document.getElementByTagName()</code> 返回的 <code>nodeList</code>；</li>
+<li>新增加的 <code>Map</code> 和 <code>Set</code> 数据结构。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let itemElements &#x3D; document.querySelectorAll(&#39;.items&#39;);</span><br><span class="line">let items &#x3D; Array.from(itemElements);</span><br><span class="line">items.forEach(function(element) &#123;</span><br><span class="line">console.log(element.nodeType)</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; A workaround often used in ES5:</span><br><span class="line">let items &#x3D; Array.prototype.slice.call(itemElements);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在上面的例子中，可以看到 <code>items</code> 数组拥有 <code>forEach</code> 方法，该方法是 <code>itemElements</code> 集合所不具备的。 <code>Array.from</code> 的一个有趣的特性是它的第二个可选参数<code>mapFunction</code> 。该参数允许你通过一次单独调用创建一个新的映射数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let navElements &#x3D; document.querySelectorAll(&#39;nav li&#39;);</span><br><span class="line">let navTitles &#x3D; Array.from(navElements, el &#x3D;&gt; el.textContent);</span><br></pre></td></tr></table></figure>
+<p>然后，我们可以使用 <code>Array.of</code> 方法，该方法的表现很像 <code>Array</code> 构造函数。它适合只传递一个参数的情况。因此 <code>Array.of</code> 是 <code>new Array()</code> 的更优选择。然而，更多的情况下，你会想使用数组字面量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let x &#x3D; new Array(3); &#x2F;&#x2F; [undefined, undefined, undefined]</span><br><span class="line">let y &#x3D; Array.of(8); &#x2F;&#x2F; [8]</span><br><span class="line">let z &#x3D; [1, 2, 3]; &#x2F;&#x2F; Array literal</span><br></pre></td></tr></table></figure>
+<p>最后但同样重要的，有几个方法被添加到 <code>Array</code> 的原型上。我想 <code>find</code> 方法将会很受 Javascript 开发者欢迎。</p>
+<ul>
+<li><code>find</code> 返回回调返回 <code>true</code> 的第一个元素。</li>
+<li><code>findIndex</code> 返回回调函数返回 <code>true</code>的第一个元素的下标。</li>
+<li><code>fill</code> 用所给参数“覆盖”数组的元素。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[5, 1, 10, 8].find(n &#x3D;&gt; n &#x3D;&#x3D;&#x3D; 10) &#x2F;&#x2F; 10</span><br><span class="line">[5, 1, 10, 8].findIndex(n &#x3D;&gt; n &#x3D;&#x3D;&#x3D; 10) &#x2F;&#x2F; 2</span><br><span class="line">[0, 0, 0].fill(7) &#x2F;&#x2F; [7, 7, 7]</span><br><span class="line">[0, 0, 0, 0, 0].fill(7, 1, 3) &#x2F;&#x2F; [0, 7, 7, 7, 0]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h3><p><code>Math</code> 对象新增了几个方法。</p>
+<ul>
+<li><code>Math.sign</code> 返回数字的符号，结果为 <code>1</code>、<code>-1</code> 或 <code>0</code>。</li>
+<li><code>Math.trunc</code> 返回无小数位的数字。</li>
+<li><code>Math.cbrt</code> 返回数字的立方根。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Math.sign(5); &#x2F;&#x2F; 1</span><br><span class="line">Math.sign(-9); &#x2F;&#x2F; -1</span><br><span class="line">Math.trunc(5.9); &#x2F;&#x2F; 5</span><br><span class="line">Math.trunc(5.123); &#x2F;&#x2F; 5</span><br><span class="line">Math.cbrt(64); &#x2F;&#x2F; 4</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="扩展操作符"><a href="#扩展操作符" class="headerlink" title="扩展操作符"></a>扩展操作符</h3><p>扩展操作符（<code>...</code>）这个语法用于特定地方扩展元素非常方便，例如函数调用中的参数。让你了解它们用途的最好方法就是举例子了。 首先，我们看看如何在一个另数组中扩展一个数组的元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let values &#x3D; [1, 2, 4];</span><br><span class="line">let some &#x3D; [...values, 8]; &#x2F;&#x2F; [1, 2, 4, 8]</span><br><span class="line">let more &#x3D; [...values, 8, ...values]; &#x2F;&#x2F; [1, 2, 4, 8, 1, 2, 4]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">let values &#x3D; [1, 2, 4];</span><br><span class="line">&#x2F;&#x2F; Iterate, push, sweat, repeat...</span><br><span class="line">&#x2F;&#x2F; Iterate, push, sweat, repeat...</span><br></pre></td></tr></table></figure>
+<p>扩展语法在传参数调用函数时也非常有用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let values &#x3D; [1, 2, 4];</span><br><span class="line">doSomething(...values);</span><br><span class="line">function doSomething(x, y, z) &#123;</span><br><span class="line"> &#x2F;&#x2F; x &#x3D; 1, y &#x3D; 2, z &#x3D; 4</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">doSomething.apply(null, values);</span><br></pre></td></tr></table></figure>
+<p>正如你所看到的，该语法让我们免去通常使用 <code>fn.apply()</code> 的麻烦。它非常灵活，因为扩展操作符可以用在参数列表中的任意位置。这意味着以下调用方式会产生一样的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let values &#x3D; [2, 4];</span><br><span class="line">doSomething(1, ...values);</span><br></pre></td></tr></table></figure>
+<p>我们已经把扩展操作符应用在数组和参数中。事实上，它可以用在所有的可遍历对象中，例如一个 <code>NodeList</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let form &#x3D; document.querySelector(&#39;#my-form&#39;),</span><br><span class="line"> inputs &#x3D; form.querySelectorAll(&#39;input&#39;),</span><br><span class="line"> selects &#x3D; form.querySelectorAll(&#39;select&#39;);</span><br><span class="line">let allTheThings &#x3D; [form, ...inputs, ...selects];</span><br></pre></td></tr></table></figure>
+<p>现在， <code>allTheThings</code> 是一个包含 <code>&lt;form&gt;</code> 节点、 <code>&lt;input&gt;</code> 子节点和 <code>&lt;select&gt;</code> 子节点的二维数组。</p>
+<h3 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h3><p>解构提供了一个方便地从对象或数组中提取数据的方法。对于初学者，请看以下数组示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let [x, y] &#x3D; [1, 2]; &#x2F;&#x2F; x &#x3D; 1, y &#x3D; 2</span><br><span class="line">&#x2F;&#x2F; ES5 equivalent:</span><br><span class="line">var arr &#x3D; [1, 2];</span><br><span class="line">var x &#x3D; arr[0];</span><br><span class="line">var y &#x3D; arr[1];</span><br></pre></td></tr></table></figure>
+<p>使用这个语法，可以一次性给多个变量赋值。一个很好的附加用处是可以很简单地交换变量值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let x &#x3D; 1,</span><br><span class="line"> y &#x3D; 2;</span><br><span class="line">[x, y] &#x3D; [y, x]; &#x2F;&#x2F; x &#x3D; 2, y &#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>解构也可以用于对象。注意对象中必须存在对应的键：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let obj &#x3D; &#123;x: 1, y: 2&#125;;</span><br><span class="line">let &#123;x, y&#125; &#x3D; obj; &#x2F;&#x2F; x &#x3D; 1, y &#x3D; 2</span><br></pre></td></tr></table></figure>
+<p>你也可以使用该机制来修改变量名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let obj &#x3D; &#123;x: 1, y: 2&#125;;</span><br><span class="line">let &#123;x: a, y: b&#125; &#x3D; obj; &#x2F;&#x2F; a &#x3D; 1, b &#x3D; 2</span><br></pre></td></tr></table></figure>
+<p>另一个有趣的模式是模拟多个返回值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function doSomething() &#123;</span><br><span class="line"> return [1, 2]</span><br><span class="line">&#125;</span><br><span class="line">let [x, y] &#x3D; doSomething(); &#x2F;&#x2F; x &#x3D; 1, y &#x3D; 2</span><br></pre></td></tr></table></figure>
+<p>解构可以用来为参数对象赋默认值。通过对象字面量，可以模拟命名参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function doSomething(&#123;y &#x3D; 1, z &#x3D; 0&#125;) &#123;</span><br><span class="line">console.log(y, z);</span><br><span class="line">&#125;</span><br><span class="line">doSomething(&#123;y: 2&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><h4 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h4><p>在 ES6 中，可以定义函数的参数默认值。语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function doSomething(x, y &#x3D; 2) &#123;</span><br><span class="line"> return x * y;</span><br><span class="line">&#125;</span><br><span class="line">doSomething(5); &#x2F;&#x2F; 10</span><br><span class="line">doSomething(5, undefined); &#x2F;&#x2F; 10</span><br><span class="line">doSomething(5, 3); &#x2F;&#x2F; 15</span><br></pre></td></tr></table></figure>
+<p>看起来很简洁，对吧？ 我肯定你之前在 ES5 中曾经需要给某些参数赋默认值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function doSomething(x, y) &#123;</span><br><span class="line"> y &#x3D; y &#x3D;&#x3D;&#x3D; undefined ? 2 : y;</span><br><span class="line"> return x * y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传递 <code>undefined</code> 或不传参数时都会触发参数使用默认值。</p>
+<h4 id="REST参数"><a href="#REST参数" class="headerlink" title="REST参数"></a>REST参数</h4><p>我们已经学习了省略号操作符。剩余参数和它很类似。它同样是使用 <code>...</code> 语法，允许你把末尾的参数保存在数组中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function doSomething(x, ...remaining) &#123;</span><br><span class="line"> return x * remaining.length;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">doSomething(5, 0, 0, 0); &#x2F;&#x2F; 15</span><br></pre></td></tr></table></figure>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>模块当然是一个受欢迎的 Javascript 语言新功能。我想仅仅是这个主要特性就值得我们投入到 ES6 中来。 当前任何重要的 Javascript 项目都使用某种模块系统 —— 可能是“展示模块模式”或其他 AMD 或 CommonJS 扩展形式的东西。然而，浏览器并没有任何模块系统特性。为了实现 AMD 或 CommonJS，你通常需要一个构建步骤或加载器。解决这个问题的工具包括 RequireJS、Browserify 和 WebPack。 ES6 规范包含模块化的新语法和加载器。如果你未来想使用模块，应该使用这个语法。现代构建工具支持这种形式（可能通过插件），所以你可以放心使用。（不用担心 —— 我们将在后面的“转译”章节中讨论） 在 ES6 的模块语法中。模块设计围绕 <code>export</code> 和 <code>import</code> 关键词。现在让我们看一个包含两个模块的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; lib&#x2F;math.js</span><br><span class="line">export function sum(x, y) &#123;</span><br><span class="line"> return x + y;</span><br><span class="line">&#125;</span><br><span class="line">export var pi &#x3D; 3.141593;</span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import &#123; sum, pi &#125; from &quot;lib&#x2F;math&quot;;</span><br><span class="line">console.log(&#39;2π &#x3D; &#39; + sum(pi, pi));</span><br></pre></td></tr></table></figure>
+<p>正如你所见，可以存在多个 <code>export</code> 声明。每一个都要明确地指明输出值的类型（本例中的 <code>function</code> 和 <code>var</code>）。</p>
+<p>本例中的 <code>import</code> 声明使用一种语法（类似解构）来明确定义被导入的内容。可以使用 <code>*</code> 通配符，结合 <code>as</code> 关键词给模块提供一个本地名称，把模块当成一个整体导入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import * as math from &quot;lib&#x2F;math&quot;;</span><br><span class="line">console.log(&#39;2π &#x3D; &#39; + math.sum(math.pi, math.pi));</span><br></pre></td></tr></table></figure>
+<p>模块系统有一个 <code>default</code> 输出。它可以是一个函数。只需要提供一个本地名称就可以导入这个默认值（即无解构）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; lib&#x2F;my-fn.js</span><br><span class="line">export default function() &#123;</span><br><span class="line"> console.log(&#39;echo echo&#39;);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; app.js</span><br><span class="line">import doSomething from &#39;lib&#x2F;my-fn&#39;;</span><br><span class="line">doSomething();</span><br></pre></td></tr></table></figure>
+<p>请注意 <code>import</code> 声明是同步的，但是模块代码需在所有依赖加载完后才会运行。</p>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>类是 ES6 中备受热议的一个特性。一部分人认为它不符合 Javascript 的原型特性，另一部分人认为类可以降低从其他语言转过来的入门门槛，并帮助人们构建大规模应用。不管怎样，它是 ES6 的一部分。这里我们快速介绍一下。 类的创建围绕 <code>class</code> 和 <code>constructor</code> 关键词。以下是个简短的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Vehicle &#123;</span><br><span class="line"> constructor(name) &#123;</span><br><span class="line">this.name &#x3D; name;</span><br><span class="line">this.kind &#x3D; &#39;vehicle&#39;;</span><br><span class="line"> &#125;</span><br><span class="line"> getName() &#123;</span><br><span class="line">return this.name;</span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; Create an instance</span><br><span class="line">let myVehicle &#x3D; new Vehicle(&#39;rocky&#39;);</span><br></pre></td></tr></table></figure>
+<p>注意类的定义不是一般的对象，因此，类的成员间没有逗号。</p>
+<p>创造一个类的对象时，需要使用 <code>new</code> 关键词。继承一个基类时，使用 <code>extends</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Car extends Vehicle &#123;</span><br><span class="line"> constructor(name) &#123;</span><br><span class="line">super(name);</span><br><span class="line">this.kind &#x3D; &#39;car&#39;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let myCar &#x3D; new Car(&#39;bumpy&#39;);</span><br><span class="line">myCar.getName(); &#x2F;&#x2F; &#39;bumpy&#39;</span><br><span class="line">myCar instanceof Car; &#x2F;&#x2F; true</span><br><span class="line">myCar instanceof Vehicle; &#x2F;&#x2F;true</span><br></pre></td></tr></table></figure>
+<p>从衍生类中，你可以使用从任何构造函数或方法中使用 <code>super</code> 来获取它的基类：</p>
+<ul>
+<li>使用 <code>super()</code> 调用父类构造函数。</li>
+<li>调用其它成员，举个例子，使用 <code>super.getName()</code> 。</li>
+</ul>
+<h3 id="记号"><a href="#记号" class="headerlink" title="记号"></a>记号</h3><p>记号是一个新的原生数据类型，像 <code>Number</code> 和 <code>String</code> 一样。你可以使用记号为对象属性创建唯一标识或创建唯一的常量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const MY_CONSTANT &#x3D; Symbol();</span><br><span class="line">let obj &#x3D; &#123;&#125;;</span><br><span class="line">obj[MY_CONSTANT] &#x3D; 1;</span><br></pre></td></tr></table></figure>
+<p>注意通过记号产生的键值对不能通过 <code>Object.getOwnPropertyNames()</code> 获得，在 <code>for...in</code> 遍历、 <code>Object.keys()</code> 、<code>JSON.stringify()</code> 中均不可见。这是与基于字符串的键相反的。你可以通过 <code>Object.getOwnPropertySymbols()</code> 获取一个对象的记号数组。</p>
+<p>记号与 <code>const</code> 配合很合适，因为它们都有不可改变的特性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const CHINESE &#x3D; Symbol();</span><br><span class="line">const ENGLISH &#x3D; Symbol();</span><br><span class="line">const SPANISH &#x3D; Symbol();</span><br><span class="line"></span><br><span class="line">switch(language) &#123;</span><br><span class="line"> case CHINESE:</span><br><span class="line">&#x2F;&#x2F; </span><br><span class="line">break;</span><br><span class="line"> case ENGLISH:</span><br><span class="line">break;</span><br><span class="line"> case SPANISH:</span><br><span class="line">&#x2F;&#x2F; </span><br><span class="line">break;</span><br><span class="line"> default:</span><br><span class="line">&#x2F;&#x2F; </span><br><span class="line">break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以为 symbol 添加描述。虽然不可以通过描述获取 symbol，但是可用于代码调试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const CONST_1 &#x3D; Symbol(&#39;my symbol&#39;);</span><br><span class="line">const CONST_2 &#x3D; Symbol(&#39;my symbol&#39;);</span><br><span class="line">typeof CONST_1 &#x3D;&#x3D;&#x3D; &#39;symbol&#39;; &#x2F;&#x2F; true</span><br><span class="line">CONST_1 &#x3D;&#x3D;&#x3D; CONST_2; &#x2F;&#x2F; false</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES/" rel="tag">ES</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2018/06/AngularJS-%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            AngularJS-作用域
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/06/AngularJS-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">AngularJS-表达式</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

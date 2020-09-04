@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    Linux-xShell常用指令大全 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Linux-xShell常用指令大全"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Linux-xShell常用指令大全
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/Linux-xShell%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E5%A4%A7%E5%85%A8/" class="article-date">
+  <time datetime="2019-01-29T15:46:39.000Z" itemprop="datePublished">2019-01-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h6 id="1-命令ls——列出文件"><a href="#1-命令ls——列出文件" class="headerlink" title="(1)命令ls——列出文件"></a>(1)命令ls——列出文件</h6><p>ls -la 给出当前目录下所有文件的一个长列表，包括以句点开头的“隐藏”文件 ls a* 列出当前目录下以字母a开头的所有文件 ls -l *.doc 给出当前目录下以.doc结尾的所有文件</p>
+<h6 id="2-命令cp——复制文件"><a href="#2-命令cp——复制文件" class="headerlink" title="(2)命令cp——复制文件"></a>(2)命令cp——复制文件</h6><p>cp afile afile.bak 把文件复制为新文件afile.bak cp afile /home/bible/ 把文件afile从当前目录复制到/home/bible/目录下 cp * /tmp 把当前目录下的所有未隐藏文件复制到/tmp/目录下 cp -a docs docs.bak 递归性地把当前目录下的docs目录复制为新目录docs.bak,保持文件属性，并复制所有的文件，包括以句点开头的隐藏文件。为了方便起见，-a选项包含-R选项 cp -i 在覆盖前询问用户 cp -v 告诉用户正在做什么</p>
+<h6 id="3-命令mv——移动和重命名文件"><a href="#3-命令mv——移动和重命名文件" class="headerlink" title="(3)命令mv——移动和重命名文件"></a>(3)命令mv——移动和重命名文件</h6><p>mv aflie bfile 将afile重命名为bfile mv afile /tmp 把当前目录下的afile移动到/tmp/目录下</p>
+<h6 id="4-命令rm——删除文件和目录"><a href="#4-命令rm——删除文件和目录" class="headerlink" title="(4)命令rm——删除文件和目录"></a>(4)命令rm——删除文件和目录</h6><p>rm afile 删除文件afile rm * 删除当前目录下的所有文件（未隐藏文件）。rm命令不删除目录，除非也指定了-r(递归)参数。 rm -rf domed 删除domed目录以及它所包含的所有内容 rm -i a* 删除当前目录下所有以字母a开头的文件，并且在每次删除时，提示用户进行确认</p>
+<h6 id="5-命令cd——更改目录"><a href="#5-命令cd——更改目录" class="headerlink" title="(5)命令cd——更改目录"></a>(5)命令cd——更改目录</h6><p>cd ~ 切换到主目录 cd /tmp 切换到目录/tmp cd dir 切换到当前目录下的dir目录 cd / 切换到根目录 cd .. 切换到到上一级目录 cd ../.. 切换到上二级目录 cd ~ 切换到用户目录，比如是root用户，则切换到/root下</p>
+<h6 id="6-命令mkdir——建立目录"><a href="#6-命令mkdir——建立目录" class="headerlink" title="(6)命令mkdir——建立目录"></a>(6)命令mkdir——建立目录</h6><p>mkdir phots 在当前目录中建立名为photos的目录 mkdir -p this/that/theother 在当前目录下建立指定的嵌套子目录</p>
+<h6 id="7-命令mkdir——删除目录"><a href="#7-命令mkdir——删除目录" class="headerlink" title="(7)命令mkdir——删除目录"></a>(7)命令mkdir——删除目录</h6><p>mkdir 将删除空目录</p>
+<h6 id="8-命令more、less——查看文件内容"><a href="#8-命令more、less——查看文件内容" class="headerlink" title="(8)命令more、less——查看文件内容"></a>(8)命令more、less——查看文件内容</h6><p>more /etc/passwd 查看/etc/passwd的内容 功能：分页显示命令 more file more命令也可以通过管道符(|)与其他的命令一起使用, 例如： ps ux|more ls|more less /etc/passwd 查看/etc/passwd的内容</p>
+<h6 id="9-命令grep——搜索文件内容"><a href="#9-命令grep——搜索文件内容" class="headerlink" title="(9)命令grep——搜索文件内容"></a>(9)命令grep——搜索文件内容</h6><p>grep bible /etc/exports 在文件exports中查找包含bible的所有行 tail -100 /var/log/apache/access.log|grep 404 在WEB服务器日志文件access.log的后100行中查找包含“404”的行 tail -100 /var/log/apache/access.log|grep -v googlebot 在WEB服务器日志文件access.log的后100行中，查找没有被google访问的行 grep -v ^# /etc/apache2/httpd.conf 在主apache配置文件中，查找所有非注释行</p>
+<h6 id="10-命令find——查找文件"><a href="#10-命令find——查找文件" class="headerlink" title="(10)命令find——查找文件"></a>(10)命令find——查找文件</h6><p>find .-name *.rpm 在当前目录中查找rpm包 find .|grep page 在当前目录及其子目录中查找文件名包含page的文件 locate traceroute 在系统的任何地方查找文件名包含traceroute的文件</p>
+<h6 id="11-命令vi——编辑文件"><a href="#11-命令vi——编辑文件" class="headerlink" title="(11)命令vi——编辑文件"></a>(11)命令vi——编辑文件</h6><p>vi /etc/bubby.txt 用vi编辑文件/etc/bubby.txt vim /etc/bubby.txt 用vi编辑文件/etc/bubby.txt 快捷操作： 切换窗口：alt+1,alt+2 全屏：alt+回车 将vim挂起（暂停）：ctrl+z，暂停后可进行其他shell操作，完了之后可通过 fg 命令切换回vim界面继续编辑 :MR：查看历史文件记录（注意：MR大写） :sp 横向切换界面窗口 :vsp 纵向切换界面窗口 方便多文件对照编码（如下图：） emacs /etc/bubby.txt 用emacs编辑文件/etc/bubby.txt</p>
+<h6 id="12-命令rz、sz——文件上传下载"><a href="#12-命令rz、sz——文件上传下载" class="headerlink" title="(12)命令rz、sz——文件上传下载"></a>(12)命令rz、sz——文件上传下载</h6><p>运行命令sudo rz，即是接收文件，xshell就会弹出文件选择对话框，选好文件之后关闭对话框，文件就会上传到linux里的当前目录 。 运行命令sudo sz file 就是发文件到windows上（保存的目录是可以配置） 比ftp命令方便多了，而且服务器不用再开FTP服务了。</p>
+<h6 id="13-命令cat——显示文件内容"><a href="#13-命令cat——显示文件内容" class="headerlink" title="(13)命令cat——显示文件内容"></a>(13)命令cat——显示文件内容</h6><p>cat file</p>
+<h6 id="14-命令ps——查看进程"><a href="#14-命令ps——查看进程" class="headerlink" title="(14)命令ps——查看进程"></a>(14)命令ps——查看进程</h6><p>ps [options] DESCRIPTION（描述）：ps命令显示运行程序选项的一些信息。如果你想显示选项的一些重复信息，请使用top命令替代。 用标准语法查看系统上的每一个进程。 ps -e ps -ef ps -eF ps -ely</p>
+<h6 id="15-命令kill——杀掉进程"><a href="#15-命令kill——杀掉进程" class="headerlink" title="(15)命令kill——杀掉进程"></a>(15)命令kill——杀掉进程</h6><p>[root@linux ~]# kill -signal %jobnumber [root@linux ~]# kill -l 参数： -l ：这个是 L 的小写，列出目前 kill 能够使用的讯号 (signal) 有哪些？共有62个 信号。 signal ：代表给予后面接的那个工作什么样的指示啰！用 man 7 signal 可知： -1 ：重新读取一次参数的设定档 (类似 reload)； -2 ：代表与由键盘输入 [ctrl]-c 同样的动作； -9 ：立刻强制删除一个工作； -15：以正常的程序方式终止一项工作。与 -9 是不一样的。 范例一：找出目前的 bash 环境下的背景工作，并将该工作删除。 [root@linux ~]# jobs [1]+ Stopped vim bashrc [root@linux ~]# kill -9 %1 [1]+ 已砍掉 vim bashrc</p>
+<h6 id="16-命令stop、start——重启tomcat-catalina-sh-stop"><a href="#16-命令stop、start——重启tomcat-catalina-sh-stop" class="headerlink" title="(16)命令stop、start——重启tomcat ./catalina.sh stop"></a>(16)命令stop、start——重启tomcat ./catalina.sh stop</h6><p>./catalina.sh start</p>
+<h6 id="17-命令top——查看cpu、内存"><a href="#17-命令top——查看cpu、内存" class="headerlink" title="(17)命令top——查看cpu、内存"></a>(17)命令top——查看cpu、内存</h6><h6 id="18-命令pwd——查看当前路径"><a href="#18-命令pwd——查看当前路径" class="headerlink" title="(18)命令pwd——查看当前路径"></a>(18)命令pwd——查看当前路径</h6><h6 id="19-命令tar——打包、命令rar——解包"><a href="#19-命令tar——打包、命令rar——解包" class="headerlink" title="(19)命令tar——打包、命令rar——解包"></a>(19)命令tar——打包、命令rar——解包</h6><h6 id="20-命令tail——查看文件详细信息"><a href="#20-命令tail——查看文件详细信息" class="headerlink" title="(20)命令tail——查看文件详细信息"></a>(20)命令tail——查看文件详细信息</h6><p>tail -f aaa.txt 看aaa.txt文件的详细信息 tail -n x aaa.log x:最后几行</p>
+<h6 id="21-命令head——查看文件的名字和后缀"><a href="#21-命令head——查看文件的名字和后缀" class="headerlink" title="(21)命令head——查看文件的名字和后缀"></a>(21)命令head——查看文件的名字和后缀</h6><p>head -n x aaa.log x:开始几行aaa.log：要查看的文件的名字和后缀</p>
+<h6 id="22-命令diff——比较文件内容"><a href="#22-命令diff——比较文件内容" class="headerlink" title="(22)命令diff——比较文件内容"></a>(22)命令diff——比较文件内容</h6><p>diff dir1 dir2 比较目录1与目录2的文件列表是否相同，但不比较文件的实际内容，不同则列出 diff file1 file2 比较文件1与文件2的内容是否相同，如果是文本格式的文件，则将不相同的内容显示，如果是二进制代码则只表示两个文件是不同的 comm file1 file2 比较文件，显示两个文件不相同的内容</p>
+<h6 id="23-命令ln——建立连接"><a href="#23-命令ln——建立连接" class="headerlink" title="(23)命令ln——建立连接"></a>(23)命令ln——建立连接</h6><p>ln source_path target_path 硬连接 ln -s source_path target_path 软连接</p>
+<h6 id="24-命令touch——创建一个空文件"><a href="#24-命令touch——创建一个空文件" class="headerlink" title="(24)命令touch——创建一个空文件"></a>(24)命令touch——创建一个空文件</h6><p>touch aaa.txt 创建一个空文件，文件名为aaa.txt 三、基本系统命令</p>
+<h6 id="25-命令man——查看某个命令的帮助"><a href="#25-命令man——查看某个命令的帮助" class="headerlink" title="(25)命令man——查看某个命令的帮助"></a>(25)命令man——查看某个命令的帮助</h6><p>man ls 显示ls命令的帮助内容</p>
+<h6 id="26-命令w——显示登录用户的详细信息"><a href="#26-命令w——显示登录用户的详细信息" class="headerlink" title="(26)命令w——显示登录用户的详细信息"></a>(26)命令w——显示登录用户的详细信息</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sarge:~# w</span><br></pre></td></tr></table></figure>
+<h6 id="27-命令who——显示登录用户"><a href="#27-命令who——显示登录用户" class="headerlink" title="(27)命令who——显示登录用户"></a>(27)命令who——显示登录用户</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sarge:~# who</span><br></pre></td></tr></table></figure>
+<h6 id="28-命令last——查看最近那些用户登录系统"><a href="#28-命令last——查看最近那些用户登录系统" class="headerlink" title="(28)命令last——查看最近那些用户登录系统"></a>(28)命令last——查看最近那些用户登录系统</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sarge:~# last</span><br></pre></td></tr></table></figure>
+<h6 id="29-命令date——系统日期设定"><a href="#29-命令date——系统日期设定" class="headerlink" title="(29)命令date——系统日期设定"></a>(29)命令date——系统日期设定</h6><p>date -s “060520 06:00:00″ 设置系统时期为2006年5月20日6点整。</p>
+<h6 id="30-命令"><a href="#30-命令" class="headerlink" title="(30)命令"></a>(30)命令</h6><p>clock——时钟设置 clock –r 对系统Bios中读取时间参数 clock –w 将系统时间(如由date设置的时间)写入Bios</p>
+<h6 id="31-命令uname——查看系统版本"><a href="#31-命令uname——查看系统版本" class="headerlink" title="(31)命令uname——查看系统版本"></a>(31)命令uname——查看系统版本</h6><p>uname -R 显示操作系统内核的version</p>
+<h6 id="32-命令reboot、shutdown——关闭和重新启动计算机"><a href="#32-命令reboot、shutdown——关闭和重新启动计算机" class="headerlink" title="(32)命令reboot、shutdown——关闭和重新启动计算机"></a>(32)命令reboot、shutdown——关闭和重新启动计算机</h6><p>reboot 重新启动计算机 shutdown -r now 重新启动计算机，停止服务后重新启动计算机 shutdown -h now 关闭计算机，停止服务后再关闭系统 halt 关闭计算机 一般用shutdown -r now,在重启系统是，关闭相关服务，shutdown -h now也是如此。</p>
+<h6 id="33-命令su——切换用户"><a href="#33-命令su——切换用户" class="headerlink" title="(33) 命令su——切换用户"></a>(33) 命令su——切换用户</h6><p>su - 切换到root用户 su – zhoulj 切换到zhoulj用户， 注意：- ，他很关键，使用-，将使用用户的环境变量</p>
+<h6 id="34-命令free——查看内存和swap分区使用情况"><a href="#34-命令free——查看内存和swap分区使用情况" class="headerlink" title="(34)命令free——查看内存和swap分区使用情况"></a>(34)命令free——查看内存和swap分区使用情况</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sarge:~# free -tm</span><br></pre></td></tr></table></figure>
+<h6 id="35-命令uptime——现在的时间-，系统开机运转到现在经过的时间，连线的使用者数量，最近一分钟，五分钟和十五分钟的系统负载"><a href="#35-命令uptime——现在的时间-，系统开机运转到现在经过的时间，连线的使用者数量，最近一分钟，五分钟和十五分钟的系统负载" class="headerlink" title="(35)命令uptime——现在的时间 ，系统开机运转到现在经过的时间，连线的使用者数量，最近一分钟，五分钟和十五分钟的系统负载"></a>(35)命令uptime——现在的时间 ，系统开机运转到现在经过的时间，连线的使用者数量，最近一分钟，五分钟和十五分钟的系统负载</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sarge:~# uptime</span><br></pre></td></tr></table></figure>
+<h6 id="36-命令vmstat——监视虚拟内存使用情况"><a href="#36-命令vmstat——监视虚拟内存使用情况" class="headerlink" title="(36) 命令vmstat——监视虚拟内存使用情况"></a>(36) 命令vmstat——监视虚拟内存使用情况</h6><p>vmstat</p>
+<h6 id="37-命令iostat——磁盘吞吐量"><a href="#37-命令iostat——磁盘吞吐量" class="headerlink" title="(37)命令iostat——磁盘吞吐量"></a>(37)命令iostat——磁盘吞吐量</h6><p>-c 只显示CPU行 -d 显示磁盘行 -k 以千字节为单位显示磁盘输出 -t 在输出中包括时间戳 -x 在输出中包括扩展的磁盘指标</p>
+<h6 id="38-命令clear——-清屏"><a href="#38-命令clear——-清屏" class="headerlink" title="(38)命令clear—— 清屏"></a>(38)命令clear—— 清屏</h6><h6 id="39-重启tomcat"><a href="#39-重启tomcat" class="headerlink" title="(39)重启tomcat"></a>(39)重启tomcat</h6><h6 id="40-变更使用者chown"><a href="#40-变更使用者chown" class="headerlink" title="(40)变更使用者chown"></a>(40)变更使用者chown</h6><p>变更文件或目录的拥有者或所属群组 chown -R -h owner file</p>
+<ul>
+<li>R(recursive)选项意味着对所有子目录下的文件也都进行同样的操作。</li>
+<li>h选项意味着在改变符号链接文件的属主时不影响该链接所指向的目标文件 chown -R xh test1 (test1目录及子目录的所有文件属主变为xh) </li>
+</ul>
+<p>1.查看要重启进程的进程号 Ps –ef|grep xxxx </p>
+<p>2.杀掉该项目的进程 先杀第二列，再杀第一列 Sudo kill -9 x x (x为进程号，同时杀多个中间以空格分割) </p>
+<p>3.重启tomcat 首先找到tomcat的bin目录 Cd tomcat/bin; 然后运行 sudo ./run.sh即可启动tomcat。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/02/MongoDB%E2%80%93nodejs%E9%93%BE%E6%8E%A5%E5%92%8C%E6%93%8D%E4%BD%9C%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            MongoDB–nodejs链接和操作常用代码
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/ES6-async%E5%87%BD%E6%95%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ES6-async函数</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

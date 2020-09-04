@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c语言-实现简单常用滤波算法 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c语言-实现简单常用滤波算法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c语言-实现简单常用滤波算法
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%B8%B8%E7%94%A8%E6%BB%A4%E6%B3%A2%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2015-08-16T09:49:14.000Z" itemprop="datePublished">2015-08-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c%E8%AF%AD%E8%A8%80/">c语言</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>1.限幅滤波算法（程序判断滤波算法） 方法解析： 根据经验判断，确定两次采样允许的最大偏差值（设定为A），每次检测到新值时判断： 如果本次值与上次值之差&lt;=A，则本次值有效， 如果本次值与上次值只差&gt;A,则本次值无效，放弃本次值，用上次值代替本次值。 优点： 能有效克服因偶然因素引起的脉冲干扰 缺点： 无法抑制那种周期性的干扰，平滑度差</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> A 10</span></span><br><span class="line"><span class="keyword">char</span> value;</span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> new_value;</span><br><span class="line">  new_value = get_ad();</span><br><span class="line">  <span class="keyword">if</span> ( ( new_value - value &gt; A ) || ( value - new_value &gt; A )</span><br><span class="line">  <span class="keyword">return</span> value;</span><br><span class="line">  <span class="keyword">return</span> new_value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.中位值滤波法 方法解析： 连续采样N次（N取奇数），把N次采样值按大小排列，取中间值为本次有效值 优点： 能有效克服因偶然因素引起的波动干扰，对温度，液位的变化缓慢的被测参数有良好的滤波效果 缺点： 对流量，速度等快速变化的参数不宜</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 11</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> value_buf[N];</span><br><span class="line"><span class="keyword">char</span> count,i,j,temp;</span><br><span class="line"><span class="keyword">for</span> ( count=<span class="number">0</span>;count&lt;N;count++)</span><br><span class="line">&#123;</span><br><span class="line">value_buf[count] = get_ad();</span><br><span class="line"><span class="built_in">delay</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;N<span class="number">-1</span>;j++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;N-j;i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> ( value_buf[i]&gt;value_buf[i+<span class="number">1</span>] )</span><br><span class="line">&#123;</span><br><span class="line">temp = value_buf[i];</span><br><span class="line">value_buf[i] = value_buf[i+<span class="number">1</span>];</span><br><span class="line">value_buf[i+<span class="number">1</span>] = temp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> value_buf[(N<span class="number">-1</span>)/<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>3.算术平均滤波 方法解析： 连续取N个采样值进行平均运算，N值较大时：信号平滑度较高，但灵敏度较低 N值较小时：信号平滑度较低，但灵敏度较高。N值的选取：一般12左右。 优点： 适应于对一般具有随机干扰的信号进行滤波，这样信号的特点是有一个平均值，信号在某一数值范围附近上下波动 缺点： 对于测量速度较慢或要求数据计算速度较快的实时控制并不适用，比较浪费RAM</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 12</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> ( count=<span class="number">0</span>;count&lt;N;count++)</span><br><span class="line">&#123;</span><br><span class="line">sum + = get_ad();</span><br><span class="line"><span class="built_in">delay</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> (<span class="keyword">char</span>)(sum/N);</span><br></pre></td></tr></table></figure>
+
+<p>4.递推平均滤波（滑动平均滤波法） 方法解析： 把连续取N个采样值看成一个队列，队列的长度固定为N，每次采样到一个新数据放入队尾，并扔掉原来队首的一次数据（先进先出）。 把队列中的N个数据进行算术平均运算，就可获得新的滤波结果。N值的选取：一般12. 优点： 对周期性干扰有良好的抑制作用，平滑度高，适应于高频振荡的系统 缺点： 灵敏度低，对偶然出现的脉冲性干扰的抑制作用较差。不易消除由于脉冲干扰所引起打的采样值偏差，不适用于脉冲干扰比较严重的场合 浪费RAM</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 12</span></span><br><span class="line"><span class="keyword">char</span> value_buf[N];</span><br><span class="line"><span class="keyword">char</span> i=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> count;</span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">value_buf[i++] = get_ad();</span><br><span class="line"><span class="keyword">if</span> ( i == N ) i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> ( count=<span class="number">0</span>;count&lt;N,count++)</span><br><span class="line">sum = value_buf[count];</span><br><span class="line"><span class="keyword">return</span> (<span class="keyword">char</span>)(sum/N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.中位值平均滤波法（防脉冲干扰平均滤波法） 方法解析： 相当于中位值滤波+算术平均滤波，连续采样N个数据，去掉一个最大值和一个最小值，然后计算N-2个数据的算术平均值。 N值的选取：3-14 优点：融合了两种滤波法的优点 对于偶然出现的脉冲性干扰，可消除由于脉冲干扰所引起的采样值偏差。 缺点： 测量速度较慢，和算法平均滤波一样，浪费RAM。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 12</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> count,i,j;</span><br><span class="line"><span class="keyword">char</span> value_buf[N];</span><br><span class="line"><span class="keyword">int</span> sum=<span class="number">0</span>,temp=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (count=<span class="number">0</span>;count&lt;N;count++)</span><br><span class="line">&#123;</span><br><span class="line">value_buf[count] = get_ad();</span><br><span class="line"><span class="built_in">delay</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;N<span class="number">-1</span>;j++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;N-j;i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> ( value_buf[i]&gt;value_buf[i+<span class="number">1</span>] )</span><br><span class="line">&#123;</span><br><span class="line">temp = value_buf[i];</span><br><span class="line">value_buf[i] = value_buf[i+<span class="number">1</span>];</span><br><span class="line">value_buf[i+<span class="number">1</span>] = temp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(count=<span class="number">1</span>;count&lt;N<span class="number">-1</span>;count++)</span><br><span class="line">sum += value[count];</span><br><span class="line"><span class="keyword">return</span> (<span class="keyword">char</span>)(sum/(N<span class="number">-2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>6一阶滞后滤波法 方法解析： 取a=0-1 本次滤波结果=（1-a）<em>本次采样值+a</em>上次滤波结果 优点： 对周期性干扰具有良好的抑制作用，适用于波动频率较高的场合 缺点： 相位滞后，灵敏度低，滞后程度取决于a值的大小，不能消除滤波频率高于采样频率的1/2的干扰信号</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> a 50</span></span><br><span class="line"><span class="keyword">char</span> value;</span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> new_value;</span><br><span class="line">new_value = get_ad();</span><br><span class="line"><span class="keyword">return</span> (<span class="number">100</span>-a)*value + a*new_value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7.加权递推平均滤波法 方法解析： 是对递推平均滤波法的改进，即不同时刻的数据加以不同的权 通常是，越接近现时刻的数据，权取得越大，给予新采样值的权系数越大，则灵敏度越高，但信号平滑度越低。 优点： 适用于有较大纯滞后时间常数的对象，和采样周期较短的系统 缺点: 对于纯滞后时间常数较小，采样周期较长，变化缓慢的信号，不能迅速反应系统当前所受干扰的严重程度，滤波效果差。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 12</span></span><br><span class="line"><span class="keyword">char</span> code coe[N] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>&#125;;</span><br><span class="line"><span class="keyword">char</span> code sum_coe = <span class="number">1</span>+<span class="number">2</span>+<span class="number">3</span>+<span class="number">4</span>+<span class="number">5</span>+<span class="number">6</span>+<span class="number">7</span>+<span class="number">8</span>+<span class="number">9</span>+<span class="number">10</span>+<span class="number">11</span>+<span class="number">12</span>;</span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> count;</span><br><span class="line">  <span class="keyword">char</span> value_buf[N];</span><br><span class="line">  <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (count=<span class="number">0</span>,count&lt;N;count++)</span><br><span class="line">&#123;</span><br><span class="line">  value_buf[count] = get_ad();</span><br><span class="line">  <span class="built_in">delay</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (count=<span class="number">0</span>,count&lt;N;count++)</span><br><span class="line">  sum += value_buf[count]*coe[count];</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">char</span>)(sum/sum_coe);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  8.消抖滤波法 方法解析： 设置一个滤波计数器，将每次采样值与当前有效值比较： 如果采样值＝当前有效值，则计数器清零，如果采样值&lt;&gt;当前有效值，则计数器+1，并判断计数器是否&gt;=上限N(溢出)，如果计数器溢出,则将本次值替换当前有效值,并清计数器 优点： 对于变化缓慢的被测参数有较好的滤波效果,可避免在临界值附近控制器的反复开/关跳动或显示器上数值抖动。 缺点： 对于快速变化的参数不宜，如果在计数器溢出的那一次采样到的值恰好是干扰值,则会将干扰值当作有效值导入系统</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 12</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">filter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> count=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> new_value;</span><br><span class="line">new_value = get_ad();</span><br><span class="line"><span class="keyword">while</span> (value !=new_value);</span><br><span class="line">&#123;</span><br><span class="line">count++;</span><br><span class="line"><span class="keyword">if</span> (count&gt;=N) <span class="keyword">return</span> new_value;</span><br><span class="line"><span class="built_in">delay</span>();</span><br><span class="line">new_value = get_ad();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>10.低通数字滤波 解析： 低通滤波也称一阶滞后滤波,方法是第N次采样后滤波结果输出值是(1-a)乘第N次采样值加a乘上次滤波结果输出值。可见a&lt;&lt;1。 该方法适用于变化过程比较慢的参数的滤波的C程序函数如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">low_filter</span><span class="params">(<span class="keyword">float</span> low_buf[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">float</span> sample_value;</span><br><span class="line"><span class="keyword">float</span> X=<span class="number">0.01</span>;</span><br><span class="line">sample_value=(<span class="number">1</span>_X)*low_buf[<span class="number">1</span>]+X*low buf[<span class="number">0</span>];</span><br><span class="line">retrun(sample_value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-define%E7%9A%84%E7%94%A8%E6%B3%95(%E8%BD%AC)/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c语言-#define的用法(转)
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80%E5%87%A0%E4%B8%AA%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c语言-几个经典的算法</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

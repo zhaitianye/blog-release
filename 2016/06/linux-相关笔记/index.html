@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    linux-相关笔记 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-linux-相关笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  linux-相关笔记
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2016/06/linux-%E7%9B%B8%E5%85%B3%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2016-06-13T14:06:38.000Z" itemprop="datePublished">2016-06-13</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>linux中，存放配置文件的是在/etc目录下，而存放命令的则是在/bin /sbin / usr/bin / usr/sbin中，命令当然都是以文件形式存放的。/sbin/中存放的是基本系统命令例如ifconfig、dump等，只有root可以执行，是super bin。而/bin存放的是普通命令例如ls 、chmod、kill等，root和普通用户都可以执行。/usr/bin里面存放的用户后期安装的软件的运行脚本，例如gzip、gcc、man等。/usr/sbin中安装的是用户管理系统的命令脚本。而且在root的PATH变量中必须包含有这四个路径，因为在命令行输入的命令实际能够执行是因为linux能够通过PATH变量里面指定的路径及其顺序找到该命令对应的运行脚本，找不到则command not found。</p>
+<p>linux中wget是一个软件包下载程序，而curl也是通过url的方式获得所需的软件包。</p>
+<p>要把自己的脚本或者目录的路径加入PATH变量中需要修改PATH，就是给PATH列表中增加一个路径。如果在命令行中使用PATH=$PATH:dir则只对当前对话有效，登出或重启之后则消失。如果在自己的~/.bash_profile中修改PATH，则需要在PATH列表中加入一个dir，这只对本用户有效。如果在/etc/profile中修改，则需要在export一行下面新增加一行export PATH=$PATH:dir即可永久且对所有用户生效。动态重启的命令就是source /etc/profile，而查看PATH的命令是echo $PATH。</p>
+<p>scp是跨主机的文件复制工具，复制代表着上传和下载。采用cp是本主机的复制操作，而rsync和scp都是跨主机文件传输工具。scp占用系统资源少。使用的方法就是scp [option] [原路径] [目标路径]，其中如果需要远程目录则形式为user_name@ip:path。之后需要输入登陆密码即可传输。</p>
+<p>密码学基本知识：加密的方法分为两种，一种单钥一种双钥，单钥对于密钥的保存非常重要因为密钥就只有一个。双钥有两把钥匙，一个公钥一个私钥。公钥和私钥是一一对应的关系，有一把公钥就必然有一把与之对应的、独一无二的私钥，反之亦成立。所有的（公钥, 私钥）对都是不同的。 用公钥可以解开私钥加密的信息，反之亦成立。同时生成公钥和私钥应该相对比较容易，但是从公钥推算出私钥，应该是很困难或者是不可能的。公钥用来加密信息，私钥用来数字签名。双钥加密典型算法RSA。假设有三个人A/B/C，C生成了自己的私钥，将公钥给了A和B，A和B对C进行数据传输使用该公钥进行加密，C再通过私钥进行解密即可。C给A数据传输时，先通过hash函数对数据生成digest摘要，再用私钥对digest进行加密生成signature数字签名，将其附在数据后面一齐发送给A，A收到整个数据之后使用公钥对signature进行解密得到digest，再对数据本身应用hash函数得到一个digest，两者对比确认数据是否被篡改过。为了证明A手中的公钥确实是对应C的私钥的，需要C在证书中心CA(certificate authority)对公钥进行认证，证书中心用自己的私钥，对鲍勃的公钥和一些相关信息一起加密，生成”数字证书”（Digital Certificate）。之后C给A发送数据时在signature之后附上自己的数字证书即可。A收到数据之后使用CA的公钥对数字证书进行解密，拿到真正的C的公钥，之后再进行解密。https就是一个应用，服务器端发回的网页是通过自己的私钥进行加密的，连同本身的数字证书传回，浏览器根据本身的证书管理器对数字证书验证，依据受信任的根证书颁发机构一项检查网页是否通过，如果通过则使用该机构的公钥进行加密得到网页的公钥，再进行解密得到数据部分。</p>
+<p>ssh：一种网络协议，用于计算机之间的加密登陆。ssh的实现版本有很多，包括linux的openssh，windows的putty等。要使用ssh需要两者均安装了ssh软件。ssh采用了公钥进行加密，（1）远程主机收到用户的登录请求，把自己的公钥发给用户。（2）用户使用这个公钥，将登录密码加密后，发送回来。（3）远程主机用自己的私钥，解密登录密码，如果密码正确，就同意用户登录。但是一旦中间人截获用户的登陆请求，将自己的公钥发给用户，用户登陆发送密码，中间人截获密码，登陆到远程主机就完蛋了。而且https是有CA的而ssh没有，每个人都是自己发公钥。ssh提供了公钥登陆可以省去密码的传输，所谓”公钥登录”，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求密码。ssh提供第二种级别（基于密匙的安全验证）需要依靠密钥，也就是你必须为自己创建一对密钥，并把公用密钥放在需要访问的服务器上。如果你要连接到SSH服务器上，客户端软件就会向服务器发出请求，请求用你的密钥进行安全验证。服务器收到请求之后，先在你在该服务器的家目录下寻找你的公钥，然后把它和你发送过来的公钥进行比较。如果两个密钥一致，服务器就用公用密钥加密“质询”（challenge）并把它发送给客户端软件。客户端软件收到“质询”之后就可以用你的私钥解密再把它发送给服务器。用这种方式，你必须知道自己的密钥。</p>
+<p>linux中挂载的概念：linux中文件组织形式是树形结构的，windows和dos也是树形的，但是linux只有一棵树，最顶层是根目录，其他节点是从根目录往下索引的。而windows是根据盘符（就是C盘、D盘、E盘等）创建多个并列级别的树形文件组织结构。这是软件管理系统。文件系统指文件存在的物理空间，linux系统中每个分区都是一个文件系统，都有自己的目录层次结构。linux会将这些分属不同分区的、单独的文件系统按一定的方式形成一个系统的总的目录层次结构，这个就是“挂载”，将一个文件系统的顶层目录挂到另一个文件系统的子目录上，使它们成为一个整体，称为挂载。把该子目录称为挂载点。挂载点必须是目录，一个分区挂载在一个已存在的目录上，这个目录可以不为空，但挂载后这个目录下以前的内容将不可用。挂载前要了解linux是否支持所要挂载的文件系统格式。挂载时使用mount命令：mount [-参数][-设备名称][-挂载点]，注意文件或者说目录不一定是磁盘中的，光盘、某种外设、软盘、其他OS的目录都是可以作为挂载点的。一个操作系统的运行离不开对文件的操作，因此必然要拥有并维护自己的文件系统。linux文件系统使用索引节点来记录文件信息，作用像windows的文件分配表。索引节点是一个结构，它包含了一个文件的长度、创建及修改时间、权限、所属关系、磁盘中的位置等信息。一个文件系统维护了一个索引节点的数组，每个文件或目录都与索引节点数组中的唯一一个元素对应。系统给每个索引节点分配了一个号码，也就是该节点在数组中的索引号，称为索引节点号。linux文件系统将文件索引节点号和文件名同时保存在目录中。所以，目录只是将文件的名称和它的索引节点号结合在一起的一张表，目录中每一对文件名称和索引节点号称为一个连接。对于一个文件来说有唯一的索引节点号与之对应，对于一个索引节点号，却可以有多个文件名与之对应。因此，在磁盘上的同一个文件可以通过不同的路径去访问它。可以用ln命令对一个已经存在的文件再建立一个新的连接，而不复制文件的内容。连接有软连接和硬连接之分，软连接又叫符号连接。它们各自的特点是：硬连接：原文件名和连接文件名都指向相同的物理地址。目录不能有硬连接；硬连接不能跨越文件系统（不能跨越不同的分区）文件在磁盘中只有一个拷贝，节省硬盘空间；由于删除文件要在同一个索引节点属于唯一的连接时才能成功，因此可以防止不必要的误删除。符号连接：用ln -s命令建立文件的符号连接符号连接是linux特殊文件的一种，作为一个文件，它的数据是它所连接的文件的路径名。类似windows下的快捷方式。可以删除原有的文件而保存连接文件，没有防止误删除功能。</p>
+<p>linux中软件的快捷启动方式都是在/usr/share/applications/目录中存放的，要建立某个软件的启动快捷方式则需要在该目录中新建一个desktop文件，并在启动配置两个关键的内容，一个是软件启动脚本.sh文件路径，一个是软件的icon图标，之后将desktop复制到桌面就可以了。</p>
+<p>debain系的linux系统包括ubuntu的系统清理方法：第一，通过df -h命令可以直接查看系统各个磁盘空间占用情况。大多数占用较多的目录未/var  /lib 和/usr。在任一目录中通过du -h -x –max-depth=1可以得到该目录中文件占用空间大小。/lib/modules目录中存放的安装的系统内核，linux是不会在安装新的内核之后删除旧有的内核的，会被保留，在/lib/modules中存放，可以通过du -h -x –max-depth=1看到。而通过uname -a可以得到系统正在使用的哪个内核，通过dpkg –get-selections|grep linux-image可以看到已经安装了哪些内核，保留正在使用内核和最近的一个内核，其他通过sudo apt-get purge generic_name header_name删除；第二，/var/log目录存放的是应用日志文件，没用的可以直接删除；第三，通过du -h /var/cache/apt/archives可以看到已经安装的软件包，linux安装软件默认不会清楚软件包的，即使卸载某个软件也不会删除他的软件包。所以删除已卸载的软件的软件包的方法：sudo apt-get autoclean。清除所有的软件包的方法sudo apt-get clean。清除孤立软件包的命令sudo apt-get autoremove;清理浏览器缓存。</p>
+<p>事实上linux的链接文件很有用处，包括软链接和硬链接。例如之前安装eclipse时如果通过在/xxx/eclipse/目录中直接启动eclipse可以运行，并且他可以自动检测到系统安装的jre的目录位置。但是我在/usr/share/applications/目录中添加他的desktop文件通过该文件启动的时候就不能找到/jre/bin/java导致无法启动，所以需要在/xxx/eclipse/目录中加入已经安装的jre目录的才能找到，但是如果把已经安装的180MB的jre目录再拷贝过来太浪费空间，所以可以通过在/xxx/eclipse中建立一个/jre目录在其中添加一个bin作为软链接指向已经安装的jre/bin目录就可以找到了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2016/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据结构-算法分析
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2016/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-100%E9%81%93%E7%BB%83%E4%B9%A0%E9%A2%98/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数据结构-100道练习题</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

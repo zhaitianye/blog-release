@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    mescroll-案例源码 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-mescroll-案例源码"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  mescroll-案例源码
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/03/mescroll-%E6%A1%88%E4%BE%8B%E6%BA%90%E7%A0%81/" class="article-date">
+  <time datetime="2017-03-23T12:47:51.000Z" itemprop="datePublished">2017-03-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/mescroll/">mescroll</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="listreports-html"><a href="#listreports-html" class="headerlink" title="listreports.html"></a>listreports.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no"</span>&gt;</span> <span class="comment">&lt;!-- necessary --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">content</span>=<span class="string">"1,2,3"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">""</span>&gt;</span> <span class="comment">&lt;!-- description --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"renderer"</span> <span class="attr">content</span>=<span class="string">"webkit"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>报告列表<span class="tag">&lt;/<span class="name">title</span>&gt;</span> <span class="comment">&lt;!-- base --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"../../css/comm/base-m.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"../../css/comm/mescroll.min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"../../css/bisserve/bisserve.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--\[if lt IE 9\]&gt; &lt;img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-wp-preserve="%3Cscript%20src%3D%22https%3A%2F%2Fcdn.bootcss.com%2Fhtml5shiv%2F3.7.3%2Fhtml5shiv.min.js%22%3E%3C%2Fscript%3E" data-mce-resize="false" data-mce-placeholder="1" class="mce-object" width="20" height="20" alt="&amp;lt;script&amp;gt;" title="&amp;lt;script&amp;gt;" /&gt; &lt;img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-wp-preserve="%3Cscript%20src%3D%22https%3A%2F%2Fcdn.bootcss.com%2Frespond.js%2F1.4.2%2Frespond.min.js%22%3E%3C%2Fscript%3E" data-mce-resize="false" data-mce-placeholder="1" class="mce-object" width="20" height="20" alt="&amp;lt;script&amp;gt;" title="&amp;lt;script&amp;gt;" /&gt; &lt;!\[endif\]--&gt;</span> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"</span> <span class="attr">data-wp-preserve</span>=<span class="string">"%3Cstyle%20type%3D%22text%2Fcss%22%3E%0A%20%20%20%20%20%20%20%20*%20%7B%20-webkit-touch-callout%3Anone%3B%20-webkit-user-select%3Anone%3B%20-webkit-tap-highlight-color%3Atransparent%3B%20%7D%0A%20%20%20%20%3C%2Fstyle%3E"</span> <span class="attr">data-mce-resize</span>=<span class="string">"false"</span> <span class="attr">data-mce-placeholder</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"mce-object"</span> <span class="attr">width</span>=<span class="string">"20"</span> <span class="attr">height</span>=<span class="string">"20"</span> <span class="attr">alt</span>=<span class="string">"<span class="symbol">&amp;lt;</span>style<span class="symbol">&amp;gt;</span>"</span> <span class="attr">title</span>=<span class="string">"<span class="symbol">&amp;lt;</span>style<span class="symbol">&amp;gt;</span>"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">"min-h-100s bg-F2F2F2"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear pos-r"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear h-50 z-99 select_munu"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear pos-r bg-white"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear col-xs-6 pl-0 pr-0 mt-10 mb-10 text-center bor bor-r bor-col-F2F2F2 line-h-30 f-14 f-w-600 sel-class"</span>&gt;</span> 选择分类<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"ml-5"</span> <span class="attr">src</span>=<span class="string">"../../img/listreports/pulldown.png"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear col-xs-6 pl-0 pr-0 mt-10 mb-10 text-center bor bor-l bor-col-F2F2F2 line-h-30 f-14 f-w-600 sel-rank"</span>&gt;</span> 选择排序<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"ml-5"</span> <span class="attr">src</span>=<span class="string">"../../img/listreports/pulldown.png"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"pos-a full-w t-50 line-h-50 bg-white z-99 bor bor-l-none bor-r-none bor-col-e1e1e1 dis-n sel-class-show"</span>&gt;</span> 默认 最新 倒序 <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"pos-a full-w t-50 line-h-50 bg-white z-99 bor bor-l-none bor-r-none bor-col-e1e1e1 dis-n sel-rank-show"</span>&gt;</span> 默认 快速检测报告 深度检测报告 <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 滑动区域 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"mescroll"</span> <span class="attr">class</span>=<span class="string">"clear pos-r overflow-h bg-ddd mescroll"</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--展示上拉加载的数据列表--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"dataList"</span> <span class="attr">class</span>=<span class="string">"data-list"</span>&gt;</span> <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"</span> <span class="attr">data-wp-preserve</span>=<span class="string">"%3Cscript%20src%3D%22..%2F..%2Fjs%2Fcomm%2Fjquery.min.js%22%3E%3C%2Fscript%3E"</span> <span class="attr">data-mce-resize</span>=<span class="string">"false"</span> <span class="attr">data-mce-placeholder</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"mce-object"</span> <span class="attr">width</span>=<span class="string">"20"</span> <span class="attr">height</span>=<span class="string">"20"</span> <span class="attr">alt</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> <span class="attr">title</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> /&gt;</span> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"</span> <span class="attr">data-wp-preserve</span>=<span class="string">"%3Cscript%20src%3D%22..%2F..%2Fjs%2Fcomm%2Fmescroll.min.js%22%3E%3C%2Fscript%3E"</span> <span class="attr">data-mce-resize</span>=<span class="string">"false"</span> <span class="attr">data-mce-placeholder</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"mce-object"</span> <span class="attr">width</span>=<span class="string">"20"</span> <span class="attr">height</span>=<span class="string">"20"</span> <span class="attr">alt</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> <span class="attr">title</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> /&gt;</span> <span class="comment">&lt;!-- 模拟数据js后期可以删掉 --&gt;</span> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"</span> <span class="attr">data-wp-preserve</span>=<span class="string">"%3Cscript%20src%3D%22..%2F..%2Fjs%2Freport%2Fpdlist1.js%22%3E%3C%2Fscript%3E"</span> <span class="attr">data-mce-resize</span>=<span class="string">"false"</span> <span class="attr">data-mce-placeholder</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"mce-object"</span> <span class="attr">width</span>=<span class="string">"20"</span> <span class="attr">height</span>=<span class="string">"20"</span> <span class="attr">alt</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> <span class="attr">title</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> /&gt;</span> <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"</span> <span class="attr">data-wp-preserve</span>=<span class="string">"%3Cscript%20src%3D%22..%2F..%2Fjs%2Freport%2Flistreports.js%22%3E%3C%2Fscript%3E"</span> <span class="attr">data-mce-resize</span>=<span class="string">"false"</span> <span class="attr">data-mce-placeholder</span>=<span class="string">"1"</span> <span class="attr">class</span>=<span class="string">"mce-object"</span> <span class="attr">width</span>=<span class="string">"20"</span> <span class="attr">height</span>=<span class="string">"20"</span> <span class="attr">alt</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> <span class="attr">title</span>=<span class="string">"<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="listreports-js"><a href="#listreports-js" class="headerlink" title="listreports.js"></a>listreports.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">/*报告列表日期选择按钮按下*/</span></span><br><span class="line">  $(<span class="string">".cal-sel"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; $(<span class="string">".cal-sel"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/calendar-screening.png"</span>); &#125;) $(<span class="string">".sel-class"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> selclassdis = $(<span class="string">".sel-class-show"</span>).css(<span class="string">'display'</span>);</span><br><span class="line">    <span class="keyword">var</span> selrankdis = $(<span class="string">".sel-rank-show"</span>).css(<span class="string">'display'</span>);</span><br><span class="line">    <span class="keyword">if</span> (selrankdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (selclassdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">        $(<span class="string">".sel-class"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pullup.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-class-show"</span>).slideDown();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(<span class="string">".sel-class"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-class-show"</span>).slideUp();</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      $(<span class="string">".sel-rank"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">      $(<span class="string">".sel-rank-show"</span>).slideUp(<span class="number">300</span>);</span><br><span class="line">      <span class="keyword">if</span> (selclassdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">        $(<span class="string">".sel-class"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pullup.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-class-show"</span>).slideDown();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(<span class="string">".sel-class"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-class-show"</span>).slideUp();</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;) $(<span class="string">".sel-class-show"</span>).find(<span class="string">"p"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">".sel-class-show"</span>).find(<span class="string">"p"</span>).removeClass(<span class="string">"bg-white-sel"</span>);</span><br><span class="line">    $(<span class="keyword">this</span>).addClass(<span class="string">"bg-white-sel"</span>);</span><br><span class="line">  &#125;) $(<span class="string">".sel-rank"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> selclassdis = $(<span class="string">".sel-class-show"</span>).css(<span class="string">'display'</span>);</span><br><span class="line">    <span class="keyword">var</span> selrankdis = $(<span class="string">".sel-rank-show"</span>).css(<span class="string">'display'</span>);</span><br><span class="line">    <span class="keyword">if</span> (selclassdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (selrankdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">        $(<span class="string">".sel-rank"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pullup.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-rank-show"</span>).slideDown();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(<span class="string">".sel-rank"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-rank-show"</span>).slideUp();</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      $(<span class="string">".sel-class"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">      $(<span class="string">".sel-class-show"</span>).slideUp(<span class="number">300</span>);</span><br><span class="line">      <span class="keyword">if</span> (selrankdis == <span class="string">'none'</span>) &#123;</span><br><span class="line">        $(<span class="string">".sel-rank"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pullup.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-rank-show"</span>).slideDown();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(<span class="string">".sel-rank"</span>).find(<span class="string">"img"</span>).attr(<span class="string">"src"</span>, <span class="string">"../../img/listreports/pulldown.png"</span>);</span><br><span class="line">        $(<span class="string">".sel-rank-show"</span>).slideUp();</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;) $(<span class="string">".sel-rank-show"</span>).find(<span class="string">"p"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">".sel-rank-show"</span>).find(<span class="string">"p"</span>).removeClass(<span class="string">"bg-white-sel"</span>);</span><br><span class="line">    $(<span class="keyword">this</span>).addClass(<span class="string">"bg-white-sel"</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;); <span class="comment">/*滚动部分js*/</span> <span class="comment">/*滚动部分的高度*/</span></span><br><span class="line">$(<span class="string">"body"</span>).height($(<span class="built_in">document</span>).height());</span><br><span class="line"><span class="keyword">var</span> wrapperheight = $(<span class="built_in">document</span>).height() - $(<span class="string">".select_munu"</span>).height();</span><br><span class="line">$(<span class="string">"#mescroll"</span>).css(<span class="string">"height"</span>, wrapperheight);</span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  $(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> mescroll = <span class="keyword">new</span> MeScroll(<span class="string">"mescroll"</span>, &#123;</span><br><span class="line">      up: &#123;</span><br><span class="line">        page: &#123; <span class="attr">size</span>: <span class="number">8</span> &#125;, <span class="comment">//每次加载1条数据,模拟</span></span><br><span class="line">        loadFull loadFull: &#123;</span><br><span class="line">          use: <span class="literal">true</span>, <span class="comment">//列表数据过少,不足以滑动触发上拉加载,是否自动加载下一页,直到满屏或者无更多数据为止;默认false,因为可通过调高page.size避免这个情况 </span></span><br><span class="line">          delay: <span class="number">500</span> <span class="comment">//延时执行的毫秒数; 延时是为了保证列表数据或占位的图片都已初始化完成,且下拉刷新上拉加载中区域动画已执行完毕; </span></span><br><span class="line">        &#125;,</span><br><span class="line">        clearEmptyId: <span class="string">"dataList"</span>, <span class="comment">//1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空 </span></span><br><span class="line">        callback: getListData, <span class="comment">//上拉回调,此处可简写; 相当于 </span></span><br><span class="line">        callback: <span class="function"><span class="keyword">function</span>(<span class="params">page</span>) </span>&#123; getListData(page); &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;); <span class="comment">/*联网加载列表数据 page = &#123;num:1, size:10&#125;; num:当前页 从1开始, size:每页数据条数 */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getListData</span>(<span class="params">page</span>) </span>&#123; <span class="comment">//联网加载数据 </span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"page.num=="</span> + page.num);</span><br><span class="line">      getListDataFromNet(page.num, page.size, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; <span class="comment">//联网成功的回调,隐藏下拉刷新和上拉加载的状态; </span></span><br><span class="line">        mescroll.endSuccess(data.length); <span class="comment">//传参:数据的总数; mescroll会自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据; //设置列表数据,因为配置了emptyClearId,第一页会清空dataList的数据,所以setListData应该写在最后; </span></span><br><span class="line">        setListData(data);</span><br><span class="line">      &#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">//联网失败的回调,隐藏下拉刷新和上拉加载的状态; </span></span><br><span class="line">        mescroll.endErr();</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125; <span class="comment">/*设置列表数据*/</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setListData</span>(<span class="params">data</span>) </span>&#123; <span class="keyword">var</span> listDom = <span class="built_in">document</span>.getElementById(<span class="string">"dataList"</span>); <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123; <span class="keyword">var</span> pd = data\[i\]; <span class="keyword">var</span> str = <span class="string">""</span>;</span><br><span class="line">        str += <span class="string">" &lt;li class=\\"</span></span><br><span class="line">        clear mg - <span class="number">10</span> radius - <span class="number">10</span> bg - white pt - <span class="number">20</span> pb - <span class="number">15</span>\\ <span class="string">"&gt;"</span>;</span><br><span class="line">        str += <span class="string">" &lt;div class=\\"</span></span><br><span class="line">        col - xs - <span class="number">3</span> pl - <span class="number">20</span> pr - <span class="number">20</span>\\ <span class="string">"&gt; "</span>;</span><br><span class="line">        str += <span class="string">" &lt;img src=\\"</span></span><br><span class="line">        <span class="string">"+ pd.pdImg +"</span>\\ <span class="string">" class=\\"</span></span><br><span class="line">        full - w\\ <span class="string">" alt=\\"</span>\\</span><br><span class="line">        <span class="string">"&gt;"</span>;</span><br><span class="line">        str += <span class="string">" &lt;\\/div&gt;"</span>;</span><br><span class="line">        str += <span class="string">" &lt;div class=\\"</span></span><br><span class="line">        col - xs - <span class="number">9</span> pl - <span class="number">15</span> pr - <span class="number">0</span>\\ <span class="string">"&gt; "</span>;</span><br><span class="line">        str += <span class="string">" "</span>;</span><br><span class="line">        str += <span class="string">" "</span> + pd.pdName + <span class="string">""</span>;</span><br><span class="line">        str += <span class="string">" &lt;\\/p&gt;"</span>;</span><br><span class="line">        str += <span class="string">" "</span>;</span><br><span class="line">        str += <span class="string">" "</span> + pd.pdTime + <span class="string">" &lt;span class=\\"</span></span><br><span class="line">        <span class="string">"+ pd.pdCol +"</span></span><br><span class="line">        f - <span class="number">14</span> pull - right dis - ib mr - <span class="number">20</span>\\ <span class="string">"&gt;"</span> + pd.pdstate + <span class="string">"&lt;\\/span&gt;"</span>;</span><br><span class="line">        str += <span class="string">" &lt;\\/p&gt;"</span>;</span><br><span class="line">        str += <span class="string">" &lt;\\/div&gt;"</span>;</span><br><span class="line">        str += <span class="string">"&lt;\\/li&gt;"</span>; <span class="keyword">var</span> liDom = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br><span class="line">        liDom.innerHTML = str;</span><br><span class="line">        listDom.appendChild(liDom); &#125; &#125; <span class="comment">/*联网加载列表数据*/</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getListDataFromNet</span>(<span class="params">pageNum, pageSize, successCallback, errorCallback</span>) </span>&#123; <span class="comment">//延时一秒,模拟联网 </span></span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// </span></span><br><span class="line">        $.ajax(&#123; <span class="comment">// </span></span><br><span class="line">          type: <span class="string">'GET'</span>, <span class="comment">// </span></span><br><span class="line">          url: <span class="string">'xxx'</span>, <span class="comment">// </span></span><br><span class="line">          url: <span class="string">'xxx?num='</span> + pageNum + <span class="string">"&amp;size="</span> + pageSize, <span class="comment">// </span></span><br><span class="line">          dataType: <span class="string">'json'</span>, <span class="comment">// </span></span><br><span class="line">          success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> data = pdlist1; <span class="comment">// 模拟数据: ../res/pdlist1.js //模拟分页数据 </span></span><br><span class="line">            <span class="keyword">var</span> listData = \ [\];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = (pageNum - <span class="number">1</span>) * pageSize; i &lt; pageNum * pageSize; i++) &#123; <span class="keyword">if</span> (i == data.length) <span class="keyword">break</span>;</span><br><span class="line">              listData.push(data\[i\]); &#125; successCallback(listData); <span class="comment">// </span></span><br><span class="line">          &#125;, <span class="comment">// </span></span><br><span class="line">          error: errorCallback <span class="comment">// </span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;, <span class="number">500</span>)</span><br><span class="line">    &#125; <span class="comment">//禁止PC浏览器拖拽图片,避免与下拉刷新冲突;如果仅在移动端使用,可删除此代码 </span></span><br><span class="line">    <span class="built_in">document</span>.ondragstart = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="pdlist1-js"><a href="#pdlist1-js" class="headerlink" title="pdlist1.js"></a>pdlist1.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pdlist1 = [&#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"1分钟快速监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-FF2E24"</span>, <span class="string">"pdstate"</span>: <span class="string">"未读"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/24reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"2小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/24reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"24小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-FF2E24"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"3小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"4小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"5小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-FF2E24"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"6小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"7小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"8小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-FF2E24"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"9小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"10小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"11小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"12小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"13小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-FF2E24"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"14小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"15小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"16小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"17小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"18小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"19小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;, &#123; <span class="string">"pdImg"</span>: <span class="string">"../../img/listreports/15reportsv1.png"</span>, <span class="string">"pdName"</span>: <span class="string">"20小时深度监测报告"</span>, <span class="string">"pdTime"</span>: <span class="string">"2017/6/20 18:34:43"</span>, <span class="string">"pdCol"</span>: <span class="string">"col-E47A36"</span>, <span class="string">"pdstate"</span>: <span class="string">"报告生成中"</span> &#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mescroll/" rel="tag">mescroll</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2017/03/js-%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            js-变量提升
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2017/03/mysql-sql%E6%B3%A8%E5%85%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">mysql-sql注入</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

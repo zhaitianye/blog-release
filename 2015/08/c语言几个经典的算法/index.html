@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    c语言-几个经典的算法 |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-c语言几个经典的算法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  c语言-几个经典的算法
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80%E5%87%A0%E4%B8%AA%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2015-08-16T08:30:32.000Z" itemprop="datePublished">2015-08-16</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c%E8%AF%AD%E8%A8%80/">c语言</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">25 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>POJ上做做ACM的题 c语言的学习要从基础开始，这里是几个经典的算法 </p>
+<p>题目：古典问题：有一对兔子，从出生后第3个月起每个月都生一对兔子，小兔 子长到第三个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子总数 为多少？ </p>
+<p>程序分析：兔子的规律为数列1,1,2,3,5,8,13,21…. </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">long</span> f1,f2; <span class="keyword">int</span> i; f1=f2=<span class="number">1</span>; <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=<span class="number">20</span>;i++) &#123; <span class="built_in">printf</span>(<span class="string">"%12ld %12ld"</span>,f1,f2); <span class="keyword">if</span>(i%<span class="number">2</span>==<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"\\n"</span>);</span><br><span class="line"><span class="comment">/*控制输出，每行四个*/</span> </span><br><span class="line">f1=f1+f2;</span><br><span class="line"><span class="comment">/*前两个月加起来赋值给第三个月*/</span> </span><br><span class="line">f2=f1+f2;<span class="comment">/*前两个月加起来赋值给第三个月*/</span>&#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上题还可用一维数组处理! </p>
+<p>题目：判断101-200之间有多少个素数，并输出所有素数。</p>
+<p>程序分析：判断素数的方法：用一个数分别去除2到sqrt(这个数)，如果能被整 除，则表明此数不是素数，反之是素数。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math.h"</span> </span></span><br><span class="line">main() &#123; </span><br><span class="line">  <span class="keyword">int</span> m,i,k,h=<span class="number">0</span>,leap=<span class="number">1</span>; </span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\\n"</span>); </span><br><span class="line">  <span class="keyword">for</span>(m=<span class="number">101</span>;m&lt;=<span class="number">200</span>;m++) &#123; </span><br><span class="line">    k=<span class="built_in">sqrt</span>(m+<span class="number">1</span>); </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=k;i++) <span class="keyword">if</span>(m%i==<span class="number">0</span>) &#123;leap=<span class="number">0</span>;<span class="keyword">break</span>;&#125; <span class="keyword">if</span>(leap) &#123;<span class="built_in">printf</span>(<span class="string">"%-4d"</span>,m);h++; <span class="keyword">if</span>(h%<span class="number">10</span>==<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"\\n"</span>); &#125; </span><br><span class="line">    leap=<span class="number">1</span>; </span><br><span class="line">  &#125; <span class="built_in">printf</span>(<span class="string">"\\nThe total is %d"</span>,h); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：打印出所有的“水仙花数”，所谓“水仙花数”是指一个三位数，其各位 数字立方和等于该数本身。例如：153是一个“水仙花数”，因为153=1的三次方 ＋5的三次方＋3的三次方。 </p>
+<p>程序分析：利用for循环控制100-999个数，每个数分解出个位，十位，百位。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> i,j,k,n; <span class="built_in">printf</span>(<span class="string">"'water flower'number is:"</span>); <span class="keyword">for</span>(n=<span class="number">100</span>;n&lt;<span class="number">1000</span>;n++) &#123; i=n/<span class="number">100</span>;<span class="comment">/*分解出百位*/</span> j=n/<span class="number">10</span>%<span class="number">10</span>;<span class="comment">/*分解出十位*/</span> k=n%<span class="number">10</span>;<span class="comment">/*分解出个位*/</span> <span class="keyword">if</span>(i\*<span class="number">100</span>+j\*<span class="number">10</span>+k==i\*i\*i+j\*j\*j+k\*k\*k) &#123; <span class="built_in">printf</span>(<span class="string">"%-5d"</span>,n); &#125; &#125; <span class="built_in">printf</span>(<span class="string">"\\n"</span>); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：将一个正整数分解质因数。例如：输入90,打印出90=2*3*3*5。 </p>
+<p>程序分析：</p>
+<p>对n进行分解质因数，应先找到一个最小的质数k，然后按下述步骤完 成： (1)如果这个质数恰等于n，则说明分解质因数的过程已经结束，打印出即可。 (2)如果n&lt;&gt;k，但n能被k整除，则应打印出k的值，并用n除以k的商,作为新的正 整数你n,重复执行第一步。 (3)如果n不能被k整除，则用k+1作为k的值,重复执行第一步。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> n,i; <span class="built_in">printf</span>(<span class="string">"\\nplease input a number:\\n"</span>); <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n); <span class="built_in">printf</span>(<span class="string">"%d="</span>,n); <span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++) &#123; <span class="keyword">while</span>(n!=i) &#123; <span class="keyword">if</span>(n%i==<span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">"%d*"</span>,i); n=n/i; &#125; <span class="keyword">else</span> <span class="keyword">break</span>; &#125; &#125; <span class="built_in">printf</span>(<span class="string">"%d"</span>,n); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：利用条件运算符的嵌套来完成此题：学习成绩&gt;=90分的同学用A表示，60 -89分之间的用B表示，60分以下的用C表示。 </p>
+<p>程序分析：(a&gt;b)?a:b这是条件运算符的基本例子。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> score; <span class="keyword">char</span> grade; <span class="built_in">printf</span>(<span class="string">"please input a score\\n"</span>); <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;score); grade=score&gt;=<span class="number">90</span>?<span class="string">'A'</span>score&gt;=<span class="number">60</span>?<span class="string">'B'</span>:<span class="string">'C'</span>); <span class="built_in">printf</span>(<span class="string">"%d belongs to %c"</span>,score,grade); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：输入两个正整数m和n，求其最大公约数和最小公倍数。 </p>
+<p>程序分析：利用辗除法。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> a,b,num1,num2,temp; <span class="built_in">printf</span>(<span class="string">"please input two numbers:\\n"</span>); <span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;num1,&amp;num2); <span class="keyword">if</span>(num1 　&#123; temp=num1; num1=num2; num2=temp; &#125; a=num1;b=num2; <span class="keyword">while</span>(b!=<span class="number">0</span>)<span class="comment">/*利用辗除法，直到b为0为止*/</span> &#123; temp=a%b; a=b; b=temp; &#125; <span class="built_in">printf</span>(<span class="string">"gongyueshu:%d\\n"</span>,a); <span class="built_in">printf</span>(<span class="string">"gongbeishu:%d\\n"</span>,num1\*num2/a); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数 。 </p>
+<p>程序分析：利用while语句,条件为输入的字符不为’\n’.</p>
+<p>程序源代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include "stdio.h" main() &#123;char c; int letters=0,space=0,digit=0,others=0; printf("please input some characters\\n"); while((c=getchar())!='\\n') &#123; if(c&gt;='a'&amp;&amp;c&lt;='z'||c&gt;='A'&amp;&amp;c&lt;='Z') letters++; else if(c==' ') space++; else if(c&gt;='0'&amp;&amp;c&lt;='9') digit++; else others++; &#125; printf("all in all:char=%d space=%d digit=%d others=% d\\n",letters,space,digit,others); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：求s=a+aa+aaa+aaaa+aa…a的值，其中a是一个数字。例如 2+22+222+2222+22222(此时共有5个数相加)，几个数相加有键盘控制。</p>
+<p>程序分析：关键是计算出每一项的值。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> a,n,count=<span class="number">1</span>; <span class="keyword">long</span> <span class="keyword">int</span> sn=<span class="number">0</span>,tn=<span class="number">0</span>; <span class="built_in">printf</span>(<span class="string">"please input a and n\\n"</span>); <span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;a,&amp;n); <span class="built_in">printf</span>(<span class="string">"a=%d,n=%d\\n"</span>,a,n); <span class="keyword">while</span>(count&lt;=n) &#123; tn=tn+a; sn=sn+tn; a=a\*<span class="number">10</span>; ++count; &#125; <span class="built_in">printf</span>(<span class="string">"a+aa+...=%ld\\n"</span>,sn); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：一个数如果恰好等于它的因子之和，这个数就称为“完数”。例如6=1＋2 ＋3.编程找出1000以内的所有完数。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">static</span> <span class="keyword">int</span> k\[<span class="number">10</span>\]; <span class="keyword">int</span> i,j,n,s; <span class="keyword">for</span>(j=<span class="number">2</span>;j&lt;<span class="number">1000</span>;j++) &#123; n=<span class="number">-1</span>; s=j; <span class="keyword">for</span>(i=<span class="number">1</span>;i 　　&#123; <span class="keyword">if</span>((j%i)==<span class="number">0</span>) &#123;　n++; s=s-i; k\[n\]=i; &#125; &#125; <span class="keyword">if</span>(s==<span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">"%d is a wanshu"</span>,j); <span class="keyword">for</span>(i=<span class="number">0</span>;i 　<span class="built_in">printf</span>(<span class="string">"%d,"</span>,k); <span class="built_in">printf</span>(<span class="string">"%d\\n"</span>,k\[n\]); &#125; &#125; &#125;   题目：一球从<span class="number">100</span>米高度自由落下，每次落地后反跳回原高度的一半；再落下， 求它在第<span class="number">10</span>次落地时，共经过多少米？第<span class="number">10</span>次反弹多高？</span><br></pre></td></tr></table></figure>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">float</span> sn=<span class="number">100.0</span>,hn=sn/<span class="number">2</span>; <span class="keyword">int</span> n; <span class="keyword">for</span>(n=<span class="number">2</span>;n&lt;=<span class="number">10</span>;n++) &#123; sn=sn+<span class="number">2</span>\*hn;/\*第n次落地时共经过的米数*/ hn=hn/<span class="number">2</span>; <span class="comment">/*第n次反跳高度*/</span> &#125; <span class="built_in">printf</span>(<span class="string">"the total of road is %f\\n"</span>,sn); <span class="built_in">printf</span>(<span class="string">"the tenth is %f meter\\n"</span>,hn); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：一只猴子摘了N个桃子第一天吃了一半又多吃了一个,第二天又吃了余下的 一半又多吃了一个,到第十天的时候发现还有一个. </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 猴子吃桃问题 */</span> main() &#123; <span class="keyword">int</span> i,s,n=<span class="number">1</span>; <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;<span class="number">10</span>;i++) &#123; s=(n+<span class="number">1</span>)\*<span class="number">2</span> n=s; &#125; <span class="built_in">printf</span>(<span class="string">"第一天共摘了%d个桃\\n"</span>,s); &#125;   </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Epsilon 1.0E-6 <span class="comment">/*控制解的精度*/</span> #<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt; main() &#123; float a,x0,x1; printf("请输入要求的数:"); scanf("%f",&amp;a); x0=a/2; x1=(x0+a/x0)/2; while(fabs(x1-x0)&gt;=Epsilon) &#123; x0=x1; x1=(x0+a/x0)/2; &#125; printf("%f的平方根：%f.5\\n",x1); &#125;   /* 上题的另一种算法 */ #define Epsilon 1.0E-6 /*控制解的精度*/ #include &lt;stdio.h&gt; #include &lt;math.h&gt; main() &#123; float num,pre,this; do &#123; scanf("%f",&amp;num);/*输入要求平方根的数*/ &#125;while(num&lt;0); if (num==0) printf("the root is 0"); else &#123; this=1; do &#123; pre=this; this=(pre+num/pre)/2; &#125;while(fabs(pre-this)&gt;Epsilon);/*用解的精度，控制循环次数*/ &#125; printf("the root is %f",this); &#125; 用牛顿迭代法 求方程 2\*x\*x\*x-4\*x\*x+3\*x-6 的根 /* 牛顿迭代法 */ #define Epsilon 1.0E-6 /*控制解的精度*/ #include&lt;math.h&gt; main() &#123; float x1,x0=1.5; x1=x0-(2\*x0\*x0\*x0-4\*x0\*x0+3\*x0-6)/(6\*x0\*x0-8\*x0+3); while(fabs(x1-x0&gt;=Epsilon) &#123; x0=x1; x1=x0-(2\*x0\*x0\*x0-4\*x0\*x0+3\*x0-6)/(6\*x0\*x0-8\*x0+3); &#125; printf("方程的根为%f\\n",x1); &#125; 用二分法求上题 /* 二分法 */ #define Epsilon 1.0E-5 /*控制解的精度*/ #include&lt;math.h&gt; main() &#123; folat x1,x2,x0,f1,f2,f0; x0=(x1+x2)/2; f0=2\*x0\*x0\*x0-4\*x0\*x0+3\*x0-6;　　 /* 求中点的函数值 */ while(fabs(f0)&gt;=Epsilon) &#123; if(f0\*f1&lt;0) &#123; x2=x0; f2=2\*x2\*x2\*x2-4\*x2\*x2+3\*x2-6; &#125; if(f0\*f2&lt;0) &#123; x1=x0; f1=2\*x1\*x1\*x1-4\*x1\*x1+3\*x1-6; &#125; x0=(x1+x2)/2; f0=2\*x0\*x0\*x0-4\*x0\*x0+3\*x0-6; &#125; printf("用二分法求得方程的根：%f\\n",x0); &#125;</span></span></span><br></pre></td></tr></table></figure>
+
+
+<p>题目：打印出如下图案（菱形） * <strong>* ****</strong> <strong>****</strong> <strong>**</strong> *** * </p>
+<p>程序分析：先把图形分成两部分来看待，前四行一个规律，后三行一个规律，利 用双重for循环，第一层控制行，第二层控制列。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> i,j,k; <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=<span class="number">3</span>;i++) &#123; <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=<span class="number">2</span>-i;j++) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;=<span class="number">2</span>\*i;k++) <span class="built_in">printf</span>(<span class="string">"\*"</span>); <span class="built_in">printf</span>(<span class="string">"\\n"</span>); &#125; <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=<span class="number">2</span>;i++) &#123; <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=i;j++) <span class="built_in">printf</span>(<span class="string">" "</span>); <span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;=<span class="number">4</span><span class="number">-2</span>\*i;k++) <span class="built_in">printf</span>(<span class="string">"\*"</span>); <span class="built_in">printf</span>(<span class="string">"\\n"</span>); &#125; &#125; 题目：一个<span class="number">5</span>位数，判断它是不是回文数。即<span class="number">12321</span>是回文数，个位与万位相同， 十位与千位相同。</span><br></pre></td></tr></table></figure>
+
+<p>程序分析：同29例 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main( ) &#123; <span class="keyword">long</span> ge,shi,qian,wan,x; <span class="built_in">scanf</span>(<span class="string">"%ld"</span>,&amp;x); wan=x/<span class="number">10000</span>; qian=x%<span class="number">10000</span>/<span class="number">1000</span>; shi=x%<span class="number">100</span>/<span class="number">10</span>; ge=x%<span class="number">10</span>; <span class="keyword">if</span> (ge==wan&amp;&amp;shi==qian)<span class="comment">/*个位等于万位并且十位等于千位*/</span> <span class="built_in">printf</span>(<span class="string">"this number is a huiwen\\n"</span>); <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"this number is not a huiwen\\n"</span>); &#125;   题目：请输入星期几的第一个字母来判断一下是星期几，如果第一个字母一样， 则继续判断第二个字母。</span><br></pre></td></tr></table></figure>
+
+<p>程序分析：用情况语句比较好，如果第一个字母一样，则判断用情况语句或if语 句判断第二个字母。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; void main() &#123; char letter; printf("please input the first letter of someday\\n"); while ((letter=getch())!='Y') /*当所按字母为Y时才结束*/ &#123; switch (letter) &#123;case 'S':printf("please input second letter\\n"); if((letter=getch())=='a') printf("saturday\\n"); else if ((letter=getch())=='u') printf("sunday\\n"); else printf("data error\\n"); break; case 'F':printf("friday\\n");break; case 'M':printf("monday\\n");break; case 'T':printf("please input second letter\\n"); if((letter=getch())=='u') printf("tuesday\\n"); else if ((letter=getch())=='h') printf("thursday\\n"); else printf("data error\\n"); break; case 'W':printf("wednesday\\n");break; default: printf("data error\\n"); &#125; &#125; &#125; 题目：Press any key to change color, do you want to try it. Please hurry up!</span></span></span><br></pre></td></tr></table></figure>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt; void main(void) &#123; int color; for (color = 0; color &lt; 8; color++) &#123; textbackground(color); /*设置文本的背景颜色*/ cprintf("This is color %d\\r\\n", color); cprintf("ress any key to continue\\r\\n"); getch(); /*输入字符看不见*/ &#125; &#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>题目：学习gotoxy()与clrscr()函数 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt; void main(void) &#123; clrscr(); /*清屏函数*/ textbackground(2); gotoxy(1, 5); /*定位函数*/ cprintf("Output at row 5 column 1\\n"); textbackground(3); gotoxy(20, 10); cprintf("Output at row 10 column 20\\n"); &#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>题目：练习函数调用 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; void hello\_world(void) &#123; printf("Hello, world!\\n"); &#125; void three\_hellos(void) &#123; int counter; for (counter = 1; counter &lt;= 3; counter++) hello\_world();/*调用此函数*/ &#125; void main(void) &#123; three\_hellos();/*调用此函数*/ &#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>题目：文本颜色设置 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt; void main(void) &#123; int color; for (color = 1; color &lt; 16; color++) &#123; textcolor(color);/*设置文本颜色*/ cprintf("This is color %d\\r\\n", color); &#125; textcolor(128 + 15); cprintf("This is blinking\\r\\n"); &#125;</span></span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">题目：求<span class="number">100</span>之内的素数 </span><br><span class="line"></span><br><span class="line">程序源代码：</span><br><span class="line">```C</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; #include "math.h" #define N 101 main() &#123; int i,j,line,a\[N\]; for(i=2;i&lt;N;i++) a=i; for(i=2;i&lt;sqrt(N);i++) for(j=i+1;j&lt;N;j++) &#123; if(a!=0&amp;&amp;a\[j\]!=0) if(a\[j\]%a==0) a\[j\]=0;&#125; printf("\\n"); for(i=2,line=0;i&lt;N;i++) &#123; if(a!=0) &#123;printf("%5d",a); line++;&#125; if(line==10) &#123;printf("\\n"); line=0;&#125; &#125; &#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>题目：对10个数进行排序 </p>
+<p>程序分析：可以利用选择法，即从后9个比较过程中，选择一个最小的与第一个元素交换，下次类推，即用第二个元素与后8个进行比较，并进行交换。 程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 10 main() &#123;int i,j,min,tem,a\[N\]; /\*input data\*/ printf(<span class="meta-string">"please input ten num:\\n"</span>); for(i=0;i<span class="meta-string">&lt;N;i++) &#123; printf("a\[%d\]=",i); scanf("%d",&amp;a);&#125; printf("\\n"); for(i=0;i&lt;N;i++) printf("%5d",a); printf("\\n"); /\*sort ten num\*/ for(i=0;i&lt;N-1;i++) &#123;min=i; for(j=i+1;j&lt;N;j++) if(a\[min\]&gt;a\[j\]) min=j; tem=a; a=a\[min\]; a\[min\]=tem; &#125; /\*output data\*/ printf("After sorted \\n"); for(i=0;i&lt;N;i++) printf("%5d",a); &#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>题目：求一个3*3矩阵对角线元素之和 </p>
+<p>程序分析：利用双重for循环控制输入二维数组，再将a累加后输出。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">float</span> a\[<span class="number">3</span>\]\[<span class="number">3</span>\],sum=<span class="number">0</span>; <span class="keyword">int</span> i,j; <span class="built_in">printf</span>(<span class="string">"please input rectangle element:\\n"</span>); <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++) <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">3</span>;j++) <span class="built_in">scanf</span>(<span class="string">"%f"</span>,&amp;a\[j\]); <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++) sum=sum+a; <span class="built_in">printf</span>(<span class="string">"duijiaoxian he is %6.2f"</span>,sum); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：有一个已经排好序的数组。现输入一个数，要求按原来的规律将它插入数 组中。 </p>
+<p>程序分析：首先判断此数是否大于最后一个数，然后再考虑插入中间的数的情况 ，插入后此元素之后的数，依次后移一个位置。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">int</span> a\[<span class="number">11</span>\]=&#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">28</span>,<span class="number">40</span>,<span class="number">100</span>&#125;; <span class="keyword">int</span> temp1,temp2,number,<span class="built_in">end</span>,i,j; <span class="built_in">printf</span>(<span class="string">"original array is:\\n"</span>); <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) <span class="built_in">printf</span>(<span class="string">"%5d"</span>,a); <span class="built_in">printf</span>(<span class="string">"\\n"</span>); <span class="built_in">printf</span>(<span class="string">"insert a new number:"</span>); <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;number); <span class="built_in">end</span>=a\[<span class="number">9</span>\]; <span class="keyword">if</span>(number&gt;<span class="built_in">end</span>) a\[<span class="number">10</span>\]=number; <span class="keyword">else</span> &#123;<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123; <span class="keyword">if</span>(a&gt;number) &#123;temp1=a; a=number; <span class="keyword">for</span>(j=i+<span class="number">1</span>;j&lt;<span class="number">11</span>;j++) &#123;temp2=a\[j\]; a\[j\]=temp1; temp1=temp2; &#125; <span class="keyword">break</span>; &#125; &#125; &#125; <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">11</span>;i++) <span class="built_in">printf</span>(<span class="string">"%6d"</span>,a); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目：将一个数组逆序输出。 </p>
+<p>程序分析：用第一个与最后一个交换。 </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 5 main() &#123; int a\[N\]=&#123;9,6,5,4,1&#125;,i,temp; printf(<span class="meta-string">"\\n original array:\\n"</span>); for(i=0;i&lt;N;i++) printf(<span class="meta-string">"%4d"</span>,a); for(i=0;i&lt;N/2;i++) &#123;temp=a; a=a\[N-i-1\]; a\[N-i-1\]=temp; &#125; printf(<span class="meta-string">"\\n sorted array:\\n"</span>); for(i=0;i&lt;N;i++) printf(<span class="meta-string">"%4d"</span>,a); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：学习static定义静态变量的用法 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">程序源代码： <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> varfunc() &#123; int var=0; static int static\_var=0; printf(<span class="meta-string">"\\40:var equal %d \\n"</span>,var); printf(<span class="meta-string">"\\40:static var equal %d \\n"</span>,static\_var); printf(<span class="meta-string">"\\n"</span>); var++; static\_var++; &#125; void main() &#123;int i; for(i=0;i&lt;3;i++) varfunc(); &#125;   题目：学习使用auto定义变量的用法 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ 程序源代码： #<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123;int i,num; num=2; for (i=0;i&lt;3;i++) &#123; printf(<span class="meta-string">"\\40: The num equal %d \\n"</span>,num); num++; &#123; auto int num=1; printf(<span class="meta-string">"\\40: The internal block num equal %d \\n"</span>,num); num++; &#125; &#125; &#125; c语言的学基础，100个经典的算法－２ 程序源代码： #<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123; int i,num; num=2; for(i=0;i&lt;3;i++) &#123; printf(<span class="meta-string">"\\40: The num equal %d \\n"</span>,num); num++; &#123; static int num=1; printf(<span class="meta-string">"\\40:The internal block num equal %d\\n"</span>,num); num++; &#125; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：学习使用external的用法。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> int a,b,c; void add() &#123; int a; a=3; c=a+b; &#125; void main() &#123; a=b=4; add(); printf(<span class="meta-string">"The value of c is equal to %d\\n"</span>,c); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：学习使用register定义变量的方法。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123; <span class="keyword">register</span> <span class="keyword">int</span> i; <span class="keyword">int</span> tmp=<span class="number">0</span>; <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=<span class="number">100</span>;i++) tmp+=i; <span class="built_in">printf</span>(<span class="string">"The sum is %d\\n"</span>,tmp); &#125;</span><br></pre></td></tr></table></figure>
+<p>题目：宏#define命令练习(1) </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> #<span class="meta-keyword">define</span> TRUE 1 #<span class="meta-keyword">define</span> FALSE 0 #<span class="meta-keyword">define</span> SQ(x) (x)\*(x) void main() &#123; int num; int again=1; printf(<span class="meta-string">"\\40: Program will stop if input value less than 50.\\n"</span>); while(again) &#123; printf(<span class="meta-string">"\\40lease input number==&gt;"</span>); scanf(<span class="meta-string">"%d"</span>,&amp;num); printf(<span class="meta-string">"\\40:The square for this number is %d \\n"</span>,SQ(num)); <span class="meta-keyword">if</span>(num&gt;=50) again=TRUE; <span class="meta-keyword">else</span> again=FALSE; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：宏#define命令练习(2) </p>
+<p>程序源代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> #<span class="meta-keyword">define</span> exchange(a,b) &#123; \ <span class="comment">/*宏定义中允许包含两道衣裳命令的情形，此时必须在最右边加上"\\"*/</span> int t;\ t=a;\ a=b;\ b=t;\ &#125; void main(void) &#123; int x=10; int y=20; printf(<span class="meta-string">"x=%d; y=%d\\n"</span>,x,y); exchange(x,y); printf(<span class="meta-string">"x=%d; y=%d\\n"</span>,x,y); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：宏#define命令练习(3) </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LAG &gt; #<span class="meta-keyword">define</span> SMA &lt; #<span class="meta-keyword">define</span> EQ == #<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> void main() &#123; int i=10; int j=20; <span class="meta-keyword">if</span>(i LAG j) printf(<span class="meta-string">"\\40: %d larger than %d \\n"</span>,i,j); <span class="meta-keyword">else</span> <span class="meta-keyword">if</span>(i EQ j) printf(<span class="meta-string">"\\40: %d equal to %d \\n"</span>,i,j); <span class="meta-keyword">else</span> <span class="meta-keyword">if</span>(i SMA j) printf(<span class="meta-string">"\\40:%d smaller than %d \\n"</span>,i,j); <span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: No such value.\\n"</span>); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：#if #ifdef和#ifndef的综合应用。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> #<span class="meta-keyword">define</span> MAX #<span class="meta-keyword">define</span> MAXIMUM(x,y) (x&gt;y)?x:y #<span class="meta-keyword">define</span> MINIMUM(x,y) (x&gt;y)?y:x void main() &#123; int a=10,b=20; #<span class="meta-keyword">ifdef</span> MAX printf(<span class="meta-string">"\\40: The larger one is %d\\n"</span>,MAXIMUM(a,b)); #<span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: The lower one is %d\\n"</span>,MINIMUM(a,b)); #<span class="meta-keyword">endif</span> #<span class="meta-keyword">ifndef</span> MIN printf(<span class="meta-string">"\\40: The lower one is %d\\n"</span>,MINIMUM(a,b)); #<span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: The larger one is %d\\n"</span>,MAXIMUM(a,b)); #<span class="meta-keyword">endif</span> #<span class="meta-keyword">undef</span> MAX #<span class="meta-keyword">ifdef</span> MAX printf(<span class="meta-string">"\\40: The larger one is %d\\n"</span>,MAXIMUM(a,b)); #<span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: The lower one is %d\\n"</span>,MINIMUM(a,b)); #<span class="meta-keyword">endif</span> #<span class="meta-keyword">define</span> MIN #<span class="meta-keyword">ifndef</span> MIN printf(<span class="meta-string">"\\40: The lower one is %d\\n"</span>,MINIMUM(a,b)); #<span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: The larger one is %d\\n"</span>,MAXIMUM(a,b)); #<span class="meta-keyword">endif</span> &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：#include 的应用练习 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LAG &gt; #<span class="meta-keyword">define</span> SMA &lt; #<span class="meta-keyword">define</span> EQ == #<span class="meta-keyword">include</span> <span class="meta-string">"test.h"</span> <span class="comment">/*一个新文件50.c，包含test.h*/</span> #<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> void main() &#123; int i=10; int j=20; <span class="meta-keyword">if</span>(i LAG j) printf(<span class="meta-string">"\\40: %d larger than %d \\n"</span>,i,j); <span class="meta-keyword">else</span> <span class="meta-keyword">if</span>(i EQ j) printf(<span class="meta-string">"\\40: %d equal to %d \\n"</span>,i,j); <span class="meta-keyword">else</span> <span class="meta-keyword">if</span>(i SMA j) printf(<span class="meta-string">"\\40:%d smaller than %d \\n"</span>,i,j); <span class="meta-keyword">else</span> printf(<span class="meta-string">"\\40: No such value.\\n"</span>); &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：学习使用按位与 &amp; 。 </p>
+<p>程序分析：0&amp;0=0; 0&amp;1=0; 1&amp;0=0; 1&amp;1=1 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123; int a,b; a=077; b=a&amp;3; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); b&amp;=7; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：学习使用按位或 | 。 </p>
+<p>程序分析：0|0=0; 0|1=1; 1|0=1; 1|1=1 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123; int a,b; a=077; b=a|3; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); b|=7; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：学习使用按位异或 ^ 。 </p>
+<p>程序分析：0^0=0; 0^1=1; 1^0=1; 1^1=0 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123; int a,b; a=077; b=a^3; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); b^=7; printf(<span class="meta-string">"\\40: The a &amp; b(decimal) is %d \\n"</span>,b); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：取一个整数a从右端开始的4～7位。 </p>
+<p>程序分析：可以这样考虑： (1)先使a右移4位。 (2)设置一个低4位全为1,其余全为0的数。可用<del>(</del>0&lt;&lt;4) (3)将上面二者进行&amp;运算。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main() &#123; <span class="keyword">unsigned</span> a,b,c,d; <span class="built_in">scanf</span>(<span class="string">"%o"</span>,&amp;a); b=a&gt;&gt;<span class="number">4</span>; c=~(~<span class="number">0</span>&lt;&lt;<span class="number">4</span>); d=b&amp;c; <span class="built_in">printf</span>(<span class="string">"%o\\n%o\\n"</span>,a,d); &#125;</span><br></pre></td></tr></table></figure>
+<p>题目：学习使用按位取反~。 程序分析：~0=1; ~1=0; </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span> main() &#123; int a,b; a=234; b=~a; printf(<span class="meta-string">"\\40: The a's 1 complement(decimal) is %d \\n"</span>,b); a=~a; printf(<span class="meta-string">"\\40: The a's 1 complement(hexidecimal) is %x \\n"</span>,a); &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>题目：画图，学用circle画圆形。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"graphics.h"</span> main() &#123; int driver,mode,i; float j=1,k=1; driver=VGA;mode=VGAHI; initgraph(&amp;driver,&amp;mode,<span class="meta-string">""</span>); setbkcolor(YELLOW); for(i=0;i&lt;=25;i++) &#123; setcolor(8); circle(310,250,k); k=k+j; j=j+0.3; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：画图，学用line画直线。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"graphics.h"</span> main() &#123; int driver,mode,i; float x0,y0,y1,x1; float j=12,k; driver=VGA;mode=VGAHI; initgraph(&amp;driver,&amp;mode,<span class="meta-string">""</span>); setbkcolor(GREEN); x0=263;y0=263;y1=275;x1=275; for(i=0;i&lt;=18;i++) &#123; setcolor(5); <span class="meta-keyword">line</span>(x0,y0,x0,y1); x0=x0-5; y0=y0-5; x1=x1+5; y1=y1+5; j=j+10; &#125; x0=263;y1=275;y0=263; for(i=0;i&lt;=20;i++) &#123; setcolor(5); <span class="meta-keyword">line</span>(x0,y0,x0,y1); x0=x0+5; y0=y0+5; y1=y1-5; &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>题目：画图，学用rectangle画方形。 </p>
+<p>程序分析：利用for循环控制100-999个数，每个数分解出个位，十位，百位。 </p>
+<p>程序源代码： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"graphics.h"</span> main() &#123; int x0,y0,y1,x1,driver,mode,i; driver=VGA;mode=VGAHI; initgraph(&amp;driver,&amp;mode,<span class="meta-string">""</span>); setbkcolor(YELLOW); x0=263;y0=263;y1=275;x1=275; for(i=0;i&lt;=18;i++) &#123; setcolor(1); rectangle(x0,y0,x1,y1); x0=x0-5; y0=y0-5; x1=x1+5; y1=y1+5; &#125; settextstyle(DEFAULT\_FONT,HORIZ\_DIR,2); outtextxy(150,40,<span class="meta-string">"How beautiful it is!"</span>); <span class="meta-keyword">line</span>(130,60,480,60); setcolor(2); circle(269,269,137); &#125;</span></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%B8%B8%E7%94%A8%E6%BB%A4%E6%B3%A2%E7%AE%97%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            c语言-实现简单常用滤波算法
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2015/08/c%E8%AF%AD%E8%A8%80-%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">c语言-字符数组</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>

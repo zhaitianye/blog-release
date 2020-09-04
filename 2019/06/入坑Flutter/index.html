@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="The seeker of the world" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    入坑Flutter |  Tianye Blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/comm/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="/comm/pace.min.js"></script>
+
+  
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Tianye Blog" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-入坑Flutter"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  入坑Flutter
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/%E5%85%A5%E5%9D%91Flutter/" class="article-date">
+  <time datetime="2019-06-08T06:09:42.000Z" itemprop="datePublished">2019-06-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Flutter/">Flutter</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">6.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">23 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>简介</p>
+<p><code>Flutter</code>是<code>Google</code>开发的新一代跨平台方案，<code>Flutter</code>可以实现写一份代码同时运行在iOS和Android设备上，并且提供很好的性能体验。<code>Flutter</code>使用<code>Dart</code>作为开发语言，这是一门简洁、强类型的编程语言。<code>Flutter</code>对于iOS和Android设备，提供了两套视觉库，可以针对不同的平台有不同的展示效果。</p>
+<p><code>Flutter</code>原本是为了解决<code>Web</code>开发中的一些问题，而开发的一套精简版<code>Web</code>框架，拥有独立的渲染引擎和开发语言，但后来逐渐演变为移动端开发框架。正是由于<code>Dart</code>当初的定位是为了替代<code>JS</code>成为<code>Web</code>框架，所以<code>Dart</code>的语法更接近于<code>JS</code>语法。例如定义对象构建方法，以及实例化对象的方式等。 在<code>Google</code>刚推出<code>Flutter</code>时，其发展很缓慢，终于在18年发布第一个Beta版之后迎来了爆发性增长，发布第一个<code>Release</code>版时增长速度更快。可以从Github上Star数据看出来这个增长的过程。在19年最新的<code>Flutter 1.2</code>版本中，已经开放<code>Web</code>支持的Beta版。 目前已经有不少大型项目接入<code>Flutter</code>，阿里的闲鱼、头条的抖音、腾讯的NOW直播，都将<code>Flutter</code>当做应用程序的开发语言。除此之外，还有一些其他中小型公司也在做。</p>
+<p>整体架构</p>
+<p><code>Flutter</code>可以理解为开发SDK或者工具包，其通过<code>Dart</code>作为开发语言，并且提供<code>Material</code>和<code>Cupertino</code>两套视觉控件，视图或其他和视图相关的类，都以<code>Widget</code>的形式表现。<code>Flutter</code>有自己的渲染引擎，并不依赖原生平台的渲染。<code>Flutter</code>还包含一个用<code>C++</code>实现的<code>Engine</code>，渲染也是包含在其中的。</p>
+<h4 id="Engine"><a href="#Engine" class="headerlink" title="Engine"></a>Engine</h4><p><code>Flutter</code>是一套全新的跨平台方案，<code>Flutter</code>并不像<code>React Native</code>那样，依赖原生应用的渲染，而是自己有自己的渲染引擎，并使用<code>Dart</code>当做<code>Flutter</code>的开发语言。<code>Flutter</code>整体框架分为两层，底层是通过<code>C++</code>实现的引擎部分，<code>Skia</code>是<code>Flutter</code>的渲染引擎，负责跨平台的图形渲染。<code>Dart</code>作为<code>Flutter</code>的开发语言，在<code>C++</code>引擎上层是<code>Dart</code>的<code>Framework</code>。 <code>Flutter</code>不仅仅提供了一套视觉库，在<code>Flutter</code>整体框架中包含各个层级阶段的库。例如实现一个游戏功能，上面一些游戏控件可以用上层视觉库，底层游戏可以直接基于<code>Flutter</code>的底层库进行开发，而不需要调用原生应用的底层库。<code>Flutter</code>的底层库是基于<code>Open GL</code>实现的，所以<code>Open GL</code>可以做的<code>Flutter</code>都可以。</p>
+<h4 id="视觉库"><a href="#视觉库" class="headerlink" title="视觉库"></a>视觉库</h4><p>在上层<code>Framework</code>中包含两套视觉库，符合<code>Android</code>风格的<code>Material</code>，和符合iOS风格的<code>Cupertino</code>。也可以在此基础上，封装自己风格的系统组件。<code>Cupertino</code>是一套iOS风格的视觉库，包含了iOS的导航栏、 <code>button</code> 、 <code>alertView</code>等。 <code>Flutter</code>对不同硬件平台有不同的兼容，例如同样的<code>Material</code>代码运行在iOS和Android不同平台上，有一些平台特有的显示和交互，<code>Flutter</code>依然对其进行了区分适配。例如滑动<code>ScrollView</code>时，iOS平台是有回弹效果的，而Android平台则是阻尼效果。例如iOS的导航栏标题是居中的，Android导航栏标题是向左的，等等。这些<code>Flutter</code>都做了区分兼容。 除了<code>Flutter</code>为我们做的一些适配外，有一些控件是需要我们自己做适配的，例如<code>AlertView</code>，在Android和iOS两个平台下的表现就是不同的。这些iOS特性的控件都定义在<code>Cupertino</code>中，所以建议在进行App开发时，对一些控件进行上层封装。 例如<code>AlertView</code>则对其进行一个二次封装，控件内部进行设备判断并选择不同的视觉库，这样可以保证各个平台的效果。 虽然<code>Flutter</code>对于iOS和Android两个平台，开发有<code>cupertino</code>和<code>material</code>两个视觉库，但实际开发过程中的选择，应该使用<code>material</code>当做视觉库。因为<code>Flutter</code>对iOS的支持并不是很好，主要对Android平台支持比较好，<code>material</code>中的UI控件要比<code>cupertino</code>多好几倍。</p>
+<h4 id="Dart"><a href="#Dart" class="headerlink" title="Dart"></a>Dart</h4><p>Dart是<code>Google</code>在2011年推出的一款应用于<code>Web</code>开发的编程语言，<code>Dart</code>刚推出的时候，定位是替代<code>JS</code>做前端开发，后来逐步扩展到移动端和服务端。 <code>Dart</code>是<code>Flutter</code>的开发语言，<code>Flutter</code>必须遵循<code>Dart</code>的语言特性。在此基础上，也会有自己的东西，例如<code>Flutter</code>的上层<code>Framework</code>，自己的渲染引擎等。可以说，<code>Dart</code>只是<code>Flutter</code>的一部分。 <code>Dart</code>是强类型的，对定义的变量不需要声明其类型，<code>Flutter</code>会对其进行类型推导。如果不想使用类型推导，也可以自己声明指定的类型。</p>
+<p>Hot Reload</p>
+<p><code>Flutter</code>支持亚秒级热重载，<code>Android Studio</code>和<code>VSCode</code>都支持<code>Hot Reload</code>的特性。但需要区分的是，热重载和热更新是不同的两个概念，热重载是在运行调试状态下，将新代码直接更新到执行中的二进制。而热更新是在上线后，通过<code>Runtime</code>或其他方式，改变现有执行逻辑。</p>
+<h4 id="AOT、JIT"><a href="#AOT、JIT" class="headerlink" title="AOT、JIT"></a>AOT、JIT</h4><p><code>Flutter</code>支持<code>AOT</code>(<code>Ahead of time</code>)和<code>JIT</code>(<code>Just in time</code>)两种编译模式，<code>JIT</code>模式支持在运行过程中进行<code>Hot Reload</code>。刷新过程是一个增量的过程，由系统对本次和上次的代码做一次<code>snapshot</code>，将新的代码注入到<code>DartVM</code>中进行刷新。但有时会不能进行<code>Hot Reload</code>，此时进行一次全量的<code>Hot Reload</code>即可。 而<code>AOT</code>模式则是在运行前预先编译好，这样在每次运行过程中就不需要进行分析、编译，此模式的运行速度是最快的。<code>Flutter</code>同时采用了两种方案，在开发阶段采用<code>JIT</code>模式进行开发，在<code>release</code>阶段采用<code>AOT</code>模式，将代码打包为二进制进行发布。 在开发原生应用时，每次修改代码后都需要重新编译，并且运行到硬件设备上。由于<code>Flutter</code>支持<code>Hot Reload</code>，可以进行热重载，对项目的开发效率有很大的提升。 由于<code>Flutter</code>实现机制支持<code>JIT</code>的原因，理论上来说是支持热更新以及服务器下发代码的。可以从服务器。但是由于这样会使性能变差，而且还有审核的问题，所以<code>Flutter</code>并没有采用这种方案。</p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p><code>Flutter</code>的热重载是基于<code>State</code>的，也就是我们在代码中经常出现的<code>setState</code>方法，通过这个来修改后，会执行相应的<code>build</code>方法，这就是热重载的基本过程。 <code>Flutter</code>的<code>hot reload</code>的实现源码在下面路径中，在此路径中包含<code>run_cold.dart</code>和<code>run_hot.dart</code>两个文件，前者负责冷启动，后者负责热重载。</p>
+<p>~/flutter/packages/flutter_tools/lib/src/run_hot.dart</p>
+<p>热重载的代码实现在<code>run_hot.dart</code>文件中，有<code>HotRunner</code>来负责具体代码执行。当<code>Flutter</code>进行热重载时，会调用<code>restart</code>函数，函数内部会传入一个<code>fullRestart</code>的<code>bool</code>类型变量。热重载分为全量和非全量，<code>fullRestart</code>参数就是表示是否全量。以非全量热重载为例，函数的<code>fullRestart</code>会传入<code>false</code>，根据传入<code>false</code>参数。 调用<code>restart</code>函数后，内部会调用<code>_reloadSources</code>函数，去执行内部逻辑。下面是大概逻辑执行流程。 在<code>_reloadSources</code>函数内部，会调用<code>_updateDevFS</code>函数，函数内部会扫描修改的文件，并将文件修改前后进行对比，随后会将被改动的代码生成一个<code>kernel files</code>文件。 随后会通过<code>HTTP Server</code>将生成的<code>kernel files</code>文件发送给<code>Dart VM</code>虚拟机，虚拟机拿到<code>kernel</code>文件后会调用<code>_reloadSources</code>函数进行资源重载，将<code>kernel</code>文件注入正在运行的<code>Dart VM</code>中。当资源重载完成后，会调用RPC接口触发<code>Widgets</code>的重绘。 跨平台方案对比 现在市面上RN、Weex的技术方案基本一样，所以这里就以RN来代表类似的跨平台方案。<code>Flutter</code>是基于<code>GPU</code>进行渲染的，而RN则将渲染交给原生平台，而自己只是负责通过<code>JSCore</code>将视图组织起来，并处理业务逻辑。所以在渲染效果和性能这块，<code>Flutter</code>的性能比RN要强很多。 跨平台方案一般都需要对各个平台进行平台适配，也就是创建各自平台的适配层，RN的平台适配层要比<code>Flutter</code>要大很多。因为从技术实现来说，RN是通过<code>JSCore</code>引擎进行原生代码调用的，和原生代码交互很多，所以需要更多的适配。而<code>Flutter</code>则只需要对各自平台独有的特性进行适配即可，例如调用系统相册、粘贴板等。 <code>Flutter</code>技术实现是基于更底层实现的，对平台依赖度不是很高，相对来说，RN对平台的依赖度是很高的。所以RN未来的技术升级，包括扩展之类的，都会受到很大的限制。而<code>Flutter</code>未来的潜力将会很大，可以做很多技术改进。</p>
+<p>Widget</p>
+<p>在<code>Flutter</code>中将显示以及和显示相关的部分，都统一定义为<code>widget</code>，下面列举一些<code>widget</code>包含的类型：</p>
+<ol>
+<li>用于显示的视图，例如<code>ListView</code>、<code>Text</code>、<code>Container</code>等。</li>
+<li>用来操作视图，例如<code>Transform</code>等动画相关。</li>
+<li>视图布局相关，例如<code>Center</code>、<code>Expanded</code>、<code>Column</code>等。</li>
+</ol>
+<p>在<code>Flutter</code>中，所有的视图都是由<code>Widget</code>组成，<code>Label</code>、<code>AppBar</code>、<code>ViewController</code>等。在<code>Flutter</code>的设计中，组合的优先级要大于继承，整体视图类结构继承层级很浅但单层很多类。如果想定制或封装一些控件，也应该以组合为主，而不是继承。 在iOS开发中，我也经常采用这种设计方案，组合大于继承。因为如果继承层级过多的话，一个是不便于阅读代码，还有就是不好维护代码。例如底层需要改一个通用的样式，但这个类的继承层级比较复杂，这样改动的话影响范围就比较大，会将一些不需要改的也改掉，这时候就会发现继承很鸡肋。但在iOS中有<code>Category</code>的概念，这也是一种组合的方式，可以通过将一些公共的东西放在<code>Category</code>中，使继承的方便性和组合的灵活性达到一个平衡。 <code>Flutter</code>中并没有单独的布局文件，例如iOS的XIB这种，代码都在<code>Widget</code>中定义。和<code>UIView</code>的区别在于，<code>Widget</code>只是负责描述视图，并不参与视图的渲染。<code>UIView</code>也是负责描述视图，而<code>UIView</code>的<code>layer</code>则负责渲染操作，这是二者的区别。</p>
+<p>了解Widget 在应用程序启动时，<code>main</code>方法接收一个<code>Widget</code>当做主页面，所以任何一个<code>Widget</code>都可以当做根视图。一般都是传一个<code>MaterialApp</code>，也可以传一个<code>Container</code>当做根视图，这都是被允许的。 在<code>Flutter</code>应用中，和界面显示及用户交互的对象都是由<code>Widget</code>构成的，例如视图、动画、手势等。<code>Widget</code>分为<code>StatelessWidget</code>和<code>StatefulWidget</code>两种，分别是无状态和有状态的<code>Widget</code>。 <code>StatefulWidget</code>本质上也是无状态的，其通过<code>State</code>来处理<code>Widget</code>的状态，以达到有状态，<code>State</code>出现在整个<code>StatefulWidget</code>的生命周期中。 当构建一个<code>Widget</code>时，可以通过其<code>build</code>获得构建流程，在构建流程中可以加入自己的定制操作，例如对其设置title或视图等。 有些<code>Widget</code>在构建时，也提供一些参数来帮助构建，例如构建一个<code>ListView</code>时，会将<code>index</code>返回给<code>build</code>方法，来区别构建的Cell，以及构建的上下文<code>context</code>。</p>
+<h4 id="StatelessWidget"><a href="#StatelessWidget" class="headerlink" title="StatelessWidget"></a>StatelessWidget</h4><p><code>StatelessWidget</code>是一种静态<code>Widget</code>，即创建后自身就不能再进行改变。在创建一个<code>StatelessWidget</code>后，需要重写<code>build</code>函数。每个静态<code>Widget</code>都会有一个<code>build</code>函数，在创建视图对象时会调用此方法。同样的，此函数也接收一个<code>Widget</code>类型的返回值。</p>
+<h4 id="StatefulWidget"><a href="#StatefulWidget" class="headerlink" title="StatefulWidget"></a>StatefulWidget</h4><p><code>Widget</code>本质上是不可被改变的，但<code>StatefulWidget</code>将状态拆分到<code>State</code>中去管理，当数据发生改变时由<code>State</code>去处理视图的改变。 下面是创建一个动态<code>Widget</code>，当创建一个动态<code>Widget</code>需要配合一个<code>State</code>，并且需要重写<code>createState</code>方法。重写此函数后，指定一个<code>Widget</code>对应的<code>State</code>并初始化。 下面例子中，在<code>StatefulWidget</code>的父类中包含一个Key类型的<code>key</code>变量，这是无论静态<code>Widget</code>还是动态<code>Widget</code>都具备的参数。在动态<code>Widget</code>中定义了自己的成员变量title，并在自定义的初始化方法中传入，通过下面<code>DynamicWidget</code>类的构造方法，并不需要在内部手动进行title的赋值，title即为传入的值，是由系统完成的。 由于上面动态<code>Widget</code>定义了初始化方法，在调用动态<code>Widget</code>时可以直接用自定义初始化方法即可。</p>
+<h4 id="State"><a href="#State" class="headerlink" title="State"></a>State</h4><p><code>StatefulWidget</code>的改变是由<code>State</code>来完成的，<code>State</code>中需要重写<code>build</code>方法，在<code>build</code>中进行视图组织。<code>StatefulWidget</code>是一种响应式视图改变的方式，数据源和视图产生绑定关系，由数据源驱动视图的改变。 改变<code>StatefulWidget</code>的数据源时，需要调用<code>setState</code>方法，并将数据源改变的操作写在里面。使用动态<code>Widget</code>后，是不需要我们手动去刷新视图的。系统在<code>setState</code>方法调用后，会重新调用对应<code>Widget</code>的<code>build</code>方法，重新绘制某个<code>Widget</code>。 下面的代码示例中添加了一个float按钮，并给按钮设置了一个回调函数<code>_onPressAction</code>，这样在每次触发按钮事件时都会调用此函数。<code>counter</code>是一个整型变量并和<code>Text</code>相关联，当<code>counter</code>的值在<code>setState</code>方法中改变时，<code>Text Widget</code>也会跟着变化。</p>
+<h4 id="主要Widget"><a href="#主要Widget" class="headerlink" title="主要Widget"></a>主要Widget</h4><p>在iOS中有<code>UINavigationController</code>的概念，其并不负责显示，而是负责控制各个页面的跳转操作。在<code>Flutter</code>中可以将<code>MaterialApp</code>理解为iOS的导航控制器，其包含一个<code>navigationBar</code>以及导航栈，这和iOS是一样的。 在iOS中除了用来显示的视图外，视图还有对应的<code>UIViewController</code>。在<code>Flutter</code>中并没有专门用来管理视图并且和<code>View</code>一对一的类，但从显示的角度来说，有类似的类<code>Scaffold</code>，其包含控制器的<code>appBar</code>，也可以通过<code>body</code>设置一个<code>widget</code>当做其视图。</p>
+<h4 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h4><p><code>theme</code>是<code>Flutter</code>提供的界面风格API，<code>MaterialApp</code>提供有<code>theme</code>属性，可以在<code>MaterialApp</code>中设置全局样式，这样可以统一整个应用的风格。 如果不想使用系统默认主题，可以将对应的控件或试图用<code>Theme</code>包起来，并将<code>Theme</code>当做<code>Widget</code>赋值给其他<code>Widget</code>。 有时<code>MaterialApp</code>设定的统一风格，并不能满足某个<code>Widget</code>的要求，可能还需要有其他的外观变化，可以通过<code>Theme.of</code>传入当前的<code>BuildContext</code>，来对<code>theme</code>进行扩展。 <code>Flutter</code>会根据传入的<code>context</code>，顺着<code>Widget</code>树查找最近的<code>Theme</code>，并对<code>Theme</code>复制一份防止影响原有的<code>Theme</code>，并对其进行扩展。</p>
+<p>网络请求</p>
+<p><code>Flutter</code>中可以通过<code>async</code>、<code>await</code>组合使用，进行网络请求。<code>Flutter</code>中的网络请求大体有三种：</p>
+<ol>
+<li>系统自带的<code>HttpClient</code>网络请求，缺点是代码量相对而言比较多，而且对post请求支持不是很好。</li>
+<li>三方库<code>http.dart</code>，请求简单。</li>
+<li>三方库<code>dio</code>，请求简单。</li>
+</ol>
+<h4 id="http网络库"><a href="#http网络库" class="headerlink" title="http网络库"></a>http网络库</h4><p><code>http</code>网络库定义在<code>http.dart</code>中，内部代码定义非常全面，其中包括<code>HttpStatus</code>、<code>HttpHeaders</code>、<code>Cookie</code>等很多基础信息，有助于我们了解<code>http</code>请求协议。 因为是三方库，所以需要在<code>pubspec.yaml</code>中加入下面的引用。</p>
+<p>下面是<code>http.dart</code>的请求示例代码，可以看到请求很简单，真正的请求代码其实就两行。生成一个<code>Client</code>请求对象，调用<code>client</code>实例的get方法(如果是post则调用post方法)，并用<code>Response</code>对象去接收请求结果即可。 通过<code>async</code>修饰发起请求的方法，表示这是一个异步操作，并在请求代码的前面加入<code>await</code>，修饰这里的代码需要等待数据返回，需要过一段时间后再处理。 请求回来的数据默认是<code>json</code>字符串，需要对其进行<code>decode</code>并解析为数据对象才可以使用，这里使用系统自带的<code>convert</code>库进行解析，并解析为数组。 在调用<code>Client</code>进行post数据请求时，需要传入一个字典进去，<code>Client</code>会通过将字典当做post的<code>from</code>表单。 dio网络库 <code>dio</code>库的调用方式和<code>http</code>库类似，这里不过多介绍。<code>dio</code>库相对于<code>http</code>库强大的在于，<code>dio</code>库提供了更好的<code>Cookie</code>管理、文件的上传下载、<code>fromData</code>表单等处理。所以，如果对网络库需求比较复杂的话，还是建议使用<code>dio</code>。 数据解析</p>
+<h4 id="convert"><a href="#convert" class="headerlink" title="convert"></a>convert</h4><p>系统自带有<code>convert</code>解析库，在使用时直接<code>import</code>即可。<code>convert</code>类似于iOS自带的JSON解析类<code>NSJSONSerialization</code>，可以直接将json字符串解析为字典或数组。 但是，我们在项目中使用时，一般都不会直接使用字典取值，这是一种很不好的做法。一般都会将字典或数组转换为模型对象，在项目中使用模型对象。可以定义类似<code>Model.dart</code> 这样的模型类，并在模型类中进行数据解析，对外直接暴露公共变量来让外界获取值。</p>
+<h4 id="自动序列化"><a href="#自动序列化" class="headerlink" title="自动序列化"></a>自动序列化</h4><p>但如果定义模型类的话，一个是要在代码内部写取值和赋值代码，这些都需要手动完成。另外如果当服务端字段发生改变后，客户端也需要跟着进行改变，所以这种方式并不是很灵活。 可以采用json序列化的三方库<code>json_serializable</code>，此库可以将一个类标示为自动JSON序列化的类，并对类提供JSON和对象相互转换的能力。也可以通过命令行开启一个<code>watch</code>，当类中的变量定义发生改变时，相关代码自动发生改变。 首先引入下面的三个库，其中包括依赖库一个，以及调试库两个。 定义一个模型文件，例如这里叫做<code>User.dart</code>文件，并在内部定义一个<code>User</code>的模型类。随后引入<code>json_annotation</code>的依赖，通过<code>@JsonSerializable()</code>标示此类需要被<code>json_serializable</code>进行合成。 定义的<code>User</code>类包含两部分，实例变量和两个转换函数。在下面定义json转换函数时，需要注意函数命名一定要按照下面格式命名，否则不能正常生成<code>user.g.dart</code>文件。 有的时候服务端返回的参数名和本地的关键字冲突，或者命名不规范，导致本地定义和服务器字段不同的情况。这种情况可以通过<code>@JsonKey</code>关键字，来修饰json字段匹配新的本地变量。除此之外，也可以做其他修饰，例如变量不能为空等。 现在项目中依然是报错的，随后我们在<code>flutter</code>工程的根目录文件夹下，运行下面命令。</p>
+<p>flutter packages pub run build_runner watch</p>
+<p>系统文件</p>
+<h4 id="主要文件"><a href="#主要文件" class="headerlink" title="主要文件"></a>主要文件</h4><ul>
+<li>iOS文件：iOS工程文件</li>
+<li>Android：Android工程文件</li>
+<li>lib：Flutter的dart代码</li>
+<li>assets：资源文件夹，例如font、image等都可以放在里面</li>
+<li>.gitignore：git忽略文件</li>
+</ul>
+<h4 id="packages"><a href="#packages" class="headerlink" title="packages"></a>packages</h4><p>这是一个系统文件，<code>Flutter</code>通过<code>.packages</code>文件来管理一些系统依赖库，例如<code>material</code>、<code>cupertino</code>、<code>widgets</code>、<code>animation</code>、<code>gesture</code>等系统库就在里面，这些主要的系统库由<code>.packages</code>下的<code>flutter</code>统一管理，源码都在<code>flutter/lib/scr</code>目录下。除此之外，还有一些其他的系统库或系统资源都在<code>.packages</code>中。</p>
+<h4 id="yaml文件"><a href="#yaml文件" class="headerlink" title="yaml文件"></a>yaml文件</h4><p>在<code>Flutter</code>中通过<code>pubspec.yaml</code>文件来管理外部引用，包含本地资源文件、字体文件、依赖库等依赖，以及应用的一些配置信息。这些配置在项目中时，需要注意代码对其的问题，否则会导致加载失败。 当修改<code>yaml</code>文件的依赖信息后，需要执行<code>flutter get packages</code>命令更新本地文件。但并不需要这么麻烦，可以直接<code>Cmd+s</code>保存文件，VSCode编译器会自动更新依赖。 Flutter开发</p>
+<h4 id="启动函数"><a href="#启动函数" class="headerlink" title="启动函数"></a>启动函数</h4><p>和大多数编程语言一样，<code>dart</code>也包含一个<code>main</code>方法，是<code>Flutter</code>程序执行的主入口，在<code>main</code>方法中写的代码就是在程序启动时执行的代码。<code>main</code>方法中会执行<code>runApp</code>方法，<code>runApp</code>方法类似于iOS的<code>UIApplicationMain</code>方法，<code>runApp</code>函数接收一个<code>Widget</code>用来做应用程序的显示。</p>
+<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>在iOS中通过<code>AppDelegate</code>可以获取应用程序的生命周期回调，在<code>Flutter</code>中也可以获取到。可以通过向<code>Binding</code>添加一个<code>Observer</code>，并实现<code>didChangeAppLifecycleState</code>方法，来监听指定事件的到来。 但是由于<code>Flutter</code>提供的状态有限，在iOS平台只能监听三种状态，下面是示例代码。</p>
+<h4 id="矩阵变换"><a href="#矩阵变换" class="headerlink" title="矩阵变换"></a>矩阵变换</h4><p>在<code>Flutter</code>中是支持矩阵变化的，例如<code>rotate</code>、<code>scale</code>等方式。<code>Flutter</code>的矩阵变换由<code>Widget</code>完成，需要进行矩阵变换的视图，在外面包一层<code>Transform Widget</code>即可，内部可以设置其变换方式。 在<code>Transform</code>中可以通过<code>transform</code>指定其矩阵变换方式，通过<code>alignment</code>指定变换的锚点。</p>
+<h4 id="页面导航"><a href="#页面导航" class="headerlink" title="页面导航"></a>页面导航</h4><p>在iOS中可以通过<code>UINavigationController</code>对页面进行管理，控制页面间的push、pop跳转。<code>Flutter</code>中使用<code>Navigator</code>和<code>Routers</code>来实现类似<code>UINavigationController</code>的功能，<code>Navigator</code>负责管理导航栈，包含push、pop的操作，可以把<code>UIViewController</code>看做一个<code>Routers</code>，<code>Routers</code>被<code>Navigator</code>管理着。 <code>Navigator</code>的跳转方式分为两种，一种是直接跳转到某个<code>Widget</code>页面，另一种是为<code>MaterialApp</code>构建一个<code>map</code>，通过<code>key</code>来跳转对应的<code>Widget</code>页面。<code>map</code>的格式是<code>key : context</code>的形式。 跳转时通过<code>pushNamed</code>指定<code>map</code>中的<code>key</code>，即可跳转到对应的<code>Widget</code>。如果需要从push出来的页面获取参数，可以通过<code>await</code>修饰push操作，这样即可在新页面pop的时候将参数返回到当前页面。</p>
+<p>编码规范</p>
+<p>VSCode有很好的语法检查，如果有命名不规范等问题，都会以警告的形式表现出来。</p>
+<ol>
+<li>驼峰命名法，方法名、变量名等，都以首字母小写的驼峰命名法。类名也是驼峰命名法，但类名首字母大写。</li>
+<li>文件名，文件命名以下划线进行区分，不使用驼峰命名法。</li>
+<li><code>Flutter</code>中创建<code>Widget</code>对象，可以用<code>new</code>修饰，也可以不用。</li>
+</ol>
+<p>4.函数中可以定义可选参数，以及必要参数。 下面是一个函数定义，这里定义了一个必要参数<code>url</code>，以及一个<code>Map</code>类型的可选参数<code>headers</code>。</p>
+<p>Future<Response> get(url, {Map&lt;String, String&gt; headers});</p>
+<ol start="5">
+<li><code>Dart</code>中在函数定义前加下划线，则表示是私有方法或变量。</li>
+<li><code>Dart</code>通过<code>import</code>引入外部引用，除此之外也可以通过下面的语法单独引入文件中的某部分。</li>
+</ol>
+<p>import “dart:collection” show HashMap, IterableBase;</p>
+<h4 id="gt-调用"><a href="#gt-调用" class="headerlink" title="=&gt;调用"></a>=&gt;调用</h4><p>在<code>Dart</code>中经常可以看到<code>=&gt;</code>的调用方式，这种调用方式类似于一种语法糖，下面是一些常用的调用方式。 当进行函数调用时，可以将普通函数调用转换为<code>=&gt;</code>的调用方式，例如下面第一个示例。在此基础上，如果调用函数只有一个参数，可以将其改为第二个示例的方式，也就是可以省略调用的括号，直接写参数名。 当只有一个返回值，并且没有逻辑处理时，可以直接省略<code>return</code>，返回数值。 当调用的函数中没有参数时，可以直接省略参数，写一对空括号即可。</p>
+<p>小技巧</p>
+<h4 id="代码重构"><a href="#代码重构" class="headerlink" title="代码重构"></a>代码重构</h4><p>VSCode支持对<code>Dart</code>语言进行重构，一般作用范围都是在函数内小范围的。 例如在创建<code>Widget</code>对象的地方，将鼠标焦点放在这里，当前行的最前面会有提示。点击提示后会有下面两个选项：</p>
+<ul>
+<li><code>Extract Local Variable</code>将当前<code>Widget</code>及其子<code>Widget</code>创建的代码，剥离到一个变量中，并在当前位置使用这个变量。</li>
+<li><code>Extract Method</code>将当前<code>Widget</code>及其子<code>Widget</code>创建的代码，封装到一个函数中，并在当前位置调用此函数。</li>
+</ul>
+<p>除此之外，将鼠标焦点放在方法的一行，点击最前面的提示，会出现下面两个选项：</p>
+<ul>
+<li><code>Convert to expression body</code>将当前函数转换为一个表达式。</li>
+<li><code>Convert to async function body</code>将当前函数转换为一个异步线程中执行的代码。</li>
+</ul>
+<h4 id="附加效果"><a href="#附加效果" class="headerlink" title="附加效果"></a>附加效果</h4><p>在<code>Dart</code>中添加任何附加效果，例如动画效果或矩阵转换，除了直接给<code>Widget</code>子类的属性赋值外，就是在被当前<code>Widget</code>外面包一层，就可以使当前<code>Widget</code>拥有对应的效果。</p>
+<h4 id="快捷键-VSCode"><a href="#快捷键-VSCode" class="headerlink" title="快捷键(VSCode)"></a>快捷键(VSCode)</h4><ul>
+<li><code>Cmd + Shift + p</code>：可以进行快速搜索。需要注意的是，默认是带有一个<code>&gt;</code>的，这样搜索结果主要是<code>dart</code>代码。如果想搜索其他配置文件，或者安装插件等操作，需要把<code>&gt;</code>去掉。</li>
+<li><code>Cmd + Shift + o</code>：可以在某个文件中搜索某个类，但前提是需要提前进入这个文件。例如进入<code>framework.dart</code>，搜索<code>StatefulWidget</code>类。</li>
+</ul>
+<p>注意点</p>
+<ul>
+<li>使用<code>Flutter</code>要注意代码缩进，如果缩进有问题可能会影响最后的结果，尤其是在<code>.yaml</code>中写配置文件的时候。</li>
+<li>因为 <code>Flutter</code>是开源的，所以遇到问题后可以进入源码中，找解决方案。</li>
+<li>在代码中要注意标点符号的使用，例如第二个创建<code>Stack</code>的代码，如果上面是以逗号结尾，则后面的创建会失败，如果上面是以分号结尾则没问题。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章，未经许可，任何单位及个人不得做营利性使用！如有侵权请联系作者。
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/06/Node%E6%A8%A1%E5%9D%97%E4%B8%ADmodule.exports%E4%B8%8Eexports%E7%9A%84%E5%85%B3%E7%B3%BB/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Node模块中module.exports与exports的关系
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/06/css-%E7%89%B9%E5%AE%9A%E7%94%A8%E6%B3%95/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">css-特定用法</div>
+      </a>
+    
+  </nav>
+
+  
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2020
+        <i class="ri-heart-fill heart_icon"></i> Tianye Zhai
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/logo.svg" alt="Tianye Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  
+  if(document.getElementsByClassName("tocbot").length !== 0){
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      scrollContainer: 'main',
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto'
+    });
+  }
+</script>
+
+<script src="/comm/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/comm/jquery.modal.min.css">
+<script src="/comm/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="/comm/photoswipe_dist/photoswipe.css">
+<link rel="stylesheet" href="/comm/photoswipe_dist/default-skin/default-skin.css">
+<script src="/comm/photoswipe_dist/photoswipe.min.js"></script>
+<script src="/comm/photoswipe_dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+
+<script src="/js/clickBoom2.js"></script>
+
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="/comm/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+<!-- CanvasBackground -->
+
+
+    
+  </div>
+</body>
+
+</html>
