@@ -72,6 +72,36 @@
   </entry>
   
   <entry>
+    <title>require 是如何工作的</title>
+    <link href="http://blog.zhaitianye.com/2019/11/require%20%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/"/>
+    <id>http://blog.zhaitianye.com/2019/11/require%20%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</id>
+    <published>2019-11-08T03:10:45.000Z</published>
+    <updated>2020-09-16T03:56:06.618Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;出处：&lt;a href=&quot;https://juejin.im/post/6844903957752463374&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;FESKY&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="NodeJs" scheme="http://blog.zhaitianye.com/categories/NodeJs/"/>
+    
+    
+      <category term="NodeJs" scheme="http://blog.zhaitianye.com/tags/NodeJs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>为什么 CommonJS 和 ES Module 不能共存</title>
     <link href="http://blog.zhaitianye.com/2019/10/%E4%B8%BA%E4%BB%80%E4%B9%88%20CommonJS%20%E5%92%8C%20ES%20Module%20%E4%B8%8D%E8%83%BD%E5%85%B1%E5%AD%98/"/>
     <id>http://blog.zhaitianye.com/2019/10/%E4%B8%BA%E4%BB%80%E4%B9%88%20CommonJS%20%E5%92%8C%20ES%20Module%20%E4%B8%8D%E8%83%BD%E5%85%B1%E5%AD%98/</id>
@@ -543,33 +573,6 @@
     
     
       <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>js-开发常用工具函数</title>
-    <link href="http://blog.zhaitianye.com/2019/08/js-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/"/>
-    <id>http://blog.zhaitianye.com/2019/08/js-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/</id>
-    <published>2019-08-11T09:10:37.000Z</published>
-    <updated>2020-09-04T03:31:55.131Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1、isStatic：检测数据是不是除了symbol外的原始数据&quot;&gt;&lt;a href=&quot;#1、isStatic：检测数据是不是除了symbol外的原始数据&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
     
   </entry>
   
