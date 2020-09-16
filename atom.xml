@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.zhaitianye.com/"/>
-  <updated>2020-09-15T02:49:33.689Z</updated>
+  <updated>2020-09-16T03:07:27.199Z</updated>
   <id>http://blog.zhaitianye.com/</id>
   
   <author>
@@ -15,6 +15,115 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>桂花伺开季-喜讯万里来</title>
+    <link href="http://blog.zhaitianye.com/2020/09/%E6%A1%82%E8%8A%B1%E4%BC%BA%E5%BC%80%E5%AD%A3-%E5%96%9C%E8%AE%AF%E4%B8%87%E9%87%8C%E6%9D%A5/"/>
+    <id>http://blog.zhaitianye.com/2020/09/%E6%A1%82%E8%8A%B1%E4%BC%BA%E5%BC%80%E5%AD%A3-%E5%96%9C%E8%AE%AF%E4%B8%87%E9%87%8C%E6%9D%A5/</id>
+    <published>2020-09-10T13:20:37.000Z</published>
+    <updated>2020-09-16T03:07:27.199Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;今年年初疫情严重，公司做了一款结合区块链的疫情工具，名字叫同程链康&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="个人随笔" scheme="http://blog.zhaitianye.com/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="个人随笔" scheme="http://blog.zhaitianye.com/tags/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo增加脚注功能</title>
+    <link href="http://blog.zhaitianye.com/2019/11/hexo%E5%A2%9E%E5%8A%A0%E8%84%9A%E6%B3%A8%E5%8A%9F%E8%83%BD/"/>
+    <id>http://blog.zhaitianye.com/2019/11/hexo%E5%A2%9E%E5%8A%A0%E8%84%9A%E6%B3%A8%E5%8A%9F%E8%83%BD/</id>
+    <published>2019-11-23T01:40:15.000Z</published>
+    <updated>2020-09-16T02:39:35.311Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h2&gt;&lt;p&gt;让hexo博客可以使用脚注功能&lt;/p&gt;
+&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="http://blog.zhaitianye.com/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://blog.zhaitianye.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为什么 CommonJS 和 ES Module 不能共存</title>
+    <link href="http://blog.zhaitianye.com/2019/10/%E4%B8%BA%E4%BB%80%E4%B9%88%20CommonJS%20%E5%92%8C%20ES%20Module%20%E4%B8%8D%E8%83%BD%E5%85%B1%E5%AD%98/"/>
+    <id>http://blog.zhaitianye.com/2019/10/%E4%B8%BA%E4%BB%80%E4%B9%88%20CommonJS%20%E5%92%8C%20ES%20Module%20%E4%B8%8D%E8%83%BD%E5%85%B1%E5%AD%98/</id>
+    <published>2019-10-28T07:30:00.000Z</published>
+    <updated>2020-09-16T02:21:24.158Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在 Node 14 的项目里，我们依然能看到混杂着 CommonJS（CJS） 和 ES Modules（ESM） 风格的代码。CJS 使用的是 require() 和 module.exports；ESM 用的是是 import 和 exports。&lt;br&gt;首先 ESM
+        
+      
+    
+    </summary>
+    
+    
+      <category term="NodeJs" scheme="http://blog.zhaitianye.com/categories/NodeJs/"/>
+    
+    
+      <category term="NodeJs" scheme="http://blog.zhaitianye.com/tags/NodeJs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript中使用Class的优劣</title>
+    <link href="http://blog.zhaitianye.com/2019/10/JavaScript%E4%B8%AD%E4%BD%BF%E7%94%A8Class%E7%9A%84%E4%BC%98%E5%8A%A3/"/>
+    <id>http://blog.zhaitianye.com/2019/10/JavaScript%E4%B8%AD%E4%BD%BF%E7%94%A8Class%E7%9A%84%E4%BC%98%E5%8A%A3/</id>
+    <published>2019-10-22T05:15:23.000Z</published>
+    <updated>2020-09-16T01:52:19.143Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;看似无处不在的OOP&quot;&gt;&lt;a href=&quot;#看似无处不在的OOP&quot; class=&quot;headerlink&quot; title=&quot;看似无处不在的OOP&quot;&gt;&lt;/a&gt;看似无处不在的OOP&lt;/h2&gt;&lt;p&gt;OOP 即 面向对象编程 （Object Oriented
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>全面掌握Git命令</title>
@@ -461,118 +570,6 @@
     
     
       <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>实现快速排序</title>
-    <link href="http://blog.zhaitianye.com/2019/08/%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
-    <id>http://blog.zhaitianye.com/2019/08/%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</id>
-    <published>2019-08-10T12:50:13.000Z</published>
-    <updated>2020-09-04T03:31:55.133Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;对于经典算法，你是否也遇到这样的情形：学时觉得很清楚，可过阵子就忘了？本系列文章（老姚的-手写算法并记住它-系列）就尝试解决这个问题。 研读那些排序算法，细品它们的名字，其实都很贴切。比如快速排序，一个快字就能体现出其价值，因而它是用得最多的。
-        
-      
-    
-    </summary>
-    
-    
-      <category term="JavaScript" scheme="http://blog.zhaitianye.com/categories/JavaScript/"/>
-    
-    
-      <category term="JavaScript" scheme="http://blog.zhaitianye.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端学习路线的一些建议</title>
-    <link href="http://blog.zhaitianye.com/2019/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BB%BA%E8%AE%AE/"/>
-    <id>http://blog.zhaitianye.com/2019/07/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BB%BA%E8%AE%AE/</id>
-    <published>2019-07-24T12:06:56.000Z</published>
-    <updated>2020-09-04T03:31:55.127Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;入题&quot;&gt;&lt;a href=&quot;#入题&quot; class=&quot;headerlink&quot; title=&quot;入题&quot;&gt;&lt;/a&gt;入题&lt;/h2&gt;&lt;p&gt;我们俨然能感受到前端岗位现在已经发展成了最重要的研发岗位之一，所以对我们提出的要求也就越来越高。所以我们需要学的也就不仅仅只是
-        
-      
-    
-    </summary>
-    
-    
-      <category term="前端方向" scheme="http://blog.zhaitianye.com/categories/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
-    
-    
-      <category term="前端方向" scheme="http://blog.zhaitianye.com/tags/%E5%89%8D%E7%AB%AF%E6%96%B9%E5%90%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>React-Hooks与Redux的配合及状态管理方案</title>
-    <link href="http://blog.zhaitianye.com/2019/07/React-Hooks%E4%B8%8ERedux%E7%9A%84%E9%85%8D%E5%90%88%E5%8F%8A%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/"/>
-    <id>http://blog.zhaitianye.com/2019/07/React-Hooks%E4%B8%8ERedux%E7%9A%84%E9%85%8D%E5%90%88%E5%8F%8A%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88/</id>
-    <published>2019-07-18T06:14:10.000Z</published>
-    <updated>2020-09-04T03:31:55.126Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Hooks面世已有一段时间，但目前在状态管理方面，还未正式推出官方解决方案。因此目前社区中hooks主要有这么三种方案来解决应用的状态管理问题&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;使用Redux-React-Hook库替代React-redux，与Redux一同配合&lt;/li&gt;
-&lt;li
-        
-      
-    
-    </summary>
-    
-    
-      <category term="React" scheme="http://blog.zhaitianye.com/categories/React/"/>
-    
-    
-      <category term="React" scheme="http://blog.zhaitianye.com/tags/React/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Webpack-优化技巧</title>
-    <link href="http://blog.zhaitianye.com/2019/07/Webpack-%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/"/>
-    <id>http://blog.zhaitianye.com/2019/07/Webpack-%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7/</id>
-    <published>2019-07-12T02:20:05.000Z</published>
-    <updated>2020-09-04T03:31:55.126Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;我们构建的初始大小&lt;/p&gt;
-&lt;p&gt;我们处理一个构建时收到了以下两条错误消息： Vue 建议包大小不超过 244 KiB。我们一共有 14 项 assets
-        
-      
-    
-    </summary>
-    
-    
-      <category term="JS工具" scheme="http://blog.zhaitianye.com/categories/JS%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="JS工具" scheme="http://blog.zhaitianye.com/tags/JS%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
